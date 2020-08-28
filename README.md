@@ -1,1 +1,1 @@
-# oneview-ansible-collection-
+# oneview-ansible-collection
