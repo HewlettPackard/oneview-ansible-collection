@@ -1,0 +1,7 @@
+---
+- hosts: all
+  collections:
+    - hpe.oneview
+  roles:
+    - hpe.oneview.oneview_fc_network
+    - hpe.oneview.oneview_fc_network_facts

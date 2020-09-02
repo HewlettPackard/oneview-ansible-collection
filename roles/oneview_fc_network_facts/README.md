@@ -1,0 +1,32 @@
+## oneview_fc_network_facts
+Retrieve the facts about one or more of the OneView Fibre Channel Networks
+
+#### Synopsis
+ Retrieve the facts about one or more of the Fibre Channel Networks from OneView.
+
+#### Requirements (on the host that executes the module)
+  * hpOneView >= 5.0.0
+
+#### Options
+
+| Parameter     | Required    | Default  | Choices    | Comments |
+| ------------- |-------------| ---------|----------- |--------- |
+| config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
+| name  |   |  | |  Fibre Channel Network name.  |
+| params  |   No  |  | |  List of params to delimit, filter and sort the list of resources.  params allowed: `start`: The first item to return, using 0-based indexing. `count`: The number of resources to return. `filter`: A general filter/query string to narrow the list of items returned. `sort`: The sort order of the returned data set.  |
+
+## Example Playbook
+ 
+```yaml
+- hosts: all
+  collections:
+    - name: hpe.oneview
+  roles:
+    - hpe.oneview.oneview_fc_network_facts
+```
+
+#### Return Values
+
+| Name          | Description  | Returned | Type       |
+| ------------- |-------------| ---------|----------- |
+| fc_networks   | Has all the OneView facts about the Fibre Channel Networks. |  Always, but can be null. |  dict |
