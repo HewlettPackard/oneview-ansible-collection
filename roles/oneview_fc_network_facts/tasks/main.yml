@@ -1,0 +1,26 @@
+---
+- name: Gather facts about all Fibre Channel Networks
+  oneview_fc_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=fc_networks
+
+- name: Gather paginated, filtered and sorted facts about Fibre Channel Networks
+  oneview_fc_network_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'fabricType=FabricAttach'
+
+- debug: var=fc_networks
+
+- name: Gather facts about a Fibre Channel Network by name
+  oneview_fc_network_facts:
+    config: "{{ config }}"
+    name: "{{ network_name }}"
+  delegate_to: localhost
+
+- debug: var=fc_networks

@@ -1,0 +1,9 @@
+---
+######################################################################################
+# Install specified dependencies specified in requirements file.
+# This file will be called before triggering any endpoint for a resource.
+# If you don't want to run this file everytime, you can remove this role name under dependencies list specified in meta folder.
+######################################################################################
+- name: Install dependencies
+  pip:
+    requirements: "{{ playbook_dir }}/../requirements.txt"
