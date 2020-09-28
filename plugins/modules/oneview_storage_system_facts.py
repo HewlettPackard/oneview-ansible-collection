@@ -36,9 +36,11 @@ options:
     storage_hostname:
       description:
         - Storage System IP or hostname.
+      type: str
     name:
       description:
         - Storage System name.
+      type: str
     options:
       description:
         - "List with options to gather additional facts about a Storage System and related resources.
@@ -50,6 +52,7 @@ options:
           C(templates) gets a list of storage templates belonging to the storage system."
         - "To gather facts about C(storagePools), C(reachablePorts), and C(templates) it is required to inform
             either the argument C(name), C(ip_hostname), or C(hostname). Otherwise, this option will be ignored."
+      type: list
     validate_etag:
         description:
             - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
@@ -57,6 +60,16 @@ options:
         default: true
         choices: []
         type: bool
+    params:
+        description:
+        - List of params to delimit, filter and sort the list of resources.
+        - "params allowed:
+            C(start): The first item to return, using 0-based indexing.
+            C(count): The number of resources to return.
+            C(filter): A general filter/query string to narrow the list of items returned.
+            C(sort): The sort order of the returned data set."
+        required: false
+        type: dict
     api_version:
         description:
             - List with the api_version.
@@ -145,7 +158,6 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 1200
-    hostname: "172.18.11.12"
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -184,7 +196,6 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 1200
-    hostname: "172.18.11.12"
     options:
         - reachablePorts
     params:
@@ -201,7 +212,6 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 1200
-    hostname: "172.18.11.12"
     options:
       - templates
     params:
@@ -249,7 +259,7 @@ class StorageSystemFactsModule(OneViewModule):
             storage_hostname=dict(type='str')
         )
 
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.storage_systems)
 
     def execute_module(self):

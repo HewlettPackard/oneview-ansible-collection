@@ -195,6 +195,7 @@ import collections
 from copy import deepcopy
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
 
+
 class StorageSystemModule(OneViewModule):
     MSG_ADDED = 'Storage System added successfully.'
     MSG_UPDATED = 'Storage System updated successfully.'
