@@ -31,6 +31,9 @@ version_added: "2.5.0"
 requirements:
     - "hpeOneView >= 4.3.0"
 author: "Priyanka Sood (@soodpr)"
+extends_documentation_fragment:
+- oneview
+- oneview.factsparams
 '''
 
 EXAMPLES = '''
