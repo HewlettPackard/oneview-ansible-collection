@@ -43,10 +43,8 @@ options:
     options:
       description:
         - List with options to gather additional facts about Storage Pools.
-      reachableStoragePools: []
       required: false
       type: list
-      elements: str
     api_version:
         description:
             - List with the api_version.
@@ -152,7 +150,7 @@ class StoragePoolFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
-            options=dict(required=False, type='list', reachableStoragePools=[])
+            options=dict(required=False, type='list')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.storage_pools)
