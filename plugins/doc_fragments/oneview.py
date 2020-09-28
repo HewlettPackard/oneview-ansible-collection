@@ -28,6 +28,7 @@ options:
           The configuration file is optional. If the file path is not provided, the configuration will be loaded from
           environment variables.
       required: false
+      type: path
 
 notes:
     - "A sample configuration file for the config parameter can be found at:
@@ -45,7 +46,8 @@ options:
             - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
                 for the resource matches the ETag provided in the data.
         default: true
-        choices: ['true', 'false']
+        choices: []
+        type: bool
 '''
 
     FACTSPARAMS = '''
@@ -59,4 +61,5 @@ options:
             C(filter): A general filter/query string to narrow the list of items returned.
             C(sort): The sort order of the returned data set."
         required: false
+        type: dict
 '''
