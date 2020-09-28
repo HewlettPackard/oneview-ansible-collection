@@ -100,7 +100,7 @@ def dict_merge(resource_dict, data_dict):
     for key, val in data_dict.items():
         if not resource_dict.get(key):
             resource_dict[key] = val
-        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], collections.Mapping):
+        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
             tmp_list1 = []
