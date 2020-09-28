@@ -1,0 +1,7 @@
+---
+# defaults file for oneview_storage_pool
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_pool/files/oneview_config.json"
+contents: "{{lookup('file', config)}}"
+storage_system_uri: "/rest/storage-systems/TXQ1000307"
+storage_pool_name: "cpg-growth-limit-1TiB"
+scopes_uri: "/rest/scopes/resources/rest/storage-pools/5F9CA89B-C632-4F09-BC55-A8AA00DA5C4A"

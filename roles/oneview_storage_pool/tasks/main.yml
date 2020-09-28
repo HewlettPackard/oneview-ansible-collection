@@ -1,0 +1,46 @@
+---
+# Below task works for only APIVersion 300
+- name: Create a Storage Pool
+  oneview_storage_pool:
+    config: "{{ config }}"
+    state: present
+    data:
+      storageSystemUri: '{{ storage_system_uri }}'
+      poolName: '{{ storage_pool_name }}'
+  delegate_to: localhost
+
+- name: Do nothing when the Storage Pool already exists
+  oneview_storage_pool:
+    config: "{{ config }}"
+    state: present
+    data:
+      storageSystemUri: '{{ storage_system_uri }}'
+      poolName: '{{ storage_pool_name }}'
+  delegate_to: localhost
+
+# To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
+- name: Update storage pool
+  oneview_storage_pool:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ storage_pool_name }}'
+      isManaged: false
+  delegate_to: localhost
+
+# Below 2 task works for only APIVersion 300
+- name: Delete the Storage Pool
+  oneview_storage_pool:
+    config: "{{ config }}"
+    state: absent
+    data:
+      poolName: '{{ storage_pool_name }}'
+  delegate_to: localhost
+
+- name: Do nothing when Storage Pool is absent
+  oneview_storage_pool:
+    config: "{{ config }}"
+    state: absent
+    data:
+      poolName: '{{ storage_pool_name }}'
+  delegate_to: localhost

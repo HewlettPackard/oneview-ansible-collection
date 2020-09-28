@@ -6,3 +6,5 @@ plugins/modules/oneview_storage_system_facts.py validate-modules:missing-gplv3-l
 plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_version_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_storage_pool.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_storage_pool_facts.py validate-modules:missing-gplv3-license
