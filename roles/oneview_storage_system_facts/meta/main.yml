@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_fc_network
+  role_name: oneview_storage_system_facts
   author: Chebrolu Bala Sai Harika
-  description: Ansible role to manage OneView Fibre Channel Network resources.
+  description: Ansible role to manage OneView Storage System resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

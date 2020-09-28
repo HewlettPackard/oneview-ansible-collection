@@ -170,7 +170,7 @@ class FcNetworkModule(OneViewModule):
                                        required=True,
                                        choices=['present', 'absent']))
 
-        super(FcNetworkModule, self).__init__(additional_arg_spec=additional_arg_spec,
+        super().__init__(additional_arg_spec=additional_arg_spec,
                                               validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.fc_networks)

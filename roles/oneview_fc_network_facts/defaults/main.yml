@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_fc_network_facts
 network_name: 'Ansible Test FC Network'
-config: "{{ playbook_dir }}/../roles/oneview_fc_network_facts/files/oneview_config.json"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fc_network/files/oneview_config.json"

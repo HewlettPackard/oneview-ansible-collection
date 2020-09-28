@@ -146,7 +146,7 @@ class FcNetworkFactsModule(OneViewModule):
             params=dict(required=False, type='dict')
         )
 
-        super(FcNetworkFactsModule, self).__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec)
 
         self.resource_client = self.oneview_client.fc_networks
 
