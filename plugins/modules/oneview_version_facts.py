@@ -14,6 +14,9 @@
 #
 # ----------------------------------------------------------------------------
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
@@ -24,7 +27,7 @@ module: oneview_version_facts
 short_description: Returns the range of possible API versions supported by the appliance
 description:
     - Provides an interface to return the range of possible API versions supported by the appliance.
-version_added: "2.5"
+version_added: "2.5.0"
 requirements:
     - "hpeOneView >= 4.3.0"
 author: "Priyanka Sood (@soodpr)"
@@ -96,7 +99,7 @@ version:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModuleBase
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase
 
 
 class VersionFactsModule(OneViewModuleBase):

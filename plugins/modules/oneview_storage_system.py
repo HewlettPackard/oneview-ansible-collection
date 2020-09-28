@@ -14,6 +14,9 @@
 #
 # ----------------------------------------------------------------------------
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
@@ -24,7 +27,7 @@ module: oneview_storage_system
 short_description: Manage OneView Storage System resources.
 description:
     - Provides an interface to manage Storage System resources. Can add, update and remove.
-version_added: "2.3"
+version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.0.0"
@@ -190,8 +193,7 @@ storage_system:
 
 import collections
 from copy import deepcopy
-from ansible.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
-
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
 
 class StorageSystemModule(OneViewModule):
     MSG_ADDED = 'Storage System added successfully.'
@@ -212,7 +214,7 @@ class StorageSystemModule(OneViewModule):
             data=dict(required=True, type='dict')
         )
         super().__init__(additional_arg_spec=argument_spec,
-                                                  validate_etag_support=True)
+                         validate_etag_support=True)
         self.set_resource_object(self.oneview_client.storage_systems)
 
     def execute_module(self):

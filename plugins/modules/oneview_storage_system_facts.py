@@ -14,6 +14,9 @@
 #
 # ----------------------------------------------------------------------------
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
@@ -24,7 +27,7 @@ module: oneview_storage_system_facts
 short_description: Retrieve facts about the OneView Storage Systems
 description:
     - Retrieve facts about the Storage Systems from OneView.
-version_added: "2.5"
+version_added: "2.5.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.0.0"
@@ -234,7 +237,7 @@ storage_system_templates:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
 class StorageSystemFactsModule(OneViewModule):
