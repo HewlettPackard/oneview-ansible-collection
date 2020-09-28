@@ -37,8 +37,8 @@ options:
         - Fibre Channel Network name.
 
 extends_documentation_fragment:
-- oneview
-- oneview.factsparams
+- hpe.oneview.oneview
+- hpe.oneview.oneview.factsparams
 '''
 
 EXAMPLES = '''

@@ -51,8 +51,8 @@ options:
         - "To gather facts about C(storagePools), C(reachablePorts), and C(templates) it is required to inform
             either the argument C(name), C(ip_hostname), or C(hostname). Otherwise, this option will be ignored."
 extends_documentation_fragment:
-- oneview
-- oneview.factsparams
+- hpe.oneview.oneview
+- hpe.oneview.oneview.factsparams
 '''
 
 EXAMPLES = '''

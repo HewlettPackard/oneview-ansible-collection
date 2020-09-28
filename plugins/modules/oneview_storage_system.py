@@ -45,8 +45,8 @@ options:
             - List with Storage System properties and its associated states.
         required: true
 extends_documentation_fragment:
-- oneview
-- oneview.validateetag
+- hpe.oneview.oneview
+- hpe.oneview.oneview.validateetag
 '''
 
 EXAMPLES = '''
