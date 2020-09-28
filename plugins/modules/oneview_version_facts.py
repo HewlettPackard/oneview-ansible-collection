@@ -42,32 +42,39 @@ api_version:
     description:
         - List with the api_version.
     required: false
+    type: int
 hostname:
     description:
         - List with the hostname.
     required: false
+    type: str
 image_streamer_hostname:
     description:
         - List with the image_streamer_hostname.
     required: false
+    type: str
 password:
     description:
         - List with the password.
     required: false
+    type: str
 auth_login_domain:
     description:
         - List with the auth_login_domain.
     required: false
+    type: str
 username:
     description:
         - List with the username.
     required: false
+    type: str
 config:
     description:
         - Path to a .json configuration file containing the OneView client configuration.
-        The configuration file is optional. If the file path is not provided, the configuration will be loaded from
-        environment variables.
+          The configuration file is optional. If the file path is not provided, the configuration will be loaded from
+          environment variables.
     required: false
+    type: path
 notes:
     - "A sample configuration file for the config parameter can be found at:
        U(https://github.com/HewlettPackard/oneview-ansible/blob/master/examples/oneview_config-rename.json)"

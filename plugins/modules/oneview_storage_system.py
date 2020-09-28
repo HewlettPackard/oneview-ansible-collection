@@ -44,7 +44,7 @@ options:
         description:
             - List with Storage System properties and its associated states.
         required: true
-validate_etag:
+    validate_etag:
         description:
             - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
                 for the resource matches the ETag provided in the data.

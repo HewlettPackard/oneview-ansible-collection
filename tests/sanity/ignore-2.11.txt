@@ -1,0 +1,1 @@
+plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
