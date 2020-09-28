@@ -9,7 +9,7 @@ namespace: hpe
 name: oneview
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 1.0.5
+version: 1.0.8
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -31,7 +31,7 @@ license_file: LICENSE
 
 # A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
 # requirements as 'namespace' and 'name'
-tags: []
+tags: [ansible-modules, ansible, devops, hpe-oneview, infrastructure-as-code, bare-metal]
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range
@@ -40,7 +40,7 @@ tags: []
 dependencies: {}
 
 # The URL of the originating SCM repository
-repository: https://github.com/chebroluharika/hpe.oneview
+repository: https://github.com/HewlettPackard/oneview-ansible-collection
 
 # The URL to any online docs
 documentation: http://docs.example.com
@@ -49,7 +49,7 @@ documentation: http://docs.example.com
 homepage: http://example.com
 
 # The URL to the collection issue tracker
-issues: https://github.com/chebroluharika/hpe.oneview/issues
+issues: https://github.com/HewlettPackard/oneview-ansible-collection/issues
 
 # Ignore files and directories matching the following patterns
 build_ignore:
