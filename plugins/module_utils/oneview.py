@@ -28,7 +28,7 @@ import collections
 from ansible.module_utils.common._collections_compat import Mapping
 
 try:
-    from hpOneView.oneview_client import OneViewClient
+    from hpeOneView.oneview_client import OneViewClient
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
@@ -93,6 +93,28 @@ def transform_list_to_dict(list_):
             ret[to_native(value)] = True
 
     return ret
+
+
+# Makes a deep merge of 2 dictionaries and returns the merged dictionary
+def dict_merge(resource_dict, data_dict):
+    for key, val in data_dict.items():
+        if not resource_dict.get(key):
+            resource_dict[key] = val
+        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], collections.Mapping):
+            resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
+        elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
+            tmp_list1 = []
+            tmp_list2 = []
+            for index, value in enumerate(resource_dict[key]):
+                tmp_list1.append([index, value])
+            for index, value in enumerate(data_dict[key]):
+                tmp_list2.append([index, value])
+            output_dict = dict_merge(dict(tmp_list1), dict(tmp_list2))
+            resource_dict[key] = list(output_dict.values())
+        else:
+            resource_dict[key] = val
+
+    return resource_dict
 
 
 def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None):
@@ -173,9 +195,11 @@ def compare(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+
     # The first resource is True / Not Null and the second resource is False / Null
     if resource1 and not resource2:
-        logger.debug("resource1 and not resource2. ")
+        logger.debug("resource1 and not resource2. " + debug_resources)
         return False
 
     # Checks all keys in first dict against the second dict
@@ -183,7 +207,7 @@ def compare(first_resource, second_resource):
         if key not in resource2:
             if resource1[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug("OneViewModuleBase.MSG_DIFF_AT_KEY.format(key)")
+                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         # If both values are null, empty or False it will be considered equal.
         elif not resource1[key] and not resource2[key]:
@@ -191,15 +215,15 @@ def compare(first_resource, second_resource):
         elif isinstance(resource1[key], Mapping):
             # recursive call
             if not compare(resource1[key], resource2[key]):
-                logger.debug("OneViewModuleBase.MSG_DIFF_AT_KEY.format(key)")
+                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         elif isinstance(resource1[key], list):
             # change comparison function to compare_list
             if not compare_list(resource1[key], resource2[key]):
-                logger.debug("OneViewModuleBase.MSG_DIFF_AT_KEY.format(key)")
+                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         elif _standardize_value(resource1[key]) != _standardize_value(resource2[key]):
-            logger.debug("OneViewModuleBase.MSG_DIFF_AT_KEY.format(key)")
+            logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
             return False
 
     # Checks all keys in the second dict, looking for missing elements
@@ -207,7 +231,7 @@ def compare(first_resource, second_resource):
         if key not in resource1:
             if resource2[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug("OneViewModuleBase.MSG_DIFF_AT_KEY.format(key)")
+                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
 
     return True
@@ -226,13 +250,15 @@ def compare_list(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+
     # The second list is null / empty  / False
     if not resource2:
-        logger.debug("resource 2 is null. ")
+        logger.debug("resource 2 is null. " + debug_resources)
         return False
 
     if len(resource1) != len(resource2):
-        logger.debug("resources have different length. ")
+        logger.debug("resources have different length. " + debug_resources)
         return False
 
     resource1 = sorted(resource1, key=_str_sorted)
@@ -242,15 +268,15 @@ def compare_list(first_resource, second_resource):
         if isinstance(val, Mapping):
             # change comparison function to compare dictionaries
             if not compare(val, resource2[i]):
-                logger.debug("resources are different. ")
+                logger.debug("resources are different. " + debug_resources)
                 return False
         elif isinstance(val, list):
             # recursive call
             if not compare_list(val, resource2[i]):
-                logger.debug("lists are different. ")
+                logger.debug("lists are different. " + debug_resources)
                 return False
         elif _standardize_value(val) != _standardize_value(resource2[i]):
-            logger.debug("values are different. ")
+            logger.debug("values are different. " + debug_resources)
             return False
 
     # no differences found
@@ -352,7 +378,7 @@ class OneViewModule(object):
         """
         argument_spec = self._build_argument_spec(additional_arg_spec, validate_etag_support)
 
-        self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
+        self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
 
         self.resource_client = None
         self.current_resource = None
@@ -554,6 +580,86 @@ class OneViewModule(object):
             operation_data = dict(operation='replace', path='/scopeUris', value=scope_uris)
             updated_resource = self.current_resource.patch(**operation_data)
             state['ansible_facts'][fact_name] = updated_resource.data
+            state['changed'] = True
+            state['msg'] = self.MSG_UPDATED
+
+        return state
+
+    def check_resource_present(self, fact_name):
+
+        """
+        The following implementation will work for resource_present under check mode.
+        Generic implementation of the present state to be run under check mode for the OneView resources.
+
+        It checks if the resource needs to be created or updated.
+
+        :arg str fact_name: Name of the fact returned to the Ansible.
+        Usually checks if the resource will becreate or add.
+        :return: A dictionary with the expected arguments for the AnsibleModule.exit_json
+        """
+        changed = False
+
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
+        if not self.current_resource:
+            msg = self.MSG_CREATED
+            changed = True
+        else:
+            changed, msg = self.check_update_resource()
+        data = self.data
+        return dict(
+            msg=msg,
+            changed=changed,
+            ansible_facts={fact_name: data}
+        )
+
+    def check_update_resource(self):
+        """
+        The following implementation will work for update_resource under check mode.
+        It checks if the resource needs to be updated or not.
+        """
+
+        updated_data = self.current_resource.data.copy()
+        updated_data.update(self.data)
+        changed = False
+
+        if compare(self.current_resource.data, updated_data):
+            msg = self.MSG_ALREADY_PRESENT
+        else:
+            changed = True
+            msg = self.MSG_UPDATED
+        return (changed, msg)
+
+    def check_resource_absent(self, method='delete'):
+        """
+        The following implementation will work for resource_absent under check mode.
+        Generic implementation of the absent state for the OneView resources that to be run under check_mode.
+        It checks if the resource needs to be removed.
+        :return: A dictionary with the expected arguments for the AnsibleModule.exit_json
+        """
+        if self.current_resource:
+            return {"changed": True, "msg": self.MSG_DELETED}
+        else:
+            return {"changed": False, "msg": self.MSG_ALREADY_ABSENT}
+
+    def check_resource_scopes_set(self, state, fact_name, scope_uris):
+        """
+        The following implementation will work for resource_absent under check mode.
+        Generic implementation of the scopes update PATCH for the OneView resources.
+        It checks if the resource needs to be updated with the current scopes.
+        This method is meant to be run after ensuring the present state.
+        :arg dict state: Dict containing the data from the last state results in the resource.
+            It needs to have the 'msg', 'changed', and 'ansible_facts' entries.
+        :arg str fact_name: Name of the fact returned to the Ansible.
+        :arg list scope_uris: List with all the scope URIs to be added to the resource.
+        :return: A dictionary with the expected arguments for the AnsibleModule.exit_json
+        """
+        if scope_uris is None:
+            scope_uris = []
+
+        resource = state['ansible_facts'][fact_name]
+
+        if resource.get('scopeUris') is None or set(resource['scopeUris']) != set(scope_uris):
             state['changed'] = True
             state['msg'] = self.MSG_UPDATED
 
@@ -775,6 +881,7 @@ class SPKeys(object):
     ID = 'id'
     NAME = 'name'
     DEVICE_SLOT = 'deviceSlot'
+    CONNECTION_SETTINGS = 'connectionSettings'
     CONNECTIONS = 'connections'
     OS_DEPLOYMENT = 'osDeploymentSettings'
     OS_DEPLOYMENT_URI = 'osDeploymentPlanUri'
@@ -809,7 +916,7 @@ class SPKeys(object):
 class ServerProfileMerger(object):
     def merge_data(self, resource, data):
         merged_data = deepcopy(resource)
-        merged_data.update(data)
+        merged_data = dict_merge(merged_data, data)
 
         merged_data = self._merge_bios_and_boot(merged_data, resource, data)
         merged_data = self._merge_connections(merged_data, resource, data)
@@ -829,6 +936,15 @@ class ServerProfileMerger(object):
         return merged_data
 
     def _merge_connections(self, merged_data, resource, data):
+        # The below condition is added to handle connectionSettings in server profile json
+        if data.get(SPKeys.CONNECTION_SETTINGS) and SPKeys.CONNECTIONS in data.get(SPKeys.CONNECTION_SETTINGS):
+            existing_connections = resource[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS]
+            params_connections = data[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS]
+            merged_data[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS] = merge_list_by_key(existing_connections, params_connections, key=SPKeys.ID)
+
+            merged_data[SPKeys.CONNECTION_SETTINGS] = self._merge_connections_boot(merged_data[SPKeys.CONNECTION_SETTINGS], resource[
+                SPKeys.CONNECTION_SETTINGS])
+
         if self._should_merge(data, resource, key=SPKeys.CONNECTIONS):
             existing_connections = resource[SPKeys.CONNECTIONS]
             params_connections = data[SPKeys.CONNECTIONS]
@@ -892,8 +1008,6 @@ class ServerProfileMerger(object):
 
     def _merge_os_deployment_settings(self, merged_data, resource, data):
         if self._should_merge(data, resource, key=SPKeys.OS_DEPLOYMENT):
-            merged_data = self._merge_dict(merged_data, resource, data, key=SPKeys.OS_DEPLOYMENT)
-
             merged_data = self._merge_os_deployment_custom_attr(merged_data, resource, data)
         return merged_data
 
@@ -923,9 +1037,9 @@ class ServerProfileMerger(object):
         return merged_data
 
     def _merge_sas_logical_jbods(self, merged_data, resource, data):
-        if self._should_merge(data[SPKeys.LOCAL_STORAGE], resource[SPKeys.LOCAL_STORAGE], key=SPKeys.SAS_LOGICAL_JBODS):
+        if data.get(SPKeys.LOCAL_STORAGE) and SPKeys.SAS_LOGICAL_JBODS in data.get(SPKeys.LOCAL_STORAGE):
             existing_items = resource[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
-            provided_items = merged_data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
+            provided_items = data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
             merged_jbods = merge_list_by_key(existing_items, provided_items, key=SPKeys.ID, ignore_when_null=[SPKeys.SAS_LOGICAL_JBOD_URI])
             merged_data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS] = merged_jbods
         return merged_data
@@ -1062,7 +1176,8 @@ class ServerProfileReplaceNamesByUris(object):
         for connection in connections:
             if 'networkName' in connection:
                 name = connection.pop('networkName')
-                connection['networkUri'] = self._get_network_by_name(name)['uri']
+                if name is not None:
+                    connection['networkUri'] = self._get_network_by_name(name)['uri']
 
     def _replace_server_hardware_type_name_by_uri(self, data):
         self._replace_name_by_uri(data, 'serverHardwareTypeName', self.SERVER_HARDWARE_TYPE_NOT_FOUND,

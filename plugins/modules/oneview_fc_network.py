@@ -29,7 +29,7 @@ description:
     - Provides an interface to manage Fibre Channel Network resources. Can create, update, and delete.
 version_added: '2.4.0'
 requirements:
-    - "hpOneView >= 5.0.0"
+    - "hpeOneView >= 5.0.0"
 author: "Felipe Bulsoni (@fgbulsoni)"
 options:
     state:
@@ -38,65 +38,15 @@ options:
               C(present) will ensure data properties are compliant with OneView.
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
-        required: true
-        type: str
     data:
         description:
             - List with the Fibre Channel Network properties.
         required: true
-        type: dict
-    validate_etag:
-        description:
-            - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
-                for the resource matches the ETag provided in the data.
-        default: true
-        choices: []
-        type: bool
-    api_version:
-        description:
-            - List with the api_version.
-        required: false
-        type: int
-    hostname:
-        description:
-            - List with the hostname.
-        required: false
-        type: str
-    image_streamer_hostname:
-        description:
-            - List with the image_streamer_hostname.
-        required: false
-        type: str
-    password:
-        description:
-            - List with the password.
-        required: false
-        type: str
-    auth_login_domain:
-        description:
-            - List with the auth_login_domain.
-        required: false
-        type: str
-    username:
-        description:
-            - List with the username.
-        required: false
-        type: str
-    config:
-      description:
-        - Path to a .json configuration file containing the OneView client configuration.
-          The configuration file is optional. If the file path is not provided, the configuration will be loaded from
-          environment variables.
-      required: false
-      type: path
-notes:
-    - "A sample configuration file for the config parameter can be found at:
-       U(https://github.com/HewlettPackard/oneview-ansible/blob/master/examples/oneview_config-rename.json)"
-    - "Check how to use environment variables for configuration at:
-       U(https://github.com/HewlettPackard/oneview-ansible#environment-variables)"
-    - "Additional Playbooks for the HPE OneView Ansible modules can be found at:
-       U(https://github.com/HewlettPackard/oneview-ansible/tree/master/examples)"
-    '''
+
+extends_documentation_fragment:
+- oneview
+- oneview.validateetag
+'''
 
 EXAMPLES = '''
 - name: Ensure that the Fibre Channel Network is present using the default configuration
