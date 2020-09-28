@@ -1,3 +1,4 @@
 plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/oneview_storage_system_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/* validate-modules:missing-gplv3-license
