@@ -1,0 +1,83 @@
+- name: Gather facts about all Storage Systems
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=storage_systems
+
+- name: Gather paginated, filtered and sorted facts about Storage Systems
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+
+- debug: var=storage_systems
+
+- name: Gather facts about a Storage System by IP (storage_hostname)
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    storage_hostname: "{{ storage_system_ip }}"
+  delegate_to: localhost
+
+- debug: var=storage_systems
+
+- name: Gather facts about a Storage System by IP (hostname)
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    storage_hostname: "{{ storage_system_ip }}"
+  delegate_to: localhost
+
+- debug: var=storage_systems
+
+- name: Gather facts about a Storage System by name
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    name: "{{ storage_system_name }}"
+  delegate_to: localhost
+
+- debug: var=storage_systems
+
+- name: Gather facts about Storage System - Host Types
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    options:
+        - hostTypes
+  delegate_to: localhost
+
+- debug: var=storage_system_host_types
+
+- name: Gather facts about Storage Pools of a Storage System by name
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    name: "{{ storage_system_name }}"
+    options:
+         storagePools
+  delegate_to: localhost
+
+- debug: var=storage_system_pools
+
+- name: Gather queried facts about Storage System reachable ports
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    storage_hostname: "{{ storage_system_ip }}"
+    options:
+      - reachablePorts:
+          networks:
+              - /rest/fc-networks/507c4b12-2b30-42fb-9675-b9546a3a57c2
+    params:
+      sort: 'name:descending'
+
+- debug: var=storage_system_reachable_ports
+
+- name: Gather facts about the Storage System storage templates
+  oneview_storage_system_facts:
+    config: "{{ config }}"
+    storage_hostname: "{{ storage_system_ip }}"
+    options:
+      - templates
+    params:
+      sort: 'name:descending'
+
+- debug: var=storage_system_templates

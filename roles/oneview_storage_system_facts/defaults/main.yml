@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_storage_system_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_system_facts/files/oneview_config.json"
+storage_system_name: ThreePAR-1
+storage_system_ip: 172.18.11.12

@@ -1,15 +1,32 @@
 ---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version|length == 0
+  register: version
+
+- name: Print currentVersion if api version is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: contents.api_version|length == 0
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version|length != 0
+
 - name: Create a Fibre Channel Network
   oneview_fc_network:
-      config: "{{ config }}"
-      state: present
-      validate_etag: False
-      data:
-        name: "{{ network_name }}"
-        fabricType: 'FabricAttach'
-        linkStabilityTime: '30'
-        autoLoginRedistribution: true
-        type: "fc-networkV4"
+    config: "{{ config }}"
+    state: present
+    validate_etag: False
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+      type: "fc-networkV4"
   delegate_to: localhost
   register: fc_network_1
 
@@ -34,8 +51,8 @@
       fabricType: 'FabricAttach'
       linkStabilityTime: '30'
   delegate_to: localhost
-
-  # This feature is available only till OneView 3.10
+     
+# This feature is available only till OneView 3.10
 - name: Update the FC Network with two scopes
   oneview_fc_network:
     config: "{{ config }}"
@@ -43,8 +60,8 @@
     data:
       name: "{{ network_name }}"
       scopeUris: "{{ network_scope_uris }}"
+  when: currentVersion >= '300' or currentVersion <= '500'
   delegate_to: localhost
-  when: contents.api_version >= 300 and contents.api_version <= 500
 
 - name: Delete the Fibre Channel Network
   oneview_fc_network:
@@ -61,3 +78,13 @@
     data: "{{ fc_network_1.ansible_facts.fc_network }}"
   delegate_to: localhost
   register: deleted
+
+# This feature is available only from OneView 5.20
+- name: Delete Fibre Channel Networks in bulk
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: absent
+    data:
+      networkUris: "{{ networkUris_to_bulkdelete }}"
+  delegate_to: localhost
+  when: currentVersion >= '1600'
