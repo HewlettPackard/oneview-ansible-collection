@@ -42,12 +42,41 @@ options:
       type: str
     options:
       description:
-        - "List with options to gather additional facts about Storage Pools.
-          Options allowed:
-          C(reachableStoragePools) gets the list of reachable Storage pools based on the network param.
-          If the network param is not specified it gets all of them."
+        - List with options to gather additional facts about Storage Pools.
+      reachableStoragePools: []
       required: false
       type: list
+      elements: str
+    api_version:
+        description:
+            - List with the api_version.
+        required: false
+        type: int
+    hostname:
+        description:
+            - List with the hostname.
+        required: false
+        type: str
+    image_streamer_hostname:
+        description:
+            - List with the image_streamer_hostname.
+        required: false
+        type: str
+    password:
+        description:
+            - List with the password.
+        required: false
+        type: str
+    auth_login_domain:
+        description:
+            - List with the auth_login_domain.
+        required: false
+        type: str
+    username:
+        description:
+            - List with the username.
+        required: false
+        type: str
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -123,7 +152,7 @@ class StoragePoolFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
-            options=dict(required=False, type='list')
+            options=dict(required=False, type='list', reachableStoragePools=[])
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.storage_pools)
