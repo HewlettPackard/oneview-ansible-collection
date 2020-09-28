@@ -1,0 +1,37 @@
+- name: Gather facts about all Storage Pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=storage_pools
+
+- name: Gather paginated, filtered and sorted facts about Storage Pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: status='OK'
+
+- debug: var=storage_pools
+
+- name: Gather facts about a Storage Pool by name
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    name: "CPG_FC-AO"
+  delegate_to: localhost
+
+- name: Gather facts about reachable storage pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    options:
+      - reachableStoragePools:
+          networks: '{{ networks_query }}'
+          scope_uris: '{{ scope_uris }}'
+          scope_exclusions: '{{ scope_exclusions }}'
+    params:
+      filter: status='OK'
+  delegate_to: localhost
+
+- debug: var=storage_pools_reachable_storage_pools
