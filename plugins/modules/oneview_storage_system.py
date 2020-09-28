@@ -40,10 +40,12 @@ options:
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
         required: true
+        type: str
     data:
         description:
             - List with Storage System properties and its associated states.
         required: true
+        type: dict
     api_version:
         description:
             - List with the api_version.

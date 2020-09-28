@@ -36,9 +36,11 @@ options:
     storage_hostname:
       description:
         - Storage System IP or hostname.
+      type: str
     name:
       description:
         - Storage System name.
+      type: str
     options:
       description:
         - "List with options to gather additional facts about a Storage System and related resources.
@@ -50,6 +52,7 @@ options:
           C(templates) gets a list of storage templates belonging to the storage system."
         - "To gather facts about C(storagePools), C(reachablePorts), and C(templates) it is required to inform
             either the argument C(name), C(ip_hostname), or C(hostname). Otherwise, this option will be ignored."
+      type: list
     api_version:
         description:
             - List with the api_version.
@@ -84,6 +87,7 @@ options:
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
+- hpe.oneview.oneview.validateetag
 '''
 
 EXAMPLES = '''
