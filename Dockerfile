@@ -25,7 +25,7 @@ RUN echo localhost ansible_python_interpreter=python3 ansible_connection=local >
 
 # packages to run tests
 RUN cd /root/oneview-ansible/
-RUN pip install -r test_requirements.txt
+RUN pip install -r /root/oneview-ansible/tests/requirements.txt
 
 ENV ANSIBLE_LIBRARY=/root/oneview-ansible/library
 ENV ANSIBLE_MODULE_UTILS=/root/oneview-ansible/library/module_utils/
