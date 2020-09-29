@@ -10,3 +10,5 @@ plugins/modules/oneview_storage_pool.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_interconnect.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_interconnect_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_interconnect_facts.py validate-modules:parameter-list-no-elements
