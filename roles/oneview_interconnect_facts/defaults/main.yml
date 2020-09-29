@@ -1,6 +1,6 @@
 ---
 # defaults file for oneview_interconnect_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fc_network/files/oneview_config.json"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_interconnect_facts/files/oneview_config.json"
 interconnect_name: 'Enc-Updated, interconnect 2' # provide your interconnect name here
 port_name: 'd3' # provide your interconnect port_name
 subport_number: 1 # provide a subport_number

@@ -58,6 +58,7 @@ options:
             'reset_port_protection',
             'reconfigured'
         ]
+        required: true
         type: str
     name:
       description:
