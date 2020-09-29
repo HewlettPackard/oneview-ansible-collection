@@ -126,12 +126,12 @@
   delegate_to: localhost
 
 - name: Delete the volume previously created with a Snapshot Pool
-    oneview_volume:
-      config: '{{ config }}'
-      state: absent
-      data:
-        name: 'Volume with Snapshot Pool'
-    delegate_to: localhost
+  oneview_volume:
+    config: '{{ config }}'
+    state: absent
+    data:
+      name: 'Volume with Snapshot Pool'
+  delegate_to: localhost
 
 - name: Delete the volume previously added using the WWN of the volume
   oneview_volume:
