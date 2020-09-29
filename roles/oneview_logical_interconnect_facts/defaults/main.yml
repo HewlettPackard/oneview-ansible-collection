@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_logical_interconnect_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_interconnect_facts/files/oneview_config.json"
+name: "SYN03_LE-SYN03_LIG" # change for the desired logical interconnect name
