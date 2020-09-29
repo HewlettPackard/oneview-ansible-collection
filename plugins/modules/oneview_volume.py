@@ -49,8 +49,9 @@ options:
               non-idempotent.
               C(snapshot_created) creates a snapshot for the volume specified. This operation is non-idempotent.
               C(snapshot_deleted) deletes a snapshot from OneView and the storage system.
-        choices: ['present', 'absent', 'repaired', 'snapshot_created', 'snapshot_deleted']
+        choices: ['present', 'absent', 'managed', 'repaired', 'snapshot_created', 'snapshot_deleted']
         type: str
+        required: true
     data:
       description:
         - Volume or snapshot data.
@@ -61,6 +62,12 @@ options:
         - If set to True, when the status is C(absent) and the resource exists, it will be removed only from OneView.
       default: False
       type: bool
+    suppress_device_updates:
+      description:
+        - To delete volume only from the appliance then request must contain the 'suppressDeviceUpdates' parameter set to true.
+      default: False
+      type: bool
+      required: false
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.validateetag
@@ -210,7 +217,7 @@ storage_volume:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound,
-OneViewModuleException, compare)
+                    OneViewModuleException, compare)
 
 
 class VolumeModule(OneViewModule):
