@@ -263,7 +263,7 @@ class InterconnectFactsModule(OneViewModule):
             ansible_facts=facts
         )
 
-    def extract_id_from_uri(id_or_uri):
+    def extract_id_from_uri(self, id_or_uri):
         """
         Extract ID from the end of the URI
 
