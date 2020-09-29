@@ -103,7 +103,7 @@ LOGICAL_INTERCONNECT = dict(
 ALL_INTERCONNECTS = [LOGICAL_INTERCONNECT]
 
 
-def create_params(options=[]):
+def create_params(options=None):
     return dict(config='config.json', name=LOGICAL_INTERCONNECT_NAME, options=options)
 
 
