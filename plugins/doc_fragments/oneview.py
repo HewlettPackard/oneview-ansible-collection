@@ -63,3 +63,37 @@ options:
         required: false
         type: dict
 '''
+
+    PARAMS = '''
+options:
+    api_version:
+        description:
+            - List with the api_version.
+        required: false
+        type: int
+    hostname:
+        description:
+            - List with the hostname.
+        required: false
+        type: str
+    image_streamer_hostname:
+        description:
+            - List with the image_streamer_hostname.
+        required: false
+        type: str
+    password:
+        description:
+            - List with the password.
+        required: false
+        type: str
+    auth_login_domain:
+        description:
+            - List with the auth_login_domain.
+        required: false
+        type: str
+    username:
+        description:
+            - List with the username.
+        required: false
+        type: str
+'''
