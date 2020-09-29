@@ -58,18 +58,22 @@ options:
             'reset_port_protection',
             'reconfigured'
         ]
+        type: str
     name:
       description:
         - Interconnect name.
       required: false
+      type: str
     ip:
       description:
         - Interconnect IP address.
       required: false
+      type: str
     ports:
       description:
         - List with ports to update. This option should be used together with C(update_ports) state.
       required: false
+      type: list
 
 extends_documentation_fragment:
 - hpe.oneview.oneview

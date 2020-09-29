@@ -39,6 +39,7 @@ options:
       description:
         - Interconnect name.
       required: false
+      type: str
     options:
       description:
         - "List with options to gather additional facts about Interconnect.
@@ -53,6 +54,7 @@ options:
         - "To gather additional facts it is required inform the Interconnect name. Otherwise, these options will be
           ignored."
       required: false
+      type: list
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
