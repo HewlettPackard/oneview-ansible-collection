@@ -217,7 +217,7 @@ storage_volume:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound,
-                    OneViewModuleException, compare)
+                                                                          OneViewModuleException, compare)
 
 
 class VolumeModule(OneViewModule):

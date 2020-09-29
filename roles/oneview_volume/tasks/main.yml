@@ -2,7 +2,7 @@
 - name: Gather facts about a Storage Pool by name
   oneview_storage_pool_facts:
     config: "{{ config }}"
-    name: "CPG_FC-AO"
+    name: "{{ storage_pool_name }}"
   delegate_to: localhost
 
 - debug: var=storage_pools
@@ -127,11 +127,11 @@
 
 - name: Delete the volume previously created with a Snapshot Pool
     oneview_volume:
-    config: '{{ config }}'
-    state: absent
-    data:
-      name: 'Volume with Snapshot Pool'
-  delegate_to: localhost
+      config: '{{ config }}'
+      state: absent
+      data:
+        name: 'Volume with Snapshot Pool'
+    delegate_to: localhost
 
 - name: Delete the volume previously added using the WWN of the volume
   oneview_volume:
