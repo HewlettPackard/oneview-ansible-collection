@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_storage_pool_facts
+  role_name: oneview_interconnect_type_facts
   author: Chebrolu Bala Sai Harika
-  description: Ansible role to manage OneView Storage Pool resources.
+  description: Ansible role to manage OneView InterconnectType resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

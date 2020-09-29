@@ -1,0 +1,102 @@
+- name: Fail if interconnect_name is undefined
+  fail: msg="To run this example you must define the vars first"
+  when: not interconnect_name
+
+- name: Gather facts about all interconnects
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: msg="{{interconnects | map(attribute='name') | list }}"
+
+- name: Gather paginated, filtered and sorted facts about Interconnects
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 5
+      sort: 'name:descending'
+      filter: "enclosureName='0000A66101'"
+
+- debug: var=interconnects
+
+- name: Gather facts about the interconnect that matches the specified name
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+  delegate_to: localhost
+
+- debug: var=interconnects
+
+- name: Gather facts about the interconnect that matches the specified name and its name servers
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - nameServers
+  delegate_to: localhost
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_name_servers
+
+- name: Gather facts about statistics for the Interconnect that matches the specified name
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - statistics
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_statistics
+
+- name: Get the port statistics for the specified interconnect name and port name
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - portStatistics: "{{ port_name }}"
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_port_statistics
+
+- name: Get the subport statistics
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - subPortStatistics:
+            portName: "{{ port_name }}"
+            subportNumber: "{{ subport_number }}"
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_subport_statistics
+
+- name: Gather facts about all the Interconnect ports
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - ports
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_ports
+
+- name: Gather facts about an Interconnect port
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - port: "{{ port_name }}"
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_port
+
+- name: Gather facts about the small-form pluggable modules
+  oneview_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ interconnect_name }}"
+    options:
+        - pluggableModuleInformation
+
+- debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
+- debug: var=interconnect_pluggable_module_information
