@@ -1,0 +1,59 @@
+---
+- name: Gather facts about all Volumes
+  oneview_volume_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=storage_volumes
+
+- name: Gather paginated, filtered and sorted facts about Volumes
+  oneview_volume_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 2
+      sort: 'name:descending'
+      filter: "provisioningType='Thin'"
+- debug: var=storage_volumes
+
+
+- name: "Gather facts about all Volumes, the attachable volumes managed by the appliance and the extra managed
+          storage volume paths"
+  oneview_volume_facts:
+    config: "{{ config }}"
+    options:
+        - attachableVolumes:        # optional
+            connections:
+              - networkUri: '/rest/fc-networks/f61d2299-c6dd-4f81-bcd2-1f99dbae118a'
+                proxyName: '20:19:50:EB:1A:0F:0E:B6'
+                initiatorName: '10:00:62:01:F8:70:00:0E'
+        - extraManagedVolumePaths  # optional
+  delegate_to: localhost
+
+- debug: var=storage_volumes
+- debug: var=attachable_volumes
+- debug: var=extra_managed_volume_paths
+
+
+- name: Gather facts about a Volume by name with a list of all snapshots taken
+  oneview_volume_facts:
+    config: "{{ config }}"
+    name: "{{ volume_name }}"
+    options:
+        - snapshots  # optional
+  delegate_to: localhost
+
+- debug: var=storage_volumes
+- debug: var=snapshots
+
+- name: "Gather facts about a Volume with one specific snapshot taken"
+  oneview_volume_facts:
+    config: "{{ config }}"
+    name: "{{ volume_name }}"
+    options:
+        - snapshots:  # optional
+            name: "{{ snapshot_name }}"
+  delegate_to: localhost
+
+- debug: var=storage_volumes
+- debug: var=snapshots

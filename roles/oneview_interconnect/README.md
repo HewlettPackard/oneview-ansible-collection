@@ -6,7 +6,7 @@ Manage the OneView Interconnect resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.0.0
+  * hpeOneView >= 5.8.0
 
 #### Options
 

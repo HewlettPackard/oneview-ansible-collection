@@ -1,0 +1,8 @@
+---
+# defaults file for oneview_volume
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_volume/files/oneview_config.json"
+contents: "{{lookup('file', config)}}"
+storage_pool_uri: '/rest/storage-pools/4EF694D4-FB48-4209-8790-AB200070738C' # set a Storage Pool URI to run this example
+storage_system_uri: '/rest/storage-systems/TXQ1000307' # set a Storage System URI to run this example
+template_uri: '/rest/storage-volume-templates/eb95244f-967b-4e38-9924-ab50011116a8'
+storage_pool_name: "CPG_FC-AO"
