@@ -73,7 +73,7 @@ def replacement(path, search_pattern, replace_string, search_string):
                     f = open(path, 'w')                                  # open the file with the WRITE option
                     f.write(strg)                                        # write the the changes to the file
                     f.close()                                            # Closing the file
-            except:
+            finally:
                 pass
 
 
