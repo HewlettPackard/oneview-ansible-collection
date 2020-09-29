@@ -64,7 +64,7 @@ options:
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.validateetag
-- hpe.oneview.params
+- hpe.oneview.oneview.params
 '''
 
 EXAMPLES = '''
@@ -209,7 +209,8 @@ storage_volume:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound, OneViewModuleException, compare
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound, 
+                                                                         OneViewModuleException, compare
 
 
 class VolumeModule(OneViewModule):
