@@ -10,17 +10,17 @@
 # hpOneView to hpeOneView, and any reference to HPOneView to HPEOneView.
 #
 ##############################################################################
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,15 +28,17 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-# 
+#
 ##############################################################################
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 import re
 import os
 import sys
 
 self_name = sys.argv[0]
-path = sys.argv[1] # Fetch the SDK repository path from cmd line
+path = sys.argv[1]# Fetch the SDK repository path from cmd line
 search_pattern1 = re.compile('hpOneView')
 search_string1 = 'hpOneView'
 replace_string1 = 'hpeOneView'
@@ -51,7 +53,7 @@ destination = os.path.join(path, replace_string1)
 if os.path.isdir(source):
     os.rename(source, destination)
 
-print("\n\t>>> STARTING THE DE-BRANDING TASK...<<< \n") 
+print("\n\t>>> STARTING THE DE-BRANDING TASK...<<< \n")
 
 
 # Replacing the old module name with new name
@@ -62,7 +64,7 @@ def replacement(path, search_pattern, replace_string, search_string):
 
             # ignore unecessary files
             if fname.endswith('.pyc') or fname.endswith('.png') or fname.endswith('.gz') or fname.endswith('doctree') \
-                or '.git' in dirpath or '.tox' in dirpath or search_string1 in dirpath or self_name == fname:
+                    or '.git' in dirpath or '.tox' in dirpath or search_string1 in dirpath or self_name == fname:
                 continue
             try:
                 strg = open(path).read()                                 # Open the files for read only
