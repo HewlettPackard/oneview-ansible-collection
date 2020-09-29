@@ -60,8 +60,9 @@ options:
         choices: ['compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',
                   'forwarding_information_base_generated', 'qos_aggregated_configuration_updated',
                   'snmp_configuration_updated', 'port_monitor_updated', 'configuration_updated', 'firmware_installed',
-                  'telemetry_configuration_updated']
+                  'telemetry_configuration_updated', 'scopes_updated']
         type: str
+        required: true
     data:
         description:
             - List with the options.
@@ -305,7 +306,7 @@ class LogicalInterconnectModule(OneViewModule):
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec,
-                                                        validate_etag_support=True)
+                         validate_etag_support=True)
         self.set_resource_object(self.oneview_client.logical_interconnects)
 
     def execute_module(self):
