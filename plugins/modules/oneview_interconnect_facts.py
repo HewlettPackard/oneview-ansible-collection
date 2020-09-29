@@ -233,7 +233,6 @@ interconnect_pluggable_module_information:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-from hpeOneView.resources.resource import extract_id_from_uri
 
 
 class InterconnectFactsModule(OneViewModule):
@@ -263,6 +262,21 @@ class InterconnectFactsModule(OneViewModule):
             changed=False,
             ansible_facts=facts
         )
+
+    def extract_id_from_uri(id_or_uri):
+        """
+        Extract ID from the end of the URI
+
+        Args:
+            id_or_uri: ID or URI of the OneView resources.
+
+        Returns:
+            str: The string founded after the last "/"
+        """
+        if '/' in id_or_uri:
+            return id_or_uri[id_or_uri.rindex('/') + 1:]
+        else:
+            return id_or_uri
 
     def __get_options(self, facts):
         if self.options.get('nameServers'):
