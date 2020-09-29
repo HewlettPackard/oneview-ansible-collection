@@ -61,7 +61,7 @@ options:
           C(ethernet_settings) gets the Ethernet interconnect settings for the Logical Interconnect.
         - These options are valid just when a C(name) is provided. Otherwise it will be ignored."
       required: false
-      type: dict
+      type: list
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
