@@ -33,7 +33,7 @@ description:
 version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
-    - "hpeOneView >= 5.0.0"
+    - "hpeOneView >= 5.8.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
     state:
@@ -210,7 +210,7 @@ storage_volume:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound,
-                OneViewModuleException, compare
+OneViewModuleException, compare
 
 
 class VolumeModule(OneViewModule):

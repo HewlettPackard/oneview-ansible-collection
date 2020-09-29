@@ -10,7 +10,7 @@
 - name: Gather facts about a Storage Volume Template by name
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
-      name: "{{ volume_template_name }}"
+    name: "{{ volume_template_name }}"
   delegate_to: localhost
 
 - debug: var=storage_volume_templates    

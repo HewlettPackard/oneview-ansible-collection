@@ -33,7 +33,7 @@ description:
       device reset, reset port protection, and update the interconnect ports.
 requirements:
     - "python >= 2.7.9"
-    - "hpeOneView >= 5.0.0"
+    - "hpeOneView >= 5.8.0"
 author: "Bruno Souza (@bsouza)"
 options:
     state:

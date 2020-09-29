@@ -52,7 +52,7 @@
     name: "{{ volume_name }}"
     options:
         - snapshots:  # optional
-            name : "{{ snapshot_name }}"
+            name: "{{ snapshot_name }}"
   delegate_to: localhost
 
 - debug: var=storage_volumes
