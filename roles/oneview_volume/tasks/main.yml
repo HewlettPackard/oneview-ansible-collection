@@ -60,7 +60,7 @@
     name: "{{ storage_system_name }}"
   delegate_to: localhost
 
-    - debug: var=storage_systems
+- debug: var=storage_systems
 
 # Supported only with API version 300 and below.
 - name: Add a volume for management by the appliance using the WWN of the volume
