@@ -3,7 +3,7 @@
 
 # Ansible Modules for HPE OneView
 
-Modules to manage HPE OneView using Ansible playbooks.
+Modules to manage HPE OneView using Ansible collection framework.
 
 ## Requirements
 
@@ -15,10 +15,6 @@ Modules to manage HPE OneView using Ansible playbooks.
 ```bash
 ansible-galaxy collection install hpe.oneview
 ```
-
-## Setup
-
-To run the Ansible modules provided in this project, you may run a containerized version or perform a full installation. The containerized version of the `oneview-ansible` modules is available in the [Docker Store](https://store.docker.com/community/images/hewlettpackardenterprise/oneview-ansible-debian). There is also a [how-to guide](https://github.com/HewlettPackard/oneview-ansible-samples/blob/master/oneview-ansible-in-container/oneview-ansible-in-container.md) with instructions on how to use the container.
 
 To perform a full installation, you should execute the following steps:
 
@@ -62,7 +58,7 @@ example:
     "authLoginDomain": "",
     "password": "secret123"
   },
-  "api_version": 200
+  "api_version": 2000
 }
 ```
 
@@ -97,7 +93,7 @@ export ONEVIEWSDK_USERNAME='Administrator'
 export ONEVIEWSDK_PASSWORD='secret123'
 
 # Optional
-export ONEVIEWSDK_API_VERSION='200'  # default value is 300
+export ONEVIEWSDK_API_VERSION='200'
 export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
 export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 ```
@@ -112,9 +108,9 @@ In this case, you shouldn't provide the `config` argument. For example:
     name: "FCoE Network Test"
 ```
 
-Once you have defined the environment variables, you can run the plays.
+Once you have defined the environment variables, you can run the roles.
 
-#### Parameters in the playbook
+#### Parameters in roles
 
 The third way to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
 
@@ -126,7 +122,7 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2000
     state: present
     data:
       name: "{{ network_name }}"
@@ -141,32 +137,32 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### 5. Setting your OneView version
 
-The Ansible modules for HPE OneView support the API endpoints for HPE OneView 2.0, 3.0, 3.10, 4.0 and 4.10.
+The Ansible modules for HPE OneView support the API endpoints for HPE OneView 4.00, 4.10, 4.20, 5.00, 5.20, 5.30, 5.40
 
-The current `default` HPE OneView version used by the modules is `3.00`, API `300`.
+The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 1200
+"api_version": 2000
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='1200'
+export ONEVIEWSDK_API_VERSION='2000'
 ```
 
-If this property is not specified, it will fall back to the ```300``` default value.
+If this property is not specified, it will fall back to efault value.
 
 The API list is as follows:
 
-- HPE OneView 2.0 API version: `200`
-- HPE OneView 3.0 API version: `300`
-- HPE OneView 3.10 API version: `500`
-- HPE OneView 4.0 API version: `600`
+- HPE OneView 4.00 API version: `600`
 - HPE OneView 4.10 API version: `800`
 - HPE OneView 4.20 API version: `1000`
 - HPE OneView 5.00 API version: `1200`
+- HPE OneView 5.20 API version: `1600`
+- HPE OneView 5.30 API version: `1800`
+- HPE OneView 5.40 API version: `2000`
 
 ### 6. HPE Synergy Image Streamer
 
@@ -189,9 +185,7 @@ You can find sample playbooks in the [examples](https://github.com/HewlettPackar
 
 ## License
 
-Some portions of this collection are licensed under [GNU General Public License, Version 3.0](https://opensource.org/licenses/GPL-3.0), and other portions of this collection are licensed under [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0).
-
-See individual files for applicable licenses.
+This project is licensed under the Apache 2.0 license. Please see the [LICENSE](LICENSE) for more information.
 
 ## Contributing and feature requests
 
@@ -203,10 +197,10 @@ This feedback is crucial for us to deliver a useful product. Do not assume that 
 ## Features
 
 The HPE.Oneview collection includes
-[roles](https://github.com/chebroluharika/hpe.oneview/tree/master/roles/),
-[modules](https://github.com/chebroluharika/hpe.oneview/tree/master/plugins/modules),
-[sample playbooks](https://github.com/chebroluharika/hpe.oneview/tree/master/playbooks),
-[module_utils](https://github.com/chebroluharika/hpe.oneview/tree/master/plugins/module_utils)
+[roles](https://github.com/HewlettPackard/oneview-ansible-collection/tree/master/roles/),
+[modules](https://github.com/HewlettPackard/oneview-ansible-collection/tree/master/plugins/modules),
+[sample playbooks](https://github.com/HewlettPackard/oneview-ansible-collection/tree/master/playbooks),
+[module_utils](https://github.com/HewlettPackard/oneview-ansible-collection/tree/master/plugins/module_utils)
 
 
 ## Copyright
