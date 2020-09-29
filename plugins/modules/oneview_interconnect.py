@@ -196,21 +196,6 @@ class InterconnectModule(OneViewModule):
             ansible_facts=dict(interconnect=resource)
         )
 
-    def extract_id_from_uri(id_or_uri):
-        """
-        Extract ID from the end of the URI
-
-        Args:
-            id_or_uri: ID or URI of the OneView resources.
-
-        Returns:
-            str: The string founded after the last "/"
-        """
-        if '/' in id_or_uri:
-            return id_or_uri[id_or_uri.rindex('/') + 1:]
-        else:
-            return id_or_uri
-
     def __find_interconnect(self):
         interconnect_ip = self.module.params['ip']
         if not interconnect_ip and not self.module.params["name"]:

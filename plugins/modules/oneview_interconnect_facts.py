@@ -304,7 +304,7 @@ class InterconnectFactsModule(OneViewModule):
 
         if self.options.get('port'):
             port_name = self.options.get('port')
-            port_id = "{}:{}".format(extract_id_from_uri(self.current_resource.data['uri']), port_name)
+            port_id = "{}:{}".format(self.extract_id_from_uri(self.current_resource.data['uri']), port_name)
             port = self.current_resource.get_port(port_id)
             facts['interconnect_port'] = port
 
