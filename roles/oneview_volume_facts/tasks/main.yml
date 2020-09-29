@@ -46,14 +46,13 @@
 - debug: var=storage_volumes
 - debug: var=snapshots
 
-
 - name: "Gather facts about a Volume with one specific snapshot taken"
   oneview_volume_facts:
     config: "{{ config }}"
-    name : "{{ volume_name }}"
+    name: "{{ volume_name }}"
     options:
         - snapshots:  # optional
-                name : "{{ snapshot_name }}"
+            name : "{{ snapshot_name }}"
   delegate_to: localhost
 
 - debug: var=storage_volumes

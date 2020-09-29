@@ -142,7 +142,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class VolumeFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(name=dict(type='str'), options=dict(type='list'), params=dict(type='dict'))
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.volumes)
 
     def execute_module(self):
@@ -169,7 +169,7 @@ class VolumeFactsModule(OneViewModule):
                 facts['extra_managed_volume_paths'] = extra_managed_volume_paths
             if self.options.get('attachableVolumes'):
                 query_params = self.options['attachableVolumes']
-                query_params = {} if type(query_params) is not dict else query_params
+                query_params = {} if isinstance(query_params) is not dict else query_params
                 if 'connections' in query_params:
                     query_params['connections'] = str(query_params['connections'])
                 attachable_volumes = self.resource_client.get_attachable_volumes(**query_params)
