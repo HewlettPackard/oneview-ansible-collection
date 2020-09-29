@@ -38,7 +38,7 @@ import os
 import sys
 
 self_name = sys.argv[0]
-path = sys.argv[1]# Fetch the SDK repository path from cmd line
+path = sys.argv[1]  # Fetch the SDK repository path from cmd line
 search_pattern1 = re.compile('hpOneView')
 search_string1 = 'hpOneView'
 replace_string1 = 'hpeOneView'
@@ -70,7 +70,7 @@ def replacement(path, search_pattern, replace_string, search_string):
                 strg = open(path).read()                                 # Open the files for read only
                 if re.search(search_pattern, strg):
                     strg_count = strg.count(search_string)
-                    print("Found '{}' {} times in '{}'".format(search_string, strg_count, path))
+                    print("Found '{1}' {2} times in '{3}'".format(search_string, strg_count, path))
                     strg = strg.replace(search_string, replace_string)   # Create the replacement condition
                     f = open(path, 'w')                                  # open the file with the WRITE option
                     f.write(strg)                                        # write the the changes to the file
