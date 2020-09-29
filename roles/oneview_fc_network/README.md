@@ -5,7 +5,7 @@ Manage OneView Fibre Channel Network resources.
  Provides an interface to manage Fibre Channel Network resources. Can create, update, and delete.
 
 #### Requirements (on the host that executes the module)
-  * hpOneView >= 5.0.0
+  * hpeOneView >= 5.0.0
 
 #### Options
 

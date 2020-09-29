@@ -7,7 +7,7 @@
  - **OneView Appliance Version:** [Version of the OneView appliance you're interacting with]
  - **OneView Client API Version:** [API version listed in your configuration file or dictionary]
  - **Python Version:** [Version of Python in your environment]
- - **python-hpOneView SDK Version:** [Version of the python-hpOneView SDK in your environment]
+ - **python-hpeOneView SDK Version:** [Version of the python-hpeOneView SDK in your environment]
  - **Platform:** [OS distribution and release version]
 
 ### Steps to Reproduce
