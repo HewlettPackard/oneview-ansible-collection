@@ -14,5 +14,4 @@ plugins/modules/oneview_interconnect_facts.py validate-modules:missing-gplv3-lic
 plugins/modules/oneview_interconnect_facts.py pylint:ansible-format-automatic-specification
 plugins/modules/oneview_interconnect.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_interconnect_facts.py validate-modules:parameter-list-no-elements
-plugins/modules/oneview_interconnect.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_type_facts.py validate-modules:missing-gplv3-license
