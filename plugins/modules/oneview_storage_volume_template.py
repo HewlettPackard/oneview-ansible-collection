@@ -47,7 +47,7 @@ options:
         description:
             - List with Storage Volume Template properties and its associated states.
         required: true
-        type: str
+        type: dict
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.validateetag

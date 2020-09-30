@@ -39,7 +39,6 @@ options:
       description:
         - Indicates the desired state for the Storage Volume Attachment
           C(extra_presentations_removed) will remove extra presentations from a specified server profile.
-      choices: ['extra_presentations_removed']
       required: true
       type: str
     server_profile:
@@ -95,7 +94,7 @@ class StorageVolumeAttachmentModule(OneViewModule):
 
     def __init__(self):
         argument_spec = {
-            "state": {"required": True, "type": 'str', choices=['extra_presentations_removed']},
+            "state": {"required": True, "type": 'str'},
             "server_profile": {"required": True, "type": 'str'},
         }
 

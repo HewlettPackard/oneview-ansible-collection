@@ -67,7 +67,7 @@
 - name: Gather facts about volume attachment paths
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
-      erverProfileName: "{{ server_profile_name }}"
+    serverProfileName: "{{ server_profile_name }}"
     storageVolumeName: "{{ storage_volume_name }}"
     options:
       - paths
