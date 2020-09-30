@@ -54,9 +54,9 @@ class OneViewBaseTest(object):
             # Load scenarios from module examples (Also checks if it is a valid yaml)
             self.EXAMPLES = yaml.load(testing_module.EXAMPLES, yaml.SafeLoader)
 
-        except yaml.scanner.ScannerError:
+        except yaml.scanner.ScannerError as e:
             message = "Something went wrong while parsing yaml from {}.EXAMPLES".format(self.testing_class.__module__)
-            raise Exception(message)
+            raise Exception(message) from e
         return testing_module
 
     def underscore(self, word):
