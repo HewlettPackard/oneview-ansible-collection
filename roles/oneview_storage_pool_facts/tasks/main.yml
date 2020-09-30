@@ -1,3 +1,4 @@
+---
 - name: Gather facts about all Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
