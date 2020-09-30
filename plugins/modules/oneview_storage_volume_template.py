@@ -42,7 +42,7 @@ options:
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
         required: true
-        type: dict
+        type: str
     data:
         description:
             - List with Storage Volume Template properties and its associated states.
