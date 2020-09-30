@@ -56,7 +56,7 @@ class OneViewBaseTest(object):
 
         except yaml.scanner.ScannerError:
             message = "Something went wrong while parsing yaml from {}.EXAMPLES".format(self.testing_class.__module__)
-            raise Exception(message) from None
+            raise Exception(message)
         return testing_module
 
     def underscore(self, word):
