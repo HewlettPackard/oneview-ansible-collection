@@ -42,7 +42,7 @@ options:
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
         required: true
-        type: str
+        type: dict
     data:
         description:
             - List with Storage Volume Template properties and its associated states.
@@ -89,17 +89,17 @@ storage_volume_template:
     type: dict
 '''
 
-import collections
+from ansible.module_utils.common._collections_compat import Mapping
 
 from copy import deepcopy
-from six import iteritems
+from ansible.module_utils.six import iteritems
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare
 
 
 def _update_dict_with_depth(ov_resource, user_resource):
     for key, value in iteritems(user_resource):
-        if isinstance(value, collections.Mapping):
+        if isinstance(value, Mapping):
             ov_resource[key] = _update_dict_with_depth(ov_resource.get(key, {}), value)
         else:
             ov_resource[key] = user_resource[key]

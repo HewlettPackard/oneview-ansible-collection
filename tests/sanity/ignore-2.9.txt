@@ -22,3 +22,9 @@ plugins/modules/oneview_logical_interconnect_facts.py validate-modules:parameter
 plugins/modules/oneview_volume.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_volume_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_volume_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_volume_template_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_volume_attachment_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_volume_template.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_volume_attachment.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_volume_template_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_volume_attachment_facts.py validate-modules:parameter-list-no-elements

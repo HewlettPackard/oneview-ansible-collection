@@ -32,7 +32,7 @@ description:
       Attachment it is required to inform the option I(storageVolumeAttachmentUri). It is also possible to retrieve a
       specific Storage Volume Attachment by the Server Profile and the Volume. For this option, it is required to inform
       the option I(serverProfileName) and the param I(storageVolumeName) or I(storageVolumeUri)."
-version_added: "2.3"
+version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.0.0"

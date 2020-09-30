@@ -104,16 +104,16 @@ from oneview_fc_network_facts import FcNetworkFactsModule
 # from oneview_id_pools_ipv4_subnet_facts import IdPoolsIpv4SubnetFactsModule
 # from oneview_id_pools_ipv4_range import IdPoolsIpv4RangeModule
 # from oneview_id_pools_ipv4_range_facts import IdPoolsIpv4RangeFactsModule
-# from oneview_interconnect import InterconnectModule
-# from oneview_interconnect_facts import InterconnectFactsModule
+from oneview_interconnect import InterconnectModule
+from oneview_interconnect_facts import InterconnectFactsModule
 # from oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
 # from oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from oneview_internal_link_set_facts import InternalLinkSetFactsModule
 # from oneview_logical_downlinks_facts import LogicalDownlinksFactsModule
 # from oneview_logical_enclosure import LogicalEnclosureModule
 # from oneview_logical_enclosure_facts import LogicalEnclosureFactsModule
-# from oneview_logical_interconnect import LogicalInterconnectModule
-# from oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
+from oneview_logical_interconnect import LogicalInterconnectModule
+from oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
 # from oneview_logical_interconnect_group import LogicalInterconnectGroupModule
 # from oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
 # from oneview_logical_switch import LogicalSwitchModule
@@ -153,14 +153,14 @@ from oneview_fc_network_facts import FcNetworkFactsModule
 # from oneview_server_profile_facts import ServerProfileFactsModule
 # from oneview_server_profile_template import ServerProfileTemplateModule
 # from oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
-# from oneview_storage_pool import StoragePoolModule
-# from oneview_storage_pool_facts import StoragePoolFactsModule
-# from oneview_storage_system import StorageSystemModule
-# from oneview_storage_system_facts import StorageSystemFactsModule
-# from oneview_storage_volume_attachment import StorageVolumeAttachmentModule
-# from oneview_storage_volume_attachment_facts import StorageVolumeAttachmentFactsModule
-# from oneview_storage_volume_template import StorageVolumeTemplateModule
-# from oneview_storage_volume_template_facts import StorageVolumeTemplateFactsModule
+from oneview_storage_pool import StoragePoolModule
+from oneview_storage_pool_facts import StoragePoolFactsModule
+from oneview_storage_system import StorageSystemModule
+from oneview_storage_system_facts import StorageSystemFactsModule
+from oneview_storage_volume_attachment import StorageVolumeAttachmentModule
+from oneview_storage_volume_attachment_facts import StorageVolumeAttachmentFactsModule
+from oneview_storage_volume_template import StorageVolumeTemplateModule
+from oneview_storage_volume_template_facts import StorageVolumeTemplateFactsModule
 # from oneview_switch import SwitchModule
 # from oneview_switch_facts import SwitchFactsModule
 # from oneview_switch_type_facts import SwitchTypeFactsModule
@@ -171,6 +171,6 @@ from oneview_fc_network_facts import FcNetworkFactsModule
 # from oneview_uplink_set_facts import UplinkSetFactsModule
 # from oneview_user import UserModule
 # from oneview_user_facts import UserFactsModule
-# from oneview_volume import VolumeModule
-# from oneview_volume_facts import VolumeFactsModule
-# from oneview_version_facts import VersionFactsModule
+from oneview_volume import VolumeModule
+from oneview_volume_facts import VolumeFactsModule
+from oneview_version_facts import VersionFactsModule

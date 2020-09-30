@@ -95,7 +95,7 @@ class StorageVolumeAttachmentModule(OneViewModule):
 
     def __init__(self):
         argument_spec = {
-            "state": {"required": True, "type": 'str'},
+            "state": {"required": True, "type": 'str', choices=['extra_presentations_removed']},
             "server_profile": {"required": True, "type": 'str'},
         }
 
