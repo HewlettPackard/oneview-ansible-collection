@@ -41,7 +41,7 @@ options:
           The configuration file is optional. If the file path is not provided, the configuration will be loaded from
           environment variables.
       required: false
-      type: str
+      type: path
     name:
       description:
         - Name of the scope.
@@ -58,7 +58,7 @@ options:
            c(view): Returns a specific subset of the attributes of the resource or collection, by specifying the name
            of a predefined view."
       required: false
-      type: list
+      type: dict
 notes:
     - This resource is available for API version 300 or later.
 extends_documentation_fragment:
