@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version|length == 0
+  when: contents.api_version == ""
   register: version
 
 - name: Print currentVersion if api version is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version|length == 0
+  when: contents.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version|length != 0
+  when: contents.api_version != ""
 
 - name: Create a Fibre Channel Network
   oneview_fc_network:

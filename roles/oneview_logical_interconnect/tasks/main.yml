@@ -2,18 +2,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version|length == 0
+  when: contents.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version|length == 0
+  when: contents.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version|length != 0
+  when: contents.api_version != ""
 
 # Below task is supported only with C7000 Hardware
 - name: Update the Ethernet interconnect settings for the logical interconnect
