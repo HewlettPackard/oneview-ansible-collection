@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_scope_facts
+scope_name: "MySampleScope"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_scope_facts/files/oneview_config.json"
