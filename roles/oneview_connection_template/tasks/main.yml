@@ -5,11 +5,11 @@
     state: present
     data:
         name: "{{ template_name }}"
-        type : "connection-template"
-        bandwidth :
-            maximumBandwidth : 10000
-            typicalBandwidth : 2000
-        newName : "CT-23"
+        type: "connection-template"
+        bandwidth:
+            maximumBandwidth: 10000
+            typicalBandwidth: 2000
+        newName: "{{ template_new_name }}"
   delegate_to: localhost
 
 - name: Update back the Connection Template
@@ -17,10 +17,10 @@
     config: "{{ config }}"
     state: present
     data:
-        name: "{{ template_name }}"
-        type : "connection-template"
-        bandwidth :
-            maximumBandwidth : 10000
-            typicalBandwidth : 2000
-        newName : "{{ template_new_name }}"
+        name: "{{ template_new_name }}"
+        type: "connection-template"
+        bandwidth:
+            maximumBandwidth: 10000
+            typicalBandwidth: 2000
+        newName: "{{ template_name }}"
   delegate_to: localhost

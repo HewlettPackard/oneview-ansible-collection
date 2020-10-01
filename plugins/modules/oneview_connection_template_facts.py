@@ -43,7 +43,8 @@ options:
     options:
       description:
         - "List with options to gather additional facts about Connection Template related resources.
-           Options allowed: C(defaultConnectionTemplate)."
+           Options allowed: 
+           C(defaultConnectionTemplate)."
       required: false
       type: list
 
