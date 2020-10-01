@@ -28,3 +28,5 @@ plugins/modules/oneview_storage_volume_template.py validate-modules:missing-gplv
 plugins/modules/oneview_storage_volume_attachment.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_volume_template_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_storage_volume_attachment_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_scope.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_scope_facts.py validate-modules:missing-gplv3-license
