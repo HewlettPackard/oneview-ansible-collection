@@ -1,0 +1,27 @@
+---
+- name: Gather facts about the last two tasks
+  oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 2
+  delegate_to: localhost
+
+- debug: var=tasks
+
+- name: Gather facts about the last two tasks associated to Server Profile templates
+  oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 2
+      filter: "associatedResource.resourceCategory='server-profile-templates'"
+  delegate_to: localhost
+
+- name: Gather facts about the last five tasks completed with warnings
+  oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 5
+      filter: "taskState='Warning'"
+  delegate_to: localhost
+
+- debug: var=tasks
