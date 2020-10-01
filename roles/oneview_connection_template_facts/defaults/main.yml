@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_scope_facts
+template_name: "name2139069875-1471287701836"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_connection_template_facts/files/oneview_config.json"

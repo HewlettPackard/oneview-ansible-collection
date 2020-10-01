@@ -1,0 +1,26 @@
+---
+- name: Update the Connection Template
+  oneview_connection_template:
+    config: "{{ config }}"
+    state: present
+    data:
+        name: "{{ template_name }}"
+        type : "connection-template"
+        bandwidth :
+            maximumBandwidth : 10000
+            typicalBandwidth : 2000
+        newName : "CT-23"
+  delegate_to: localhost
+
+- name: Update back the Connection Template
+  oneview_connection_template:
+    config: "{{ config }}"
+    state: present
+    data:
+        name: "{{ template_name }}"
+        type : "connection-template"
+        bandwidth :
+            maximumBandwidth : 10000
+            typicalBandwidth : 2000
+        newName : "{{ template_new_name }}"
+  delegate_to: localhost
