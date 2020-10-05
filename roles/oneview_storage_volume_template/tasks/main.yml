@@ -1,3 +1,4 @@
+---
 - name: Retrieve the Root Storage Volume Template
   oneview_storage_volume_template_facts:
     config: "{{ config }}"

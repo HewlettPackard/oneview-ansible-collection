@@ -1,3 +1,4 @@
+---
 - name: Removes extra presentations from a specified server profile name
   oneview_storage_volume_attachment:
     config: "{{ config }}"
