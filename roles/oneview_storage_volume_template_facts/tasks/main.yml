@@ -1,4 +1,21 @@
 ---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
+
+- name: Print currentVersion if api version is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: contents.api_version == ""
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
+  
 - name: Gather facts about all Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"

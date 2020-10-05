@@ -4,3 +4,5 @@ config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_st
 contents: "{{lookup('file', config)}}"
 volume_template_name: 'sample'
 networks: '/rest/fc-networks/53dbd1ef-a90c-498d-b015-437c87d822bd'
+storage_volume_name: 'test-volume'
+server_profile_name: 'test-SP'
