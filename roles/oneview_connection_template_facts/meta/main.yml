@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  role_name: oneview_connection_template_facts
+  author: Venkatesh Ravula
+  description: Ansible role to manage OneView Connection Template Facts resources.
+  company: Hewlett Packard Enterprise
+  license: Apache
+  min_ansible_version: 2.9
+  min_python_version: 3.4.2
+  platforms: []
+  galaxy_tags:
+    - ansible
+    - hpe-oneview
+    - ansible-modules
+    - sdk
+dependencies: []
