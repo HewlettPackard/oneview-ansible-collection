@@ -60,7 +60,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 600
+    api_version: 2000
   delegate_to: localhost
 - debug: var=connection_templates
 
@@ -69,7 +69,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 600
+    api_version: 2000
     params:
       start: 0
       count: 3
@@ -83,7 +83,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 600
+    api_version: 2000
     name: 'connection template name'
   delegate_to: localhost
 - debug: var=connection_templates
@@ -93,7 +93,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 600
+    api_version: 2000
     options:
       - defaultConnectionTemplate
   delegate_to: localhost
