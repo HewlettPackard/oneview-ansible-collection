@@ -33,3 +33,4 @@ plugins/modules/oneview_scope_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_task_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_connection_template_facts.py validate-modules:parameter-list-no-elements
