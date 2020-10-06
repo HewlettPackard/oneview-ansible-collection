@@ -106,7 +106,7 @@ enclosure_groups:
 enclosure_group_script:
     description: The configuration script for an Enclosure Group.
     returned: When requested, but can be null.
-    type: string
+    type: dict
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
