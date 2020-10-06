@@ -44,7 +44,7 @@
                     - relativeValue: 6
                       type: 'Bay'
       interconnectBaySet: 3
-      enclosureIndexes: [1,2,3]
+      enclosureIndexes: [1, 2, 3]
       redundancyType: "HighlyAvailable"
       interconnectMapTemplate:
         interconnectMapEntryTemplates:

@@ -170,7 +170,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
         )
 
         super().__init__(additional_arg_spec=argument_spec,
-                                                             validate_etag_support=True)
+                         validate_etag_support=True)
         self.set_resource_object(self.oneview_client.logical_interconnect_groups)
 
     def execute_module(self):
