@@ -1,0 +1,11 @@
+---
+# defaults file for oneview_server_profile_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fc_network/files/oneview_config.json"
+# set the name of an existent server profile to run this example
+server_profile_name: "RHEl76"
+# set the uri of an existent enclosure group to run this example
+enclosure_group_uri: '/rest/enclosure-groups/0f2a3f46-36ad-4c8f-9e88-763c062855d3'
+# set the uri of an existent server hardware type to run this example
+server_hardware_type_uri: '/rest/server-hardware-types/1A7C413B-6677-49A6-B435-09A71490EBB4'
+# set the ID of an existent storage system to run this example
+storage_system_id: "MXN6122CVA"
