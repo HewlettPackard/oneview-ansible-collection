@@ -169,7 +169,7 @@ class VolumeFactsModule(OneViewModule):
                 facts['extra_managed_volume_paths'] = extra_managed_volume_paths
             if self.options.get('attachableVolumes'):
                 query_params = self.options['attachableVolumes']
-                query_params = {} if isinstance(query_params) is not dict else query_params
+                query_params = {} if not isinstance(query_params, dict) else query_params
                 if 'connections' in query_params:
                     query_params['connections'] = str(query_params['connections'])
                 attachable_volumes = self.resource_client.get_attachable_volumes(**query_params)
