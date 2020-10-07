@@ -17,8 +17,7 @@
 - debug: var=storage_volumes
 
 
-- name: "Gather facts about all Volumes, the attachable volumes managed by the appliance and the extra managed
-          storage volume paths"
+- name: Gather facts about all Volumes, the attachable volumes managed by the appliance and the extra managed storage volume paths
   oneview_volume_facts:
     config: "{{ config }}"
     options:
