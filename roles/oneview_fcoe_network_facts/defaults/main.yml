@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_fcoe_network_facts
+network_name: 'Ansible Test FCoE Network'
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fcoe_network/files/oneview_config.json"
