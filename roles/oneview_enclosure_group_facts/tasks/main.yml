@@ -1,0 +1,37 @@
+---
+- name: Gather facts about all Enclosure Groups
+  oneview_enclosure_group_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=enclosure_groups
+
+- name: Gather paginated, filtered and sorted facts about Enclosure Groups
+  oneview_enclosure_group_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=OK'
+      scope_uris: '{{ scope_uris }}'
+
+- debug: var=enclosure_groups
+
+- name: Gather facts about an Enclosure Group by name
+  oneview_enclosure_group_facts:
+    config: "{{ config }}"
+    name: "{{ enclosure_group_name }}"
+  delegate_to: localhost
+
+- debug: var=enclosure_groups
+
+- name: Gather facts about an Enclosure Group by name with configuration script
+  oneview_enclosure_group_facts:
+    config: "{{ config }}"
+    name: "{{ enclosure_group_name }}"
+    options:
+      - configuration_script
+  delegate_to: localhost
+
+- debug: var=enclosure_group_script

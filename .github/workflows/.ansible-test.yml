@@ -9,6 +9,7 @@ jobs:
       matrix:
         python_version:
         - 3.6
+        - 3.7
         ansible:
         - stable-2.10
         - devel
@@ -23,7 +24,7 @@ jobs:
       - name: Set up Python ${{ matrix.python_version }}
         uses: actions/setup-python@v1
         with:
-          python-version: 3.6
+          python-version: ${{ matrix.python_version }}
 
       - name: Install dependencies
         run: |
