@@ -21,7 +21,7 @@ Provides an interface to manage Enclosure Group resources. Can create, update, o
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_enclosure_group
 ```

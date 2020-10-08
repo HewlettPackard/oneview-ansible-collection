@@ -20,7 +20,7 @@ Retrieve facts about the OneView Tasks.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_task_facts
 ```

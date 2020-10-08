@@ -22,7 +22,7 @@ Retrieve facts about one or more of the Enclosure Groups from OneView.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_enclosure_group_facts
 ```

@@ -22,7 +22,7 @@ Retrieve facts about one or more of the Logical Enclosures from OneView.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_enclosure_facts
 ```

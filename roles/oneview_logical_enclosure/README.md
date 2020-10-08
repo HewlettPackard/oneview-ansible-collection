@@ -21,7 +21,7 @@ Provides an interface to manage Logical Enclosure resources. Can create, update,
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_enclosure
 ```

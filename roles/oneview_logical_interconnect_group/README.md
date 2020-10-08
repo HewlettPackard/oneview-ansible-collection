@@ -22,7 +22,7 @@ Provides an interface to manage Logical Interconnect Group resources. Can create
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_interconnect_group
 ```

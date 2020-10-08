@@ -2,11 +2,11 @@
 Retrieve facts about the OneView Storage Systems
 
 #### Synopsis
- Retrieve facts about the Storage Systems from OneView.
+Retrieve facts about the Storage Systems from OneView.
 
 #### Requirements (on the host that executes the module)
-  * python >= 2.7.9
-  * hpeOneView >= 5.8.0
+  * python >= 3.4.2
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -23,7 +23,7 @@ Retrieve facts about the OneView Storage Systems
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_system_facts
 ```

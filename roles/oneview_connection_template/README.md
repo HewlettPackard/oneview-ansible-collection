@@ -21,7 +21,7 @@ Manage the OneView Connection Template resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_connection_template
 ```
