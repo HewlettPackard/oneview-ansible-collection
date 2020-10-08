@@ -2,19 +2,21 @@
 Manage OneView Server Profile resources.
 
 #### Synopsis
- Provides an interface to manage Server Profile resources. Can create, update, and delete.
+Provides an interface to retrieve facts about Server Profile resources.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
 | Parameter     | Required    | Default  | Choices    | Comments |
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
-| data  |   Yes  |  | |  List with the Server Profile properties.  |
-| state  |   |  | <ul> <li>present</li>  <li>absent</li> </ul> |  Indicates the desired state for the Server Profile resource. `present` will ensure data properties are compliant with OneView. `absent` will remove the resource from OneView, if it exists.  |
-| validate_etag  |   |  True  | <ul> <li>true</li>  <li>false</li> </ul> |  When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag for the resource matches the ETag provided in the data.  |
+| name  |   |  | |  Server Profile name.  |
+| options  |   |  | |  List with options to gather additional facts about Server Profile related resources. Options allowed: `schema`, `compliancePreview`, `profilePorts`, `messages`, `transformation`, `available_networks`, `available_servers`, `available_storage_system`, `available_storage_systems`, `available_targets`, `newProfileTemplate`,  To gather facts about `compliancePreview`, `messages`, `newProfileTemplate` and `transformation` a Server Profile name is required. Otherwise, these options will be ignored.  |
+| params  |   No  |  | |  List of params to delimit, filter and sort the list of resources.  params allowed: `start`: The first item to return, using 0-based indexing. `count`: The number of resources to return. `filter`: A general filter/query string to narrow the list of items returned. `sort`: The sort order of the returned data set.  |
+| uri  |   |  | |  Server Profile uri.  |
+
 
 ## Example Playbook
 

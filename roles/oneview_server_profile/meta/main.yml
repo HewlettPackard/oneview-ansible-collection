@@ -1,8 +1,8 @@
 ---
 galaxy_info:
   role_name: oneview_server_profile
-  author: Chebrolu Bala Sai Harika
-  description: Ansible role to manage OneView Fibre Channel Network resources.
+  author: Asis Bagga
+  description: Ansible role to manage OneView Server Profile resource.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

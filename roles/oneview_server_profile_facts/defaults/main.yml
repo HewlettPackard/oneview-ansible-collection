@@ -1,6 +1,6 @@
 ---
 # defaults file for oneview_server_profile_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fc_network/files/oneview_config.json"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_profile_facts/files/oneview_config.json"
 # set the name of an existent server profile to run this example
 server_profile_name: "RHEl76"
 # set the uri of an existent enclosure group to run this example

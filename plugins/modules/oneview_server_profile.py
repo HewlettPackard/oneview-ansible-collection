@@ -31,7 +31,7 @@ description:
       automatically based on the server profile configuration if no server hardware was provided.
 version_added: "2.5.0"
 requirements:
-    - hpeOneView >= 5.0.0
+    - hpeOneView >= 5.4.0
 author:
     - "Chakravarthy Racharla (@ChakruHP)"
     - "Camila Balestrin (@balestrinc)"

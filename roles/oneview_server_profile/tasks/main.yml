@@ -7,8 +7,8 @@
       name: "{{ inventory_hostname }}"
       # User should set initialScopeUris in case of scoped user
       initialScopeUris:
-        - '/rest/scopes/12ab33bb-391f-491a-adfb-02b0dc625b3e'
-        - '/rest/scopes/3006eb67-a58f-4f5c-b173-e46309b2b87d'
+        - '{{ scope1 }}'
+        - '{{ scope2 }}'
     params: # Supported only in API version >= 600
       force: True
   delegate_to: localhost
