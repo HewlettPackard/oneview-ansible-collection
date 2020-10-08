@@ -22,7 +22,7 @@ Retrieve facts about the OneView Connection Templates.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_scope_facts
 ```

@@ -21,7 +21,7 @@ Retrieve facts about one or more of the Logical Interconnect Groups from OneView
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_interconnect_group_facts
 ```
