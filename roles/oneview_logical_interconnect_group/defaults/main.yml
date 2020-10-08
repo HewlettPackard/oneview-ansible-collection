@@ -1,16 +1,18 @@
 ---
 # defaults file for oneview_logical_interconnect_group
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_interconnect_group/files/oneview_config.json"
+contents: "{{lookup('file', config)}}"
 # Inform the permitted Interconnect Type URI to configure Interconnect Map
 permitted_interconnect_type_name_1: 'Virtual Connect SE 40Gb F8 Module for Synergy'
 permitted_interconnect_type_name_2: 'Synergy 20Gb Interconnect Link Module'
 scope_uris:
-  - '/rest/scopes/d0324c4b-56c9-485b-b7dd-8f6218a4b5bb'
-  - '/rest/scopes/9422ce05-dc39-4358-b723-c8c825eae412'
-network_uri_1: '/rest/ethernet-networks/e882896c-265f-4437-8ce6-838b917238b0'
-network_uri_2: '/rest/ethernet-networks/e882896c-265f-4437-8ce6-838b917238c1'
-network_uri_3: '/rest/ethernet-networks/e882896c-265f-4437-8ce6-838b917238s2'
-network_name_1: 'Test_network_1'
-network_name_2: 'Test_network_2'
+  - '/rest/scopes/f17892e0-c0bf-495a-8171-5cc12f2e1a69'
+  - '/rest/scopes/5438f376-b61f-45b1-8c11-052a48a474ad'
+network_uri_1: '/rest/ethernet-networks/e7daeda6-301d-4bfa-a05e-e5abb59b14d8'
+network_uri_2: '/rest/ethernet-networks/507fb3a5-902c-4a6b-bc7f-0ac2935cb3cf'
+network_uri_3: '/rest/ethernet-networks/01eee25d-d487-417e-ac74-a6f3c0be7800'
+network_uri_4: '/rest/ethernet-networks/26cb6480-23d0-4391-b481-ae524dd54f67' # untagged network uri
+network_name_1: 'TestNetwork_1'
+network_name_2: 'TestNetwork_2'
 lig_name: 'Test_lig'
 lig_new_name: 'Test_lig_updated'
