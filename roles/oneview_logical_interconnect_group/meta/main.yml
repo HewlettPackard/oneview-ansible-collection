@@ -13,4 +13,4 @@ galaxy_info:
     - hpe-oneview
     - ansible-modules
     - sdk
-dependencies: ['oneview_ethernet_network', 'oneview_interconnect_type']
+dependencies: []
