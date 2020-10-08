@@ -2,7 +2,7 @@
 Manage OneView Server Profile Template Facts resources.
 
 #### Synopsis
- Provides an interface to manage server profile template facts.
+ Provides an interface to retrieve server profile template facts.
 
 #### Requirements (on the host that executes the module)
   * python >= 3.4.2
@@ -36,4 +36,4 @@ Apache
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| oneview_server_profile_template_facts   | Has the facts about the Scope. |  On state 'present' and 'resource_assignments_updated', but can be null. |  dict |
+| oneview_server_profile_template_facts   | Has the facts about the Server Profile Template. |  On state 'present' and 'resource_assignments_updated', but can be null. |  dict |
