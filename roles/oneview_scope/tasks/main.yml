@@ -1,0 +1,47 @@
+---
+- name: Create a scope
+  oneview_scope:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ scope_name }}"
+  delegate_to: localhost
+
+- name: Update the scope name
+  oneview_scope:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ scope_name }}"
+      newName: "{{ scope_new_name }}"
+  delegate_to: localhost
+
+- name: Update the scope resource assignments, adding a resource
+  oneview_scope:
+    config: "{{ config }}"
+    state: resource_assignments_updated
+    data:
+      name: "{{ scope_new_name }}"
+      resourceAssignments:
+        addedResourceUris: "{{ resource_uri_1 }}"
+  delegate_to: localhost
+
+- name: Update the scope resource assignments, removing two resources
+  oneview_scope:
+    config: "{{ config }}"
+    state: resource_assignments_updated
+    data:
+      name: "{{ scope_new_name }}"
+      resourceAssignments:
+        removedResourceUris:
+          - "{{ resource_uri_1 }}"
+          - "{{ resource_uri_2 }}"
+  delegate_to: localhost
+ 
+- name: Delete the Scope
+  oneview_scope:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ scope_new_name }}"
+  delegate_to: localhost

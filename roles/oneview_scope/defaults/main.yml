@@ -1,0 +1,7 @@
+---
+# defaults file for oneview_scope
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_scope/files/oneview_config.json"
+scope_name: 'SampleScope'
+scope_new_name: 'SampleScopeRenamed'
+resource_uri_1: '/rest/ethernet-networks/29769296-ea14-47e5-80d0-24bf7c4f5020'
+resource_uri_2: '/rest/fc-networks/4cf6f8f9-3edb-4ddb-9df8-03b2a8ada0bb'

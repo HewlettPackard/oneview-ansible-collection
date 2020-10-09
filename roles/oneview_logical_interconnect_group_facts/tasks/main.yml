@@ -1,0 +1,34 @@
+---
+- name: Gather facts about all Logical Interconnect Groups
+  oneview_logical_interconnect_group_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=logical_interconnect_groups
+
+- name: Gather paginated, filtered, and sorted facts about Logical Interconnect Groups
+  oneview_logical_interconnect_group_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: "\"'name'='e11-encl-group logical interconnect group'\""
+
+- debug: var=logical_interconnect_groups
+
+- name: Gather facts about Logical Interconnect Group by scope_uris
+  oneview_logical_interconnect_group_facts:
+    config: "{{ config }}"
+    params:
+      scope_uris: "{{ scope_uris }}"
+
+- debug: var=logical_interconnect_groups
+
+- name: Gather facts about a Logical Interconnect Group by name
+  oneview_logical_interconnect_group_facts:
+    config: "{{ config }}"
+    name: "{{ lig_name }}"
+  delegate_to: localhost
+
+- debug: var=logical_interconnect_groups

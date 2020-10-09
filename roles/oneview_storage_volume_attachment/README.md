@@ -2,11 +2,11 @@
 Provides an interface to remove extra presentations from a specified server profile.
 
 #### Synopsis
- Provides an interface to remove extra presentations from a specified server profile.
+Provides an interface to remove extra presentations from a specified server profile.
 
 #### Requirements (on the host that executes the module)
-  * python >= 2.7.9
-  * hpeOneView >= 5.0.0
+  * python >= 3.4.2
+  * hpeOneView >= 5.4.0
 
 #### Options
 
