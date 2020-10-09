@@ -131,8 +131,7 @@ class FcoeNetworkModule(OneViewModule):
                                    state=dict(default='present',
                                               choices=['present', 'absent']))
 
-        super().__init__(additional_arg_spec=additional_arg_spec,
-                                                validate_etag_support=True)
+        super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.fcoe_networks)
 

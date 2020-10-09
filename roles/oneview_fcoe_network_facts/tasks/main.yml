@@ -1,26 +1,26 @@
 ---
  - name: Gather facts about all FCoE Networks
-      oneview_fcoe_network_facts:
-        config: "{{ config }}"
-      delegate_to: localhost
+   oneview_fcoe_network_facts:
+       config: "{{ config }}"
+   delegate_to: localhost
 
  - debug: var=fcoe_networks
 
  - name: Gather paginated, filtered and sorted facts about FCoE Networks
-      oneview_fcoe_network_facts:
-        config: "{{ config }}"
-        params:
-          start: 0
-          count: 3
-          sort: 'name:descending'
-          filter: 'vlanId=2'
+   oneview_fcoe_network_facts:
+     config: "{{ config }}"
+     params:
+       start: 0
+       count: 3
+       sort: 'name:descending'
+       filter: 'vlanId=2'
 
  - debug: var=fcoe_networks
 
  - name: Gather facts about a FCoE Network by name
-      oneview_fcoe_network_facts:
-        config: "{{ config }}"
-        name: "fcoe_test"
-      delegate_to: localhost
+   oneview_fcoe_network_facts:
+     config: "{{ config }}"
+     name: "fcoe_test"
+   delegate_to: localhost
 
  - debug: var=fcoe_networks
