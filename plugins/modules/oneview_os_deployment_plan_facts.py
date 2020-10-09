@@ -30,7 +30,7 @@ description:
     - Retrieve facts about one or more of the OS Deployment Plans from OneView.
 version_added: "2.3.0"
 requirements:
-    - "python >= 3.6.9"
+    - "python >= 2.7.9"
     - "hpeOneView >= 5.8.0"
 author:
     - Abilio Parada (@abiliogp)
