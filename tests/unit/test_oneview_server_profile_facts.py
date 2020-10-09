@@ -22,8 +22,8 @@ import pytest
 import mock
 
 from copy import deepcopy
-from hpe_test_utils import OneViewBaseFactsTest
-from oneview_module_loader import ServerProfileFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ServerProfileFactsModule
 
 ERROR_MSG = 'Fake message error'
 ENCLOSURE_GROUP_URI = '/rest/enclosure-groups/3af25c76-dec7-4753-83f6-e1ad06c29a43'

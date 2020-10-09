@@ -31,8 +31,8 @@ description:
     - Retrieve facts about the Server Profile from OneView.
 version_added: "2.5.0"
 requirements:
-    - "python >= 3.6.9"
-    - "hpeOneView >= 5.8.0"
+    - "python >= 2.7.9"
+    - "hpeOneView >= 5.4.0"
 author: "Camila Balestrin (@balestrinc)"
 options:
     name:
