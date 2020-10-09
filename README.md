@@ -8,7 +8,7 @@ Modules to manage HPE OneView using Ansible collection framework.
 ## Requirements
 
  - Ansible >= 2.9
- - Python >= 3.4.2
+ - python >= 2.7.9
  - HPE OneView Python SDK
 
 # Installation

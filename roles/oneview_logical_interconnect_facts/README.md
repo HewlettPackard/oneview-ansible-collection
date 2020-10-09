@@ -5,7 +5,7 @@ Retrieve facts about one or more of the OneView Logical Interconnects.
 Retrieve facts about one or more of the OneView Logical Interconnects.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options

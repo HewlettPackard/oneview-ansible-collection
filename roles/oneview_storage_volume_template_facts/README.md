@@ -5,7 +5,7 @@ Retrieve facts about Storage Volume Templates of the OneView.
 Retrieve facts about Storage Volume Templates of the OneView.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
