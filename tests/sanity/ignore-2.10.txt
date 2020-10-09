@@ -6,6 +6,8 @@ plugins/modules/oneview_storage_system.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_system_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_uplink_set.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_uplink_set_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_ethernet_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_ethernet_network_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_ethernet_network_facts.py validate-modules:parameter-list-no-elements
