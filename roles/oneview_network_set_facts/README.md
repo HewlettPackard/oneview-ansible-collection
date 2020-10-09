@@ -5,7 +5,7 @@ Retrieve the facts about one or more of the OneView Network Sets.
  Retrieve the facts about one or more of the Network Sets from OneView.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 

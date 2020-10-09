@@ -5,7 +5,7 @@ Manage OneView Network Set resources.
  Provides an interface to manage Network Set resources. Can create, update, and delete.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
