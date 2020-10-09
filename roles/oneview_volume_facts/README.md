@@ -6,7 +6,7 @@ Retrieve facts about the OneView Volumes.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -22,7 +22,7 @@ Retrieve facts about the OneView Volumes.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_volume_facts
 ```

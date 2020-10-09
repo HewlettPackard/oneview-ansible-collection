@@ -1,4 +1,21 @@
 ---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
+
+- name: Print currentVersion if api version is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: contents.api_version == ""
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: "{{ contents.api_version | int }}"
+  when: contents.api_version != ""
+
 # Below task creates a Logical Interconnect Group with Interconnects, upLinkPorts, uplinkSets containing EthernetNetworks
 - name: Create a Logical Interconnect Group
   oneview_logical_interconnect_group:
@@ -32,7 +49,7 @@
           networkType: 'Ethernet'
           ethernetNetworkType: 'Untagged'
           networkUris:
-            - "{{ network_uri_2 }}"
+            - "{{ network_uri_4 }}"
           logicalPortConfigInfos:
            - desiredSpeed: 'Auto'
              logicalLocation:
@@ -141,6 +158,7 @@
     data:
       name: "{{ lig_name }}"
       scopeUris: "{{ scope_uris }}"
+  when: currentVersion == "300" or currentVersion == "500"
   delegate_to: localhost
 
 - name: Rename the Logical Interconnect Group to 'Updated Logical Interconnect Group'
