@@ -5,7 +5,7 @@ Manage OneView Storage Volume Template resources.
  Provides an interface to manage Storage Volume Template resources. Can create, update and delete.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options

@@ -5,7 +5,7 @@ Manage OneView Volume resources.
  Provides an interface to manage Volume resources. It allows create, update, delete or repair the volume, and create or delete a snapshot.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
