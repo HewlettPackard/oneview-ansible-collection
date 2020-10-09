@@ -5,7 +5,7 @@ Manage OneView Ethernet Network resources.
  Provides an interface to manage Ethernet Network resources. Can create, update, and delete.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -21,7 +21,7 @@ Manage OneView Ethernet Network resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_ethernet_network
 ```
