@@ -32,7 +32,7 @@ description:
 version_added: "2.5.0"
 requirements:
     - "python >= 3.6.9"
-    - "hpeOneView >= 5.4.0"
+    - "hpeOneView >= 5.8.0"
 author: "Camila Balestrin (@balestrinc)"
 options:
     name:
