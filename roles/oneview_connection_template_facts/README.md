@@ -5,7 +5,7 @@ Retrieve facts about the OneView Connection Templates.
  Retrieve facts about the OneView Connection Templates.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -22,7 +22,7 @@ Retrieve facts about the OneView Connection Templates.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_scope_facts
 ```
