@@ -5,8 +5,8 @@ Manage OneView Oneview OS Deployment Server Facts resources.
  Provides an interface to manage Oneview OS Deployment Server Facts.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
-  * hpeOneView >= 5.4.0
+  * python >= 2.7.9
+  * hpeOneView >= 5.8.0
 
 #### Options
 
