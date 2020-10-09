@@ -36,4 +36,4 @@ Apache
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| oneview_os_deployment_server   | Has the facts about the OS Deployment Server resources |  On state 'present' but can be null. |  dict |
+| oneview_os_deployment_server   | Has the facts about the OS Deployment Server resources |  On state 'present' but can be null |  dict |
