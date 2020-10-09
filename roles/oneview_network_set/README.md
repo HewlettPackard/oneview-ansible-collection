@@ -21,7 +21,7 @@ Manage OneView Network Set resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_network_set
 ```

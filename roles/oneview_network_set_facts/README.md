@@ -20,7 +20,7 @@ Retrieve the facts about one or more of the OneView Network Sets.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_network_set_facts
 ```
