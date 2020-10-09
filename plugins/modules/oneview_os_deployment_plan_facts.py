@@ -31,7 +31,7 @@ description:
 version_added: "2.3.0"
 requirements:
     - "python >= 3.6.9"
-    - "hpeOneView >= 3.0.0"
+    - "hpeOneView >= 5.8.0"
 author:
     - Abilio Parada (@abiliogp)
     - Gustavo Hennig (@GustavoHennig)
