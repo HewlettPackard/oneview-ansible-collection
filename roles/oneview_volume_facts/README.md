@@ -22,7 +22,7 @@ Retrieve facts about the OneView Volumes.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_volume_facts
 ```

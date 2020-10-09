@@ -22,7 +22,7 @@ Retrieve facts about one or more Storage Pools.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_pool_facts
 ```

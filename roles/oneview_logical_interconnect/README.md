@@ -22,7 +22,7 @@ Manage OneView Logical Interconnect resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_interconnect
 ```

@@ -22,7 +22,7 @@ Manage OneView Storage System resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_system
 ```

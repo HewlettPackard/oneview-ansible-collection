@@ -21,7 +21,7 @@ Provides an interface to remove extra presentations from a specified server prof
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_volume_attachment
 ```

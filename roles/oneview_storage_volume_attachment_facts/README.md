@@ -25,7 +25,7 @@ Retrieve facts about the OneView Storage Volume Attachments.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_volume_attachment_facts
 ```

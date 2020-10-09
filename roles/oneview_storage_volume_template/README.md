@@ -22,7 +22,7 @@ Manage OneView Storage Volume Template resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_volume_template
 ```

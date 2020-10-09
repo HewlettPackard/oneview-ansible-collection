@@ -12,7 +12,7 @@ Manage dependencies to run resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.dependencies_list
 ```

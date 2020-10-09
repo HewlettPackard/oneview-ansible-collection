@@ -22,7 +22,7 @@ Retrieve facts about Storage Volume Templates of the OneView.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_volume_template_facts
 ```

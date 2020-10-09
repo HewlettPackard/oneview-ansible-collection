@@ -21,7 +21,7 @@ Manage OneView Storage Pool resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_pool
 ```

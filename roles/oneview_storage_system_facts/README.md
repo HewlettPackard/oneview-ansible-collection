@@ -23,7 +23,7 @@ Retrieve facts about the OneView Storage Systems
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_system_facts
 ```

@@ -22,7 +22,7 @@ Retrieve facts about one or more of the OneView Logical Interconnects.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_interconnect_type_facts
 ```
