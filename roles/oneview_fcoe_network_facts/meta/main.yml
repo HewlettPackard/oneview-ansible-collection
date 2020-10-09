@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_fcoe_network
+  role_name: oneview_fcoe_network_facts
   author: Yuvarani Chidambaram
-  description: Ansible role to manage OneView FCoE Network resources.
+  description: Ansible role to manage OneView FCoE Network Facts resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9
