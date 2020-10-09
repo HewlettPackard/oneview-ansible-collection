@@ -21,8 +21,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from hpe_test_utils import OneViewBaseFactsTest
-from oneview_module_loader import ServerProfileTemplateFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ServerProfileTemplateFactsModule
 
 ERROR_MSG = 'Fake message error'
 TEMPLATE_NAME = "ProfileTemplate101"
