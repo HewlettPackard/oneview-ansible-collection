@@ -30,7 +30,7 @@ FAKE_MSG_ERROR = 'Fake message error'
 
 NETWORK_SET = dict(
     name='OneViewSDK Test Network Set',
-    networkUris=['/rest/ethernet-networks/aaa-bbb-ccc']
+    networkUris=['/rest/ethernet-networks/aaa-bbb-cccc']
 )
 
 NETWORK_SET_WITH_NEW_NAME = dict(name='OneViewSDK Test Network Set - Renamed')
