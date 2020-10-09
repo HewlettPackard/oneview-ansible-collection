@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: oneview_network_set_facts
   author: Yuvarani Chidambaram
-  description: Ansible role to manage OneView Network Set resources.
+  description: Ansible role to manage OneView Network Set Facts resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9
