@@ -1,0 +1,26 @@
+---
+    - name: Gather facts about all Uplink Sets
+      oneview_uplink_set_facts:
+        config: "{{ config }}"
+      delegate_to: localhost
+
+    - debug: msg={{uplink_sets | map(attribute='name') | list }}
+
+    - name: Gather paginated, filtered and sorted facts about Uplink Sets
+      oneview_uplink_set_facts:
+        config: "{{ config }}"
+        params:
+          start: 0
+          count: 2
+          sort: 'name:descending'
+          filter: "logicalInterconnectUri='/rest/logical-interconnects/1d2be484-6d4c-46f4-8f6a-8a34080030a6'"
+
+    - debug: var=uplink_sets
+
+    - name: Gather facts about a Uplink Set by name
+      oneview_uplink_set_facts:
+        config: "{{ config }}"
+        name: "mgmt"
+      delegate_to: localhost
+
+    - debug: var=uplink_sets
