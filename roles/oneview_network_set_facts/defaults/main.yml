@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_network_set_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_network_set_facts/files/oneview_config.json"
+network_set_name: 'OneViewSDK Test Network Set'
