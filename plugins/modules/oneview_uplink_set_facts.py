@@ -59,7 +59,7 @@ EXAMPLES = '''
 
 - name: Gather paginated, filtered and sorted facts about Uplink Sets
   oneview_uplink_set_facts:
-    hostname: 172.16.101.48
+    hostname: 172.16.101.45
     username: administrator
     password: my_password
     api_version: 2000
