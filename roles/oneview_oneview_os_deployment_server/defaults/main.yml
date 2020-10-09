@@ -1,3 +1,0 @@
----
-# defaults file for oneview_os_deployment_server
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_os_deployment_server/files/oneview_config.json"

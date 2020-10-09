@@ -5,7 +5,7 @@ Manage OneView OS Deployment Server resources.
  Provides an interface to manage OS Deployment Server resource. Can create, update, or delete OneView OS Deployment Server resources.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
