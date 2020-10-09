@@ -5,7 +5,7 @@ Retrieve facts about the OneView Tasks.
  Retrieve facts about the OneView Tasks.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
