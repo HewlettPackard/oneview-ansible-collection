@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_ethernet_network_facts
 name: 'Ansible Test Ethernet Network'
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_ethernet_network/files/oneview_config.json"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_ethernet_network_facts/files/oneview_config.json"
