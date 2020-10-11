@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_hypervisor_manager
+
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_certificates_server/files/oneview_config.json"
+remote_server: '172.18.13.11'
