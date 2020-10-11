@@ -27,7 +27,7 @@ module: oneview_hypervisor_manager
 short_description: Manage OneView Hypervisor Managers resources.
 description:
     - Provides an interface to manage Hypervisor Managers resources. Can create, update, and delete.
-version_added: "2.4"
+version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 5.2.0"
@@ -39,6 +39,7 @@ options:
               C(present) will ensure data properties are compliant with OneView.
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
+        required: true
         type: str
     data:
         description:
