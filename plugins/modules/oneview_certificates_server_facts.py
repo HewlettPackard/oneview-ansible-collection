@@ -28,7 +28,7 @@ module: oneview_certificates_server_facts
 short_description: Retrieve the facts about one or more of the OneView Server Certificates
 description:
     - Retrieve the facts about one or more of the Server Certificates from OneView.
-version_added: "2.4"
+version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - hpeOneView >= 5.4.0

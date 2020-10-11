@@ -28,7 +28,7 @@ module: oneview_certificates_server
 short_description: Manage OneView Server Certificate resources.
 description:
     - Provides an interface to manage Server Certificate resources. Can create, update, and delete.
-version_added: "2.4"
+version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 5.4.0"
@@ -40,6 +40,7 @@ options:
               C(present) will ensure data properties are compliant with OneView.
               C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
+        required: true
         type: str
     name:
         description:
@@ -115,7 +116,7 @@ class CertificatesServerModule(OneViewModule):
 
     def __init__(self):
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
-                                   name=dict(required=False, type='str'),
+                                   name=dict(required=True, type='str'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))
