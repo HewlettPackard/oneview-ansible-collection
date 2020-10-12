@@ -1,5 +1,4 @@
 plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
-tests/unit/utils/hpe_test_utils.py pylint:ansible-format-automatic-specification
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/oneview_hypervisor_cluster_profile.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile_facts.py validate-modules:missing-gplv3-license
@@ -54,3 +53,4 @@ plugins/modules/oneview_logical_interconnect_group_facts.py validate-modules:mis
 plugins/modules/oneview_enclosure_group.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:parameter-list-no-elements
+tests/unit/utils/hpe_test_utils.py pylint!skip
