@@ -5,8 +5,8 @@ Manage OneView Certificates Server resources.
  Provides an interface to manage Certificates Server resources. Can create, update, or delete.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.1.1
-  * python >= 3.4.2
+  * hpeOneView >= 5.4.0
+  * python >= 2.7.9
 
 #### Options
 
