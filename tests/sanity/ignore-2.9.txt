@@ -22,6 +22,11 @@ plugins/modules/oneview_version_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_server_hardware.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_server_hardware_type.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_type_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py pylint:ansible-format-automatic-specification
