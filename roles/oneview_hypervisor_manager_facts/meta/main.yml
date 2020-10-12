@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_oneview_hypervisor_manager
+  role_name: oneview_hypervisor_manager_facts
   author: Nabhajit Ray
-  description: Ansible role to manage OneView  Hypervisor Manager resources.
+  description: Ansible role to manage OneView Hypervisor Manager Facts resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

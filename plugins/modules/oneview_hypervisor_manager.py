@@ -29,8 +29,8 @@ description:
     - Provides an interface to manage Hypervisor Managers resources. Can create, update, and delete.
 version_added: "2.4.0"
 requirements:
-    - "python >= 3.4.2"
-    - "hpeOneView >= 5.2.0"
+    - "python >= 2.7.9"
+    - "hpeOneView >= 5.4.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
     state:

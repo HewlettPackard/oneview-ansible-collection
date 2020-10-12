@@ -1,8 +1,8 @@
-## oneview_hypervisor_manager
-Manage OneView Hypervisor Manager resources.
+## oneview_hypervisor_manager_facts
+Retrieve the facts about one or more of the OneView Hypervisor Managers.
 
 #### Synopsis
- Provides an interface to manage Hypervisor Manager resources. Can create, update, or delete.
+ Retrieve the facts about one or more of the Hypervisor Managers from OneView.
 
 #### Requirements (on the host that executes the module)
   * hpeOneView >= 5.4.0
@@ -13,9 +13,9 @@ Manage OneView Hypervisor Manager resources.
 | Parameter     | Required    | Default  | Choices    | Comments |
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional and when used should be present in the host running the ansible commands. If the file path is not provided, the configuration will be loaded from environment variables. For links to example configuration files or how to use the environment variables verify the notes section.  |
-| data  |   Yes  |  | |  List with the Hypervisor Manager properties.  |
-| state  |   |  | <ul> <li>present</li>  <li>absent</li> </ul> |  Indicates the desired state for the Hypervisor Manager resource. `present` ensures data properties are compliant with OneView. `absent` removes the resource from OneView, if it exists.  |
-| validate_etag  |   |  True  | <ul> <li>true</li>  <li>false</li> </ul> |  When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag for the resource matches the ETag provided in the data.  |
+| name  |   No  |  | |  Hypervisor Manager name.  |
+| params  |   No  |  | |  List of params to delimit, filter and sort the list of resources.  params allowed: `start`: The first item to return, using 0-based indexing. `count`: The number of resources to return. `sort`: The sort order of the returned data set.  |
+
 
 ## Example Playbook
 
