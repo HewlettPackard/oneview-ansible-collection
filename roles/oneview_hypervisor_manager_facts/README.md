@@ -24,7 +24,7 @@ Retrieve the facts about one or more of the OneView Hypervisor Managers.
   collections:
     - name: hpe.oneview
   roles:
-    - hpe.oneview.oneview_hypervisor_manager
+    - hpe.oneview.oneview_hypervisor_manager_facts
 ```
 
 ## License
