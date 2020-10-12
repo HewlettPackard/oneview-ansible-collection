@@ -1,0 +1,119 @@
+---
+- name: Add a Server Hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: present
+    data:
+      hostname: '{{ server_hardware_hostname }}'
+      username: '{{ server_hardware_username }}'
+      password: '{{ server_hardware_password }}'
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
+      scopeUris: "{{ scope_uris }}" #Supported only with OneView API version <= 500.
+      initialScopeUris: "{{ initial_scope_uris }}" #Supported only with OneView API version >= 600.
+  when: contents.variant == 'C7000'
+  delegate_to: localhost
+
+- name: Do nothing when the server hardware is already present
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: present
+    data:
+      hostname: '{{ server_hardware_hostname }}'
+      username: '{{ server_hardware_username }}'
+      password: '{{ server_hardware_password }}'
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
+  when: contents.variant == 'C7000'
+  delegate_to: localhost
+
+#This task available only with OneView API version >= 600.
+- name: Add multiple rack-mount servers
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: multiple_servers_added
+    data:
+      mpHostsAndRanges: "{{ multiple_hosts }}"
+      username: "{{ server_hardware_username }}"
+      password: "{{ server_hardware_password }}"
+      initialScopeUris: "{{ initial_scope_uris }}"
+      licensingIntent: "OneView"
+      configurationState: "Managed"
+  when: contents.variant == 'C7000'
+  delegate_to: localhost
+
+- name: Power Off the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: power_state_set
+    data:
+      name: '{{ server_hardware_hostname }}'
+      powerStateData:
+        powerState: "Off"
+        powerControl: "MomentaryPress"
+  delegate_to: localhost
+
+- name: Power On the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: power_state_set
+    data:
+      name: '{{ server_hardware_hostname }}'
+      powerStateData:
+        powerState: "On"
+        powerControl: "MomentaryPress"
+  delegate_to: localhost
+
+- name: Refresh the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: refresh_state_set
+    data:
+      name: '{{ server_hardware_hostname }}'
+      refreshStateData:
+        refreshState: "RefreshPending"
+  delegate_to: localhost
+
+- name: Update the Server Hardware iLO firmware version
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: ilo_firmware_version_updated
+    data:
+      name: '{{ server_hardware_hostname }}'
+  delegate_to: localhost
+
+- name: Reset the Server Hardware iLO State
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: ilo_state_reset
+    data:
+      name: '{{ server_hardware_hostname }}'
+  delegate_to: localhost
+
+- name: Set the server UID state off
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: uid_state_off
+    data:
+      name: '{{ server_hardware_hostname }}'
+  delegate_to: localhost
+
+- name: Remove the server hardware by its IP
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: '{{ server_hardware_hostname }}'
+  when: contents.variant == 'C7000'
+  delegate_to: localhost
+
+- name: Do nothing when the server hardware is already removed
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: '{{ server_hardware_hostname }}'
+  when: contents.variant == 'C7000'
+  delegate_to: localhost

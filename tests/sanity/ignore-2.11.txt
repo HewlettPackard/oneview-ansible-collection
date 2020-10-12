@@ -1,5 +1,4 @@
 plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
-tests/unit/utils/hpe_test_utils.py pylint:ansible-format-automatic-specification
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/oneview_certificates_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server_facts.py validate-modules:missing-gplv3-license
@@ -8,6 +7,9 @@ plugins/modules/oneview_storage_system.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_system_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_enclosure.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_enclosure_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_enclosure_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_uplink_set.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_uplink_set_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_ethernet_network.py validate-modules:missing-gplv3-license
@@ -22,6 +24,11 @@ plugins/modules/oneview_version_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_server_hardware.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_server_hardware_type.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_server_hardware_type_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py pylint:ansible-format-automatic-specification
@@ -54,3 +61,4 @@ plugins/modules/oneview_logical_interconnect_group_facts.py validate-modules:mis
 plugins/modules/oneview_enclosure_group.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:parameter-list-no-elements
+tests/unit/utils/hpe_test_utils.py pylint!skip
