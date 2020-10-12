@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: oneview_server_hardware_facts
   author: Yuvarani Chidambaram
-  description: Ansible role to manage OneView Server Hwardware Facts resources.
+  description: Ansible role to manage OneView Server Hardware Facts resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9
