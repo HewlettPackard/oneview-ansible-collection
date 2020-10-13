@@ -1,0 +1,25 @@
+---
+    - name: Gather facts about all Server Hardware Types
+      oneview_server_hardware_type_facts:
+        config: "{{ config }}"
+      delegate_to: localhost
+    - debug: var={{server_hardware_types | map(attribute='name') | list }}
+
+    - name: Gather paginated, filtered and sorted facts about Server Hardware Types
+      oneview_server_hardware_type_facts:
+        config: "{{ config }}"
+        params:
+          start: 0
+          count: 5
+          sort: name:ascending
+          filter: formFactor='HalfHeight'
+      delegate_to: localhost
+
+    - debug: var={{server_hardware_types | map(attribute='name') | list }}
+
+    - name: Gather facts about a Server Hardware Type by name
+      oneview_server_hardware_type_facts:
+        config: "{{ config }}"
+        name: "SY 480 Gen9 1"
+      delegate_to: localhost
+    - debug: var=server_hardware_types

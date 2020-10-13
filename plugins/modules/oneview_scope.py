@@ -32,7 +32,7 @@ description:
       adding or removing resource assignments.
 version_added: "2.3.0"
 requirements:
-    - "python >= 3.4.2"
+    - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
 author: "Mariana Kreisig (@marikrg)"
 options:

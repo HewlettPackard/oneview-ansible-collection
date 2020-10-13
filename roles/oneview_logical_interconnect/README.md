@@ -2,11 +2,11 @@
 Manage OneView Logical Interconnect resources.
 
 #### Synopsis
- Provides an interface to manage Logical Interconnect resources.
+Provides an interface to manage Logical Interconnect resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -22,7 +22,7 @@ Manage OneView Logical Interconnect resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_interconnect
 ```

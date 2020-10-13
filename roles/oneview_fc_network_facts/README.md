@@ -5,7 +5,7 @@ Retrieve the facts about one or more of the OneView Fibre Channel Networks
  Retrieve the facts about one or more of the Fibre Channel Networks from OneView.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -20,7 +20,7 @@ Retrieve the facts about one or more of the OneView Fibre Channel Networks
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_fc_network_facts
 ```

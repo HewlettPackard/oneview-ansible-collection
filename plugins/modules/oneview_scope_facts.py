@@ -31,7 +31,7 @@ description:
     - Retrieve facts about one or more of the Scopes from OneView.
 version_added: "2.3.0"
 requirements:
-    - "python >= 3.4.2"
+    - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
@@ -116,10 +116,10 @@ class ScopeFactsModule(OneViewModuleBase):
     def execute_module(self):
         name = self.module.params.get('name')
         if name:
-            scope = self.oneview_client.scopes.get_by_name(name)
-            scopes = [scope] if scope else []
+            scope = self.resource_client.get_by_name(name)
+            scopes = scope.data if scope else None
         else:
-            scopes = self.oneview_client.scopes.get_all(**self.facts_params)
+            scopes = self.resource_client.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(scopes=scopes))
 
