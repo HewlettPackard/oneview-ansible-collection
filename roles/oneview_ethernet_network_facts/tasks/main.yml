@@ -1,0 +1,29 @@
+---
+    - name: Gather facts about all Ethernet Networks
+      oneview_ethernet_network_facts:
+        config: "{{ config }}"
+      delegate_to: localhost
+
+    - name: Gather paginated, sorted and filtered facts about Ethernet Networks
+      oneview_ethernet_network_facts:
+        config: "{{ config }}"
+        params:
+          start: 0
+          count: 3
+          sort: 'name:descending'
+          filter: "purpose=General"
+
+    - name: Gather facts about an Ethernet Network by name
+      oneview_ethernet_network_facts:
+        config: "{{ config }}"
+        name: "{{ name }}"
+      delegate_to: localhost
+
+    - name: Gather facts about an Ethernet Network by name with options
+      oneview_ethernet_network_facts:
+        config: "{{ config }}"
+        name: "{{ name }}"
+        options:
+          - associatedProfiles
+          - associatedUplinkGroups
+      delegate_to: localhost

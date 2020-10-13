@@ -5,7 +5,7 @@ Retrieve facts about one or more of the OneView Logical Interconnect Groups
 Retrieve facts about one or more of the Logical Interconnect Groups from OneView
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -21,7 +21,7 @@ Retrieve facts about one or more of the Logical Interconnect Groups from OneView
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_interconnect_group_facts
 ```
