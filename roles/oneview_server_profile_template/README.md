@@ -23,7 +23,7 @@ Manage OneView Server Profile Template resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_server_profile_tempalte
 ```
