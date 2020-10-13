@@ -13,7 +13,7 @@ Manage OneView Server Profile Template Facts resources.
 | Parameter     | Required    | Default  | Choices    | Comments |
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
-| data  |   Yes  |  | |  List with the Scopes properties.  |
+| data  |   Yes  |  | |  List with the Server Profile properties.  |
 | state  |   |  | <ul> <li>present</li>  <li>absent</li>   </ul> |  Indicates the desired state for the resource. `present` ensures data properties are compliant with OneView. `absent` removes the resource from OneView, if it exist. This operation is non-idempotent.  |
 | validate_etag  |   |  True  | <ul> <li>true</li>  <li>false</li> </ul> |  When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag for the resource matches the ETag provided in the data.  |
 
@@ -23,7 +23,7 @@ Manage OneView Server Profile Template Facts resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_server_profile_template_facts
 ```
