@@ -1,0 +1,21 @@
+---
+# defaults file for oneview_enclosure
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_enclosure/files/oneview_config.json"
+enclosure_name: "0000A66101"
+enclosure_framelink_ipv6: "fe80::2:0:d:1"
+variant: "Synergy"
+scope_uris: 
+   - "/rest/scopes/5438f376-b61f-45b1-8c11-052a48a474ad"
+csr_data:
+  type: "CertificateDtoV2"
+  organization: "HPE"
+  organizationalUnit: "IT"
+  locality: 'Fort Collins'
+  state: "Colorado"
+  country: "US"
+  commonName: 'e10-oa'
+bay_number: 1 #Required for C7000
+#Required to import a certificate signing request
+certificate_data:
+  type: "CertificateDataV2"
+  base64Data: "certificate"
