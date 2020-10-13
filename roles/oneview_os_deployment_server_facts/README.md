@@ -6,7 +6,7 @@ Manage OneView Oneview OS Deployment Server Facts resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.8.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
