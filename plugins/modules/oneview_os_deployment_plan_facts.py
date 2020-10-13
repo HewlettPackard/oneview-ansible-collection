@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
+# Copyright (2019-2020) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ description:
 version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
-    - "hpeOneView >= 5.8.0"
+    - "hpeOneView >= 5.4.0"
 author:
     - Abilio Parada (@abiliogp)
     - Gustavo Hennig (@GustavoHennig)

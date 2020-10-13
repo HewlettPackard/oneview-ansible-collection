@@ -1,0 +1,58 @@
+---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
+  
+- name: Create a Hypervisor Manager
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ hypervisor_manager_name }}"
+      displayName: 'vcenter'
+      hypervisorType: 'Vmware'
+      username: 'dcs'
+      password: 'dcs'
+  delegate_to: localhost
+  register: hyp_mgr_1
+
+- name: Do nothing with the Hypervisor Manager when no changes are provided
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ hypervisor_manager_name }}"
+      displayName: 'vcenter'
+      hypervisorType: 'Vmware'
+  delegate_to: localhost
+
+- name: Update the Hypervisor Manager changing the attribute displayName
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ hypervisor_manager_name }}"
+      displayName: 'vcenter renamed'
+      hypervisorType: 'Vmware'
+      username: 'dcs'
+      password: 'dcs'
+  delegate_to: localhost
+
+- name: Delete the Hypervisor Manager
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: absent
+    data: "{{ hyp_mgr_1.ansible_facts.hypervisor_manager }}"
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when Hypervisor Manager is absent
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: absent
+    data: "{{ hyp_mgr_1.ansible_facts.hypervisor_manager }}"
+  delegate_to: localhost
+  register: deleted
