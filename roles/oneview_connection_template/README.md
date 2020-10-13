@@ -5,7 +5,7 @@ Manage the OneView Connection Template resources.
  Provides an interface to manage the Connection Template resources. Can update.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -21,7 +21,7 @@ Manage the OneView Connection Template resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_connection_template
 ```

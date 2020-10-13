@@ -5,7 +5,7 @@ Retrieve facts about one or more of the OneView Logical Enclosures.
 Retrieve facts about one or more of the Logical Enclosures from OneView.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -22,7 +22,7 @@ Retrieve facts about one or more of the Logical Enclosures from OneView.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_enclosure_facts
 ```
