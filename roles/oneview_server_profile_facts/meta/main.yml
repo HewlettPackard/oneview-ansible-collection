@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: oneview_server_profile_facts
-  author: Chebrolu Bala Sai Harika
+  author: Asis Bagga
   description: Ansible role to manage OneView Server Profile Facts resources.
   company: Hewlett Packard Enterprise
   license: Apache
