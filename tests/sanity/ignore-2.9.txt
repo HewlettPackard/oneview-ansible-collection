@@ -70,4 +70,6 @@ plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_os_deployment_server_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_os_deployment_server_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:parameter-list-no-elements
 tests/unit/utils/hpe_test_utils.py pylint!skip
