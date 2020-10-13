@@ -5,7 +5,7 @@ Manage OneView Enclosure Group resources.
 Provides an interface to manage Enclosure Group resources. Can create, update, or delete.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -21,7 +21,7 @@ Provides an interface to manage Enclosure Group resources. Can create, update, o
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_enclosure_group
 ```

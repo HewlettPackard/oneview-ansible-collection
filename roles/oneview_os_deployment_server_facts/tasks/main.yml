@@ -1,0 +1,40 @@
+---
+- name: Gather facts about all OS Deployment Servers
+  oneview_os_deployment_server_facts:
+    config: "{{ config }}"
+
+- debug: var=os_deployment_servers
+
+- name: Gather paginated, filtered and sorted facts about OS Deployment Servers
+  oneview_os_deployment_server_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=Error'
+
+- debug: var=os_deployment_servers
+
+- name: Gather facts about an OS Deployment Server by name
+  oneview_os_deployment_server_facts:
+    config: "{{ config }}"
+    name: "I3s-Deployment Server"
+  delegate_to: localhost
+
+- debug: var=os_deployment_servers
+
+- name: Gather facts about an OS Deployment Server by name with options
+  oneview_os_deployment_server_facts:
+    config: "{{ config }}"
+    name: 'Test-OS Deployment Server'
+    options:
+      - networks
+      - appliances
+      - appliance: '0000A66102, appliance 2'
+  delegate_to: localhost
+
+- debug: var=os_deployment_servers
+- debug: var=os_deployment_server_networks
+- debug: var=os_deployment_server_appliances
+- debug: var=os_deployment_server_appliance

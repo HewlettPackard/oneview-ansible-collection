@@ -57,14 +57,15 @@ class TestScopeFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_scope_by_name(self):
-        self.resource.get_by_name.return_value = SCOPE_2
+        self.resource.data = SCOPE_2
+        self.resource.get_by_name.return_value = self.resource
         self.mock_ansible_module.params = copy.deepcopy(PARAMS_GET_BY_NAME)
 
         ScopeFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(scopes=[SCOPE_2])
+            ansible_facts=dict(scopes=SCOPE_2)
         )
 
 

@@ -2,11 +2,11 @@
 Retrieve facts about Storage Volume Templates of the OneView.
 
 #### Synopsis
- Retrieve facts about Storage Volume Templates of the OneView.
+Retrieve facts about Storage Volume Templates of the OneView.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.0.0
+  * hpeOneView >= 5.4.0
 
 #### Options
 
@@ -22,7 +22,7 @@ Retrieve facts about Storage Volume Templates of the OneView.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_storage_volume_template_facts
 ```

@@ -1,0 +1,25 @@
+---
+- name: Gather facts about all Hypervisor Managers
+  oneview_hypervisor_manager_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=hypervisor_managers
+
+- name: Gather paginated, filtered and sorted facts about Hypervisor Managers
+  oneview_hypervisor_manager_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'hypervisorType=Vmware'
+- debug: var=hypervisor_managers
+
+- name: Gather facts about a Hypervisor Manager by name
+  oneview_hypervisor_manager_facts:
+    config: "{{ config }}"
+    name: "172.18.13.11"
+  delegate_to: localhost
+
+- debug: var=hypervisor_managers

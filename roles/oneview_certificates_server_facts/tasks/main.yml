@@ -1,0 +1,16 @@
+---
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    remote: "{{ remote_server }}"
+  delegate_to: localhost
+
+- debug: var=remote_certificate['certificateDetails'][0]['base64Data']
+
+- name: Gather facts about a Server Certificate by alias_name
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    aliasName: "172.18.13.11"
+  delegate_to: localhost
+
+- debug: var=certificates_server

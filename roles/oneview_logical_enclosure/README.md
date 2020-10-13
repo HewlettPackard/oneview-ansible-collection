@@ -5,7 +5,7 @@ Manage OneView Logical Enclosure resources.
 Provides an interface to manage Logical Enclosure resources. Can create, update, update firmware, perform dump, update configuration script, reapply configuration, update from group, or delete.
 
 #### Requirements (on the host that executes the module)
-  * python >= 3.4.2
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
@@ -21,7 +21,7 @@ Provides an interface to manage Logical Enclosure resources. Can create, update,
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_logical_enclosure
 ```

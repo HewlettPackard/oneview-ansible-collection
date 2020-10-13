@@ -1,0 +1,61 @@
+---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+  when: contents.api_version|string|length == 0
+  register: version
+
+- name: Print currentVersion if an apiVersion is not specified in config file
+  set_fact:
+    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
+  when: contents.api_version|string|length == 0
+
+- name: Print currentVersion if an apiVersion is specified in config file
+  set_fact:
+    currentVersion: "{{ contents.api_version }}"
+  when: contents.api_version|string|length != 0
+
+- name: Create a Network Set
+  oneview_network_set:
+    config: '{{ config }}'
+    state: present
+    data:
+      name: 'OneViewSDK Test Network Set'
+      networkUris:
+        - '{{ ethernet_network_1_name }}'  # can be a name
+        - '{{ ethernet_network_2_uri }}'   # or a URI
+      bandwidth:
+        maximumBandwidth: 15000
+        typicalBandwidth: 3000
+  delegate_to: localhost
+
+# Scope update is only supported V300 and V500
+- name: Update the Network set with two scopes
+  oneview_network_set:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: OneViewSDK Test Network Set
+      scopeUris: "{{ network_scope_uris }}"
+  delegate_to: localhost
+  when: currentVersion >= '300' and currentVersion <= '500'
+
+- name: Update the Network Set name to 'OneViewSDK Test Network Set - Renamed' and change the associated networks
+  oneview_network_set:
+    config: '{{ config }}'
+    state: present
+    data:
+      name: 'OneViewSDK Test Network Set'
+      newName: 'OneViewSDK Test Network Set - Renamed'
+      networkUris:
+        - '{{ ethernet_network_1_name }}'
+  delegate_to: localhost
+
+- name: Delete the Network Set
+  oneview_network_set:
+    config: '{{ config }}'
+    state: absent
+    data:
+      name: 'OneViewSDK Test Network Set - Renamed'
+  delegate_to: localhost
