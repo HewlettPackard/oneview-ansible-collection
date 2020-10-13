@@ -1,0 +1,90 @@
+---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version|length == 0
+  register: version
+
+- name: Print currentVersion if an apiVersion is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
+  when: contents.api_version|length == 0
+
+- name: Print currentVersion if an apiVersion is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version|length != 0
+
+- name: Gather facts about all Server Profile Templates
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=server_profile_templates
+
+- name: Gather paginated, filtered and sorted facts about Server Profile Templates
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: name:ascending
+      filter: macType='Virtual'
+      scope_uris: "{{ scope_uris }}" #Supported only for OneView API version >= 600
+  delegate_to: localhost
+
+- debug: var=server_profile_templates
+
+- name: Gather facts about a Server Profile Template by name
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    name: "{{ server_profile_template_name }}"
+  delegate_to: localhost
+
+- debug: var=server_profile_templates
+
+- name: Gather facts about a Server Profile Template by URI
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    uri: "{{server_profile_templates[0]['uri']}}"
+  delegate_to: localhost
+
+- name: Gather facts about a template and a profile with the configuration based on this template
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    name: "{{ server_profile_template_name }}"
+    options:
+      - new_profile
+  delegate_to: localhost
+
+- debug: var=server_profile_templates
+- debug: var=new_profile
+
+# This option is available for API version 300 or later.
+- name: Transform an existing profile template by supplying a new server hardware type and/or enclosure group.
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    name: "{{ server_profile_template_name }}"
+    options:
+      - transformation:
+          enclosure_group_uri: "{{ enclosure_group_uri }}"
+          server_hardware_type_uri: "{{ server_hardware_type_uri }}"
+  delegate_to: localhost
+  when: currentVersion >= '300'
+
+- debug: var=transformation
+
+# This option is available only for API version >= 600.
+- name: Gather facts about available networks
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    options:
+      - available_networks:
+          serverHardwareTypeUri: "{{server_hardware_type_uri}}"
+          enclosureGroupUri: "{{enclosure_group_uri}}"
+
+  delegate_to: localhost
+  when: currentVersion >= '600'
+
+- debug: var=server_profile_template_available_networks

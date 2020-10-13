@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  role_name: oneview_server_profile_template_facts
+  author: Asis Bagga
+  description: Ansible role to manage OneView Server Profile Template Facts Resources.
+  company: Hewlett Packard Enterprise
+  license: Apache
+  min_ansible_version: 5.4.0
+  min_python_version: 2.7.9
+  platforms: []
+  galaxy_tags:
+    - ansible
+    - hpe-oneview
+    - ansible-modules
+    - sdk
+dependencies: ['oneview_enclosure_group', 'oneview_server_hardware_type', 'oneview_scope_uris']
