@@ -1,0 +1,29 @@
+---
+- name: Ensure that the Deployment Server is present
+  oneview_os_deployment_server:
+    config: "{{ config_file_path }}"
+    state: present
+    data:
+      name: 'Test Deployment Server'
+      description: "OS Deployment Server"
+      mgmtNetworkName: "Mgmt Network"
+      applianceName: "0000A66103, appliance 2"
+
+- debug: var=os_deployment_server
+
+- name: Ensure that the Deployment Server is present with name 'Renamed Deployment Server'
+  oneview_os_deployment_server:
+    config: "{{ config_file_path }}"
+    state: present
+    data:
+      name: 'Test Deployment Server'
+      newName: 'Renamed Deployment Server'
+
+- debug: var=os_deployment_server
+
+- name: Ensure that the Deployment Server is absent
+  oneview_os_deployment_server:
+    config: "{{ config_file_path }}"
+    state: absent
+    data:
+      name: 'Renamed Deployment Server'
