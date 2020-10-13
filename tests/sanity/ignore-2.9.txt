@@ -69,7 +69,6 @@ plugins/modules/oneview_enclosure_group.py validate-modules:missing-gplv3-licens
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_server_profile.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_server_profile.py pylint:raise-missing-from
 plugins/modules/oneview_server_profile_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_server_profile_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_server_profile_template_facts.py validate-modules:missing-gplv3-license
