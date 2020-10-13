@@ -23,7 +23,7 @@ Manage OneView OS Deployment Server resources.
 ```yaml
 - hosts: all
   collections:
-    - name: hpe.oneview
+    - hpe.oneview
   roles:
     - hpe.oneview.oneview_os_deployment_server
 ```

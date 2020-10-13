@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: oneview_os_deployment_server_facts
+  role_name: oneview_os_deployment_server
   author: Asis Bagga
   description: Ansible role to manage OneView OS Deployment Server resources.
   company: Hewlett Packard Enterprise
