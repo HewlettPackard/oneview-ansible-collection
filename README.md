@@ -9,7 +9,7 @@ This collection provides a series of Ansible modules and plugins for interacting
 
  - Ansible >= 2.9
  - python >= 2.7.9
- - [![HPE OneView Python SDK](https://pypi.org/project/hpeOneView/)
+ - [HPE OneView Python SDK](https://pypi.org/project/hpeOneView/)
 
 # Installation
 To install HPEOneView collection hosted in Galaxy
@@ -34,7 +34,7 @@ To install dependency packages
 
 #### Using a JSON Configuration File
 
-To use the Ansible OneView modules, you can store the configuration on a JSON file. This file is used to define the
+To use the HPEOneView collection, you can store the configuration in a JSON file. This file is used to define the
 settings, which will be used on the OneView appliance connection, like hostname, username, and password. Here's an
 example:
 
@@ -61,7 +61,7 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
 
 :lock: Tip: Check the file permissions since the password is stored in clear-text.
 
-The configuration file path must be provided for all of the playbooks `config` arguments. For example:
+The configuration file path must be provided for all of the roles `config` arguments. For example:
 
 ```yml
 - name: Gather facts about the FCoE Network with name 'FCoE Network Test'
@@ -74,7 +74,7 @@ Once you have defined the config variables, you can run the roles.
 
 #### Parameters in roles
 
-The third way to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
+The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
 
 This option allows the parameters `hostname`, `username`, `password`, `api_version` and `image_streamer_hostname` to be passed directly inside your task.
 
