@@ -26,6 +26,7 @@ ansible-galaxy collection install hpe.oneview --force
 To install HPE OneView collection from GitHub
 ```bash
 git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
+cd oneview-ansible-collection
 ansible-galaxy collection build .
 ansible-galaxy collection install <tar_file>
 ```
