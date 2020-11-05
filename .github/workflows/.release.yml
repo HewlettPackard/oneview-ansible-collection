@@ -7,8 +7,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
     steps:
     - name: Check out code
       uses: actions/checkout@v1
@@ -23,9 +21,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install ansible
 
+    - name: Setup environment for collection publish
+      run: |
+        echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+
     - name: Build and publish
-      env:
-        ANSIBLE_GALAXY_API_KEY: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
       run: |
         ansible-galaxy collection build .
-        ansible-galaxy collection publish *.tar.gz --api-key $ANSIBLE_GALAXY_API_KEY
+        ansible-galaxy collection publish hpe-oneview-${{ env.RELEASE_VERSION }}.tar.gz --api-key="${{ secrets.GALAXY_API_TOKEN }}"
