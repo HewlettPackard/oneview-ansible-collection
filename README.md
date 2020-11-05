@@ -12,16 +12,22 @@ This collection provides a series of Ansible modules and plugins for interacting
  - [HPE OneView Python SDK](https://pypi.org/project/hpeOneView/)
 
 # Installation
-To install HPEOneView collection hosted in Galaxy
+To install HPE OneView collection hosted in Galaxy
 
 ```bash
 ansible-galaxy collection install hpe.oneview
 ```
 
-To upgrade to the latest version of Azure collection:
+To upgrade to the latest version of HPE OneView:
 
 ```bash
 ansible-galaxy collection install hpe.oneview --force
+```
+To install HPE OneView collection from GitHub
+```bash
+git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
+ansible-galaxy collection build .
+ansible-galaxy collection install <tar_file>
 ```
 
 To install dependency packages
@@ -34,7 +40,7 @@ To install dependency packages
 
 #### Using a JSON Configuration File
 
-To use the HPEOneView collection, you can store the configuration in a JSON file. This file is used to define the
+To use the HPE OneView collection, you can store the configuration in a JSON file. This file is used to define the
 settings, which will be used on the OneView appliance connection, like hostname, username, and password. Here's an
 example:
 
@@ -145,11 +151,11 @@ export ONEVIEWSDK_IMAGE_STREAMER_IP='100.100.100.100'
 
 Playbooks
 
-To use a module from HPEOneView collection, please reference the full namespace, collection name, and modules name that you want to use:
+To use a module from HPE OneView collection, please reference the full namespace, collection name, and modules name that you want to use:
 
 ```bash
 ---
-- name: Using HPEOneView collection
+- name: Using HPE OneView collection
   hosts: all
   collections:
     - hpe.oneview
