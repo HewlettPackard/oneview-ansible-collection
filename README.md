@@ -36,6 +36,13 @@ To install dependency packages
   ```bash
   pip install -r requirements.txt
   ```
+To install HPE OneView collection from Docker Image
+
+```bash
+docker build -t oneview-ansible-collections .
+docker run -it --rm -v (pwd)/:/root/oneview-ansible-collections oneview-ansible-collections
+```
+That's it. If you would like to modify any role, simply modify role and re-run the image.
 
 ###  OneViewClient Configuration
 
