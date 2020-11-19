@@ -12,7 +12,6 @@ jobs:
         - 3.7
         ansible:
         - stable-2.10
-        - devel
     runs-on: ubuntu-latest
     steps:
 
@@ -35,7 +34,7 @@ jobs:
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-
+ 
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
 
