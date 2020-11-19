@@ -32,7 +32,9 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import os, yaml, json
+import os
+import yaml
+import json
 cwd = os.getcwd()
 path = cwd + '/roles'
 for dirpath, dirname, filename in os.walk(path):
@@ -48,11 +50,11 @@ for dirpath, dirname, filename in os.walk(path):
             json_object["credentials"]["password"] = "<password>"
             json_object["credentials"]["image_streamer_ip"] = "<image_streamer_ip>"
             config_file = open(path, "w")
-            json.dump(json_object, config_file, indent = 2)
+            json.dump(json_object, config_file, indent=2)
         if updated_path.split("/")[-2] == 'defaults' and fname == 'main.yml':
             with open(path, 'r') as stream:
                 content = yaml.load(stream)
-            for k,v in content.items():
+            for k, v in content.items():
                 if (str(v).count('.')) >= 3:
                     content[k] = "<" + k + "_ip>"
             with open(path, "w") as f:
