@@ -55,7 +55,7 @@ for dirpath, dirname, filename in os.walk(path):
             with open(path, 'r') as stream:
                 content = yaml.load(stream)
             for k, v in content.items():
-                if (str(v).count('.')) >= 3:
+                if (str(v).count('.')) >= 3 or str(k).find("username") != -1 or str(k).find("password") != -1:
                     content[k] = "<" + k + "_ip>"
             with open(path, "w") as f:
                 yaml.dump(content, f)
