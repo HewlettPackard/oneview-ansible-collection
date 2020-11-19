@@ -2,5 +2,5 @@
 # defaults file for oneview_hypervisor_manager
 
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_manager/files/oneview_config.json"
-hypervisor_manager_name: '172.18.13.11'
+hypervisor_manager_name: '<hypervisor_manager_name>'
 contents: "{{lookup('file', config)}}"

@@ -4,6 +4,6 @@ config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_st
 contents: "{{lookup('file', config)}}"
 storage_domain: 'TestDomain'
 storage_system_name: 'ThreePAR-2'
-storage_system_ip: '172.18.11.12'
-storage_system_username: 'dcs'
-storage_system_password: 'dcs'
+storage_system_ip: '<storage_system_ip>'
+storage_system_username: '<storage_system_username>'
+storage_system_password: '<storage_system_password>'

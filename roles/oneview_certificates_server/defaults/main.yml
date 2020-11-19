@@ -2,6 +2,6 @@
 # defaults file for oneview_certificates_server
 
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_certificates_server/files/oneview_config.json"
-remote_server: '172.18.13.11'
+remote_server: "<remote_server_ip>"
 contents: "{{lookup('file', config)}}"
 name: ""
