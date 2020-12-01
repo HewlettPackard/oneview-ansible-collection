@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2017) Hewlett Packard Enterprise Development LP
+# Copyright (2020) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -150,7 +150,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_typ
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile import ServerProfileModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_facts import ServerProfileFactsModule
-from ansible_collections.hpe.oneview.plugins.modulesoneview_server_profile_template import ServerProfileTemplateModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_template import ServerProfileTemplateModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_pool import StoragePoolModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_pool_facts import StoragePoolFactsModule
