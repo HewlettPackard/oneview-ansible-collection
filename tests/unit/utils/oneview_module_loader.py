@@ -106,7 +106,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_hypervisor_manager_
 from ansible_collections.hpe.oneview.plugins.modules.oneview_interconnect import InterconnectModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_interconnect_facts import InterconnectFactsModule
 # from oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
-# from oneview_interconnect_type_facts import InterconnectTypeFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from oneview_internal_link_set_facts import InternalLinkSetFactsModule
 # from oneview_logical_downlinks_facts import LogicalDownlinksFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_enclosure import LogicalEnclosureModule
@@ -124,9 +124,9 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_interconnec
 # from oneview_managed_san_facts import ManagedSanFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_network_set import NetworkSetModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_network_set_facts import NetworkSetFactsModule
-# from oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
-# from oneview_os_deployment_server import OsDeploymentServerModule
-# from oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_server import OsDeploymentServerModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
 # from oneview_power_device import PowerDeviceModule
 # from oneview_power_device_facts import PowerDeviceFactsModule
 # from oneview_rack import RackModule
@@ -166,8 +166,8 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_volume_temp
 from ansible_collections.hpe.oneview.plugins.modules.oneview_task_facts import TaskFactsModule
 # from oneview_unmanaged_device import UnmanagedDeviceModule
 # from oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
-# from oneview_uplink_set import UplinkSetModule
-# from oneview_uplink_set_facts import UplinkSetFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_uplink_set import UplinkSetModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_uplink_set_facts import UplinkSetFactsModule
 # from oneview_user import UserModule
 # from oneview_user_facts import UserFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_volume import VolumeModule
