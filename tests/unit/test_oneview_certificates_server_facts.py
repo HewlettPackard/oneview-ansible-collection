@@ -20,7 +20,7 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import CertificatesServerFactsModule
 
 PRESENT_CERTIFICATES = {
@@ -45,7 +45,7 @@ DICT_DEFAULT_CERTIFICATE = PRESENT_CERTIFICATES["data"]
 
 
 @pytest.mark.resource(TestCertificatesServerFactsModule='certificates_server')
-class TestCertificatesServerFactsModule(OneViewBaseTest):
+class TestCertificatesServerFactsModule(OneViewBaseFactsTest):
     def test_should_get_remote_certificate(self):
         self.resource.data = DICT_DEFAULT_CERTIFICATE
         self.resource.get_remote.return_value = self.resource
