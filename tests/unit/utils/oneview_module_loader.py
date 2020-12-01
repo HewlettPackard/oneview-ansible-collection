@@ -34,7 +34,6 @@ sys.modules['ansible.module_utils.oneview'] = oneview
 sys.modules['ansible.module_utils.icsp'] = icsp
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
-                                                                          OneViewClient,
                                                                           OneViewModuleException,
                                                                           OneViewModuleTaskError,
                                                                           OneViewModuleValueError,
@@ -71,35 +70,35 @@ from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
 # from oneview_appliance_device_snmp_v3_users_facts import ApplianceDeviceSnmpV3UsersFactsModule
 # from oneview_appliance_time_and_locale_configuration_facts import ApplianceTimeAndLocaleConfigurationFactsModule
 # from oneview_appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfigurationModule
-# from oneview_certificates_server import CertificatesServerModule
-# from oneview_certificates_server_facts import CertificatesServerFactsModule
-# from oneview_connection_template import ConnectionTemplateModule
-# from oneview_connection_template_facts import ConnectionTemplateFactsModule
+from oneview_certificates_server import CertificatesServerModule
+from oneview_certificates_server_facts import CertificatesServerFactsModule
+from oneview_connection_template import ConnectionTemplateModule
+from oneview_connection_template_facts import ConnectionTemplateFactsModule
 # from oneview_datacenter import DatacenterModule
 # from oneview_datacenter_facts import DatacenterFactsModule
 # from oneview_drive_enclosure import DriveEnclosureModule
 # from oneview_drive_enclosure_facts import DriveEnclosureFactsModule
-# from oneview_enclosure import EnclosureModule
-# from oneview_enclosure_facts import EnclosureFactsModule
-# from oneview_enclosure_group import EnclosureGroupModule
-# from oneview_enclosure_group_facts import EnclosureGroupFactsModule
-# from oneview_ethernet_network import EthernetNetworkModule
-# from oneview_ethernet_network_facts import EthernetNetworkFactsModule
+from oneview_enclosure import EnclosureModule
+from oneview_enclosure_facts import EnclosureFactsModule
+from oneview_enclosure_group import EnclosureGroupModule
+from oneview_enclosure_group_facts import EnclosureGroupFactsModule
+from oneview_ethernet_network import EthernetNetworkModule
+from oneview_ethernet_network_facts import EthernetNetworkFactsModule
 # from oneview_event import EventModule
 # from oneview_event_facts import EventFactsModule
 # from oneview_fabric import FabricModule
 # from oneview_fabric_facts import FabricFactsModule
 from oneview_fc_network import FcNetworkModule
 from oneview_fc_network_facts import FcNetworkFactsModule
-# from oneview_fcoe_network import FcoeNetworkModule
-# from oneview_fcoe_network_facts import FcoeNetworkFactsModule
+from oneview_fcoe_network import FcoeNetworkModule
+from oneview_fcoe_network_facts import FcoeNetworkFactsModule
 # from oneview_firmware_bundle import FirmwareBundleModule
 # from oneview_firmware_driver import FirmwareDriverModule
 # from oneview_firmware_driver_facts import FirmwareDriverFactsModule
-# from oneview_hypervisor_cluster_profile import HypervisorClusterProfileModule
-# from oneview_hypervisor_cluster_profile_facts import HypervisorClusterProfileFactsModule
-# from oneview_hypervisor_manager import HypervisorManagerModule
-# from oneview_hypervisor_manager_facts import HypervisorManagerFactsModule
+from oneview_hypervisor_cluster_profile import HypervisorClusterProfileModule
+from oneview_hypervisor_cluster_profile_facts import HypervisorClusterProfileFactsModule
+from oneview_hypervisor_manager import HypervisorManagerModule
+from oneview_hypervisor_manager_facts import HypervisorManagerFactsModule
 # from oneview_id_pools_ipv4_subnet import IdPoolsIpv4SubnetModule
 # from oneview_id_pools_ipv4_subnet_facts import IdPoolsIpv4SubnetFactsModule
 # from oneview_id_pools_ipv4_range import IdPoolsIpv4RangeModule
@@ -110,12 +109,12 @@ from oneview_interconnect_facts import InterconnectFactsModule
 # from oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from oneview_internal_link_set_facts import InternalLinkSetFactsModule
 # from oneview_logical_downlinks_facts import LogicalDownlinksFactsModule
-# from oneview_logical_enclosure import LogicalEnclosureModule
-# from oneview_logical_enclosure_facts import LogicalEnclosureFactsModule
+from oneview_logical_enclosure import LogicalEnclosureModule
+from oneview_logical_enclosure_facts import LogicalEnclosureFactsModule
 from oneview_logical_interconnect import LogicalInterconnectModule
 from oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
-# from oneview_logical_interconnect_group import LogicalInterconnectGroupModule
-# from oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
+from oneview_logical_interconnect_group import LogicalInterconnectGroupModule
+from oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
 # from oneview_logical_switch import LogicalSwitchModule
 # from oneview_logical_switch_facts import LogicalSwitchFactsModule
 # from oneview_logical_switch_group import LogicalSwitchGroupModule
@@ -123,8 +122,8 @@ from oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
 # from oneview_login_detail_facts import LoginDetailFactsModule
 # from oneview_managed_san import ManagedSanModule
 # from oneview_managed_san_facts import ManagedSanFactsModule
-# from oneview_network_set import NetworkSetModule
-# from oneview_network_set_facts import NetworkSetFactsModule
+from oneview_network_set import NetworkSetModule
+from oneview_network_set_facts import NetworkSetFactsModule
 # from oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
 # from oneview_os_deployment_server import OsDeploymentServerModule
 # from oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
@@ -143,16 +142,16 @@ from oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
 # from oneview_sas_logical_interconnect_group_facts import SasLogicalInterconnectGroupFactsModule
 # from oneview_sas_logical_jbod_attachment_facts import SasLogicalJbodAttachmentFactsModule
 # from oneview_sas_logical_jbod_facts import SasLogicalJbodFactsModule
-# from oneview_scope import ScopeModule
-# from oneview_scope_facts import ScopeFactsModule
-# from oneview_server_hardware import ServerHardwareModule
-# from oneview_server_hardware_facts import ServerHardwareFactsModule
-# from oneview_server_hardware_type import ServerHardwareTypeModule
-# from oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
-# from oneview_server_profile import ServerProfileModule
-# from oneview_server_profile_facts import ServerProfileFactsModule
-# from oneview_server_profile_template import ServerProfileTemplateModule
-# from oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
+from oneview_scope import ScopeModule
+from oneview_scope_facts import ScopeFactsModule
+from oneview_server_hardware import ServerHardwareModule
+from oneview_server_hardware_facts import ServerHardwareFactsModule
+from oneview_server_hardware_type import ServerHardwareTypeModule
+from oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
+from oneview_server_profile import ServerProfileModule
+from oneview_server_profile_facts import ServerProfileFactsModule
+from oneview_server_profile_template import ServerProfileTemplateModule
+from oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
 from oneview_storage_pool import StoragePoolModule
 from oneview_storage_pool_facts import StoragePoolFactsModule
 from oneview_storage_system import StorageSystemModule
@@ -164,7 +163,7 @@ from oneview_storage_volume_template_facts import StorageVolumeTemplateFactsModu
 # from oneview_switch import SwitchModule
 # from oneview_switch_facts import SwitchFactsModule
 # from oneview_switch_type_facts import SwitchTypeFactsModule
-# from oneview_task_facts import TaskFactsModule
+from oneview_task_facts import TaskFactsModule
 # from oneview_unmanaged_device import UnmanagedDeviceModule
 # from oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
 # from oneview_uplink_set import UplinkSetModule
