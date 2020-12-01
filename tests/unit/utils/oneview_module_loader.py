@@ -46,7 +46,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           transform_list_to_dict,
                                                                           compare,
                                                                           get_logger)
-from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
+from ansible_collections.hpe.oneview.plugins.module_utils.icsp import ICspHelper
 # from image_streamer_artifact_bundle import ArtifactBundleModule
 # from image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
 # from image_streamer_build_plan import BuildPlanModule
