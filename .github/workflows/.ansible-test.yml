@@ -39,5 +39,8 @@ jobs:
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
 
+      - name: Run unit tests
+        run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
+
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
