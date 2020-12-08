@@ -54,7 +54,7 @@ example:
 
 ```json
 {
-  "ip": "<ip>",
+  "ip": "<oneview_ip>",
   "credentials": {
     "userName": "<userName>",
     "authLoginDomain": "",
