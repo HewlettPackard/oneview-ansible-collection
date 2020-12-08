@@ -2,5 +2,5 @@
 # defaults file for oneview_server_hardware_type
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_hardware_type/files/oneview_config.json"
 contents: "{{lookup('file', config)}}"
-server_hardware_type_name: 'SY 480 Gen9 1'
 server_hardware_type_name_renamed: 'DL380p Gen8 1 (new name)'
+variant: 'Synergy'

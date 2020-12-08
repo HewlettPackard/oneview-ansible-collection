@@ -1,7 +1,7 @@
 ---
 - name: Ensure that the Deployment Server is present
   oneview_os_deployment_server:
-    config: "{{ config_file_path }}"
+    config: "{{ config }}"
     state: present
     data:
       name: 'Test Deployment Server'
@@ -13,7 +13,7 @@
 
 - name: Ensure that the Deployment Server is present with name 'Renamed Deployment Server'
   oneview_os_deployment_server:
-    config: "{{ config_file_path }}"
+    config: "{{ config }}"
     state: present
     data:
       name: 'Test Deployment Server'
@@ -23,7 +23,7 @@
 
 - name: Ensure that the Deployment Server is absent
   oneview_os_deployment_server:
-    config: "{{ config_file_path }}"
+    config: "{{ config }}"
     state: absent
     data:
       name: 'Renamed Deployment Server'

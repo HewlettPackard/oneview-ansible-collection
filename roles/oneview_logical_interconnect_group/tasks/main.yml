@@ -6,14 +6,14 @@
   when: contents.api_version == ""
   register: version
 
-- name: Print currentVersion if api version is not specified in config file
+- name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: contents.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
-    currentVersion: "{{ contents.api_version | int }}"
+    currentVersion: contents.api_version | string
   when: contents.api_version != ""
 
 # Below task creates a Logical Interconnect Group with Interconnects, upLinkPorts, uplinkSets containing EthernetNetworks
@@ -22,37 +22,71 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ lig_name }}"
+      name: '{{ item.name }}'
       enclosureType: 'SY12000'
-      uplinkSets:
+      uplinkSets: 
         - name: 'e23 uplink set'
           mode: 'Auto'
           networkType: 'Ethernet'
           ethernetNetworkType: 'Tagged'
           networkNames:
-            - "{{ network_name_1 }}"
-            - "{{ network_name_2 }}"
-          networkUris:
-            - "{{ network_uri_1 }}"
+            - 'TestNetwork_1'
+            - 'TestNetwork_2'
           logicalPortConfigInfos:
-           - desiredSpeed: 'Auto'
-             logicalLocation:
+            - desiredSpeed: 'Auto'
+              logicalLocation:
                   locationEntries:
                     - relativeValue: 1
                       type: 'Enclosure'
-                    - relativeValue: 61
+                    - relativeValue: 82
                       type: 'Port'
                     - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 82
+                      type: 'Port'
+                    - relativeValue: 6
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 6
                       type: 'Bay'
         - name: 'e23 uplink set1'
           mode: 'Auto'
           networkType: 'Ethernet'
           ethernetNetworkType: 'Untagged'
-          networkUris:
-            - "{{ network_uri_4 }}"
+          networkNames:
+            - 'mgmt_nw'
           logicalPortConfigInfos:
-           - desiredSpeed: 'Auto'
-             logicalLocation:
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 62
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
                   locationEntries:
                     - relativeValue: 2
                       type: 'Enclosure'
@@ -61,7 +95,7 @@
                     - relativeValue: 6
                       type: 'Bay'
       interconnectBaySet: 3
-      enclosureIndexes: [1, 2, 3]
+      enclosureIndexes: [1,2,3]
       redundancyType: "HighlyAvailable"
       interconnectMapTemplate:
         interconnectMapEntryTemplates:
@@ -113,15 +147,18 @@
                     - relativeValue: 3
                       type: "Bay"
             permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
-           # Alternatively you can inform permittedInterconnectTypeUri
+            # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
+  with_items:
+    - { name: 'LIG' }
+    - { name: 'Test Logical Interconnect Group' }
 
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
   oneview_logical_interconnect_group:
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ lig_name }}"
+      name: 'Test Logical Interconnect Group'
       enclosureType: 'SY12000'
   delegate_to: localhost
 
@@ -130,14 +167,15 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ lig_name }}"
+      name: 'Test Logical Interconnect Group'
       enclosureType: 'SY12000'
       uplinkSets:
         - name: 'e23 uplink set2'
           mode: 'Auto'
           networkType: 'Ethernet'
-          networkUris:
-            - "{{ network_uri_3 }}"
+          networkNames:
+            - 'TestNetwork_3'
+              #                - '/rest/ethernet-networks/5cca6ddc-49b1-4c7c-9022-eadb2630d42b'
           logicalPortConfigInfos:
             - desiredSpeed: 'Auto'
               logicalLocation:
@@ -156,18 +194,18 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ lig_name }}"
+      name: 'Test Logical Interconnect Group'
       scopeUris: "{{ scope_uris }}"
-  when: currentVersion == "300" or currentVersion == "500"
   delegate_to: localhost
+  when: currentVersion >= '300' and currentVersion <= '500'
 
 - name: Rename the Logical Interconnect Group to 'Updated Logical Interconnect Group'
   oneview_logical_interconnect_group:
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ lig_name }}"
-      newName: "{{ lig_new_name }}"
+      name: 'Test Logical Interconnect Group'
+      newName: 'Updated Logical Interconnect Group'
   delegate_to: localhost
 
 - name: Delete the Logical Interconnect Group
@@ -175,7 +213,7 @@
     config: "{{ config }}"
     state: absent
     data:
-      name: "{{ lig_new_name }}"
+      name: 'Updated Logical Interconnect Group'
   delegate_to: localhost
   register: deleted
 
@@ -184,6 +222,6 @@
     config: "{{ config }}"
     state: absent
     data:
-      name: "{{ lig_new_name }}"
+      name: 'Updated Logical Interconnect Group'
   delegate_to: localhost
   register: deleted

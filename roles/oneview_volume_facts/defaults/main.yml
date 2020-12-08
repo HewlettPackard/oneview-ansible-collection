@@ -3,3 +3,4 @@
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_volume_facts/files/oneview_config.json"
 volume_name: "Testing facts"     # set a volume name to run this example
 snapshot_name: "Testing facts_20160823201021"  # set a snapshot name to run this example
+storage_volume_name: "Volume with Storage Pool"

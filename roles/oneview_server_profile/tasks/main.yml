@@ -1,14 +1,20 @@
 ---
+- name: Gather facts about all Scopes
+  oneview_scope_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
     data:
       serverProfileTemplateName: "{{ ov_template }}"
       name: "{{ inventory_hostname }}"
+      description: "{{ server_profile_description }}"
       # User should set initialScopeUris in case of scoped user
       initialScopeUris:
-        - '{{ scope1 }}'
-        - '{{ scope2 }}'
+        - "{{ scopes[0].uri }}"
+        - "{{ scopes[1].uri }}"
     params: # Supported only in API version >= 600
       force: True
   delegate_to: localhost
@@ -97,6 +103,7 @@
       name: "{{ inventory_hostname }}"
       serverHardwareTypeName: "{{ server_hardware_type_name }}"
       enclosureGroupName: "{{ enclosure_group_name }}"
+      description: "{{ server_profile_description }}"
   delegate_to: localhost
 
 - debug: var=server_profile

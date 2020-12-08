@@ -6,12 +6,12 @@
   when: contents.api_version == ""
   register: version
 
-- name: Print currentVersion if api version is not specified in config file
+- name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: contents.api_version == ""
 
-- name: Print currentVersion if api version is specified in config file
+- name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
   when: contents.api_version != ""
@@ -58,23 +58,23 @@
   delegate_to: localhost
 
 # This is PUT operation to update port configuration by changing expectedNetworkUri. 
-- name: Update the Storage System adding one port using name as key
-  oneview_storage_system:
-    config: "{{ config }}"
-    state: present
-    data:
-      credentials:
-        username: '{{ storage_system_username }}'
-        password: '{{ storage_system_password }}'
-      name: '{{ storage_system_name }}'
-      family: StoreServ
-      hostname: '{{ storage_system_ip }}'
-      ports: 
-        - expectedNetworkUri: '/rest/fc-networks/9141498a-9616-4512-b683-a8848be039c3'
-          name: 0:1:2
-          mode: Managed
-          
-  delegate_to: localhost
+# - name: Update the Storage System adding one port using name as key
+#   oneview_storage_system:
+#     config: "{{ config }}"
+#     state: present
+#     data:
+#         credentials:
+#             username: '{{ storage_system_username }}'
+#             password: '{{ contents.storage_system_password }}'
+#         name: '{{ contents.storage_system_name }}'
+#         family: StoreServ
+#         hostname: '{{ contents.storage_system_ip }}'
+#         ports: 
+#           - expectedNetworkUri: '/rest/fc-networks/9141498a-9616-4512-b683-a8848be039c3'
+#             name: 0:1:2
+#             mode: Managed
+      
+#   delegate_to: localhost
 
 - name: Remove the storage system by its IP(before API500)
   oneview_storage_system:
@@ -87,11 +87,12 @@
   delegate_to: localhost
   when: currentVersion < '500'
 
-- name: Do nothing when the storage system is already removed (by name) (API500 onwards)
-  oneview_storage_system:
-    config: "{{ config }}"
-    state: absent
-    data:
-        name: '{{ storage_system_name }}'
-  delegate_to: localhost
-  when: currentVersion >= '500'
+#    - name: Do nothing when the storage system is already removed (by name) (API500 onwards)
+#      oneview_storage_system:
+#        config: "{{ config }}"
+#        state: absent
+#        data:
+#            name: '{{ contents.storage_system_name }}'
+#      delegate_to: localhost
+#      when: currentVersion >= '500'
+

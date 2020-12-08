@@ -1,72 +1,72 @@
 ---
-    - name: Get currentVersion from URL
-      oneview_version_facts:
-        config: "{{ config }}"
-      delegate_to: localhost
-      when: contents.api_version|string|length == 0
-      register: version
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
 
-    - name: Print currentVersion if an apiVersion is not specified in config file
-      set_fact:
-        currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-      when: contents.api_version|string|length == 0
+- name: Print currentVersion if an apiVersion is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
+  when: contents.api_version == ""
 
-    - name: Print currentVersion if an apiVersion is specified in config file
-      set_fact:
-        currentVersion: contents.api_version | string
-      when: contents.api_version|string|length != 0
+- name: Print currentVersion if an apiVersion is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
 
-    - name: Gather facts about all Enclosures
-      oneview_enclosure_facts:
-        config: "{{ config }}"
-      delegate_to: localhost
+- name: Gather facts about all Enclosures
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
 
-    - debug: var=enclosures
+- debug: var=enclosures
 
-    - name: Gather paginated, filtered and sorted facts about Enclosures
-      oneview_enclosure_facts:
-        config: "{{ config }}"
-        params:
-          start: 0
-          count: 3
-          sort: 'name:descending'
-          filter: 'status=OK'
+- name: Gather paginated, filtered and sorted facts about Enclosures
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=OK'
 
-    - debug: var=enclosures
+- debug: var=enclosures
 
-    - name: Gather facts about an Enclosure by name
-      oneview_enclosure_facts:
-         config: "{{ config }}"
-         name: "{{ name }}"
-      delegate_to: localhost
+- name: Gather facts about an Enclosure by name
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+    name: "{{ name }}"
+  delegate_to: localhost
 
-    - debug: var=enclosures
+- debug: var=enclosures
 
-    # This block is compatible with C7000 Enclosures
-    - name: Gather facts about an Enclosure by name with script
-      oneview_enclosure_facts:
-        config: "{{ config }}"
-        name: '{{ name }}'
-        options:
-          - script
-      when: variant == 'C7000' or currentVersion == '300'
-      delegate_to: localhost
+# This block is compatible with C7000 Enclosures
+- name: Gather facts about an Enclosure by name with script
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+    name: '{{ name }}'
+    options:
+      - script
+  when: variant == 'C7000' or currentVersion == '300'
+  delegate_to: localhost 
 
-    - name: Gather facts about an Enclosure by name with options
-      oneview_enclosure_facts:
-        config: "{{ config }}"
-        name: '{{ name }}'
-        options:
-          - environmentalConfiguration   # optional
-          - utilization:                 # optional
-              fields: 'AmbientTemperature'
-              filter:
-                - "startDate=2016-07-01T14:29:42.000Z"
-                - "endDate=2017-07-01T03:29:42.000Z"
-              view: 'day'
-              refresh: False
-      delegate_to: localhost
+- name: Gather facts about an Enclosure by name with options
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+    name: '{{ name }}'
+    options:
+      - environmentalConfiguration   # optional
+      - utilization:                 # optional
+          fields: 'AmbientTemperature'
+          filter:
+            - "startDate=2016-07-01T14:29:42.000Z"
+            - "endDate=2017-07-01T03:29:42.000Z"
+          view: 'day'
+          refresh: False
+  delegate_to: localhost
 
-    - debug: var=enclosure_script
-    - debug: var=enclosure_environmental_configuration
-    - debug: var=enclosure_utilization
+- debug: var=enclosure_script
+- debug: var=enclosure_environmental_configuration
+- debug: var=enclosure_utilization

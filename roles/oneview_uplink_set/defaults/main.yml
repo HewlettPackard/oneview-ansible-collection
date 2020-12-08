@@ -5,3 +5,4 @@ config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_up
 contents: "{{lookup('file', config)}}"
 ethernet_networks:
   - '/rest/ethernet-networks/ca95ebc6-1c4f-480e-bfc7-370e80b0afd4'
+logical_interconnect_name: "LIG"

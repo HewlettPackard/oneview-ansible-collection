@@ -20,17 +20,33 @@
 - name: Gather facts about a Storage Pool by name
   oneview_storage_pool_facts:
     config: "{{ config }}"
-    name: "CPG_FC-AO"
+    name: "{{ storage_pool_name }}"
   delegate_to: localhost
+
+- name: Gather facts about all Fibre Channel Networks
+  oneview_fc_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=fc_networks
+
+- name: Gather facts about all Scopes
+  oneview_scope_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=scopes
 
 - name: Gather facts about reachable storage pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
     options:
       - reachableStoragePools:
-          networks: '{{ networks_query }}'
-          scope_uris: '{{ scope_uris }}'
-          scope_exclusions: '{{ scope_exclusions }}'
+          networks: 
+            - "{{ fc_networks[0]['uri'] }}"
+          scope_uris: "{{ scopes[0]['uri'] }}"
+          scope_exclusions: 
+            - "{{ storage_pools[0]['uri'] }}"
     params:
       filter: status='OK'
   delegate_to: localhost

@@ -1,8 +1,7 @@
 ---
 # defaults file for oneview_hypervisor_cluster_profile
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_cluster_profile/files/oneview_config.json"
-cluster_profile_name: 'Test-1'
-spt_name: '/rest/server-profile-templates/c2f23844-cf4a-44b2-b5e0-01ec7eb8d284'
-spt_name_ca: '/rest/server-profile-templates/c2f23844-cf4a-44b2-b5e0-01ec7eb8d284'
 contents: "{{lookup('file', config)}}"
-hyp_mgr: '/rest/hypervisor-managers/5b7689a4-3399-4b21-92ef-bed034365c11'
+cluster_profile_name: 'Test_HCP'
+spt_name: 'Test_spt-1' # SPT with no deployment plan and having one management connection
+hyp_mgr_name: '172.18.13.11'
