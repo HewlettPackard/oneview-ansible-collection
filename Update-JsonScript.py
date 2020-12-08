@@ -92,6 +92,6 @@ def UpdateJsonScript(path):
         return False
     else:
         return True
-             
+
 if __name__ == '__main__':
     UpdateJsonScript(path)
