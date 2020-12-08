@@ -43,6 +43,7 @@ change_required = False
 paths = []
 paths_for_defaults = []
 
+
 def IsChangeRequired(json_object):
     if (json_object["ip"] != "<oneview_ip>" and json_object["credentials"]["userName"] != "<username>" 
         and json_object["credentials"]["password"] != "<password>" and 
@@ -52,7 +53,7 @@ def IsChangeRequired(json_object):
         return False
 
 def UpdateJsonScript(path):
-    for dirpath, filename in os.walk(path):
+    for dirpath, dirname, filename in os.walk(path):
         for fname in filename:
             path = os.path.join(dirpath, fname)
             updated_path = path.replace("\\", "/")
