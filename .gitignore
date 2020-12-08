@@ -1,10 +1,8 @@
 inventory
 **/*.retry
 *.pyc
-.idea
-examples/vars/config.yml
 .idea/
 *~
-examples/vars/os_attributes.yaml
 **/.coverage
 htmlcov
+Update-JsonScript.py

@@ -60,12 +60,12 @@ options:
     export_only:
       description:
         - If set to True, when the status is C(absent) and the resource exists, it will be removed only from OneView.
-      default: False
+      default: ''
       type: bool
     suppress_device_updates:
       description:
         - To delete volume only from the appliance then request must contain the 'suppressDeviceUpdates' parameter set to true.
-      default: False
+      default: ''
       type: bool
       required: false
 extends_documentation_fragment:

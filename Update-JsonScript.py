@@ -44,15 +44,15 @@ paths = []
 paths_for_defaults = []
 
 def IsChangeRequired(json_object):
-    if (json_object["ip"] != "<oneview_ip>" or json_object["credentials"]["userName"] != "<username>" 
-        or json_object["credentials"]["password"] != "<password>" or 
+    if (json_object["ip"] != "<oneview_ip>" and json_object["credentials"]["userName"] != "<username>" 
+        and json_object["credentials"]["password"] != "<password>" and 
         json_object["image_streamer_ip"] != "<image_streamer_ip>"):
         return True
     else:
         return False
 
 def UpdateJsonScript(path):
-    for dirpath, dirname, filename in os.walk(path):
+    for dirpath, filename in os.walk(path):
         for fname in filename:
             path = os.path.join(dirpath, fname)
             updated_path = path.replace("\\", "/")
@@ -62,7 +62,7 @@ def UpdateJsonScript(path):
                 config_file.close()
                 change_required = IsChangeRequired(json_object)
                 if (change_required == True):
-                    json_object["ip"] == "<ip>"
+                    json_object["ip"] == "<oneview_ip>"
                     json_object["credentials"]["userName"] == "<username>" 
                     json_object["credentials"]["password"] == "<password>"
                     json_object["image_streamer_ip"] == "<image_streamer_ip>"
@@ -75,17 +75,18 @@ def UpdateJsonScript(path):
                 with open(path, 'r') as stream:
                     content = yaml.load(stream)
                 for k,v in content.items():
-                    if (str(v).count('.')) >= 3 or str(k).find("username") != -1 or str(k).find("password") != -1:
+                    if (str(v).count('.')) >= 3 and str(k).find("username") != -1 and str(k).find("password") != -1:
                         content[k] = "<" + k + ">"
                         paths_for_defaults.append(updated_path)
+                    else:
+                        print("No change required in {}".format(str(path)))
                 with open(path, "w") as f:
                     f.write("---\n")
                     f.write("# defaults file for {} \n".format(str(updated_path.split("/")[-3])))
                     f.write('\n')
                     yaml.dump(content, f)
     if len(paths)!= 0 or len(paths_for_defaults)!= 0:
-		print("Non-compliant files are")
-		print("\n")
+        print("\n\t>>> NON-COMPLAINT FILES ARE...<<< \n")
         print(paths)
         print(paths_for_defaults)
         return False
