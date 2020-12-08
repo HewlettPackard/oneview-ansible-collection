@@ -40,7 +40,7 @@
       username: '{{ enclosure_username }}'
       password: '{{ enclosure_password }}'
       name: '{{ enclosure_name }}'
-      licensingIntent : 'OneView'
+      licensingIntent: 'OneView'
       rackName: 'Rack-Name'
   when: variant == 'C7000'
   delegate_to: localhost
