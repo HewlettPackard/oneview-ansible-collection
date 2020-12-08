@@ -81,3 +81,4 @@ plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:parameter-l
 tests/unit/utils/hpe_test_utils.py pylint!skip
 Update-JsonScript.py pylint:ansible-format-automatic-
 Update-JsonScript.py pylint:singleton-comparison
+Update-JsonScript.py pep8!skip

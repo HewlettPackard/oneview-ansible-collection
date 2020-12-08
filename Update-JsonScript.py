@@ -46,8 +46,8 @@ paths_for_defaults = []
 
 def IsChangeRequired(json_object):
     if (json_object["ip"] != "<oneview_ip>" and json_object["credentials"]["userName"] != "<username>"
-           and json_object["credentials"]["password"] != "<password>" and 
-                  json_object["image_streamer_ip"] != "<image_streamer_ip>"):
+            and json_object["credentials"]["password"] != "<password>" and
+                json_object["image_streamer_ip"] != "<image_streamer_ip>"):
         return True
     else:
         return False
