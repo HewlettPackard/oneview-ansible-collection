@@ -71,7 +71,7 @@ def UpdateJsonScript(path):
                     json.dump(json_object, config_file, indent=2)
                     paths.append(path)
                 else:
-                    print("No change required in {}".format(str(path)))
+                    continue
             if updated_path.split("/")[-2] == 'defaults' and fname == 'main.yml':
                 with open(path, 'r') as stream:
                     content = yaml.load(stream)
@@ -80,7 +80,7 @@ def UpdateJsonScript(path):
                         content[k] = "<" + k + ">"
                         paths_for_defaults.append(updated_path)
                     else:
-                        print("No change required in {}".format(str(path)))
+                        continue
                 with open(path, "w") as f:
                     f.write("---\n")
                     f.write("# defaults file for {} \n".format(str(updated_path.split("/")[-3])))
@@ -95,4 +95,4 @@ def UpdateJsonScript(path):
         return True
                               
 if __name__ == '__main__':
-    update_required = UpdateJsonScript(path)
+    UpdateJsonScript(path)
