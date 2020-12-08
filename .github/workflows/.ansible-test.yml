@@ -39,7 +39,7 @@ jobs:
       - name: set the workflow status              # set the workflow status if command failed
         if: always()
         run: |
-          if ${{ steps.step4.changelog =='True' }}; then
+          if ${{ steps.step4.outcome =='success' }}; then
              echo fine
           else
              exit 1
@@ -47,12 +47,12 @@ jobs:
           
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-        if: ${{ steps.step4.changelog =='True' }}
+        if: ${{ steps.step4.outcome =='success' }}
       
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
-        if: ${{ steps.step4.changelog =='True' }}
+        if: ${{ steps.step4.outcome =='success' }}
 
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
-        if: ${{ steps.step4.changelog =='True' }}
+        if: ${{ steps.step4.outcome =='success' }}
