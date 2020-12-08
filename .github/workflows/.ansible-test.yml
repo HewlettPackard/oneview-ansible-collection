@@ -12,7 +12,6 @@ jobs:
         - 3.7
         ansible:
         - stable-2.10
-        - devel
     runs-on: ubuntu-latest
     steps:
 
