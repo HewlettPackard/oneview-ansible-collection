@@ -9,10 +9,10 @@
     config: "{{ config }}"
     state: present
     data:
-          hostname : '{{ server_hardware_hostname }}'
-          username : '{{ server_hardware_username }}'
-          password : '{{ server_hardware_password }}'
-          force : false
+          hostname: '{{ server_hardware_hostname }}'
+          username: '{{ server_hardware_username }}'
+          password: '{{ server_hardware_password }}'
+          force: false
           licensingIntent: "OneView"
           configurationState: "Managed"
           initialScopeUris: 
@@ -25,10 +25,10 @@
     config: "{{ config }}"
     state: present
     data:
-          hostname : '{{ server_hardware_hostname }}'
-          username : '{{ server_hardware_username }}'
-          password : '{{ server_hardware_password }}'
-          force : false
+          hostname: '{{ server_hardware_hostname }}'
+          username: '{{ server_hardware_username }}'
+          password: '{{ server_hardware_password }}'
+          force: false
           licensingIntent: "OneView"
           configurationState: "Managed"
   delegate_to: localhost
@@ -40,9 +40,9 @@
     config: "{{ config }}"
     state: multiple_servers_added
     data:
-          mpHostsAndRanges : "{{ multiple_hosts }}"
-          username : "{{ server_hardware_username }}"
-          password : "{{ server_hardware_password }}"
+          mpHostsAndRanges: "{{ multiple_hosts }}"
+          username: "{{ server_hardware_username }}"
+          password: "{{ server_hardware_password }}"
           initialScopeUris: 
           - "{{ scopes[0]['uri'] }}"
           licensingIntent: "OneView"
@@ -63,7 +63,7 @@
     config: "{{ config }}"
     state: power_state_set
     data:
-        name : "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         powerStateData:
             powerState: "Off"
             powerControl: "MomentaryPress"
@@ -74,7 +74,7 @@
     config: "{{ config }}"
     state: power_state_set
     data:
-        name : "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         powerStateData:
             powerState: "On"
             powerControl: "MomentaryPress"
@@ -85,9 +85,9 @@
     config: "{{ config }}"
     state: refresh_state_set
     data:
-        name : "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         refreshStateData:
-            refreshState : "RefreshPending"
+            refreshState: "RefreshPending"
   delegate_to: localhost
 
 - name: Update the Server Hardware iLO firmware version
@@ -95,7 +95,7 @@
     config: "{{ config }}"
     state: ilo_firmware_version_updated
     data:
-        name : "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Reset the Server Hardware iLO State
@@ -120,7 +120,7 @@
 #     config: "{{ config }}"
 #     state: absent
 #     data:
-#         name : '{{ server_hardware_hostname }}'
+#         name: '{{ server_hardware_hostname }}'
 #   delegate_to: localhost
 
 # - name: Do nothing when the server hardware is already removed
@@ -128,5 +128,5 @@
 #     config: "{{ config }}"
 #     state: absent
 #     data:
-#         name : '{{ server_hardware_hostname }}'
+#         name: '{{ server_hardware_hostname }}'
 #   delegate_to: localhost

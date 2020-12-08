@@ -95,4 +95,3 @@
 #            name: '{{ contents.storage_system_name }}'
 #      delegate_to: localhost
 #      when: currentVersion >= '500'
-

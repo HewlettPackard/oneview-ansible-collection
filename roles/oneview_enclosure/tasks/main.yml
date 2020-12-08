@@ -342,7 +342,7 @@
   oneview_enclosure:
     config: "{{ config }}"
     state: manager_bays_role_active
-    validate_etag : False
+    validate_etag: False
     data:
       name: '{{ enclosure_name }}'
       bayNumber: 2

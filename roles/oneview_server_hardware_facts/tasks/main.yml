@@ -48,7 +48,7 @@
 - name: Gather all facts about a Server Hardware
   oneview_server_hardware_facts:
     config: "{{ config }}"
-    name : server_hardware_name
+    name: server_hardware_name
     options:
         - bios                   # optional
         - javaRemoteConsoleUrl   # optional
@@ -57,9 +57,9 @@
         - physicalServerHardware # optional
         - remoteConsoleUrl       # optional
         - utilization:           # optional
-                fields : 'AveragePower'
-                filter : ['startDate=2016-05-30T03:29:42.000Z']
-                view : 'day'
+                fields: 'AveragePower'
+                filter: ['startDate=2016-05-30T03:29:42.000Z']
+                view: 'day'
   delegate_to: localhost
 
 - debug: var=server_hardwares
@@ -75,7 +75,7 @@
 - name: Gather facts about the Server Hardware firmware
   oneview_server_hardware_facts:
     config: "{{ config }}"
-    name : server_hardware_name
+    name: server_hardware_name
     options:
         - firmware
   delegate_to: localhost
@@ -86,7 +86,7 @@
 - name: Gather facts about all the firmwares inventory across all servers
   oneview_server_hardware_facts:
     config: "{{ config }}"
-    name : server_hardware_name
+    name: server_hardware_name
     options:
     - firmwares
   delegate_to: localhost

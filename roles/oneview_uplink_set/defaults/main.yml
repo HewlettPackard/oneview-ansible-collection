@@ -1,6 +1,5 @@
 ---
 # defaults file for oneview_uplink_set
-logical_interconnect_name: 'LE-LIG'
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_uplink_set/files/oneview_config.json"
 contents: "{{lookup('file', config)}}"
 ethernet_networks:

@@ -1,4 +1,3 @@
-
 ---
 - name: Gather facts about server profile templates
   oneview_server_profile_template_facts:

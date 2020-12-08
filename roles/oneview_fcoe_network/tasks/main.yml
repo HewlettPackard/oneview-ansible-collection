@@ -1,4 +1,3 @@
-
 ---
 tasks:
 - name: Get currentVersion from URL

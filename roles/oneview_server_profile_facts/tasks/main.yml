@@ -79,7 +79,7 @@
 - name: Gather all facts about a Server Profile works below API Version 1200
   oneview_server_profile_facts:
     config: "{{ config }}"
-    name : "{{server_profile_name}}"
+    name: "{{server_profile_name}}"
     options:
         - schema  # Supported only for API version <= 1200
         - newProfileTemplate # Supported only for API version <= 1200
@@ -90,7 +90,7 @@
 - name: Gather all facts about a Server Profile
   oneview_server_profile_facts:
     config: "{{ config }}"
-    name : "{{server_profile_name}}"
+    name: "{{server_profile_name}}"
     options:
         - compliancePreview
         - profilePorts:

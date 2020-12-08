@@ -5,10 +5,10 @@
     config: "{{ config }}"
     state: present
     data:
-          hostname : '{{ contents.server_hardware_hostname }}'
-          username : '{{ contents.server_hardware_username }}'
-          password : '{{ contents.server_hardware_password }}'
-          force : false
+          hostname: '{{ contents.server_hardware_hostname }}'
+          username: '{{ contents.server_hardware_username }}'
+          password: '{{ contents.server_hardware_password }}'
+          force: false
           licensingIntent: "OneView"
           configurationState: "Managed"
   delegate_to: localhost

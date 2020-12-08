@@ -48,10 +48,10 @@
 - name: "Gather facts about a Volume with one specific snapshot taken"
   oneview_volume_facts:
     config: "{{ config }}"
-    name : "{{ storage_volume_name }}"
+    name: "{{ storage_volume_name }}"
     options:
         - snapshots:  # optional
-                name : "{{ snapshots[0]['name'] }}"
+                name: "{{ snapshots[0]['name'] }}"
   delegate_to: localhost
   when: (snapshots is none and snapshots is undefined)
 
