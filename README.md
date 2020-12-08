@@ -54,11 +54,11 @@ example:
 
 ```json
 {
-  "ip": "172.25.105.12",
+  "ip": "<ip>",
   "credentials": {
-    "userName": "Administrator",
+    "userName": "<userName>",
     "authLoginDomain": "",
-    "password": "secret123"
+    "password": "<password>"
   },
   "api_version": 2200
 }
@@ -95,9 +95,9 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
 ```yaml
 - name: Create a Fibre Channel Network
   oneview_fc_network:
-    hostname: 172.16.101.48
-    username: administrator
-    password: my_password
+    hostname: <hostname>
+    username: <username>
+    password: <password>
     api_version: 2200
     state: present
     data:
@@ -146,7 +146,7 @@ To use these modules, you must set the Image Streamer IP on the OneViewClient co
 either using the JSON configuration:
 
 ```json
-"image_streamer_ip": "100.100.100.100"
+"image_streamer_ip": "<image_streamer_ip>"
 ```
 
 OR using the Environment variable:
