@@ -46,11 +46,11 @@ paths_for_defaults = []
 
 def IsChangeRequired(json_object):
     if (json_object["ip"] != "<oneview_ip>" and json_object["credentials"]["userName"] != "<username>"
-        and json_object["credentials"]["password"] != "<password>" and
-        json_object["image_streamer_ip"] != "<image_streamer_ip>"):
+        and json_object["credentials"]["password"] != "<password>" and json_object["image_streamer_ip"] != "<image_streamer_ip>"):
         return True
     else:
         return False
+
 
 def UpdateJsonScript(path):
     for dirpath, dirname, filename in os.walk(path):
@@ -61,7 +61,7 @@ def UpdateJsonScript(path):
                 config_file = open(path, "r")
                 json_object = json.load(config_file)
                 config_file.close()
-                if (IsChangeRequired(json_object) == True):
+                if (IsChangeRequired(json_object)):
                     json_object["ip"] == "<oneview_ip>"
                     json_object["credentials"]["userName"] == "<username>"
                     json_object["credentials"]["password"] == "<password>"
@@ -92,6 +92,7 @@ def UpdateJsonScript(path):
         return False
     else:
         return True
+
 
 if __name__ == '__main__':
     UpdateJsonScript(path)
