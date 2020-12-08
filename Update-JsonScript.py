@@ -33,28 +33,15 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 import os
-import yaml
 import json
-import git
-import shutil
+import yaml
+import sys
 cwd = os.getcwd()
 path = cwd + '/roles'
-#path = "C:/Users/chebrolb/Desktop/code/oneview-ansible-collections/oneview-ansible-collection/roles"
+# path = "C:/Users/chebrolb/Desktop/code/oneview-ansible-collections/oneview-ansible-collection/roles"
 change_required = False
-change_required_in_defaults = False
 paths = []
 paths_for_defaults = []
-branchName = 'update'
-
-path = os.getcwd()
-clone_dir = 'collections'
-# Deleting the clone directory if exists
-if os.path.exists(clone_dir):
-    shutil.rmtree(clone_dir, ignore_errors=True)
-
-repo = git.Repo.clone_from('https://github.com/HewlettPackard/oneview-ansible-collections',
-                           path + os.path.sep + clone_dir)
-os.chdir(path + os.path.sep + clone_dir)
 
 def IsChangeRequired(json_object):
     if (json_object["ip"] != "<oneview_ip>" or json_object["credentials"]["userName"] != "<username>" 
@@ -80,7 +67,7 @@ def UpdateJsonScript(path):
                     json_object["credentials"]["password"] == "<password>"
                     json_object["image_streamer_ip"] == "<image_streamer_ip>"
                     config_file = open(path, "w")
-                    json.dump(json_object, config_file, indent = 2)
+                    json.dump(json_object, config_file, indent=2)
                     paths.append(path)
                 else:
                     print("No change required in {}".format(str(path)))
@@ -91,20 +78,19 @@ def UpdateJsonScript(path):
                     if (str(v).count('.')) >= 3 or str(k).find("username") != -1 or str(k).find("password") != -1:
                         content[k] = "<" + k + ">"
                         paths_for_defaults.append(updated_path)
-                    f = open(path, "w")
+                with open(path, "w") as f:
+                    f.write("---\n")
+                    f.write("# defaults file for {} \n".format(str(updated_path.split("/")[-3])))
+                    f.write('\n')
                     yaml.dump(content, f)
-    return paths, paths_for_defaults
+    if len(paths)!= 0 or len(paths_for_defaults)!= 0:
+		print("Non-compliant files are")
+		print("\n")
+        print(paths)
+        print(paths_for_defaults)
+        return False
+    else:
+        return True
                               
 if __name__ == '__main__':
-    paths, paths_for_defaults = UpdateJsonScript(path)
-    print(paths)
-    print(paths_for_defaults)
-    repo.git.add(A=True)
-    repo.git.commit('-m', 'PR for config changes #pr',
-                    author='chebroluharika@gmail.com') # to commit changes
-    repo.git.push('--set-upstream', 'origin', branchName)
-    repo.close()
-    os.chdir(path) # Navigate to parent directory
-    # Delete ruby directory as cleanup
-    if os.path.exists(clone_dir):
-        shutil.rmtree(clone_dir, ignore_errors=True)
+    update_required = UpdateJsonScript(path)
