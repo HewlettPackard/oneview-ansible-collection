@@ -17,9 +17,7 @@
 import pytest
 
 from mock import Mock, patch
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ONEVIEW_MODULE_UTILS_PATH
 from hpeOneView.oneview_client import OneViewClient
-
 
 @pytest.fixture
 def mock_ov_client():
@@ -30,6 +28,7 @@ def mock_ov_client():
 
 @pytest.fixture
 def mock_ansible_module():
+    ONEVIEW_MODULE_UTILS_PATH = 'module_utils.oneview'
     patcher_ansible = patch(ONEVIEW_MODULE_UTILS_PATH + '.AnsibleModule')
     patcher_ansible = patcher_ansible.start()
     ansible_module = Mock()
