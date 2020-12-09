@@ -744,7 +744,7 @@ class OneViewModuleBase(object):
         elif not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(self.module.params['config'])
+            self.oneview_client = OneViewClientTest.from_json_file(self.module.params['config'])
 
     @abc.abstractmethod
     def execute_module(self):
