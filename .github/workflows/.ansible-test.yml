@@ -17,12 +17,12 @@ jobs:
     steps:
 
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         with:
           path: ansible_collections/hpe/oneview
 
       - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python_version }}
 
@@ -68,8 +68,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       - name: Run unit test
-        run: ansible-test units --venv --python 3.7
-        working-directory: ./ansible_collections/hpe/oneview
+        run: ansible-test units --docker -v --python 3.7
 
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
