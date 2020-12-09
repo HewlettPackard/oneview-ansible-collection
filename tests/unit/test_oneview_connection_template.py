@@ -62,7 +62,6 @@ DICT_CONNECTION_TEMPLATE = yaml.safe_load(YAML_CONNECTION_TEMPLATE)["data"]
 DICT_CONNECTION_TEMPLATE_CHANGED = yaml.safe_load(YAML_CONNECTION_TEMPLATE_CHANGE)["data"]
 
 
-TestConnectionTemplateModule='connection_templates')
 class TestConnectionTemplateModule(OneViewBaseTest):
     def test_should_update_the_connection_template(self):
         self.resource.get_by_name.return_value = self.resource
