@@ -34,12 +34,14 @@ class OneViewBaseTest(object):
 
     @pytest.fixture(autouse=True)
     def setUp(self, mock_ansible_module, mock_ov_client, request, testing_module):
-        class_name = type(self).__name__
-        if StrictVersion(pytest.__version__) < StrictVersion("3.6"):
-            marker = request.node.get_marker('resource')
-        else:
-            marker = request.node.get_closest_marker('resource')
-        self.resource = getattr(mock_ov_client, "%s" % (marker.kwargs[class_name]))
+        # class_name = type(self).__name__ 
+        resource_name = type(self).__name__.replace('Test', '')
+        resource_module_path_name = self.underscore(resource_name.replace('Module', ''))
+        # if StrictVersion(pytest.__version__) < StrictVersion("3.6"):
+        #     marker = request.node.get_marker('resource')
+        # else:
+        #     marker = request.node.get_closest_marker('resource')
+        self.resource = resource_module_path_name
         self.resource.get_by_name.return_value = self.resource
         self.mock_ov_client = mock_ov_client
         self.mock_ansible_module = mock_ansible_module
