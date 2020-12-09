@@ -36,7 +36,7 @@ class OneViewBaseTest(object):
     def setUp(self, mock_ansible_module, mock_ov_client, request, testing_module):
         resource_name = type(self).__name__.replace('Test', '').replace('Module', '')
         word1 = re.findall('[A-Z][^A-Z]*', resource_name)
-        word1 = 'oneview_' + str.join('_', word1).lower()
+        word1 = str.join('_', word1).lower()
         # if StrictVersion(pytest.__version__) < StrictVersion("3.6"):
         #     marker = request.node.get_marker('resource')
         # else:
