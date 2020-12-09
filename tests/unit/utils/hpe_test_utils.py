@@ -23,6 +23,7 @@ import importlib
 import pytest
 import re
 import yaml
+import json
 
 from mock import mock
 from distutils.version import StrictVersion
@@ -121,3 +122,20 @@ class ImageStreamerBaseTest(OneViewBaseTest):
 
 class ImageStreamerBaseFactsTest(ImageStreamerBaseTest, OneViewBaseFactsTest):
     pass
+
+class OneViewClient(object):
+    @classmethod
+    def from_json_file(cls, file_name):
+        """
+        Construct OneViewClient using a json file.
+
+        Args:
+            file_name: json full path.
+
+        Returns:
+            OneViewClient:
+        """
+        with open(file_name) as json_data:
+            config = json.load(json_data)
+
+        return cls(config)

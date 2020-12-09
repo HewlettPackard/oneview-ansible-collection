@@ -17,7 +17,7 @@
 import pytest
 
 from mock import Mock, patch
-from hpeOneView.oneview_client import OneViewClient
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewClient
 
 @pytest.fixture
 def mock_ov_client():
