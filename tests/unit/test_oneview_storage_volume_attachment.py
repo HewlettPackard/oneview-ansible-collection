@@ -77,7 +77,6 @@ MOCK_SERVER_PROFILE = {
 }
 
 
-@pytest.mark.resource(TestStorageVolumeAttachmentModule='storage_volume_attachments')
 class TestStorageVolumeAttachmentModule(OneViewBaseTest):
     def test_should_remove_extra_presentation_by_profile_name(self):
         obj = mock.Mock()

@@ -26,6 +26,7 @@ import os
 import traceback
 import collections
 from ansible.module_utils.common._collections_compat import Mapping
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewClientTest
 
 try:
     from hpeOneView.oneview_client import OneViewClient
@@ -425,7 +426,7 @@ class OneViewModule(object):
         elif not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(self.module.params['config'])
+            self.oneview_client = OneViewClientTest.from_json_file(self.module.params['config'])
 
     def set_resource_object(self, resource_client, name=None):
         self.resource_client = resource_client

@@ -44,7 +44,6 @@ PARAMS_GET_BY_ALIASNAME = dict(
 DICT_DEFAULT_CERTIFICATE = PRESENT_CERTIFICATES["data"]
 
 
-@pytest.mark.resource(TestCertificatesServerFactsModule='certificates_server')
 class TestCertificatesServerFactsModule(OneViewBaseFactsTest):
     def test_should_get_remote_certificate(self):
         self.resource.data = DICT_DEFAULT_CERTIFICATE

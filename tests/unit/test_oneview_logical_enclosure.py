@@ -116,7 +116,6 @@ YAML_LOGICAL_ENCLOSURE_ABSENT = """
 DICT_DEFAULT_LOGICAL_ENCLOSURE = yaml.safe_load(YAML_LOGICAL_ENCLOSURE)["data"]
 
 
-@pytest.mark.resource(TestLogicalEnclosureModule='logical_enclosures')
 class TestLogicalEnclosureModule(OneViewBaseTest):
     def test_should_create_when_resource_not_exist(self):
         self.resource.get_by_name.return_value = None

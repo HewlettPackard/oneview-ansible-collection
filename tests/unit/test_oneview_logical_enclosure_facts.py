@@ -47,7 +47,6 @@ PARAMS_GET_BY_NAME_WITH_OPTIONS = dict(
 )
 
 
-@pytest.mark.resource(TestLogicalEnclosureFactsModule='logical_enclosures')
 class TestLogicalEnclosureFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_logical_enclosure(self):
         self.resource.get_all.return_value = [LOGICAL_ENCLOSURE]

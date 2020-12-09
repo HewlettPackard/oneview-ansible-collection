@@ -83,7 +83,6 @@ YAML_CLUSTER_PROFILE_ABSENT = """
 DICT_DEFAULT_CLUSTER_PROFILE = yaml.safe_load(YAML_CLUSTER_PROFILE)["data"]
 
 
-@pytest.mark.resource(TestHypervisorClusterProfileModule='hypervisor_cluster_profiles')
 class TestHypervisorClusterProfileModule(OneViewBaseTest):
     def test_should_create_when_resource_not_exist(self):
         self.resource.get_by_name.return_value = None

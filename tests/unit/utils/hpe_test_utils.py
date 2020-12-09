@@ -127,7 +127,7 @@ class ImageStreamerBaseTest(OneViewBaseTest):
 class ImageStreamerBaseFactsTest(ImageStreamerBaseTest, OneViewBaseFactsTest):
     pass
 
-class OneViewClient(object):
+class OneViewClientTest(object):
     @classmethod
     def from_json_file(cls, file_name):
         """

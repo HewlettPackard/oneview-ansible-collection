@@ -209,7 +209,6 @@ def gather_facts(mock_ov_client, created=False, online_update=True):
     return facts
 
 
-@pytest.mark.resource(TestServerProfileModule='server_profiles')
 class TestServerProfileModule(OneViewBaseTest):
     """
     Test the module constructor

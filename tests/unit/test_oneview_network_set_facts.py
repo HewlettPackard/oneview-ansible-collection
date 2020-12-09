@@ -49,7 +49,6 @@ PARAMS_GET_BY_NAME_WITHOUT_ETHERNET = dict(
 )
 
 
-@pytest.mark.resource(TestNetworkSetFactsModule='network_sets')
 class TestNetworkSetFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_network_sets(self):
         network_sets = [{

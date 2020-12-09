@@ -80,7 +80,6 @@ YAML_ENCLOSURE_GROUP_ABSENT = """
 DICT_DEFAULT_ENCLOSURE_GROUP = yaml.safe_load(YAML_ENCLOSURE_GROUP)["data"]
 
 
-@pytest.mark.resource(TestEnclosureGroupModule='enclosure_groups')
 class TestEnclosureGroupModule(OneViewBaseTest):
     """
     OneViewBaseTestCase has tests for main function, also provides the mocks used in this test case

@@ -89,7 +89,6 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
-@pytest.mark.resource(TestServerProfileTemplateModule='server_profile_templates')
 class TestServerProfileTemplateModule(OneViewBaseTest):
     def test_should_create_new_template_when_it_not_exists(self):
         self.resource.get_by_name.return_value = None

@@ -135,7 +135,6 @@ DICT_DEFAULT_STORAGE_SYSTEM_500 = yaml.safe_load(YAML_STORAGE_SYSTEM_500)["data"
 del DICT_DEFAULT_STORAGE_SYSTEM_500['credentials']['password']
 
 
-@pytest.mark.resource(TestStorageSystemModule='storage_systems')
 class TestStorageSystemModule(OneViewBaseTest):
     @pytest.fixture(autouse=True)
     def specific_set_up(self, setUp):

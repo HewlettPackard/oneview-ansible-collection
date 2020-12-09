@@ -122,7 +122,6 @@ SERVER_HARDWARE_HOSTNAME = "172.18.6.15"
 DICT_DEFAULT_SERVER_HARDWARE = yaml.safe_load(YAML_SERVER_HARDWARE_PRESENT)["data"]
 
 
-@pytest.mark.resource(TestServerHardwareModule='server_hardware')
 class TestServerHardwareModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

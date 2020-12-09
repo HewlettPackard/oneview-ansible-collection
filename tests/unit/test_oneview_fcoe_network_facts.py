@@ -42,7 +42,6 @@ PRESENT_NETWORKS = [{
 }]
 
 
-@pytest.mark.resource(TestFcoeNetworkFactsModule='fcoe_networks')
 class TestFcoeNetworkFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_fcoe_network(self):
         self.resource.get_all.return_value = PRESENT_NETWORKS

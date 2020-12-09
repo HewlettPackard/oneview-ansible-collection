@@ -56,7 +56,6 @@ DICT_DEFAULT_SERVER_HARDWARE_TYPE = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE)["d
 DICT_DEFAULT_SERVER_HARDWARE_TYPE_CHANGED = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE_CHANGE)["data"]
 
 
-@pytest.mark.resource(TestServerHardwareTypeModule='server_hardware_types')
 class TestServerHardwareTypeModule(OneViewBaseTest):
     def test_should_update_the_server_hardware_type(self):
         srv_hw_type = DICT_DEFAULT_SERVER_HARDWARE_TYPE.copy()

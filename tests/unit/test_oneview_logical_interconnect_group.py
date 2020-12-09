@@ -145,7 +145,6 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
-@pytest.mark.resource(TestLogicalInterconnectGroupModule='logical_interconnect_groups')
 class TestLogicalInterconnectGroupModule(OneViewBaseTest):
     def test_should_create_new_lig(self):
         self.resource.get_by_name.return_value = None

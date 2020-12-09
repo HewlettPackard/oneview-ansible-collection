@@ -91,7 +91,6 @@ DICT_PARAMS_WITH_CHANGES = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)["data"]
 DICT_PARAMS_CONNECTION_TEMPLATE = yaml.safe_load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)["data"]
 
 
-@pytest.mark.resource(TestNetworkSetModule='network_sets')
 class TestNetworkSetModule(OneViewBaseTest):
     """
     OneViewBaseTestCase has common tests for class constructor and main function,
