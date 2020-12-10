@@ -17,13 +17,14 @@
 import pytest
 
 from mock import Mock, patch
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview import OneViewClientTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview import OneViewClient
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ONEVIEW_MODULE_UTILS_PATH
+import hpeOneView
 
 
 @pytest.fixture
 def mock_ov_client():
-    patcher_json_file = patch.object(OneViewClientTest, 'from_json_file')
+    patcher_json_file = patch.object(OneViewClient, 'from_json_file')
     patcher_json_file = patcher_json_file.start()
     from_json_module = Mock()
     patcher_json_file.return_value = from_json_module

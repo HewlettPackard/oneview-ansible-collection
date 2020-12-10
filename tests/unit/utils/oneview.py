@@ -21,7 +21,7 @@ __metaclass__ = type
 
 import json
 
-class OneViewClientTest(object):
+class OneViewClient(object):
 
     def __init__(self, connection):
         self.connection = connection
