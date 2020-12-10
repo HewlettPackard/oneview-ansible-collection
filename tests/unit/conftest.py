@@ -24,7 +24,7 @@ import hpeOneView
 
 @pytest.fixture
 def mock_ov_client():
-    patcher_json_file = patch.object(OneViewClient, 'from_json_file')
+    patcher_json_file = patch.object(hpeOneView.oneview.OneViewClient, 'from_json_file')
     patcher_json_file = patcher_json_file.start()
     from_json_module = Mock()
     patcher_json_file.return_value = from_json_module
