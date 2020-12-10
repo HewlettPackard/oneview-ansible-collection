@@ -26,7 +26,7 @@ import os
 import traceback
 import collections
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewClientTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview import OneViewClientTest
 
 try:
     from hpeOneView.oneview_client import OneViewClient

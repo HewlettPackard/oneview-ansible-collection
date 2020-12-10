@@ -124,21 +124,3 @@ class ImageStreamerBaseTest(OneViewBaseTest):
 
 class ImageStreamerBaseFactsTest(ImageStreamerBaseTest, OneViewBaseFactsTest):
     pass
-
-class OneViewClientTest(object):
-
-    @classmethod
-    def from_json_file(cls, file_name):
-        """
-        Construct OneViewClient using a json file.
-
-        Args:
-            file_name: json full path.
-
-        Returns:
-            OneViewClient:
-        """
-        with open(file_name) as json_data:
-            config = json.load(json_data)
-
-        return cls(config)
