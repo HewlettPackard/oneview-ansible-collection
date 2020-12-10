@@ -27,7 +27,7 @@ def mock_ov_client():
     patcher_json_file = patcher_json_file.start()
     from_json_module = Mock()
     patcher_json_file.return_value = from_json_module
-    return from_json_module
+    return patcher_json_file.return_value
 
 
 @pytest.fixture

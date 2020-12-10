@@ -23,6 +23,9 @@ import json
 
 class OneViewClientTest(object):
 
+    def __init__(self, connection):
+        self.connection = connection
+
     @classmethod
     def from_json_file(cls, file_name):
         """
