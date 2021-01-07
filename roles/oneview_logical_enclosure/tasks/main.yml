@@ -1,16 +1,37 @@
 ---
+- name: Gather facts about all Enclosures
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- name: Gather facts about all Enclosure Groups
+  oneview_enclosure_group_facts:
+    config: "{{ config }}"
+    name: "{{ eg_name }}"
+  delegate_to: localhost
+
+- name: Gather facts about all Firmware Drivers
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+
+- debug: var=firmware_drivers
+
 # This operation is only available on HPE Synergy
 - name: Create a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
     config: "{{ config }}"
     state: present
     data:
-        enclosureUris: "{{ enclosure_uri }}"
-        enclosureGroupUri: "{{ enclosure_group_uri }}"
+        enclosureUris:
+          - "{{ enclosures[0]['uri'] }}"
+          - "{{ enclosures[1]['uri'] }}"
+          - "{{ enclosures[2]['uri'] }}"
+        enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
         name: "{{ logical_enclosure_name }}"
   ignore_errors: true
   delegate_to: localhost
-  when: variant == "Synergy"
+  when: (variant == "Synergy" and enclosures is not none and enclosures is not undefined and 
+        enclosure_groups is not none and enclosure_groups is not undefined)
 
 - name: Update the firmware for the Logical Enclosure
   oneview_logical_enclosure:
@@ -19,13 +40,16 @@
     data:
         name: "{{ logical_enclosure_name }}"
         firmware:
-            firmwareBaselineUri: "{{ firmware_baseline_uri }}"
+            firmwareBaselineUri: "{{ firmware_drivers[0]['uri'] }}"
             firmwareUpdateOn: "EnclosureOnly"
             forceInstallFirmware: "false"
         custom_headers:
             if-Match: '*'
   ignore_errors: true
   delegate_to: localhost
+  when: (enclosures is not none and enclosures is not undefined and enclosure_groups is not none 
+          and enclosure_groups is not undefined and firmware_drivers is not none and firmware_drivers
+          is not undefined)
 
 # This play is compatible with Synergy Enclosures
 - name: Update the firmware for the Logical Enclosure with the logical-interconnect validation set as true
@@ -35,7 +59,7 @@
     data:
         name: "{{ logical_enclosure_name }}"
         firmware:
-            firmwareBaselineUri: "{{ firmware_baseline_uri }}"
+            firmwareBaselineUri: "{{ firmware_drivers[0]['uri'] }}"
             firmwareUpdateOn: "EnclosureOnly"
             forceInstallFirmware: "false"
             validateIfLIFirmwareUpdateIsNonDisruptive: "true"
@@ -45,7 +69,8 @@
             if-Match: '*'
   ignore_errors: true
   delegate_to: localhost
-  when: variant == "Synergy"
+  when: (variant == "Synergy" and firmware_drivers is not none and firmware_drivers
+          is not undefined)
 
 - name: Update the Logical Enclosure configuration script(available only on C7000)
   oneview_logical_enclosure:
@@ -106,11 +131,12 @@
   delegate_to: localhost
 
 # This state is only available on HPE Synergy
-- name: Delete a Logical Enclosure (available only on HPE Synergy)
-  oneview_logical_enclosure:
-    config: "{{ config }}"
-    state: absent
-    data: '{{ logical_enclosure }}'
-  ignore_errors: true
-  delegate_to: localhost
-  when: variant == "Synergy"
+# Commenting this to ensure continuity for automation script
+# - name: Delete a Logical Enclosure (available only on HPE Synergy)
+#   oneview_logical_enclosure:
+#     config: "{{ config }}"
+#     state: absent
+#     data: '{{ logical_enclosure }}'
+#   ignore_errors: true
+#   delegate_to: localhost
+#   when: variant == "Synergy"

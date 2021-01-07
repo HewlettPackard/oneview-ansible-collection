@@ -2,4 +2,4 @@
 # defaults file for oneview_storage_volume_attachment
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_volume_attachment/files/oneview_config.json"
 contents: "{{lookup('file', config)}}"
-server_profile_name: "Server Profile Attachment Demo"
+server_profile_name: "sp1"

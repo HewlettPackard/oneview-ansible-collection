@@ -4,13 +4,25 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ server_profile_template_name }}"
-      serverProfileName: "{{ server_profile_name }}" # Optional - Server Profile to base this SPT on
+      name: "{{ item.name }}"
       serverHardwareTypeName: "{{ server_hardware_type_name }}"
       enclosureGroupName: "{{ enclosure_group_name }}"
+      connectionSettings:
+        manageConnections: true
+        complianceControl: Checked
+        connections:
+          - id: 1
+            name: mgmt
+            functionType: Ethernet
+            portId: Auto
+            requestedMbps: 2500
+            networkName: "{{ connection_network_name }}"
     params:
       force: "True" # Supported only for API version >= 600
   delegate_to: localhost
+  with_items:
+    - { name: '{{ server_profile_template_name }}' }
+    - { name: '{{ server_profile_template_name }}-1' }
 
 - name: Update bootMode from recently created template
   oneview_server_profile_template:

@@ -19,3 +19,7 @@ bay_number: 1 #Required for C7000
 certificate_data:
   type: "CertificateDataV2"
   base64Data: "certificate"
+enclosure_hostname: ''
+enclosure_username: ''
+enclosure_password: ''
+enclosure_group_uri: ''

@@ -1,10 +1,8 @@
 ---
 # defaults file for oneview_fcoe_network
-network_name: 'Ansible Test FCoE Network'
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fcoe_network/files/oneview_config.json"
-network_scope_uris:
-  - '/rest/scopes/5438f376-b61f-45b1-8c11-052a48a474ad'
-  - '/rest/scopes/ee7e593e-fcfa-457f-b672-d478f214540f'
 contents: "{{lookup('file', config)}}"
-networkUris_to_bulkdelete:
-  - '/rest/fcoe-networks/aa10ed60-9363-496b-96f3-2514abe6df18'
+network_name: "Test FCoE Network"
+network_scope_uris:
+  - '/rest/scopes/d0324c4b-56c9-485b-b7dd-8f6218a4b5bb'
+  - '/rest/scopes/9422ce05-dc39-4358-b723-c8c825eae412'

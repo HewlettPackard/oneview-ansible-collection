@@ -1,3 +1,4 @@
+---
 - name: Gather facts about all Storage Systems
   oneview_storage_system_facts:
     config: "{{ config }}"
@@ -58,6 +59,13 @@
 
 - debug: var=storage_system_pools
 
+- name: Gather facts about all Fibre Channel Networks
+  oneview_fc_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=fc_networks    
+
 - name: Gather queried facts about Storage System reachable ports
   oneview_storage_system_facts:
     config: "{{ config }}"
@@ -65,7 +73,7 @@
     options:
       - reachablePorts:
           networks:
-              - /rest/fc-networks/507c4b12-2b30-42fb-9675-b9546a3a57c2
+              - fc_networks[0]['uri']
     params:
       sort: 'name:descending'
 

@@ -1,49 +1,58 @@
 ---
-    - name: Ensure that the Uplink Set is present
-      oneview_uplink_set:
-        config: "{{ config }}"
-        state: present
-        data:
-          name: 'Test Uplink Set'
-          status: "OK"
-          # You can choose set the Logical Interconnect by logicalInterconnectUri or logicalInterconnectName
-          logicalInterconnectName: "{{ logical_interconnect_name }}"                                    # option 1
-          # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
-          networkUris: "{{ ethernet_networks }}"
-          fcNetworkUris: []
-          fcoeNetworkUris: []
-          portConfigInfos: []
-          connectionMode: "Auto"
-          networkType: "Ethernet"
-          manualLoginRedistributionState: "NotSupported"
-      delegate_to: localhost
+- name: Gather facts about all Ethernet Networks
+  oneview_ethernet_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
 
-    - name: Update the Uplink Set changing the value of the attribute description to 'New Description'
-      oneview_uplink_set:
-        config: "{{ config }}"
-        state: present
-        data:
-          name: 'Test Uplink Set'
-          logicalInterconnectName: "{{ logical_interconnect_name }}"
-          description: 'New Description'
-      delegate_to: localhost
+- debug: var=ethernet_networks
 
-    - name: Rename the Uplink Set to 'Updated Uplink Set'
-      oneview_uplink_set:
-        config: "{{ config }}"
-        state: present
-        data:
-          name: 'Test Uplink Set'
-          logicalInterconnectName: "{{ logical_interconnect_name }}"
-          newName: 'Updated Uplink Set'
-      delegate_to: localhost
+- name: Ensure that the Uplink Set is present
+  oneview_uplink_set:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: 'Test Uplink Set'
+      status: "OK"
+      # You can choose set the Logical Interconnect by logicalInterconnectUri or logicalInterconnectName
+      logicalInterconnectName: "{{ logical_interconnect_name }}"                                    # option 1
+      # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
+      networkUris: 
+        - "{{ ethernet_networks[0]['uri'] }}"
+      fcNetworkUris: []
+      fcoeNetworkUris: []
+      portConfigInfos: []
+      connectionMode: "Auto"
+      networkType: "Ethernet"
+      manualLoginRedistributionState: "NotSupported"
+  delegate_to: localhost
+  when: (ethernet_networks is not none or ethernet_networks is not undefined)
 
-    - name: Delete the Uplink Set
-      oneview_uplink_set:
-        config: "{{ config }}"
-        state: absent
-        data:
-          name: 'Updated Uplink Set'
-          logicalInterconnectName: "{{ logical_interconnect_name }}"
-      delegate_to: localhost
-      register: deleted
+- name: Update the Uplink Set changing the value of the attribute description to 'New Description'
+  oneview_uplink_set:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: 'Test Uplink Set'
+      logicalInterconnectName: "{{ logical_interconnect_name }}"
+      description: 'New Description'
+  delegate_to: localhost
+
+- name: Rename the Uplink Set to 'Updated Uplink Set'
+  oneview_uplink_set:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: 'Test Uplink Set'
+      logicalInterconnectName: "{{ logical_interconnect_name }}"
+      newName: 'Updated Uplink Set'
+  delegate_to: localhost
+
+- name: Delete the Uplink Set
+  oneview_uplink_set:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: 'Updated Uplink Set'
+      logicalInterconnectName: "{{ logical_interconnect_name }}"
+  delegate_to: localhost
+  register: deleted

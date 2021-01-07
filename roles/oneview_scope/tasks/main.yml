@@ -1,47 +1,105 @@
 ---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
+
+- name: Print currentVersion if an apiVersion is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: contents.api_version == ""
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
+
+- name: Gather facts about all Ethernet Networks
+  oneview_ethernet_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=ethernet_networks
+
 - name: Create a scope
   oneview_scope:
-    config: "{{ config }}"
+    config: '{{ config }}'
     state: present
     data:
       name: "{{ scope_name }}"
+      addedResourceUris:
+        - "{{ ethernet_networks[0]['uri'] }}"
+        - "{{ ethernet_networks[1]['uri'] }}"
+      removedResourceUris:
+        - "{{ ethernet_networks[2]['uri'] }}"
+  delegate_to: localhost
+
+- name: Create a scope when exists
+  oneview_scope:
+    config: '{{ config }}'
+    state: present
+    data:
+      name: "{{ scope_name }}"
+      addedResourceUris:
+        - "{{ ethernet_networks[0]['uri'] }}"
+        - "{{ ethernet_networks[1]['uri'] }}"
+      removedResourceUris:
+        - "{{ ethernet_networks[2]['uri'] }}"
   delegate_to: localhost
 
 - name: Update the scope name
   oneview_scope:
-    config: "{{ config }}"
+    config: '{{ config }}'
     state: present
     data:
       name: "{{ scope_name }}"
-      newName: "{{ scope_new_name }}"
+      newName: "{{ scope_name }}_Renamed"
+      addedResourceUris:
+        - "{{ ethernet_networks[2]['uri'] }}"
+      removedResourceUris:
+        - "{{ ethernet_networks[1]['uri'] }}"
   delegate_to: localhost
 
+# This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, adding a resource
   oneview_scope:
-    config: "{{ config }}"
+    config: '{{ config }}'
     state: resource_assignments_updated
     data:
-      name: "{{ scope_new_name }}"
+      name: "{{ cscope_name }}_Renamed"
       resourceAssignments:
-        addedResourceUris: "{{ resource_uri_1 }}"
+        addedResourceUris: "{{ ethernet_networks[0]['uri'] }}"
   delegate_to: localhost
+  when: currentVersion == '300'
 
+# This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, removing two resources
   oneview_scope:
-    config: "{{ config }}"
+    config: '{{ config }}'
     state: resource_assignments_updated
     data:
-      name: "{{ scope_new_name }}"
+      name: "{{ scope_name }}_Renamed"
       resourceAssignments:
         removedResourceUris:
-          - "{{ resource_uri_1 }}"
-          - "{{ resource_uri_2 }}"
+          - "{{ ethernet_networks[0]['uri'] }}"
+          - "{{ ethernet_networks[1]['uri'] }}"
   delegate_to: localhost
- 
+  when: currentVersion == '300'
+
 - name: Delete the Scope
   oneview_scope:
-    config: "{{ config }}"
+    config: '{{ config }}'
     state: absent
     data:
-      name: "{{ scope_new_name }}"
+      name: "{{ scope_name }}_Renamed"
+  delegate_to: localhost
+
+- name: Create a scope to ensure continuity for an automation script
+  oneview_scope:
+    config: '{{ config }}'
+    state: present
+    data:
+      name: "{{ scope_name }}"
   delegate_to: localhost

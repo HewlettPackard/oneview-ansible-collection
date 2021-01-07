@@ -1,97 +1,107 @@
 ---
-    - name: Gather facts about all Server Hardwares
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-      delegate_to: localhost
+- name: Gather facts about all Server Hardwares
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
 
-    - debug: var=server_hardwares
+- debug: var=server_hardwares
+
+- name: Gather paginated, filtered and sorted facts about Server Hardware
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: name:ascending
+      filter: uidState='Off'
+  delegate_to: localhost
+
+- debug: msg="{{server_hardwares | map(attribute='name') | list }}"
+
+- set_fact: server_hardware_name = "{{ server_hardwares[0]['name'] }}"
+
+- name: Gather facts about a Server Hardware by name
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: "{{ server_hardwares[0]['name'] }}"
+  delegate_to: localhost
+
+- name: Gather facts about a Server Hardware by uri
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    uri: "{{ server_hardwares[0]['uri'] }}"
+  delegate_to: localhost
+  when: (server_hardwares is none and server_hardwares is not undefined)
+
+- name: Gather BIOS facts about a Server Hardware
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: server_hardware_name
+    options:
+      - bios
+  delegate_to: localhost
+
+- debug: var=server_hardwares
+- debug: var=server_hardware_bios
 
 
-    - name: Gather paginated, filtered and sorted facts about Server Hardware
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-        params:
-          start: 0
-          count: 3
-          sort: name:ascending
-          filter: uidState='Off'
-      delegate_to: localhost
+- name: Gather all facts about a Server Hardware
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: server_hardware_name
+    options:
+        - bios                   # optional
+        - javaRemoteConsoleUrl   # optional
+        - environmentalConfig    # optional
+        - iloSsoUrl              # optional
+        - physicalServerHardware # optional
+        - remoteConsoleUrl       # optional
+        - utilization:           # optional
+                fields: 'AveragePower'
+                filter: ['startDate=2016-05-30T03:29:42.000Z']
+                view: 'day'
+  delegate_to: localhost
 
-    - name: Gather facts about a Server Hardware by name
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-        name: "{{ server_hardware_name }}"
-      delegate_to: localhost
+- debug: var=server_hardwares
+- debug: var=server_hardware_bios
+- debug: var=server_hardware_env_config
+- debug: var=server_hardware_java_remote_console_url
+- debug: var=server_hardware_ilo_sso_url
+- debug: var=server_hardware_physical_server_hardware
+- debug: var=server_hardware_remote_console_url
+- debug: var=server_hardware_utilization
 
-    - name: Gather facts about a Server Hardware by uri
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-        uri: "{{ server_hardware_uri }}"
-      delegate_to: localhost
+# This option is available for API version 300 or later.
+- name: Gather facts about the Server Hardware firmware
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: server_hardware_name
+    options:
+        - firmware
+  delegate_to: localhost
 
-    - debug: var=server_hardwares
+- debug: var=server_hardware_firmware
 
-    - name: Gather BIOS facts about a Server Hardware
-      oneview_server_hardware_facts:
-        config: "{{ config }}"
-        name: "{{ server_hardware_name }}"
-        options:
-          - bios
-      delegate_to: localhost
+# This option is available for API version 300 or later.
+- name: Gather facts about all the firmwares inventory across all servers
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: server_hardware_name
+    options:
+    - firmwares
+  delegate_to: localhost
 
-    - name: Gather all facts about a Server Hardware
-      oneview_server_hardware_facts:
-       config: "{{ config }}"
-       name: "{{ server_hardware_name }}"
-       options:
-           - bios                   # optional
-           - javaRemoteConsoleUrl   # optional
-           - environmentalConfig    # optional
-           - iloSsoUrl              # optional
-           - physicalServerHardware # optional
-           - remoteConsoleUrl       # optional
-           - utilization:           # optional
-                    fields: 'AveragePower'
-                    filter: ['startDate=2016-05-30T03:29:42.000Z']
-                    view: 'day'
-      delegate_to: localhost
+- debug: var=server_hardware_firmwares
 
-    - debug: var=server_hardwares
-    - debug: var=server_hardware_bios
-    - debug: var=server_hardware_env_config
-    - debug: var=server_hardware_java_remote_console_url
-    - debug: var=server_hardware_ilo_sso_url
-    - debug: var=server_hardware_physical_server_hardware
-    - debug: var=server_hardware_remote_console_url
-    - debug: var=server_hardware_utilization
+- name: List the firmware inventory of the servers which have HPE Synergy 3530C version matches '1.2'
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    options:
+    - firmwares:
+        filter: [
+          "components.componentName='HPE Synergy 3530C 16G Host Bus Adapter'",
+          "components.componentVersion matches '1.2%'"
+        ]
+  delegate_to: localhost
 
-    # This option is available for API version 300 or later.
-    - name: Gather facts about the Server Hardware firmware
-      oneview_server_hardware_facts:
-       config: "{{ config }}"
-       name: "{{ server_hardware_name }}"
-       options:
-           - firmware
-      delegate_to: localhost
-
-    - debug: var=server_hardware_firmware
-
-    # This option is available for API version 300 or later.
-    - name: Gather facts about all the firmwares inventory across all servers
-      oneview_server_hardware_facts:
-       config: "{{ config }}"
-       name: "{{ server_hardware_name }}"
-       options:
-        - firmwares
-    - name: List the firmware inventory of the servers which have HPE Synergy 3530C version matches '1.2'
-      oneview_server_hardware_facts:
-       config: "{{ config }}"
-       options:
-        - firmwares:
-            filter: [
-              "components.componentName='HPE Synergy 3530C 16G Host Bus Adapter'",
-              "components.componentVersion matches '1.2%'"
-            ]
-      delegate_to: localhost
-
-    - debug: var=server_hardware_firmwares
+- debug: var=server_hardware_firmwares

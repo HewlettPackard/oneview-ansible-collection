@@ -1,11 +1,8 @@
 ---
 # defaults file for oneview_ethernet_network
-network_name: 'Ansible Test Ethernet Network'
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_ethernet_network/files/oneview_config.json"
-network_scope_uris:
-  - '/rest/scopes/5438f376-b61f-45b1-8c11-052a48a474ad'
-  - '/rest/scopes/ee7e593e-fcfa-457f-b672-d478f214540f'
 contents: "{{lookup('file', config)}}"
-networkUris_to_bulkdelete:
-  - '/rest/ethernet-networks/f8780897-81f9-4459-83b0-5d84d96280fe'
-  - '/rest/ethernet-networks/89734368-1b00-4c51-8409-aed5918276fd'
+network_name: 'OneViewSDK Test Ethernet Network'
+network_scope_uris:
+  - '/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f'
+  - '/rest/scopes/96661df3-fb4f-4617-a1fb-d6f11adf18d3'

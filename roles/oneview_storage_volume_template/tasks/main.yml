@@ -11,12 +11,21 @@
 
 - set_fact: svt_root_uri="{{ storage_volume_templates[0]['uri'] }}"
 
+- name: Gather paginated, filtered and sorted facts about Storage Pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: status='OK'
+
 - name: Create a Storage Volume Template
   oneview_storage_volume_template:
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ storage_vol_templ_name }}"
+      name: "{{ volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         name:
@@ -65,7 +74,7 @@
           format: x-uri-reference
           required: true
           description: A common provisioning group URI reference
-          default: "{{ storage_pool_uri }}"
+          default: "{{ storage_pools[0]['uri'] }}"
         snapshotPool:
           meta:
             locked: true
@@ -73,7 +82,7 @@
           type: string
           title: Snapshot Pool
           format: x-uri-reference
-          default: "{{ storage_pool_uri }}"
+          default: "{{ storage_pools[0]['uri'] }}"
           description: A URI reference to the common provisioning group used to create snapshots
         provisioningType:
           enum:
@@ -95,7 +104,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ storage_vol_templ_name }}"
+      name: "{{ volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         provisioningType:
@@ -107,17 +116,18 @@
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ storage_vol_templ_name }}"
+      name: "{{ volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         provisioningType:
           default: Thin
   delegate_to: localhost
 
-- name: Delete the Storage Volume Template
-  oneview_storage_volume_template:
-    config: "{{ config }}"
-    state: absent
-    data:
-        name: '{{storage_vol_templ_name}}'
-  delegate_to: localhost
+# Commenting it to ensure continuity with automation script
+# - name: Delete the Storage Volume Template
+#   oneview_storage_volume_template:
+#     config: "{{ config }}"
+#     state: absent
+#     data:
+#         name: '{{volume_template_name}}'
+#   delegate_to: localhost

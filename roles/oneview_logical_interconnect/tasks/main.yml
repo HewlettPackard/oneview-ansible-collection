@@ -1,3 +1,4 @@
+---
 - name: Get currentVersion from URL
   oneview_version_facts:
     config: "{{ config }}" 
@@ -133,18 +134,16 @@
 
 - debug: var=telemetry_configuration
 
-# Below task is supported only with OneView 3.10
-- name: Update the Logical Interconnect with two scopes
-  oneview_logical_interconnect:
+- name: Gather paginated, filtered and sorted facts about Firmware Drivers
+  oneview_firmware_driver_facts:
     config: "{{ config }}"
-    state: scopes_updated
-    data:
-      name: "{{ logical_interconnect_name }}"
-      scopeUris: "{{ scope_uris }}"
-  delegate_to: localhost
-  when: currentVersion >= '300' or currentVersion <= '500'
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      query: bundleType eq 'SPP'
 
-- debug: var=scope_uris
+- debug: var=firmware_drivers
 
 - name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
   oneview_logical_interconnect:
@@ -154,7 +153,7 @@
       name: "{{ logical_interconnect_name }}"
       firmware:
         command: Stage
-        spp: "{{ firmware_driver }}"  # could also be a sppUri. e.g.: - sppUri: '/rest/firmware-drivers/<filename>'
+        spp: "{{ firmware_drivers[0]['uri'] }}"  # could also be a sppUri. e.g.: - sppUri: '/rest/firmware-drivers/<filename>'
   when: firmware_driver is defined
   delegate_to: localhost
 
