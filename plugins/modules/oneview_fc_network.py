@@ -109,11 +109,12 @@ fc_network:
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
-
+# Important Change Updated
 class FcNetworkModule(OneViewModule):
     MSG_CREATED = 'FC Network created successfully.'
     MSG_UPDATED = 'FC Network updated successfully.'
     MSG_DELETED = 'FC Network deleted successfully.'
+    BULK_MSG_DELETED = 'FC Networks deleted successfully.'
     MSG_ALREADY_PRESENT = 'FC Network is already present.'
     MSG_ALREADY_ABSENT = 'FC Network is already absent.'
     RESOURCE_FACT_NAME = 'fc_network'
@@ -125,24 +126,75 @@ class FcNetworkModule(OneViewModule):
                                        required=True,
                                        choices=['present', 'absent']))
 
-        super().__init__(additional_arg_spec=additional_arg_spec,
-                         validate_etag_support=True)
+        super(FcNetworkModule, self).__init__(additional_arg_spec=additional_arg_spec,
+                                              validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.fc_networks)
+        self.connection_templates = self.oneview_client.connection_templates
 
     def execute_module(self):
+        changed, msg, ansible_facts = False, '', {}
+
         if self.state == 'present':
             return self._present()
-        else:
-            return self.resource_absent()
+        elif self.state == 'absent':
+            if self.data.get('networkUris'):
+                changed, msg, ansible_facts = self.__bulk_absent()
+            elif not self.module.check_mode:
+                return self.resource_absent()
+            else:
+                return self.check_resource_absent()
+
+        return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 
     def _present(self):
         scope_uris = self.data.pop('scopeUris', None)
-        result = self.resource_present(self.RESOURCE_FACT_NAME)
+        bandwidth = self.data.pop('bandwidth', None)
+        if not self.module.check_mode:
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
+        else:
+            result = self.check_resource_present(self.RESOURCE_FACT_NAME)
+
+        if bandwidth is not None:
+            if self.__update_connection_template(bandwidth)[0]:
+                if not result['changed']:
+                    result['changed'] = True
+                    result['msg'] = self.MSG_UPDATED
 
         if scope_uris is not None:
-            result = self.resource_scopes_set(result, 'fc_network', scope_uris)
+            if not self.module.check_mode:
+                result = self.resource_scopes_set(result, 'fc_network', scope_uris)
+            else:
+                result = self.check_resource_scopes_set(result, 'fc_network', scope_uris)
+
         return result
+
+    def __bulk_absent(self):
+        networkUris = self.data['networkUris']
+
+        if networkUris is not None:
+            self.resource_client.delete_bulk(self.data)
+            changed = True
+            msg = self.BULK_MSG_DELETED
+
+        return changed, msg, dict(fc_network_bulk_delete=None)
+
+    def __update_connection_template(self, bandwidth):
+
+        if 'connectionTemplateUri' not in self.current_resource.data:
+            return False, None
+
+        connection_template = self.connection_templates.get_by_uri(
+            self.current_resource.data['connectionTemplateUri'])
+
+        merged_data = connection_template.data.copy()
+        merged_data.update({'bandwidth': bandwidth})
+
+        if not compare(connection_template.data, merged_data):
+            connection_template.update(merged_data)
+            return True, connection_template.data
+        else:
+            return False, None
 
 
 def main():
@@ -151,3 +203,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
