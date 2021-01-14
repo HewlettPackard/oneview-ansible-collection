@@ -94,13 +94,14 @@ def transform_list_to_dict(list_):
 
     return ret
 
+
 # Makes a deep merge of 2 dictionaries and returns the merged dictionary
 def dict_merge(original_resource_dict, data_dict):
     resource_dict = deepcopy(original_resource_dict)
     for key, val in data_dict.items():
         if not resource_dict.get(key):
             resource_dict[key] = val
-        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], collections.Mapping):
+        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
             resource_dict[key] = data_dict[key]
@@ -108,6 +109,7 @@ def dict_merge(original_resource_dict, data_dict):
             resource_dict[key] = val
 
     return resource_dict
+
 
 def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None, replace_key=None, replace_value=None):
     """

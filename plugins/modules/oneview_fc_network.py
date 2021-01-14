@@ -107,9 +107,9 @@ fc_network:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, compare
 
-# Important Change Updated
+
 class FcNetworkModule(OneViewModule):
     MSG_CREATED = 'FC Network created successfully.'
     MSG_UPDATED = 'FC Network updated successfully.'
@@ -126,8 +126,7 @@ class FcNetworkModule(OneViewModule):
                                        required=True,
                                        choices=['present', 'absent']))
 
-        super(FcNetworkModule, self).__init__(additional_arg_spec=additional_arg_spec,
-                                              validate_etag_support=True)
+        super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.fc_networks)
         self.connection_templates = self.oneview_client.connection_templates
@@ -203,4 +202,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
