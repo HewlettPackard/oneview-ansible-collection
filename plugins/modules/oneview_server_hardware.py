@@ -51,8 +51,8 @@ options:
               C(environmental_configuration_set) will set the environmental configuration of the Server Hardware.
               C(multiple_servers_added) will add multiple rack-mount servers.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
-                  'ilo_state_reset','uid_state_on', 'uid_state_off', 'environmental_configuration_set',
-                  'multiple_servers_added']
+                  'ilo_state_reset','uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
+                  'environmental_configuration_set','environmental_configuration_set', 'multiple_servers_added']
         required: true
         type: str
     data:
