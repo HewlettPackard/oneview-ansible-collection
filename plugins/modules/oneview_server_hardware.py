@@ -46,6 +46,8 @@ options:
               C(ilo_state_reset) will reset the iLO state.
               C(uid_state_on) will set on the UID state, if necessary.
               C(uid_state_off) will set off the UID state, if necessary.
+              C(enable_maintenance_mode) will enable maintenance mode.
+              C(disable_maintenance_mode) will disable maintenance mode.
               C(environmental_configuration_set) will set the environmental configuration of the Server Hardware.
               C(multiple_servers_added) will add multiple rack-mount servers.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
