@@ -65,7 +65,7 @@ class TestScopeFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(scopes=SCOPE_2)
+            ansible_facts=dict(scopes=[SCOPE_2])
         )
 
 

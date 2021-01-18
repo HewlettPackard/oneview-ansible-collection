@@ -208,6 +208,7 @@ class ServerHardwareModule(OneViewModule):
     MSG_ENV_CONFIG_UPDATED = 'Server Hardware calibrated max power updated successfully.'
     MSG_SERVER_HARDWARE_NOT_FOUND = 'The provided Server Hardware was not found.'
     MSG_UID_STATE_CHANGED = 'Server Hardware UID state changed successfully.'
+    MSG_MAINTENANCE_MODE_CHANGED = 'Server Hardware Maintenance Mode changed successfully.'
     MSG_ILO_STATE_RESET = 'Server Hardware iLO state changed successfully.'
     MSG_NOTHING_TO_DO = 'Nothing to do.'
     MSG_DELETED = 'Server Hardware deleted successfully.'
@@ -218,13 +219,17 @@ class ServerHardwareModule(OneViewModule):
     patch_success_message = dict(
         ilo_state_reset=MSG_ILO_STATE_RESET,
         uid_state_on=MSG_UID_STATE_CHANGED,
-        uid_state_off=MSG_UID_STATE_CHANGED
+        uid_state_off=MSG_UID_STATE_CHANGED,
+        enable_maintenance_mode=MSG_MAINTENANCE_MODE_CHANGED,
+        disable_maintenance_mode=MSG_MAINTENANCE_MODE_CHANGED
     )
 
     patch_params = dict(
         ilo_state_reset=dict(operation='replace', path='/mpState', value='Reset'),
         uid_state_on=dict(operation='replace', path='/uidState', value='On'),
-        uid_state_off=dict(operation='replace', path='/uidState', value='Off')
+        uid_state_off=dict(operation='replace', path='/uidState', value='Off'),
+        enable_maintenance_mode=dict(operation='replace', path='/maintenanceMode', value='true'),
+        disable_maintenance_mode=dict(operation='replace', path='/maintenanceMode', value='false')
     )
 
     argument_spec = dict(
@@ -239,6 +244,8 @@ class ServerHardwareModule(OneViewModule):
                 'ilo_state_reset',
                 'uid_state_on',
                 'uid_state_off',
+                'enable_maintenance_mode',
+                'disable_maintenance_mode',
                 'environmental_configuration_set',
                 'multiple_servers_added'
             ]

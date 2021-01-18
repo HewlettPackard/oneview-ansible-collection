@@ -115,7 +115,7 @@ scope:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge
 
 
 class ScopeModule(OneViewModule):
@@ -151,35 +151,98 @@ class ScopeModule(OneViewModule):
         elif self.state == 'resource_assignments_updated':
             return self.__update_resource_assignments()
 
-    def __update_resource_assignments(self):
-        add_resources = self.data.get('resourceAssignments').get('addedResourceUris') is not None
-        remove_resources = self.data.get('resourceAssignments').get('removedResourceUris') is not None
-        updated_name = self.data.get('resourceAssignments').get('name') is not None
-        updated_description = self.data.get('resourceAssignments').get('description') is not None
-        if add_resources:
-            self.current_resource.patch(operation='add',
-                                        path='/addedResourceUris/-',
-                                        value=self.data.get('resourceAssignments').get('addedResourceUris'))
-        if remove_resources:
-            self.current_resource.patch(operation='replace',
-                                        path='/removedResourceUris',
-                                        value=self.data.get('resourceAssignments').get('removedResourceUris'))
-        if updated_name:
-            self.current_resource.patch(operation='replace',
-                                        path='/name',
-                                        value=self.data.get('resourceAssignments').get('name'))
-        if updated_description:
-            self.current_resource.patch(operation='replace',
-                                        path='/description',
-                                        value=self.data.get('resourceAssignments').get('description'))
-        if not add_resources and not remove_resources and not updated_name and not updated_description:
-            return dict(changed=False,
-                        msg=self.MSG_RESOURCE_ASSIGNMENTS_NOT_UPDATED,
-                        ansible_facts=dict(scope=self.current_resource.data))
+    def __present(self):
+        changed = False
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
 
-        return dict(changed=True,
-                    msg=self.MSG_RESOURCE_ASSIGNMENTS_UPDATED,
-                    ansible_facts=dict(scope=self.current_resource.data))
+        if self.current_resource:
+            changed, msg = self.__update()
+        else:
+            changed, msg = self.__create(self.data)
+
+        return dict(
+            msg=msg,
+            changed=changed,
+            ansible_facts=dict(scope=self.current_resource.data)
+        )
+
+    def __create(self, data):
+        self.current_resource = self.resource_client.create(data)
+        return True, self.MSG_CREATED
+
+    def __compare_resource_assignments(self, current_dict, updated_dict):
+        changed = False
+        if updated_dict.get('removedResourceUris'):
+            common_elements = set(current_dict['addedResourceUris']).intersection(set(updated_dict['removedResourceUris']))
+            if len(common_elements) > 0:
+                changed = True
+            else:
+                updated_dict.pop('removedResourceUris')
+        if changed is True:
+            return changed, updated_dict
+
+        if current_dict.get('addedResourceUris') and updated_dict.get('addedResourceUris'):
+            all_add_elements = set(current_dict['addedResourceUris']).union(set(updated_dict['addedResourceUris']))
+            new_elements = all_add_elements - set(current_dict['addedResourceUris'])
+            if len(new_elements) > 0:
+                changed = True
+            else:
+                updated_dict['addedResourceUris'] = list(all_add_elements)
+        return changed, updated_dict
+
+    def __update(self):
+        changed = False
+        existing_data = self.current_resource.data.copy()
+        updated_data = dict_merge(existing_data, self.data)
+
+        state_change, updated_data = self.__compare_resource_assignments(existing_data, updated_data)
+
+        if compare(self.current_resource.data, updated_data) and state_change is False:
+            msg = self.MSG_ALREADY_PRESENT
+        else:
+            self.current_resource.update(updated_data)
+            changed = True
+            msg = self.MSG_UPDATED
+
+        return changed, msg
+
+    # This method is available only for API300
+    def __update_resource_assignments(self):
+        if self.oneview_client.api_version == 300:
+            # returns None if scope doesn't exist
+            if not self.current_resource:
+                return dict(failed=True,
+                            msg=self.MSG_RESOURCE_NOT_FOUND)
+
+            add_resources = self.data.get('resourceAssignments').get('addedResourceUris') is not None
+            remove_resources = self.data.get('resourceAssignments').get('removedResourceUris') is not None
+            updated_name = self.data.get('resourceAssignments').get('name') is not None
+            updated_description = self.data.get('resourceAssignments').get('description') is not None
+            if add_resources:
+                self.current_resource.patch(operation='add',
+                                            path='/addedResourceUris/-',
+                                            value=self.data.get('resourceAssignments').get('addedResourceUris'))
+            if remove_resources:
+                self.current_resource.patch(operation='replace',
+                                            path='/removedResourceUris',
+                                            value=self.data.get('resourceAssignments').get('removedResourceUris'))
+            if updated_name:
+                self.current_resource.patch(operation='replace',
+                                            path='/name',
+                                            value=self.data.get('resourceAssignments').get('name'))
+            if updated_description:
+                self.current_resource.patch(operation='replace',
+                                            path='/description',
+                                            value=self.data.get('resourceAssignments').get('description'))
+            if not add_resources and not remove_resources and not updated_name and not updated_description:
+                return dict(changed=False,
+                            msg=self.MSG_RESOURCE_ASSIGNMENTS_NOT_UPDATED,
+                            ansible_facts=dict(scope=self.current_resource.data))
+
+            return dict(changed=True,
+                        msg=self.MSG_RESOURCE_ASSIGNMENTS_UPDATED,
+                        ansible_facts=dict(scope=self.current_resource.data))
 
 
 def main():
