@@ -172,6 +172,12 @@ To use a module from HPE OneView collection, please reference the full namespace
     - hpe.oneview.oneview_fc_network_facts
   ```
 
+Run the above created playbooks as shown below.
+
+```bash   
+ansible-playbook example_collection.yml
+```
+
 ## License
 
 This project is licensed under the Apache 2.0 license. Please see the [LICENSE](LICENSE) for more information.
