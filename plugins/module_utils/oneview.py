@@ -96,28 +96,22 @@ def transform_list_to_dict(list_):
 
 
 # Makes a deep merge of 2 dictionaries and returns the merged dictionary
-def dict_merge(resource_dict, data_dict):
+def dict_merge(original_resource_dict, data_dict):
+    resource_dict = deepcopy(original_resource_dict)
     for key, val in data_dict.items():
         if not resource_dict.get(key):
             resource_dict[key] = val
         elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
-            tmp_list1 = []
-            tmp_list2 = []
-            for index, value in enumerate(resource_dict[key]):
-                tmp_list1.append([index, value])
-            for index, value in enumerate(data_dict[key]):
-                tmp_list2.append([index, value])
-            output_dict = dict_merge(dict(tmp_list1), dict(tmp_list2))
-            resource_dict[key] = list(output_dict.values())
+            resource_dict[key] = data_dict[key]
         else:
             resource_dict[key] = val
 
     return resource_dict
 
 
-def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None):
+def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None, replace_key=None, replace_value=None):
     """
     Merge two lists by the key. It basically:
 
@@ -149,6 +143,8 @@ def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None):
             for ignored_key in ignore_when_null:
                 if ignored_key in item and item[ignored_key] is None:
                     item.pop(ignored_key)
+            if replace_key and item.get(replace_key) == replace_value:
+                item[replace_key] = items_map[item_key][replace_key]
             merged_items[item_key] = items_map[item_key]
             merged_items[item_key].update(item)
         else:
@@ -940,10 +936,18 @@ class ServerProfileMerger(object):
         if data.get(SPKeys.CONNECTION_SETTINGS) and SPKeys.CONNECTIONS in data.get(SPKeys.CONNECTION_SETTINGS):
             existing_connections = resource[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS]
             params_connections = data[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS]
-            merged_data[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS] = merge_list_by_key(existing_connections, params_connections, key=SPKeys.ID)
+            merged_data[SPKeys.CONNECTION_SETTINGS][SPKeys.CONNECTIONS] = merge_list_by_key(
+                existing_connections,
+                params_connections,
+                key=SPKeys.ID,
+                replace_key='portId',
+                replace_value='Auto'
+            )
 
-            merged_data[SPKeys.CONNECTION_SETTINGS] = self._merge_connections_boot(merged_data[SPKeys.CONNECTION_SETTINGS], resource[
-                SPKeys.CONNECTION_SETTINGS])
+            merged_data[SPKeys.CONNECTION_SETTINGS] = self._merge_connections_boot(
+                merged_data[SPKeys.CONNECTION_SETTINGS],
+                resource[SPKeys.CONNECTION_SETTINGS]
+            )
 
         if self._should_merge(data, resource, key=SPKeys.CONNECTIONS):
             existing_connections = resource[SPKeys.CONNECTIONS]
