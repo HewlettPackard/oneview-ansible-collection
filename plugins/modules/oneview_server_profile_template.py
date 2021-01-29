@@ -125,6 +125,7 @@ server_profile_template:
     type: dict
 '''
 
+from copy import deepcopy
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, ServerProfileReplaceNamesByUris, ServerProfileMerger, compare
 
 
@@ -200,8 +201,9 @@ class ServerProfileTemplateModule(OneViewModule):
 
     def __update(self, data):
         merged_data = ServerProfileMerger().merge_data(self.current_resource.data, data)
-
-        equal = compare(merged_data, self.current_resource.data)
+        updated_data = deepcopy(merged_data)
+        updated_data.pop('initialScopeUris', None)
+        equal = compare(updated_data, self.current_resource.data)
 
         if equal:
             msg = self.MSG_ALREADY_PRESENT
