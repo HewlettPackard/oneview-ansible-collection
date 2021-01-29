@@ -1,0 +1,163 @@
+---
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: contents.api_version == ""
+  register: version
+
+- name: Print currentVersion if api version is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: contents.api_version == ""
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
+
+- name: Create an Ethernet Network
+  oneview_ethernet_network:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ item.name }}'
+      vlanId: '{{ item.vlanId }}'
+      ethernetNetworkType: Tagged
+      purpose: General
+      smartLink: false
+      privateNetwork: false
+      bandwidth:
+          maximumBandwidth: 2000
+          typicalBandwidth: 1000
+  delegate_to: localhost
+  register: eth_network_out
+  with_items:
+   - { name: '{{ eth_network_1 }}', vlanId: '201' }
+   - { name: '{{ eth_network_2 }}', vlanId: '202'}
+
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: present
+    validate_etag: False
+    data:
+      name: "{{ item }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+      type: "fc-networkV4"
+  delegate_to: localhost
+  register: fc_network_out
+  with_items:
+      - "{{ fc_network_1 }}"
+      - "{{ fc_network_2 }}"
+
+# Below task creates a Logical Interconnect Group with Interconnects, upLinkPorts, uplinkSets containing EthernetNetworks
+- name: Create a Logical Interconnect Group
+  oneview_logical_interconnect_group:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: 'LIG-dummy'
+      enclosureType: 'SY12000'
+      uplinkSets: 
+        - name: 'e23 uplink set'
+          mode: 'Auto'
+          networkType: 'Ethernet'
+          ethernetNetworkType: 'Tagged'
+          networkUris:
+            - "{{ eth_network_out.results[0].ansible_facts.ethernet_network.uri }}"
+            - "{{ eth_network_out.results[1].ansible_facts.ethernet_network.uri }}"
+          logicalPortConfigInfos:
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 82
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 82
+                      type: 'Port'
+                    - relativeValue: 6
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 6
+                      type: 'Bay'
+      interconnectBaySet: 3
+      enclosureIndexes: [1, 2, 3]
+      redundancyType: "HighlyAvailable"
+      interconnectMapTemplate:
+        interconnectMapEntryTemplates:
+          - enclosureIndex: 3
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 3
+                      type: "Enclosure"
+                    - relativeValue: 6
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+          - enclosureIndex: 2
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 2
+                      type: "Enclosure"
+                    - relativeValue: 6
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+          - enclosureIndex: 2
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 2
+                      type: "Enclosure"
+                    - relativeValue: 3
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+          - enclosureIndex: 3
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 3
+                      type: "Enclosure"
+                    - relativeValue: 3
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+          - enclosureIndex: 1
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 1
+                      type: "Enclosure"
+                    - relativeValue: 6
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+          - enclosureIndex: 1
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 1
+                      type: "Enclosure"
+                    - relativeValue: 3
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+            # Alternatively you can inform permittedInterconnectTypeUri
+  delegate_to: localhost
