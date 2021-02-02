@@ -29,7 +29,7 @@ module: oneview_logical_interconnect
 short_description: Manage OneView Logical Interconnect resources.
 description:
     - Provides an interface to manage Logical Interconnect resources.
-version_added: "2.3"
+version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.6.0"

@@ -29,7 +29,7 @@ module: oneview_logical_interconnect_facts
 short_description: Retrieve facts about one or more of the OneView Logical Interconnects.
 description:
     - Retrieve facts about one or more of the OneView Logical Interconnects.
-version_added: "2.3"
+version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.6.0"
