@@ -6,7 +6,7 @@ Retrieve facts about one or more of the OneView Logical Interconnects.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.4.0
+  * hpeOneView >= 5.6.0
 
 #### Options
 
@@ -39,6 +39,7 @@ Retrieve facts about one or more of the OneView Logical Interconnects.
 | port_monitor   | The port monitor configuration of a logical interconnect. |  When requested, but can be null. |  dict |
 | qos_aggregated_configuration   | The QoS aggregated configuration for the logical interconnect. |  When requested, but can be null. |  dict |
 | snmp_configuration   | The SNMP configuration for a logical interconnect. |  When requested, but can be null. |  dict |
+| igmp_settings   | The IGMP settings for a logical interconnect. |  When requested, but can be null. |  dict |
 | telemetry_configuration   | The telemetry configuration of the logical interconnect. |  When requested, but can be null. |  dict |
 | unassigned_ports   | A collection of ports from the member interconnects which are eligible for assignment to an analyzer port on a logical interconnect. |  When requested, but can be null. |  dict |
 | unassigned_uplink_ports   | A collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port on a logical interconnect. |  When requested, but can be null. |  dict |

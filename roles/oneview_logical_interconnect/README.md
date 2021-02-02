@@ -6,7 +6,7 @@ Provides an interface to manage Logical Interconnect resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.4.0
+  * hpeOneView >= 5.6.0
 
 #### Options
 
@@ -37,5 +37,8 @@ Provides an interface to manage Logical Interconnect resources.
 | qos_configuration   | Has the OneView facts about the QoS Configuration. |  On 'qos_aggregated_configuration_updated' state, but can be null. |  dict |
 | scope_uris   | Has the scope URIs the specified logical interconnect is inserted into. |  On 'scopes_updated' state, but can be null. |  dict |
 | snmp_configuration   | Has the OneView facts about the SNMP Configuration. |  On 'snmp_configuration_updated' state, but can be null. |  dict |
+| igmp_settings   | Has the OneView facts about the IGMP settings. |  On 'igmp_settings_updated' state, but can be null. |  dict |
+| port_flap_settings   | Has the OneView facts about the port flap settings. |  On 'port_flap_settings_updated' state, but can be null. |  dict |
+| li_inconsistency_report   | Has the OneView facts about the bulk inconsistency report. |  On 'bulk_inconsistency_validated' state, but can be null. |  dict |
 | storage_volume_template   | Has the OneView facts about the Logical Interconnect. |  On 'compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',               and 'configuration_updated' states, but can be null. |  dict |
 | telemetry_configuration   | Has the OneView facts about the Telemetry Configuration. |  On 'telemetry_configuration_updated' state, but can be null. |  dict |

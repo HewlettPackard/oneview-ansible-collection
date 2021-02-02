@@ -5,7 +5,7 @@
       "password": "<password>"
     },
     "image_streamer_ip": "",
-    "api_version": 2200,
+    "api_version": 2400,
     "variant": "Synergy"
   }
   

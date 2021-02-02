@@ -28,14 +28,17 @@ To install HPE OneView collection from GitHub
 git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
 cd oneview-ansible-collection
 ansible-galaxy collection build .
+```
+Now a tar file is generated. Install that file.
+```
 ansible-galaxy collection install <tar_file>
 ```
 
 To install dependency packages
     
-  ```bash
-  pip install -r requirements.txt
-  ```
+```bash
+pip install -r requirements.txt
+```
 To install HPE OneView collection from Docker Image
 
 ```bash
@@ -60,7 +63,7 @@ example:
     "authLoginDomain": "",
     "password": "<password>"
   },
-  "api_version": 2200
+  "api_version": 2400
 }
 ```
 
@@ -98,7 +101,7 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
     hostname: <hostname>
     username: <username>
     password: <password>
-    api_version: 2200
+    api_version: 2400
     state: present
     data:
       name: "{{ network_name }}"
@@ -113,19 +116,19 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible modules for HPE OneView support the API endpoints for HPE OneView 4.20, 5.00, 5.20, 5.30, 5.40, 5.50
+The Ansible modules for HPE OneView support the API endpoints for HPE OneView 4.20, 5.00, 5.20, 5.30, 5.40, 5.50, 5.60
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 2200
+"api_version": 2400
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='2200'
+export ONEVIEWSDK_API_VERSION='2400'
 ```
 
 If this property is not specified, it will fall back to default value.
@@ -138,6 +141,7 @@ The API list is as follows:
 - HPE OneView 5.30 API version: `1800`
 - HPE OneView 5.40 API version: `2000`
 - HPE OneView 5.50 API version: `2200`
+- HPE OneView 5.60 API version: `2400`
 
 ### HPE Synergy Image Streamer
 
@@ -200,4 +204,4 @@ The HPE.Oneview collection includes
 
 ## Copyright
 
-© Copyright 2020 Hewlett Packard Enterprise Development LP
+© Copyright 2021 Hewlett Packard Enterprise Development LP
