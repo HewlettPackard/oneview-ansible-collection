@@ -2,9 +2,9 @@
 
 | Item | Meaning |
 | ------------------ | --------------------------------------------- |
-|  :white_check_mark: | Endpoint implemented in the Ansible SDK and tested for this API version :tada: |
-|  :heavy_multiplication_x:  | Endpoint considered as 'out-of-scope' for the Ansible SDK               |
-|  :white_check_mark: | Endpoint not available for this API Version |
+|  :white_check_mark: | Endpoint implemented in the Ansible collection and tested for this API version :tada: |
+|  :heavy_multiplication_x:  | Endpoint considered as 'out-of-scope' for the Ansible collection               |
+|  :heavy_minus_sign: | Endpoint not available for this API Version |
 
 <br />
 
@@ -153,7 +153,6 @@
 |<sub>/rest/logical-interconnects/{id}/unassignedUplinkPortsForPortMonitor</sub>          | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/unassignedPortsForPortMonitor</sub>                | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/configuration</sub>                                | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/logical-interconnects/{id}/portFlapSettings                                   | PUT      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/port-monitor</sub>                                 | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/port-monitor</sub>                                 | PUT      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/telemetry-configurations/{tcId}</sub>              | GET      | :white_check_mark:   | :white_check_mark:   |
