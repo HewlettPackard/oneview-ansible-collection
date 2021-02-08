@@ -1,9 +1,9 @@
 ## HPE OneView Ansible Collection Installation and User Guide
  
 # Preface:
-This “Install and User Guide of Ansible Collection for OneView” can help move current customers from the legacy Ansible module to the new Ansible collection.
+This document helps current customers to move from the legacy Ansible module to the new Ansible collection.
 This will enable customers to take full advantage of Infrastructure automation using Ansible Collection Modules, in addition to helping improve the customer experience.
-This guide covers various aspects including:  Installation of Ansible Collection, Installation of HPE OneView Ansible Collection and running the Ansible playbooks.
+This guide covers various aspects including: Installation of Ansible Collection, Installation of HPE OneView Ansible Collection and running the Ansible playbooks.
 
 This guide also provides step by step details to the Customer for adopting, moving and migrating to OneView-Ansible-collection for each of the below sections.
 (a)	Installation of Ansible Collection
@@ -223,9 +223,9 @@ $ ansible-playbook oneview_custom_collection_use_case.yml
 # Summary:
 Moving from the legacy Ansible module to the new Ansible collection, enables the user to take full advantage of infrastructure automation using Ansible Collection Modules.
 The new Ansible Collection architecture streamlines and focuses Ansible development by providing an updated approach to managing the dramatically increasing volume of related content.
-By migrating from the HPE OneView Ansible Module to the HPE OneView Ansible Collection, users will ensure full alignment with Ansible’s development path and compatibility with Ansible products. 
+By migrating from the HPE OneView Ansible Module to the HPE OneView Ansible Collection, users will ensure full alignment with Ansible's development path and compatibility with Ansible products. 
 
-This document shows that there are multiple paths to migration. That the process is straight forward and can be adjusted to suit a user’s particular circumstances to achieve a seamless migration with limited effort.
+This document shows that there are multiple paths to migration. That the process is straight forward and can be adjusted to suit a user's particular circumstances to achieve a seamless migration with limited effort.
 GitHub, Ansible Galaxy or Automation Hub can be used to move and migrate to OneView-Ansible-collection.
 Additionally, converting existing playbooks into playbooks for use with collections is a straight forward process. As is the creation of new customized playbooks for use in the new collection format.
 Moving from the legacy Ansible module to the new Ansible collection requires limited effort and provides benefits which make migration a worthwhile investment.
