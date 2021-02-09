@@ -1,15 +1,22 @@
 ---
+- name: Gather facts about all connection templates
+  oneview_connection_template_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- set_fact: ct_name={{ connection_templates[0]['name'] }}
+
 - name: Update the Connection Template
   oneview_connection_template:
     config: "{{ config }}"
     state: present
     data:
-        name: "{{ template_name }}"
+        name: "{{ ct_name }}"
         type: "connection-template"
         bandwidth:
             maximumBandwidth: 10000
             typicalBandwidth: 2000
-        newName: "{{ template_new_name }}"
+        newName: "{{ ct_name }}_updated"
   delegate_to: localhost
 
 - name: Update back the Connection Template
@@ -17,10 +24,10 @@
     config: "{{ config }}"
     state: present
     data:
-        name: "{{ template_new_name }}"
+        name: "{{ ct_name }}_updated"
         type: "connection-template"
         bandwidth:
             maximumBandwidth: 10000
             typicalBandwidth: 2000
-        newName: "{{ template_name }}"
+        newName: "{{ ct_name }}"
   delegate_to: localhost

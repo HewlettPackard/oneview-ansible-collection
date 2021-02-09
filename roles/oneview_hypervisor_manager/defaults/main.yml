@@ -3,4 +3,6 @@
 
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_manager/files/oneview_config.json"
 hypervisor_manager_name: '<hypervisor_manager_name>'
+hypervisor_manager_username: '<username>'
+hypervisor_manager_password: '<password>'
 contents: "{{lookup('file', config)}}"
