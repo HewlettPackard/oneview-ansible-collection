@@ -22,6 +22,7 @@ RUN ansible-galaxy collection build --force .
 RUN ansible-galaxy collection install *.tar.gz
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
+
 # Clean and remove not required packages
 RUN DEBAIN_FRONTEND=noninteractive \
     apt-get autoremove -y && \
