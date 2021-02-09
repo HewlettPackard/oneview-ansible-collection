@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ description:
 version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
-    - "hpeOneView >= 5.4.0"
+    - "hpeOneView >= 5.6.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
     state:
@@ -48,6 +48,7 @@ options:
               C(qos_aggregated_configuration_updated) updates the QoS aggregated configuration for the logical
               interconnect.
               C(snmp_configuration_updated) updates the SNMP configuration for the logical interconnect.
+              C(igmp_settings_updated) updates the IGMP settings for the logical interconnect.
               C(port_monitor_updated) updates the port monitor configuration of a logical interconnect.
               C(configuration_updated) asynchronously applies or re-applies the logical interconnect configuration
               to all managed interconnects. This operation is non-idempotent.
@@ -57,10 +58,14 @@ options:
               non-idempotent.
               C(telemetry_configuration_updated) updates the telemetry configuration of a logical interconnect.
               C(scopes_updated) updates the scopes associated with the logical interconnect.
+              C(bulk_inconsistency_validated) Validates the bulk update from group operation and gets the
+              consolidated inconsistency report.
+              C(port_flap_settings_updated) updates the port flap settings of a logical interconnect.
         choices: ['compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',
                   'forwarding_information_base_generated', 'qos_aggregated_configuration_updated',
                   'snmp_configuration_updated', 'port_monitor_updated', 'configuration_updated', 'firmware_installed',
-                  'telemetry_configuration_updated', 'scopes_updated']
+                  'telemetry_configuration_updated', 'scopes_updated', 'igmp_settings_updated', 'bulk_inconsistency_validated',
+                  'port_flap_settings_updated']
         type: str
         required: true
     data:
@@ -81,7 +86,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: compliant
     data:
       name: "Name of the Logical Interconnect"
@@ -91,7 +96,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: ethernet_settings_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -103,7 +108,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: internal_networks_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -117,7 +122,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: settings_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -129,7 +134,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: forwarding_information_base_generated
     data:
       name: "Name of the Logical Interconnect"  # could also be 'uri'
@@ -139,7 +144,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: qos_aggregated_configuration_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -157,31 +162,55 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: snmp_configuration_updated
     data:
       name: "Name of the Logical Interconnect"
       snmpConfiguration:
         enabled: True
 
+- name: Update the IGMP settings for the logical interconnect
+  oneview_logical_interconnect:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2400
+    state: igmp_settings_updated
+    data:
+      name: "Name of the Logical Interconnect"
+      igmpSettings:
+        igmpIdleTimeoutInterval: 200
+
 - name: Update the port monitor configuration of the logical interconnect
   oneview_logical_interconnect:
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: port_monitor_updated
     data:
       name: "Name of the Logical Interconnect"
       portMonitor:
         enablePortMonitor: False
 
+- name: Update the port flap settings of the logical interconnect
+  oneview_logical_interconnect:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2400
+    state: port_flap_settings_updated
+    data:
+      name: "Name of the Logical Interconnect"
+      portFlapProtection:
+        portFlapThresholdPerInterval: 5
+
 - name: Update the configuration on the logical interconnect
   oneview_logical_interconnect:
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: configuration_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -191,7 +220,7 @@ EXAMPLES = '''
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: firmware_installed
     data:
       name: "Name of the Logical Interconnect"
@@ -199,12 +228,25 @@ EXAMPLES = '''
         command: Stage
         spp: "filename"  # could also be sppUri: '/rest/firmware-drivers/<filename>'
 
+- name: Validates the bulk update from group operation of the given LI URLs
+  oneview_logical_interconnect:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2400
+    state: bulk_inconsistency_validated
+    data:
+      name: "Name of the Logical Interconnect"
+      bulk_update:
+        logicalInterconnectUris:
+          - /rest/logical-interconnects/d0432852-28a7-4060-ba49-57ca973ef6c2
+
 - name: Updates the telemetry configuration of a logical interconnect.
   oneview_logical_interconnect:
     hostname: 172.16.101.48
     username: administrator
     password: my_password
-    api_version: 1200
+    api_version: 2400
     state: telemetry_configuration_updated
     data:
       name: "Name of the Logical Interconnect"
@@ -252,9 +294,19 @@ snmp_configuration:
     returned: On 'snmp_configuration_updated' state, but can be null.
     type: dict
 
+igmp_settings:
+    description: Has the OneView facts about the IGMP settings.
+    returned: On 'igmp_settings_updated' state, but can be null.
+    type: dict
+
 port_monitor:
     description: Has the OneView facts about the Port Monitor Configuration.
     returned: On 'port_monitor_updated' state, but can be null.
+    type: dict
+
+port_flap_settings:
+    description: Has the OneView facts about the Port Flap Settings.
+    returned: On 'port_flap_settings_updated' state, but can be null.
     type: dict
 
 li_firmware:
@@ -271,6 +323,11 @@ scope_uris:
     description: Has the scope URIs the specified logical interconnect is inserted into.
     returned: On 'scopes_updated' state, but can be null.
     type: dict
+
+li_inconsistency_report:
+    description: Has the OneView facts about the LIs consolidated inconsistency report .
+    returned: On 'bulk_inconsistency_validated' state, but can be null.
+    type: dict
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError, compare
@@ -283,11 +340,14 @@ class LogicalInterconnectModule(OneViewModule):
     MSG_SETTINGS_UPDATED = 'Logical Interconnect setttings updated successfully.'
     MSG_QOS_UPDATED = 'QoS aggregated configuration updated successfully.'
     MSG_SNMP_UPDATED = 'SNMP configuration updated successfully.'
+    MSG_IGMP_UPDATED = 'IGMP settings updated successfully.'
     MSG_PORT_MONITOR_UPDATED = 'Port Monitor configuration updated successfully.'
+    MSG_PORT_FLAP_SETTINGS_UPDATED = 'Port Flap Settings updated successfully.'
     MSG_CONFIGURATION_UPDATED = 'Configuration on the Logical Interconnect updated successfully.'
     MSG_SCOPES_UPDATED = 'Scopes on the Logical Interconnect updated successfully.'
     MSG_TELEMETRY_CONFIGURATION_UPDATED = 'Telemetry configuration updated successfully.'
     MSG_FIRMWARE_INSTALLED = 'Firmware updated successfully.'
+    MSG_INCONSISTENCY_VALIDATED = 'Bulk inconsistency validated successfully.'
     MSG_NOT_FOUND = 'Logical Interconnect not found.'
     MSG_ETH_NETWORK_NOT_FOUND = 'Ethernet network not found: '
     MSG_NO_CHANGES_PROVIDED = 'Nothing to do.'
@@ -299,7 +359,8 @@ class LogicalInterconnectModule(OneViewModule):
             choices=['compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',
                      'forwarding_information_base_generated', 'qos_aggregated_configuration_updated',
                      'snmp_configuration_updated', 'port_monitor_updated', 'configuration_updated',
-                     'firmware_installed', 'telemetry_configuration_updated', 'scopes_updated']
+                     'firmware_installed', 'telemetry_configuration_updated', 'scopes_updated', 'igmp_settings_updated',
+                     'bulk_inconsistency_validated', 'port_flap_settings_updated']
         ),
         data=dict(required=True, type='dict')
     )
@@ -330,12 +391,18 @@ class LogicalInterconnectModule(OneViewModule):
             changed, msg, ansible_facts = self.__update_qos_configuration()
         elif self.state == 'snmp_configuration_updated':
             changed, msg, ansible_facts = self.__update_snmp_configuration()
+        elif self.state == 'igmp_settings_updated':
+            changed, msg, ansible_facts = self.__update_igmp_settings()
         elif self.state == 'port_monitor_updated':
             changed, msg, ansible_facts = self.__update_port_monitor()
+        elif self.state == 'port_flap_settings_updated':
+            changed, msg, ansible_facts = self.__update_port_flap_settings()
         elif self.state == 'configuration_updated':
             changed, msg, ansible_facts = self.__update_configuration()
         elif self.state == 'firmware_installed':
             changed, msg, ansible_facts = self.__install_firmware()
+        elif self.state == 'bulk_inconsistency_validated':
+            changed, msg, ansible_facts = self.__validate_bulk_inconsistency()
         elif self.state == 'telemetry_configuration_updated':
             changed, msg, ansible_facts = self.__update_telemetry_configuration()
         elif self.state == 'scopes_updated':
@@ -438,6 +505,19 @@ class LogicalInterconnectModule(OneViewModule):
 
             return True, self.MSG_SNMP_UPDATED, dict(snmp_configuration=snmp_config_updated)
 
+    def __update_igmp_settings(self):
+        self.__validate_options('igmpSettings', self.data)
+
+        igmp_settings = self.__get_igmp_settings()
+        igmp_settings_merged = self.__merge_options(self.data['igmpSettings'], igmp_settings)
+
+        if compare(igmp_settings_merged, igmp_settings):
+            return False, self.MSG_NO_CHANGES_PROVIDED, None
+        else:
+            igmp_settings_updated = self.current_resource.update_igmp_settings(igmp_settings_merged)
+
+            return True, self.MSG_IGMP_UPDATED, dict(igmp_settings=igmp_settings_updated)
+
     def __update_port_monitor(self):
         self.__validate_options('portMonitor', self.data)
 
@@ -452,6 +532,20 @@ class LogicalInterconnectModule(OneViewModule):
             result = dict(port_monitor=monitor_config_updated)
             return True, self.MSG_PORT_MONITOR_UPDATED, result
 
+    def __update_port_flap_settings(self):
+        self.__validate_options('portFlapProtection', self.data)
+
+        port_flap_config = self.current_resource.data['portFlapProtection']
+        port_flap_config_merged = self.__merge_options(self.data['portFlapProtection'], port_flap_config)
+
+        if compare(port_flap_config_merged, port_flap_config):
+            return False, self.MSG_NO_CHANGES_PROVIDED, None
+        else:
+            port_flap_config_updated = self.current_resource.update_port_flap_settings(
+                port_flap_config_merged)
+            result = dict(port_flap_settings=port_flap_config_updated)
+            return True, self.MSG_PORT_FLAP_SETTINGS_UPDATED, result
+
     def __install_firmware(self):
         self.__validate_options('firmware', self.data)
 
@@ -462,6 +556,14 @@ class LogicalInterconnectModule(OneViewModule):
         firmware = self.current_resource.install_firmware(options)
 
         return True, self.MSG_FIRMWARE_INSTALLED, dict(li_firmware=firmware)
+
+    def __validate_bulk_inconsistency(self):
+        self.__validate_options('bulk_update', self.data)
+
+        options = self.data['bulk_update'].copy()
+        inconsistency_report = self.current_resource.bulk_inconsistency_validate(options)
+
+        return True, self.MSG_INCONSISTENCY_VALIDATED, dict(li_inconsistency_report=inconsistency_report)
 
     def __update_configuration(self):
         result = self.current_resource.update_configuration()
@@ -499,6 +601,9 @@ class LogicalInterconnectModule(OneViewModule):
 
     def __get_snmp_configuration(self):
         return self.current_resource.get_snmp_configuration()
+
+    def __get_igmp_settings(self):
+        return self.current_resource.get_igmp_settings()
 
     def __get_port_monitor_configuration(self):
         return self.current_resource.get_port_monitor()

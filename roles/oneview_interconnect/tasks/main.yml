@@ -10,27 +10,27 @@
 
 - debug: var=interconnects
 
-- set_fact: interconnect_name = "{{ interconnects[0]['name'] }}"
+- set_fact: interconnect_name="{{ interconnects[0]['name'] }}"
 
 - name: Turn the power on for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
     state: 'powered_on'
-    name: interconnect_name
+    name: "{{ interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the UID light to 'On' for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
     state: 'uid_on'
-    name: interconnect_name
+    name: "{{ interconnect_name }}"
   delegate_to: localhost
 
 - name: Perform a device reset for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
     state: 'device_reset'
-    name: interconnect_name
+    name: "{{ interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the power off for interconnect that matches the specified ip
@@ -61,12 +61,12 @@
   oneview_interconnect:
     config: "{{ config }}"
     state: 'reset_port_protection'
-    name: interconnect_name
+    name: "{{ interconnect_name }}"
   delegate_to: localhost
 
 - name: Reapplies the interconnect configuration
   oneview_interconnect:
     config: "{{ config }}"
     state: reconfigured
-    name: interconnect_name
+    name: "{{ interconnect_name }}"
   delegate_to: localhost

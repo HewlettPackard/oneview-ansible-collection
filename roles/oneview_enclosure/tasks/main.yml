@@ -22,7 +22,7 @@
     state: present
     data:
       hostname: '{{ enclosure_framelink_ipv6 }}'
-  when: variant == 'Synergy'
+  when: variant == 'Synergy' and enclosure_framelink_ipv6 is defined
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -126,6 +126,7 @@
       commonName: '{{ csr_data.commonName }}'
       bay_number: '{{ bay_number }}' #Required for C7000
   delegate_to: localhost
+  when: variant == 'C7000'
 
 - name: Get certificate signing request for Synergy
   oneview_enclosure:

@@ -182,7 +182,7 @@
                   locationEntries:
                     - relativeValue: 3
                       type: "Bay"
-                    - relativeValue: 62
+                    - relativeValue: 67
                       type: "Port"
                     - relativeValue: 1
                       type: "Enclosure"

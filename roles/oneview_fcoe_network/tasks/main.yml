@@ -1,5 +1,4 @@
 ---
-tasks:
 - name: Get currentVersion from URL
   oneview_version_facts:
     config: "{{ config }}" 

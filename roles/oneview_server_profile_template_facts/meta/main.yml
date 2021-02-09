@@ -13,4 +13,4 @@ galaxy_info:
     - hpe-oneview
     - ansible-modules
     - sdk
-dependencies: ['oneview_enclosure_group', 'oneview_server_hardware_type', 'oneview_scope_uris']
+dependencies: []

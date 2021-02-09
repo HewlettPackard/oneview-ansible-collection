@@ -102,6 +102,19 @@
         readCommunity: "public"    
   delegate_to: localhost
 
+- name: Update the IGMP settings for the logical interconnect
+  oneview_logical_interconnect:
+    config: "{{ config }}"
+    state: igmp_settings_updated
+    data:
+      name: "{{ logical_interconnect_name }}"
+      igmpSettings:
+        igmpIdleTimeoutInterval: 200
+  delegate_to: localhost
+  when: currentVersion >= '2400'
+
+- debug: var=igmp_settings
+
 - name: Update the port monitor configuration of the logical interconnect
   oneview_logical_interconnect:
     config: "{{ config }}"
@@ -111,6 +124,41 @@
       portMonitor:
         enablePortMonitor: False
   delegate_to: localhost
+
+- name: Update the port flap settings of the logical interconnect
+  oneview_logical_interconnect:
+    config: "{{ config }}"
+    state: port_flap_settings_updated
+    data:
+      name: "{{ logical_interconnect_name }}"
+      portFlapProtection:
+        portFlapThresholdPerInterval: 10
+  delegate_to: localhost
+  when: currentVersion >= '2400'
+
+- debug: var=port_flap_settings
+
+- name: Gather facts about a Logical Interconnect by name to get uri
+  oneview_logical_interconnect_facts:
+    config: "{{ config }}"
+    name: "{{ logical_interconnect_name }}"
+  delegate_to: localhost
+
+- set_fact: li_uri={{ logical_interconnects['uri'] }}
+
+- name: Generate bulk inconsistency validation report for logical interconnect by name.
+  oneview_logical_interconnect:
+    config: "{{ config }}"
+    state: bulk_inconsistency_validated
+    data:
+      name: "{{ logical_interconnect_name }}"
+      bulk_update:
+        logicalInterconnectUris:
+          - "{{ li_uri }}"
+  delegate_to: localhost
+  when: currentVersion >= '2400'
+
+- debug: var=li_inconsistency_report
 
 - name: Update the configuration on the logical interconnect
   oneview_logical_interconnect:
@@ -134,28 +182,28 @@
 
 - debug: var=telemetry_configuration
 
-- name: Gather paginated, filtered and sorted facts about Firmware Drivers
-  oneview_firmware_driver_facts:
-    config: "{{ config }}"
-    params:
-      start: 0
-      count: 3
-      sort: 'name:descending'
-      query: bundleType eq 'SPP'
+#- name: Gather paginated, filtered and sorted facts about Firmware Drivers
+#  oneview_firmware_driver_facts:
+#    config: "{{ config }}"
+#    params:
+#      start: 0
+#      count: 3
+#      sort: 'name:descending'
+#      query: bundleType eq 'SPP'
+#
+#- debug: var=firmware_drivers
 
-- debug: var=firmware_drivers
-
-- name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
-  oneview_logical_interconnect:
-    config: "{{ config }}"
-    state: firmware_installed
-    data:
-      name: "{{ logical_interconnect_name }}"
-      firmware:
-        command: Stage
-        spp: "{{ firmware_drivers[0]['uri'] }}"  # could also be a sppUri. e.g.: - sppUri: '/rest/firmware-drivers/<filename>'
-  when: firmware_driver is defined
-  delegate_to: localhost
+#- name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
+#  oneview_logical_interconnect:
+#    config: "{{ config }}"
+#    state: firmware_installed
+#    data:
+#      name: "{{ logical_interconnect_name }}"
+#      firmware:
+#        command: Stage
+#        spp: "{{ firmware_drivers[0]['uri'] }}"  # could also be a sppUri. e.g.: - sppUri: '/rest/firmware-drivers/<filename>'
+#  when: firmware_driver is defined
+#  delegate_to: localhost
 
 - name: Return the Logical Interconnect to a consistent state
   oneview_logical_interconnect:
