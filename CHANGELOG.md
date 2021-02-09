@@ -1,7 +1,20 @@
 # Ansible Collections for HPE OneView Change Log
 
-## v1.2.0(unreleased)
+## v1.2.0
 This release extends the planned support of the collections to OneView REST API version 2400 (OneView v5.6)
+
+#### Major changes
+1. Achieved idempotency for below resources.
+   - Logical Interconnect Group
+   - Scope
+   - Server Profile
+   - Server Profile Template
+ 
+2. Added support for 4 new endpoints in oneview_logical_interconnect and oneview_logical_interconnect_facts resource.
+   - POST /rest/logical-interconnects/bulk-inconsistency-validation
+   - GET /rest/logical-interconnects/{id}/igmpSettings
+   - PUT /rest/logical-interconnects/{id}/igmpSettings
+   - PUT /rest/logical-interconnects/{id}/portFlapSettings
 
 ### Modules supported in this release
 - oneview_certificates_server

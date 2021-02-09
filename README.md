@@ -1,9 +1,13 @@
-[![Build Status](https://travis-ci.org/HewlettPackard/oneview-ansible.svg?branch=master)](https://travis-ci.org/HewlettPackard/oneview-ansible)
-[![Coverage Status](https://coveralls.io/repos/github/HewlettPackard/oneview-ansible/badge.svg?branch=master)](https://coveralls.io/github/HewlettPackard/oneview-ansible?branch=master)
-
 # Ansible Collection for HPE OneView
 
 This collection provides a series of Ansible modules and plugins for interacting with the HPE OneView Modules.
+
+## Build Status 
+
+OV Version | 5.60 | 5.50 |
+| ------------- |:-------------:| -------------:| -------------:| -------------:|
+SDK Version/Tag | [Master](https://github.com/HewlettPackard/oneview-ansible-collection/tree/master) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.1.0) |
+Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
 
 ## Requirements
 
