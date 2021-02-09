@@ -1,6 +1,6 @@
 # HPE OneView Ansible to Ansible Collection Migration Guide
  
-## Preface:
+### Preface:
 This document helps current customers to move from the legacy Ansible module to the new Ansible collection.
 This will enable customers to take full advantage of Infrastructure automation using Ansible Collection Modules, in addition to helping improve the customer experience.
 This guide covers various aspects including: Installation of Ansible Collection, Installation of HPE OneView Ansible Collection and running the Ansible playbooks.
@@ -13,7 +13,7 @@ This guide also provides step by step details to the Customer for adopting, movi
 * Conversion of existing custom Ansible Playbooks to Ansible Collection Playbooks.
 * Developing New Ansible Collection Playbooks.
 
-## Technical Aspects:
+### Technical Aspects:
 What aspects should I look into / check-list
 1. For leveraging HPE OneView Ansible Collection SDK module, the requirement is to have Ansible 2.9 module installed. And uninstall the Ansible module < 2.9 from the DevOps Appliance/OS if exists.
 2. Python requirements: Ansible collection works with both Python versions 2.7.9 and 3.6.x. Preferably Python 3.6.x version.
@@ -27,26 +27,26 @@ We use the ansible-galaxy executable to create the appropriate collection projec
     ansible-galaxy collection init oneview_custom_collection_use_case 
 ```
 
-## Installation of Ansible Collection:
+### Installation of Ansible Collection:
 
  * As part of using the new Ansible Collection in the DevOps appliance, Customer will need to first uninstall the existing OLD Ansible module if an installed version exists and is < 2.9. 
  * Download and install the Ansible version >= 2.9 from Red Hat portal .
  * HPE OneView Python SDK (https://pypi.org/project/hpeOneView/)
 
-## Installation of HPE OneView Ansible Collection SDK: 
+### Installation of HPE OneView Ansible Collection SDK: 
 The HPE OneView Ansible Collection includes roles, modules, sample playbooks, module_utils. You can install OneView Ansible Collection modules through multiple ways as listed below.
  * HPE GitHub
  * Ansible Galaxy 
  * Ansible Automation Hub
  * Docker Image
 
-### Install HPE OneView collection dependency packages:
+##### Install HPE OneView collection dependency packages:
 Please run the below command to install HPE OneView collection dependency packages
 ```
     $ pip install -r requirements.txt
 ```
 
-### Install HPE OneView collection from GitHub:
+##### Install HPE OneView collection from GitHub:
 ```
     $ git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
     $ cd oneview-ansible-collection
@@ -57,7 +57,7 @@ The build process will create hpe.oneview in tar file format.
     $ ansible-galaxy collection install <tar_file>
 ```
 
-### Installation HPE OneView Ansible collection from Ansible Galaxy:
+##### Installation HPE OneView Ansible collection from Ansible Galaxy:
 The HPE OneView Ansible Collection can be installed using Ansible Galaxy. Content from roles and collections can be referenced in Ansible Playbooks and immediately put to work.
 Installing collections with ansible-galaxy is only supported in Ansible version >= 2.9
  
@@ -70,7 +70,7 @@ Please refer to below command for upgrading HPE OneView Collection to the latest
     $ ansible-galaxy collection install hpe.oneview –force
 ```
 
-### Installation HPE OneView Ansible collection from Red Hat Automation Hub:
+##### Installation HPE OneView Ansible collection from Red Hat Automation Hub:
 The HPE OneView Ansible Collection can be installed using Red Hat Automation Hub. 
 Customers may want to leverage Automation Hub for downloading and using the HPE OneView collection module certified by Red Hat. 
 At a high level, automation hub provides Ansible certified, supported content by Red Hat and HPE.
@@ -97,7 +97,7 @@ Please refer to below command for installing HPE OneView Collection from the Aut
 ```
 Note: Automation Hub supports versioning, enabling users to specify the version. Refer the below link for the steps for automation hub: https://www.ansible.com/blog/getting-started-with-automation-hub
 
-### Install HPE OneView collection from Docker Image:
+##### Install HPE OneView collection from Docker Image:
 The containerized version of the oneview-ansible-collection module is available in the Docker Hub built on top of Ubuntu OS with pre-built Python and Ansible Environments.
 
 Please run the below commands to install HPE OneView collection from Docker Image.
@@ -108,7 +108,7 @@ Please run the below commands to install HPE OneView collection from Docker Imag
 
 That's it. If you would like to modify any role, simply modify role and re-run the image.
 
-## Running the Playbooks:
+### Running the Playbooks:
 To use a module from HPE OneView collection, we need to reference the full namespace, collection name, and modules name that you want to use:
 ```
     $ cd ~/.ansible/collections/ansible_collections/hpe/oneview
@@ -139,7 +139,7 @@ Run the playbook as shown below:
     $ ansible-playbook oneview_server_profile.yml
 ```
 
-## Examples provided in the HPE OneView Ansible Collection
+### Examples provided in the HPE OneView Ansible Collection
 Multiple examples are provided with the HPE OneView Ansible Collection Module covering all the HPE OneView key Resource endpoints such as Networks , LIG, EG and LE , Server Profile Template & Server Profile , Image Streamer etc.
 This is to help Customers and partners for seamless migration.
 
@@ -154,13 +154,12 @@ OneView configuration parameters such as host name, IP Address, Password are rea
 Parameter values are read from oneview_server_profile/defaults/main.yml and oneview_server_profile/vars/main.yml. Parameter values from /vars/main.yml will take precedence compared to /defaults/main.yml. 
 oneview_server_profile/meta/main.yml is meant for Version information and Author information.
 
-## Convert custom HPE OneView module playbooks to Ansible Collection [2.9]:
-## Developing new playbook in the HPE OneView Ansible Collection module:
+### Convert custom HPE OneView module playbooks to Ansible Collection [2.9] (or) Developing new playbook in the HPE OneView Ansible Collection module:
 The file structure of the Ansible Collection project is different from the Ansible project.
 As part of conversion of custom HPE OneView module playbooks to Ansible Collection, we would be leveraging the Task scripts from existing HPE OneView Ansible module.
 Respective Task scripts from oneview-ansible/examples/ yaml files are moved to oneview-ansible-collection/roles directory.
 
-### Creating a collection skeleton for the Custom Playbook:
+##### Creating a collection skeleton for the Custom Playbook:
 To start a custom collection:
 ```
     $ cd ~/.ansible/collections/ansible_collections/hpe/oneview
@@ -176,7 +175,7 @@ Once the skeleton is created, we need to add the content to the collection. The 
     oneview_custom_collection_use_case/vars/main.yml
 ```
 
-### Adding the Content:
+##### Adding the Content:
  * Add the ansible tasks related code in oneview_custom_collection_use_case/tasks/main.yml 
    Custom HPE OneView module Task scripts from oneview-ansible/examples/ yaml files are moved to oneview-ansible-collection/roles directory. 
    If Custom HPE OneView module has Python scripts in the oneview-ansible/library, they need to be moved to oneview-ansible-collection/plugins/ directory.
@@ -186,7 +185,7 @@ Once the skeleton is created, we need to add the content to the collection. The 
  * Note that parameter values in the /vars/main.yml takes precedence when compared to /defaults/main.yml. 
  * oneview_custom_collection_use_case/meta/main.yml is meant for meta info like version, author, tags etc. Fill the version information and author details.
 
-### Build the Collection: To build the collection, run ansible-galaxy collection build from inside the root directory of the collection.
+##### Build the Collection: To build the collection, run ansible-galaxy collection build from inside the root directory of the collection.
 collection_dir#> ansible-galaxy collection build
 ```
     $ cd ~/.ansible/collections/ansible_collections/hpe/oneview
@@ -197,7 +196,7 @@ This creates a tar ball of the built collection in the current directory.
     $ ansible-galaxy collection install <tar_file>
 ```
 
-### Running the Playbook:
+##### Running the Playbook:
 Run the ansible-test sanity to make sure the build passes all sanity tests. 
 ```
     $ ansible-test sanity
@@ -214,12 +213,12 @@ Add the respective roles to the sample (or) example playbook oneview_custom_coll
            roles:
               - hpe.oneview.oneview_custom_collection_use_case.yml
 ```
-### Run the playbook as shown below:
+##### Run the playbook as shown below:
 ``` 
     $ ansible-playbook oneview_custom_collection_use_case.yml
 ```
 
-## Summary:
+### Summary:
 Moving from the legacy Ansible module to the new Ansible collection, enables the user to take full advantage of infrastructure automation using Ansible Collection Modules.
 The new Ansible Collection architecture streamlines and focuses Ansible development by providing an updated approach to managing the dramatically increasing volume of related content.
 By migrating from the HPE OneView Ansible Module to the HPE OneView Ansible Collection, users will ensure full alignment with Ansible's development path and compatibility with Ansible products. 
