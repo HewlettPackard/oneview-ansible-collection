@@ -1,9 +1,13 @@
-[![Build Status](https://travis-ci.org/HewlettPackard/oneview-ansible.svg?branch=master)](https://travis-ci.org/HewlettPackard/oneview-ansible)
-[![Coverage Status](https://coveralls.io/repos/github/HewlettPackard/oneview-ansible/badge.svg?branch=master)](https://coveralls.io/github/HewlettPackard/oneview-ansible?branch=master)
-
 # Ansible Collection for HPE OneView
 
 This collection provides a series of Ansible modules and plugins for interacting with the HPE OneView Modules.
+
+## Build Status 
+
+OV Version | 5.60 | 5.50 |
+| ------------- |:-------------:| -------------:|
+SDK Version/Tag | [v1.2.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.2.0) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.1.0) |
+Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
 
 ## Requirements
 
@@ -116,7 +120,7 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible modules for HPE OneView support the API endpoints for HPE OneView 4.20, 5.00, 5.20, 5.30, 5.40, 5.50, 5.60
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
@@ -135,11 +139,6 @@ If this property is not specified, it will fall back to default value.
 
 The API list is as follows:
 
-- HPE OneView 4.20 API version: `1000`
-- HPE OneView 5.00 API version: `1200`
-- HPE OneView 5.20 API version: `1600`
-- HPE OneView 5.30 API version: `1800`
-- HPE OneView 5.40 API version: `2000`
 - HPE OneView 5.50 API version: `2200`
 - HPE OneView 5.60 API version: `2400`
 
