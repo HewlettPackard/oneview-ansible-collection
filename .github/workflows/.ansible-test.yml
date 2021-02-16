@@ -40,3 +40,12 @@ jobs:
 
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: ""
+          override-deps: |
+            ansible==2.10
+            ansible-lint==4.2.0
+          args: ""
