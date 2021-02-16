@@ -46,6 +46,5 @@ jobs:
         with:
           targets: ""
           override-deps: |
-            ansible==2.10
-            ansible-lint==4.2.0
+            ansible-lint==5.0.0
           args: ""
