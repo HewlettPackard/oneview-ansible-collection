@@ -1,0 +1,3 @@
+---
+# defaults file for oneview_version_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_version_facts/files/oneview_config.json"

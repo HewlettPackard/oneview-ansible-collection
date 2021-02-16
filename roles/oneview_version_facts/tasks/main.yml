@@ -1,0 +1,7 @@
+---
+- name: Gather facts about current and minimum Version
+  oneview_version_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=version
