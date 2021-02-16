@@ -6,7 +6,7 @@ This collection provides a series of Ansible modules and plugins for interacting
 
 OV Version | 5.60 | 5.50 |
 | ------------- |:-------------:| -------------:|
-SDK Version/Tag | [v1.2.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.2.0) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.1.0) |
+SDK Version/Tag | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/1.1.0) |
 Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
 
 ## Requirements
