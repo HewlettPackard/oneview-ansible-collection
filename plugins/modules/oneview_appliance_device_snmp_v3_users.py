@@ -134,7 +134,7 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
                 required=True,
                 choices=['present', 'absent']),
         )
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)     
+        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v3_users)
 
     def execute_module(self):
