@@ -15,6 +15,7 @@ plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_firmware_driver.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_firmware_driver_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_enclosure.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_facts.py validate-modules:parameter-list-no-elements

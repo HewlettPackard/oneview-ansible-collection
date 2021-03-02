@@ -40,6 +40,7 @@ options:
           C(present) will ensure data properties are compliant with OneView.
           C(absent) will remove the resource from OneView, if it exists.
       choices: ['present', 'absent']
+      required: True
       type: str
     name:
       description:
@@ -49,7 +50,7 @@ options:
     data:
       description:
           - List with the Firmware Driver properties.
-      required: True
+      required: False
       type: dict
 
 extends_documentation_fragment:
@@ -117,7 +118,7 @@ class FirmwareDriverModule(OneViewModule):
                              name=dict(required=False, type='str'),
                              data=dict(required=False, type='dict'))
 
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.firmware_drivers)
 
     def execute_module(self):
