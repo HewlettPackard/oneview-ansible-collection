@@ -18,8 +18,8 @@
 
 ## HPE OneView
 
-| Endpoints                                                                               | Verb     | V2200 | V2400 |
-| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: |
+| Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 |
+| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :------------------: |
 |     **Certificates Server**
 |<sub>/rest/certificates/servers</sub>                                                    |POST      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/certificates/https/remote/example.com</sub>                                   |GET       | :white_check_mark:   | :white_check_mark:   |
@@ -78,6 +78,12 @@
 |<sub>/rest/fcoe-networks/{id}</sub>                                                      | PUT      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/fcoe-networks/{id}</sub>                                                      | DELETE   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/fcoe-networks/bulk-delete</sub>                                               | POST     | :white_check_mark:   | :white_check_mark:   |
+|     **Firmware Drivers**                                                                                                                         |
+|<sub>/rest/firmware-drivers</sub>                                                        | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
+|<sub>/rest/firmware-drivers</sub>                                                        | POST     | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
+|<sub>/rest/firmware-drivers/schema</sub>                                                 | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
+|<sub>/rest/firmware-drivers/{id}</sub>                                                   | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
+|<sub>/rest/firmware-drivers/{id}</sub>                                                   | DELETE   | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
 |     **Hypervisor Cluster Profiles**                                                                                                              |
 |<sub>/rest/hypervisor-cluster-profiles</sub>                                             |POST      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/hypervisor-cluster-profiles</sub>                                             |GET       | :white_check_mark:   | :white_check_mark:   |
