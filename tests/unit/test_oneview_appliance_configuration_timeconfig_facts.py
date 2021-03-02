@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2021) Hewlett Packard Enterprise Development LP
@@ -33,6 +33,7 @@ PRESENT_TIMECONFIG = [{
     "locale": "en_US.UTF-8",
     "displayName": "English (United States)"
 }]
+
 
 @pytest.mark.resource(TestApplianceConfigurationTimeconfigFactsModule='appliance_configuration_timeconfig')
 class TestApplianceConfigurationTimeconfigFactsModule(OneViewBaseTest):
