@@ -41,11 +41,13 @@ options:
             - Indicates the desired state for the Appliance SSH Access.
               C(present) will ensure data properties are compliant with OneView.
         choices: ['present']
+        required: true
+        type: str
     data:
         description:
             - List with the Appliance SSH Access properties.
         required: true
-        type: str
+        type: dict
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -74,7 +76,7 @@ EXAMPLES = '''
     state: present
     data:
       allowSshAccess: true
-   delegate_to: localhost
+  delegate_to: localhost
 - debug: var=appliance_ssh_access
 '''
 
