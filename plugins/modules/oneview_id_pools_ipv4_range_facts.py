@@ -16,7 +16,10 @@
 # limitations under the License.
 ###
 
-ANSIBLE_METADATA = {'status': ['stableinterface'],
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+ANSIBLE_METADATA = {'status': ['preview'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
 
@@ -26,7 +29,7 @@ module: oneview_id_pools_ipv4_range_facts
 short_description: Retrieve the facts about one or more of the OneView ID Pools IPV4 Ranges.
 description:
     - Retrieve the facts about one or more of the ID Pools IPV4 Ranges from OneView.
-version_added: "2.3"
+version_added: "2.5.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 6.0.0"
@@ -38,21 +41,29 @@ options:
       description:
         - ID Pools IPV4 Range name.
       required: false
+      type: str
+    subnetUri:
+      description:
+        - ID Pools Subnet Uri
+      type: str
+      required: false
     uri:
       description:
         - ID Pools IPV4 Range ID or URI.
       required: false
+      type: str
     options:
       description:
         - "List with options to gather additional facts about an IPv4 Range and related resources.
           Options allowed:
           C(allocatedFragments) gets all fragments that have been allocated in range.
           C(freeFragments) gets all free fragments in an IPv4 range."
-      required: false
+      type: list
 
 extends_documentation_fragment:
-    - oneview
-    - oneview.factsparams
+    - hpe.oneview.oneview
+    - hpe.oneview.oneview.factsparams
+    - hpe.oneview.oneview.params
 '''
 
 EXAMPLES = '''
@@ -124,7 +135,7 @@ id_pools_ipv4_ranges_allocated_fragments:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
 class IdPoolsIpv4RangeFactsModule(OneViewModule):
@@ -136,7 +147,7 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
         )
-        super(IdPoolsIpv4RangeFactsModule, self).__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec)
         self.resource_client = self.oneview_client.id_pools_ipv4_ranges
 
     def execute_module(self):
