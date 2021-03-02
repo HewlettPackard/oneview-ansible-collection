@@ -1,0 +1,38 @@
+---
+- name: Gather facts about the appliance SNMPv3 users.
+  oneview_appliance_device_snmp_v3_users_facts:
+    config: "{{ config }}"
+
+- debug:
+    var: appliance_device_snmp_v3_users
+
+- name: Gather paginated, filtered and sorted facts about SNMPv3 users
+  oneview_appliance_device_snmp_v3_users_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 4
+      sort: 'userName:ascending'         
+      filter: "securityLevel='Authentication and privacy'"
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_snmp_v3_users
+
+- name: Gather facts about a snmp users by Username
+  oneview_appliance_device_snmp_v3_users_facts:
+    config: "{{ config }}"
+    name: "user123456"
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_snmp_v3_users
+
+- name: Gather facts about a SNMPv3 user by Uri
+  oneview_appliance_device_snmp_v3_users_facts:
+    config: "{{ config }}"        
+    uri: "{{ appliance_device_snmp_v3_users['uri'] }}"        
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_snmp_v3_users
