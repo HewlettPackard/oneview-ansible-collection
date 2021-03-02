@@ -11,6 +11,8 @@
     - hpe.oneview.oneview_ethernet_network_facts
     - hpe.oneview.oneview_network_set
     - hpe.oneview.oneview_network_set_facts
+    - hpe.oneview.oneview_appliance_ssh_access_facts
+    - hpe.oneview.oneview_appliance_ssh_access
     - hpe.oneview.oneview_connection_template
     - hpe.oneview.oneview_connection_template_facts
     - hpe.oneview.oneview_certificates_server
