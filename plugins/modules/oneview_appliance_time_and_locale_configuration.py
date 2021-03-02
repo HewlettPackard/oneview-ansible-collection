@@ -51,7 +51,7 @@ options:
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
-    - hpe.oneview.oneview.parmas
+    - hpe.oneview.oneview.paramas
 '''
 
 EXAMPLES = '''
