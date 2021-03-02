@@ -111,7 +111,6 @@ class ApplianceSshAccessModule(OneViewModule):
                     ansible_facts=ansible_facts)
 
 
-
 def main():
     ApplianceSshAccessModule().run()
 
