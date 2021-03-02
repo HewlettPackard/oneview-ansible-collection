@@ -107,7 +107,7 @@ class ApplianceDeviceSnmpV3UsersFactsModule(OneViewModule):
             uri=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )
-        super().__init__(additional_arg_spec=argument_spec)  
+        super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v3_users)
 
     def execute_module(self):
