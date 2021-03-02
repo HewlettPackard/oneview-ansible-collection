@@ -123,7 +123,7 @@ class FirmwareDriverFactsModule(OneViewModule):
             params=dict(required=False, type='dict')
         )
 
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.firmware_drivers)
 
     def execute_module(self):
@@ -141,6 +141,7 @@ class FirmwareDriverFactsModule(OneViewModule):
         ansible_facts['firmware_drivers'] = firmware_drivers
 
         return dict(changed=False, ansible_facts=ansible_facts)
+
 
 def main():
     FirmwareDriverFactsModule().run()

@@ -117,7 +117,7 @@ class FirmwareDriverModule(OneViewModule):
                              name=dict(required=False, type='str'),
                              data=dict(required=False, type='dict'))
 
-        super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.firmware_drivers)
 
     def execute_module(self):
@@ -155,7 +155,7 @@ class FirmwareDriverModule(OneViewModule):
             if spp:
                 data['baselineUri'] = spp.data['uri']
             else:
-                raise OneViewModuleException("Baseline SPP named '{}' not found in OneView Appliance.".format(baseline_name))
+                raise OneViewModuleException("Baseline SPP named '{0}' not found in OneView Appliance.".format(baseline_name))
 
         # Allow usage of hotfixNames instead of hotfixUris
         if data and data.get('hotfixNames'):
@@ -166,7 +166,7 @@ class FirmwareDriverModule(OneViewModule):
                 if hotfix:
                     data['hotfixUris'].append(hotfix.data['uri'])
                 else:
-                    raise OneViewModuleException("Hotfix named '{}' not found in OneView Appliance.".format(hotfix_name))
+                    raise OneViewModuleException("Hotfix named '{0}' not found in OneView Appliance.".format(hotfix_name))
         return data
 
 
