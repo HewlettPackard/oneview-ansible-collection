@@ -63,7 +63,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceTimeAndLocaleConfigurationFactsModule(OneViewModule):
     def __init__(self):
-        super(ApplianceTimeAndLocaleConfigurationFactsModule, self).__init__(additional_arg_spec=dict())
+        super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_time_and_locale_configuration)
 
     def execute_module(self):
