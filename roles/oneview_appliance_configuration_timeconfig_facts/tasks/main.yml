@@ -1,0 +1,7 @@
+---
+- name: Gather Facts about Oneview Appliance time configuration
+  oneview_appliance_configuration_timeconfig_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=appliance_configuration_timeconfig
