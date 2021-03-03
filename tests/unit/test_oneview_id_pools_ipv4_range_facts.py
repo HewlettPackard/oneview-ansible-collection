@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
@@ -16,11 +15,10 @@
 # limitations under the License.
 ###
 
-import pytest
-
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
+import pytest
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import IdPoolsIpv4RangeFactsModule
 
