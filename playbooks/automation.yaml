@@ -12,6 +12,8 @@
     - hpe.oneview.oneview_network_set
     - hpe.oneview.oneview_network_set_facts
     - hpe.oneview.oneview_appliance_configuration_timeconfig_facts
+    - hpe.oneview.oneview_appliance_ssh_access_facts
+    - hpe.oneview.oneview_appliance_ssh_access
     - hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
     - hpe.oneview.oneview_appliance_time_and_locale_configuration
     - hpe.oneview.oneview_connection_template
