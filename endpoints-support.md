@@ -18,8 +18,15 @@
 
 ## HPE OneView
 
-| Endpoints                                                                               | Verb     | V2200 | V2400 |
-| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: |
+| Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 |
+| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :------------------: |
+|     **Appliance SNMPv1 Trap Destinations**                                                                                                                                        |
+|<sub>/rest/appliance/trap-destinations</sub>                                             |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/trap-destinations/validation</sub>                                  |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/trap-destinations/{id}</sub>                                        |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/trap-destinations/{id}</sub>                                        |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/trap-destinations/{id}</sub>                                        |PUT       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/trap-destinations/{id}</sub>                                        |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Certificates Server**
 |<sub>/rest/certificates/servers</sub>                                                    |POST      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/certificates/https/remote/example.com</sub>                                   |GET       | :white_check_mark:   | :white_check_mark:   |
