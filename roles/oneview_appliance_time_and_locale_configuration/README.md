@@ -6,7 +6,7 @@ Manage the OneView Appliance Time and Locale Configuration resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 3.4.2
-  * hpeOneView >= 5.6.0
+  * hpeOneView >= 6.0.0
 
 #### Options
 
