@@ -62,7 +62,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceConfigurationTimeconfigFactsModule(OneViewModule):
     def __init__(self):
-        super(ApplianceConfigurationTimeconfigFactsModule, self).__init__(additional_arg_spec=dict())
+        super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_configuration_timeconfig)
 
     def execute_module(self):
