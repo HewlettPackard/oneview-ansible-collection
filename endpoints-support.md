@@ -22,6 +22,14 @@
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :------------------: |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
+|     **Appliance SNMPv3 Users**                                                                                                                                                    |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |GET       |  :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |POST      | :heavy_minus_sign:    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |DELETE    | 
+:heavy_minus_sign:    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}}</sub>                            |GET       | :heavy_minus_sign:    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |PUT       | :heavy_minus_sign:  | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |DELETE    | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
 |     **Appliance SSH Access**
 |<sub>/rest/appliance/ssh-access</sub>                                                    |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
 |<sub>/rest/appliance/ssh-access</sub>                                                    |PUT       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
