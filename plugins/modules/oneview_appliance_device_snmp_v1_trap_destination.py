@@ -23,7 +23,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: oneview_appliance_device_snmp_v1_trap_destinations
+module: oneview_appliance_device_snmp_v1_trap_destination
 short_description: Manage the Appliance Device SNMPv1 Trap Destinations.
 description:
     - Provides an interface to manage the Appliance Device SNMPv1 Trap Destinations.
@@ -134,7 +134,7 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
     )
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v1_trap_destinations)
 
     def execute_module(self):
