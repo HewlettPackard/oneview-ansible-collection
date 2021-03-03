@@ -87,7 +87,7 @@ class ApplianceTimeAndLocaleConfigurationModule(OneViewModule):
                                        required=True,
                                        choices=['present']))
 
-        super(ApplianceTimeAndLocaleConfigurationModule, self).__init__(additional_arg_spec=additional_arg_spec)
+        super().__init__(additional_arg_spec=additional_arg_spec)
         self.resource_client = self.oneview_client.appliance_time_and_locale_configuration
 
     def execute_module(self):
