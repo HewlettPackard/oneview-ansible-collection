@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_firmware_driver_facts
+fw_name: "custom_firmware_bundle"
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_firmware_driver_facts/files/oneview_config.json"
