@@ -1,8 +1,13 @@
 plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
 tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
 plugins/module_utils/oneview.py pylint:logging-not-lazy
+<<<<<<< HEAD
 plugins/modules/oneview_appliance_device_snmp_v3_users.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_users_facts.py validate-modules:missing-gplv3-license
+=======
+plugins/modules/oneview_appliance_time_and_locale_configuration_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_time_and_locale_configuration.py validate-modules:missing-gplv3-license
+>>>>>>> a643adec220ea0faa5b8dd8577c1ee4ba933ed0e
 plugins/modules/oneview_certificates_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-license
@@ -28,6 +33,9 @@ plugins/modules/oneview_network_set_facts.py validate-modules:missing-gplv3-lice
 plugins/modules/oneview_network_set_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_fcoe_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fcoe_network_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_version_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_pool_facts.py validate-modules:missing-gplv3-license

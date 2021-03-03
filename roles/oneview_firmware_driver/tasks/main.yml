@@ -1,0 +1,34 @@
+---
+- name: Create the Firmware Driver
+  oneview_firmware_driver:
+    config: "{{ config }}"
+    state: present
+    data:
+      customBaselineName: "{{ firmware_name }}"
+      baselineName: "{{ baseline_firmware_name }}"
+      hotfixNames: "{{ hotfix_firmware_list }}"
+  delegate_to: localhost
+
+- name: Create the Firmware Driver if already present
+  oneview_firmware_driver:
+    config: "{{ config }}"
+    state: present
+    data:
+      customBaselineName: "{{ firmware_name }}"
+      baselineName: "{{ baseline_firmware_name }}"
+      hotfixNames: "{{ hotfix_firmware_list }}"
+  delegate_to: localhost
+
+- name: Delete the Firmware Driver
+  oneview_firmware_driver:
+    config: "{{ config }}"
+    state: absent
+    name: "{{ firmware_name }}"
+  delegate_to: localhost
+
+- name: Do nothing when Firmware Driver is absent
+  oneview_firmware_driver:
+    config: "{{ config }}"
+    state: absent
+    name: "{{ firmware_name }}"
+  delegate_to: localhost
