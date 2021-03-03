@@ -5,7 +5,7 @@ Manage OneView ID Pools IPv4 range resources.
 Provides an interface to retrieve facts about ID Pools IPv4 Range Facts resources.
 
 #### Requirements (on the host that executes the module)
-  * hpeOneView >= 5.6.0
+  * hpeOneView >= 6.0.0
 
 #### Options
 

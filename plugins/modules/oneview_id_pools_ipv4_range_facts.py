@@ -72,7 +72,7 @@ EXAMPLES = '''
     config: "{{ config_file_path }}"
 - debug: var=id_pools_ipv4_ranges
 
-- name: Gather all facts about a Server Profile
+- name: Gather all facts about Ipv4 Range 
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config_file_path }}"
     options:
