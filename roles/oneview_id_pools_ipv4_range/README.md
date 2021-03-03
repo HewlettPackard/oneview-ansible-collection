@@ -34,4 +34,4 @@ Apache
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| id_pools_ipv4_ranges | Has the facts about the managed OneView ID Pools IPv4 Range |  On state 'present'. Can be null. |  dict |
+| id_pools_ipv4_range | Has the facts about the managed OneView ID Pools IPv4 Range |  On state 'present'. Can be null. |  dict |
