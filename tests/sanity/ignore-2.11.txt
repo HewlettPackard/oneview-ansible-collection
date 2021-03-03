@@ -3,6 +3,8 @@ tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/oneview_appliance_ssh_access_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_ssh_access.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_time_and_locale_configuration_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_time_and_locale_configuration.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-license
@@ -15,6 +17,9 @@ plugins/modules/oneview_storage_system.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_system_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_firmware_driver_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_enclosure.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_facts.py validate-modules:parameter-list-no-elements
