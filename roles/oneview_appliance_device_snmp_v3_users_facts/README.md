@@ -29,4 +29,4 @@ Retrieve the facts about one or more of the OneView SNMP V3 Users.
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| appliance_device_snmp_v3_users_facts   | Has all the OneView facts about the Hypervsior Cluster Profile. |  Always, but can be null. |  dict |
+| appliance_device_snmp_v3_users_facts   | Has all the OneView facts about theAppliance Device SNMP v user resource |  Always, but can be null. |  dict |
