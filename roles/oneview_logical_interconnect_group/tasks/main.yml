@@ -16,7 +16,7 @@
     currentVersion: contents.api_version | string
   when: contents.api_version != ""
 
-# Below task creates a Logical Interconnect Group with Interconnects, upLinkPorts, uplinkSets containing EthernetNetworks
+# Below task creates a Logical Interconnect Group with Interconnects, InternalNetworks, upLinkPorts, uplinkSets containing EthernetNetworks
 - name: Create a Logical Interconnect Group
   oneview_logical_interconnect_group:
     config: "{{ config }}"
@@ -24,7 +24,9 @@
     data:
       name: '{{ item.name }}'
       enclosureType: 'SY12000'
-      uplinkSets: 
+      internalNetworkNames:
+        - 'TestNetwork_3'
+      uplinkSets:
         - name: 'e23 uplink set'
           mode: 'Auto'
           networkType: 'Ethernet'
