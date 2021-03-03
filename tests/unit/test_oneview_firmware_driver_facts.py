@@ -19,8 +19,8 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 import pytest
-from hpe_test_utils import OneViewBaseFactsTest
-from oneview_module_loader import FirmwareDriverFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import FirmwareDriverFactsModule
 
 FIRMWARE_DRIVER_NAME = "Service Pack for ProLiant.iso"
 
