@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2017) Hewlett Packard Enterprise Development LP
+# Copyright (2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -63,12 +63,15 @@ from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
 # from oneview_alert_facts import AlertFactsModule
 # from oneview_appliance_device_read_community import ApplianceDeviceReadCommunityModule
 # from oneview_appliance_device_read_community_facts import ApplianceDeviceReadCommunityFactsModule
-# from oneview_appliance_device_snmp_v1_trap_destinations import ApplianceDeviceSnmpV1TrapDestinationsModule
-# from oneview_appliance_device_snmp_v1_trap_destinations_facts import ApplianceDeviceSnmpV1TrapDestinationsFactsModule
-# from oneview_appliance_device_snmp_v3_trap_destinations import ApplianceDeviceSnmpV3TrapDestinationsModule
-# from oneview_appliance_device_snmp_v3_trap_destinations_facts import ApplianceDeviceSnmpV3TrapDestinationsFactsModule
+from oneview_appliance_device_snmp_v1_trap_destination import ApplianceDeviceSnmpV1TrapDestinationsModule
+from oneview_appliance_device_snmp_v1_trap_destination_facts import ApplianceDeviceSnmpV1TrapDestinationsFactsModule
+from oneview_appliance_device_snmp_v3_trap_destination import ApplianceDeviceSnmpV3TrapDestinationsModule
+from oneview_appliance_device_snmp_v3_trap_destination_facts import ApplianceDeviceSnmpV3TrapDestinationsFactsModule
 # from oneview_appliance_device_snmp_v3_users import ApplianceDeviceSnmpV3UsersModule
 # from oneview_appliance_device_snmp_v3_users_facts import ApplianceDeviceSnmpV3UsersFactsModule
+# from oneview_appliance_configuration_timeconfig_facts import ApplianceConfigurationTimeconfigFactsModule
+# from oneview_appliance_ssh_access_facts import ApplianceSshAccessFactsModule
+# from oneview_appliance_ssh_access import ApplianceSshAccessModule
 # from oneview_appliance_time_and_locale_configuration_facts import ApplianceTimeAndLocaleConfigurationFactsModule
 # from oneview_appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfigurationModule
 # from oneview_certificates_server import CertificatesServerModule
@@ -94,8 +97,8 @@ from oneview_fc_network_facts import FcNetworkFactsModule
 # from oneview_fcoe_network import FcoeNetworkModule
 # from oneview_fcoe_network_facts import FcoeNetworkFactsModule
 # from oneview_firmware_bundle import FirmwareBundleModule
-# from oneview_firmware_driver import FirmwareDriverModule
-# from oneview_firmware_driver_facts import FirmwareDriverFactsModule
+from oneview_firmware_driver import FirmwareDriverModule
+from oneview_firmware_driver_facts import FirmwareDriverFactsModule
 # from oneview_hypervisor_cluster_profile import HypervisorClusterProfileModule
 # from oneview_hypervisor_cluster_profile_facts import HypervisorClusterProfileFactsModule
 # from oneview_hypervisor_manager import HypervisorManagerModule
