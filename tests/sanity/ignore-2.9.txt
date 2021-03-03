@@ -3,6 +3,8 @@ tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/oneview_certificates_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_device_snmp_v1_trap_destination.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_device_snmp_v1_trap_destination_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile.py validate-modules:missing-gplv3-license
