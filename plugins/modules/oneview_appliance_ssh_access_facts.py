@@ -64,7 +64,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceSshAccessFactsModule(OneViewModule):
     def __init__(self):
-        super(ApplianceSshAccessFactsModule, self).__init__(additional_arg_spec=dict())
+        super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_ssh_access)
 
     def execute_module(self):
