@@ -20,6 +20,8 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_appliance_time_and_locale_configuration_facts
 - oneview_firmware_driver
 - oneview_firmware_driver_facts
+- oneview_id_pools_ipv4_range
+- oneview_id_pools_ipv4_range_facts
 
 ## v1.2.1
 This release extends the planned support of the collections to OneView REST API version 2400 (OneView v5.6)

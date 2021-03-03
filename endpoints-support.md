@@ -134,6 +134,16 @@
 |<sub>/rest/hypervisor-managers/{id}</sub>                                                |GET       | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/hypervisor-managers/{id}</sub>                                                |PUT       | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/hypervisor-managers/{id}</sub>                                                |DELETE    | :white_check_mark:   | :white_check_mark:   |
+|     **ID Pool IPV4 Range**                                                                                                                      			 |
+|<sub>/rest/id-pools/ipv4/ranges</sub>                                                    |POST      |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/schema</sub>                                             |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               |PUT       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               |DELETE    |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/allocator</sub>                                     |PUT       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/collector</sub>                                     |PUT       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/allocated-fragments</sub>                           |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/free-fragments</sub>                                |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
 |     **Interconnect Types**                                                                                                                       |
 |<sub>/rest/interconnect-types</sub>                                                      | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/interconnect-types/{id}</sub>                                                 | GET      | :white_check_mark:   | :white_check_mark:   |
