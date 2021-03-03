@@ -1,0 +1,38 @@
+---
+- name: Ensure that the SNMPv3 user is present using the default configuration
+  oneview_appliance_device_snmp_v3_users:
+    config: "{{ config }}"
+    state: present
+    name: "{{ user_name }}"
+    data:
+        type: "{{ type }}"
+        userName: "{{ user_name }}"
+        securityLevel: "{{ security_level }}"
+        authenticationProtocol: "{{ authentication_protocol }}"    
+        authenticationPassphrase: "{{ authentication_passphrase }}"            
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_snmp_v3_users
+
+- name: Set the password of specified SNMPv3 user
+  oneview_appliance_device_snmp_v3_users:
+    config: "{{ config }}"
+    state: present
+    name: "{{ user_name }}"
+    data:
+      userName: "{{ user_name }}"
+      authenticationPassphrase: "{{ authentication_passphrase }}"
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_snmp_v3_users
+
+- name: Ensure that the SNMPv3 user is absent
+  oneview_appliance_device_snmp_v3_users:
+    config: "{{ config }}"
+    state: absent
+    name: "{{ user_name }}"
+    data:
+        userName: "{{ user_name }}"
+  delegate_to: localhost
