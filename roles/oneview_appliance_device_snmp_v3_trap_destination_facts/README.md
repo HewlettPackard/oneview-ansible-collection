@@ -29,6 +29,11 @@ Retrieve the facts about the OneView appliance SNMPv3 trap forwarding destinatio
     - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
 ```
 
+## License
+
+Apache
+
+
 #### Return Values
 
 | Name          | Description  | Returned | Type       |
