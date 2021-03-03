@@ -6,6 +6,10 @@ This release extends the planned support of the collections to OneView REST API 
 #### Bug fixes & Enhancements
 - [#66] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/66) module_utils _merge_connections_boot fails with TypeError
 
+### Modules supported in this release
+- oneview_firmware_driver
+- oneview_firmware_driver_facts
+
 ## v1.2.1
 This release extends the planned support of the collections to OneView REST API version 2400 (OneView v5.6)
 
