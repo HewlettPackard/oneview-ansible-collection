@@ -1,9 +1,19 @@
 # Ansible Collections for HPE OneView Change Log
 
-## v6.0.0
-This release extends the planned support of the modules to OneView REST API version 2600 (OneView v6.0)
+## v6.0.0(unreleased)
+This release extends the planned support of the collections to OneView REST API version 2600 (OneView v6.0)
+
+#### Bug fixes & Enhancements
+- [#66] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/66) module_utils _merge_connections_boot fails with TypeError
 
 ### Modules supported in this release
+- oneview_appliance_configuration_timeconfig_facts
+- oneview_appliance_ssh_access
+- oneview_appliance_ssh_access_facts
+- oneview_appliance_time_and_locale_configuration
+- oneview_appliance_time_and_locale_configuration_facts
+- oneview_firmware_driver
+- oneview_firmware_driver_facts
 - oneview_id_pools_ipv4_range
 - oneview_id_pools_ipv4_range_facts
 

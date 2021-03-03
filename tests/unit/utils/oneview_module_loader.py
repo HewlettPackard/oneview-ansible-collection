@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2017) Hewlett Packard Enterprise Development LP
+# Copyright (2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -69,6 +69,9 @@ from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
 # from oneview_appliance_device_snmp_v3_trap_destinations_facts import ApplianceDeviceSnmpV3TrapDestinationsFactsModule
 # from oneview_appliance_device_snmp_v3_users import ApplianceDeviceSnmpV3UsersModule
 # from oneview_appliance_device_snmp_v3_users_facts import ApplianceDeviceSnmpV3UsersFactsModule
+# from oneview_appliance_configuration_timeconfig_facts import ApplianceConfigurationTimeconfigFactsModule
+# from oneview_appliance_ssh_access_facts import ApplianceSshAccessFactsModule
+# from oneview_appliance_ssh_access import ApplianceSshAccessModule
 # from oneview_appliance_time_and_locale_configuration_facts import ApplianceTimeAndLocaleConfigurationFactsModule
 # from oneview_appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfigurationModule
 # from oneview_certificates_server import CertificatesServerModule
