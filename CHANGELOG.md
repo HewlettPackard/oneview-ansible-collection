@@ -4,8 +4,8 @@
 This release extends the planned support of the collections to OneView REST API version 2600 (OneView v6.0)
 
 ### Modules supported in this release
-- oneview_appliance_device_snmp_v1_trap_destion
-- oneview_appliance_device_snmp_v1_trap_destion_facts
+- oneview_appliance_device_snmp_v1_trap_destination
+- oneview_appliance_device_snmp_v1_trap_destination_facts
 
 ## v1.2.1
 This release extends the planned support of the collections to OneView REST API version 2400 (OneView v5.6)
