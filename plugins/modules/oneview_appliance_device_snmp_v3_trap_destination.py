@@ -108,7 +108,7 @@ oneview_appliance_device_snmp_v3_trap_destinations:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleException, \
-                                                        OneViewModuleValueError, OneViewModuleResourceNotFound
+    OneViewModuleValueError, OneViewModuleResourceNotFound
 
 
 class ApplianceDeviceSnmpV3TrapDestinationsModule(OneViewModule):
