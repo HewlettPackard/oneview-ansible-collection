@@ -1,0 +1,3 @@
+---
+# defaults file for appliance_configuration_timeconfig
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_configuration_timeconfig_facts/files/oneview_config.json"
