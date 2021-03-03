@@ -19,14 +19,22 @@
 ## HPE OneView
 
 | Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 |
-| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :------------------: |
-|     **Appliance SNMPv3 Trap Destinations**                                                                                                                              |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations</sub>                           |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations</sub>                           |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/validation</sub>                |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}}</sub>                     |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |PUT       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: |
+|     **Appliance Configuration Timeconfig**
+|<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
+|     **Appliance SNMPv3 Trap Destinations**                                                                                                                             |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations</sub>                           |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations</sub>                           |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/validation</sub>                |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}}</sub>                     |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |PUT       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|     **Appliance SSH Access**
+|<sub>/rest/appliance/ssh-access</sub>                                                    |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/ssh-access</sub>                                                    |PUT       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
+|     **Appliance Time and Locale Configuration**
+|<sub>/rest/appliance/configuration/time-locale</sub>                                     |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/appliance/configuration/time-locale</sub>                                     |POST      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
 |     **Certificates Server**
 |<sub>/rest/certificates/servers</sub>                                                    |POST      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/certificates/https/remote/example.com</sub>                                   |GET       | :white_check_mark:   | :white_check_mark:   |
