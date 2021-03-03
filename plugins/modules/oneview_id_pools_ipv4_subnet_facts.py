@@ -45,8 +45,9 @@ options:
       required: false
 
 extends_documentation_fragment:
-    - oneview
-    - oneview.factsparams
+   - hpe.oneview.oneview
+   - hpe.oneview.oneview.factsparams
+   - hpe.oneview.oneview.params
 '''
 
 EXAMPLES = '''
