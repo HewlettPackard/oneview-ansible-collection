@@ -22,6 +22,9 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_firmware_driver_facts
 - oneview_id_pools_ipv4_range
 - oneview_id_pools_ipv4_range_facts
+- oneview_id_pools_ipv4_subnet
+- oneview_id_pools_ipv4_subnet_facts
+
 
 ## v1.2.1
 This release extends the planned support of the collections to OneView REST API version 2400 (OneView v5.6)

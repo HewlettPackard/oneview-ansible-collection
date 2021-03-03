@@ -5,13 +5,12 @@
       state: present
       data:
         name: '{{ subnet_name }}'
-        type: Subnet
-        networkId: 10.10.1.0
-        subnetmask: 255.255.255.0
-        gateway: 10.10.1.1
-        domain: example.com
-        dnsServers:
-          - 10.10.10.215
+        type: '{{ type }}'
+        networkId: '{{ network_id }}'
+        subnetmask: '{{ subnetmask }}'
+        gateway: '{{ gateway }}'
+        domain: '{{ domain }}'
+        dnsServers: '{{ dnsServers }}'
       delegate_to: localhost
 
 - name: Do nothing with the ID Pools IPV4 Subnet when no changes are provided
@@ -26,7 +25,7 @@
 - name: Update the ID Pools IPV4 Subnet with awesome.com domain
     oneview_id_pools_ipv4_subnet:
       config: "{{ config }}"
-            state: present
+      state: present
       data:
         networkId: '{{ network_id }}'
         domain: awesome.com
@@ -38,7 +37,7 @@
       state: allocate
       data:
         networkId: '{{ network_id }}'
-        count: 3
+        count: '{{ count }}'
       delegate_to: localhost
 
 - name: Get the allocated ID's List
