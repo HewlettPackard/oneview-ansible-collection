@@ -12,7 +12,7 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_appliance_device_snmp_v1_trap_destination_facts
 - oneview_appliance_device_snmp_v3_trap_destination
 - oneview_appliance_device_snmp_v3_trap_destination_facts
-- oneview_appliance_device_snmp_v3_uses
+- oneview_appliance_device_snmp_v3_users
 - oneview_appliance_device_snmp_v3_users_facts
 - oneview_appliance_ssh_access
 - oneview_appliance_ssh_access_facts
