@@ -43,10 +43,13 @@ options:
               C(allocate) will allocate set of ID's from IPv4 subnet
               C(collect) will collect the allocated IDs'
         choices: ['present', 'absent', 'allocate', 'collect']
+        required: true
+        type: str
     data:
         description:
             - List with ID pools IPV4 Subnet properties.
         required: true
+        type: dict
 
 extends_documentation_fragment:
   - hpe.oneview.oneview

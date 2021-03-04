@@ -40,10 +40,12 @@ options:
       description:
         - ID Pools IPV4 Subnet network id.
       required: false
+      type: str
     uri:
       description:
         - ID Pools IPV4 Subnet ID or URI.
       required: false
+      type: str
 
 extends_documentation_fragment:
    - hpe.oneview.oneview
