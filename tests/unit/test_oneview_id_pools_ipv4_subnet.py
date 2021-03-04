@@ -21,7 +21,7 @@ __metaclass__ = type
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from oneview_module_loader import IdPoolsIpv4SubnetModule
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import IdPoolsIpv4SubnetModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 
