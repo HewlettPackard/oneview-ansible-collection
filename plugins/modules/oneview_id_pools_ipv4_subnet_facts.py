@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
@@ -28,7 +29,7 @@ module: oneview_id_pools_ipv4_subnet_facts
 short_description: Retrieve the facts about one or more of the OneView ID Pools IPV4 Subnets.
 description:
     - Retrieve the facts about one or more of the ID Pools IPV4 Subnets from OneView.
-version_added: "2.4"
+version_added: "2.5.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 5.6.0"
@@ -81,7 +82,7 @@ id_pools_ipv4_subnets:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModule, OneViewModuleValueError
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
 class IdPoolsIpv4SubnetFactsModule(OneViewModule):

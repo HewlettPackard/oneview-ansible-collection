@@ -19,7 +19,7 @@
       state: present
       data:
          networkId: '{{ network_id }}'
-         type: Subnet
+         type: '{{ type }}'
       delegate_to: localhost
 
 - name: Update the ID Pools IPV4 Subnet with awesome.com domain
@@ -28,7 +28,7 @@
       state: present
       data:
         networkId: '{{ network_id }}'
-        domain: awesome.com
+        domain: '{{ newDomain }}'
       delegate_to: localhost
 
 - name: Allocate the no of IPv4 ID's

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2021) Hewlett Packard Enterprise Development LP
@@ -28,10 +29,10 @@ module: oneview_id_pools_ipv4_subnet
 short_description: Manage OneView ID pools IPV4 Subnet resources.
 description:
     - Provides an interface to manage ID pools IPV4 Subnet resources. Can create, update, or delete.
-version_added: "2.4"
+version_added: "2.5.0"
 requirements:
     - "python >= 3.4.2"
-    - "hpeOneView >= 5.6.0"
+    - "hpeOneView >= 6.0.0"
 author: "Yuvarani Chidambaram(@yuvirani)"
 options:
     state:
@@ -77,7 +78,7 @@ id_pools_ipv4_subnet:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
 class IdPoolsIpv4SubnetModule(OneViewModule):
