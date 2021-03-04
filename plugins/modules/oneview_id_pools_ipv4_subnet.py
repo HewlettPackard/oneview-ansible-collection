@@ -93,11 +93,11 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
     MSG_COLLECT = 'Collected the ids allocated'
     RESOURCE_FACT_NAME = 'id_pools_ipv4_subnet'
 
-    def __init__(self):
+    additional_arg_spec = dict(data=dict(required=True, type='dict'),
+                               state=dict(required=True,
+                               choices=['present', 'absent', 'allocate', 'collect']))
 
-        additional_arg_spec = dict(data=dict(required=True, type='dict'),
-                                   state=dict(required=True,
-                                   choices=['present', 'absent', 'allocate', 'collect']))
+    def __init__(self):
 
         super().__init__(additional_arg_spec=self.additional_arg_spec, validate_etag_support=True)
 
