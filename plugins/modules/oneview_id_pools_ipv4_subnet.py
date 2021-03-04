@@ -99,7 +99,7 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
                                    state=dict(required=True,
                                    choices=['present', 'absent', 'allocate', 'collect']))
 
-        super().__init__(additional_arg_spec=additional validate_etag_support=True)
+        super().__init__(additional_arg_spec=self.additional_arg_spec, validate_etag_support=True)
 
         self.resource_client = self.oneview_client.id_pools_ipv4_subnets
 
