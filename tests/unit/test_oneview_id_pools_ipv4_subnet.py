@@ -18,10 +18,9 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import mock
 import pytest
 
-from hpe_test_utils import OneViewBaseTest
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from oneview_module_loader import IdPoolsIpv4SubnetModule
 
 FAKE_MSG_ERROR = 'Fake message error'

@@ -23,7 +23,7 @@ Manage OneView ID Pools IPv4 Subnet resources.
   collections:
     - hpe.oneview
   roles:
-    - hpe.oneview.oneview_id_pools_ipv4_subnets
+    - hpe.oneview.oneview_id_pools_ipv4_subnet
 ```
 
 ## License
@@ -34,4 +34,4 @@ Apache
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| id_pools_ipv4_subnet | Has the facts about the managed OneView ID Pools IPv4 Subnet |  On state 'present'. Can be null. |  dict |
+| id_pools_ipv4_subnets | Has the facts about the managed OneView ID Pools IPv4 Subnet |  On state 'present'. Can be null. |  dict |

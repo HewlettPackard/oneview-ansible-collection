@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: oneview_id_pools_ipv4_subnets
+  role_name: oneview_id_pools_ipv4_subnet
   author: Yuvarani Chidambaram
   description: Ansible role to manage OneView ID pool IPv4 resources.
   company: Hewlett Packard Enterprise
