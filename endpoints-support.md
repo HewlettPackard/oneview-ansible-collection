@@ -144,6 +144,14 @@
 |<sub>/rest/id-pools/ipv4/ranges/{id}/collector</sub>                                     |PUT       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/id-pools/ipv4/ranges/{id}/allocated-fragments</sub>                           |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/id-pools/ipv4/ranges/{id}/free-fragments</sub>                                |GET       |  :white_check_mark:  |  :white_check_mark:  | :white_check_mark:  |
+|      **ID Pool IPV4 Subnet**                                                                                                                     |
+|<sub>/rest/id-pools/ipv4/subnets</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/subnets</sub>                                                   | POST     | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | GET      | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | PUT      | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/subnets/{id}/allocate</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | 
+|<sub>/rest/id-pools/ipv4/subnets/{id}/collect</sub>                                      | PUT      |:white_check_mark:    | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | DELETE   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
 |     **Interconnect Types**                                                                                                                       |
 |<sub>/rest/interconnect-types</sub>                                                      | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/interconnect-types/{id}</sub>                                                 | GET      | :white_check_mark:   | :white_check_mark:   |

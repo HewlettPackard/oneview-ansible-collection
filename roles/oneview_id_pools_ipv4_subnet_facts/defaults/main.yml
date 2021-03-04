@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_id_pools_ipv4_subnets
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_subnet_facts/files/oneview_config.json"
+subnet_name: subnet
+networkId: '10.1.0.0'
