@@ -9,7 +9,6 @@ jobs:
       matrix:
         python_version:
         - 3.6
-        - 3.7
         ansible:
         - stable-2.9
     runs-on: ubuntu-latest
