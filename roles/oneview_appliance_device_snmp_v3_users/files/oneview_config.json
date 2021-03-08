@@ -1,11 +1,11 @@
 {
-  "ip": "10.1.20.82",
-  "credentials": {
-    "userName": "Administrator",
-    "password": "admin123"
-  },
-  "image_streamer_ip": "",
-  "api_version": 2600,
-  "variant": "Synergy"
-}
-
+    "ip":  "<oneview_ip>",
+    "credentials": {
+      "userName": "<userName>",
+      "password": "<password>"
+    },
+    "image_streamer_ip": "",
+    "api_version": 2600,
+    "variant": "Synergy"
+  }
+  
