@@ -1,5 +1,5 @@
 {
-    "ip":  "<oneview_ip>",
+    "ip": "<ip>",
     "credentials": {
       "userName": "<userName>",
       "password": "<password>"
@@ -8,3 +8,4 @@
     "api_version": 2600,
     "variant": "Synergy"
   }
+  

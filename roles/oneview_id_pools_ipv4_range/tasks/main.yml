@@ -12,7 +12,7 @@
           endAddress: 192.168.1.54
   delegate_to: localhost
 
-- set_fact: uri="{{ id_pool_ipv4_range['uri'] }}"
+- set_fact: uri="{{ id_pools_ipv4_range['uri'] }}"
 
 - name: Update the ID Pools IPV4 Range with end address 101
   oneview_id_pools_ipv4_range:
@@ -41,7 +41,7 @@
     config: "{{ config }}"
     state: present
     data:
-      uri: ""
+      uri: "{{ uri }}"
       count: 2
       update_allocator: True
       idList:
@@ -53,7 +53,7 @@
     config: "{{ config }}"
     state: present
     data:
-      uri: ""
+      uri: "{{ uri }}"
       update_collector: True
       idList:
         - ""

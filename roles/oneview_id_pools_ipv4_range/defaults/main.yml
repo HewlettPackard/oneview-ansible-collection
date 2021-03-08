@@ -1,7 +1,7 @@
 ---
 # defaults file for oneview_id_pools_ipv4_ranges
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_ranges/files/oneview_config.json"
-subnet_name: Range Test IPv4 Subnet
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_range/files/oneview_config.json"
+subnet_name: IPv4Subnet
 range_name: Experts Range
 disabled_range_name: DISABLED - Experts Range
-subnet_uri: "/rest/id-pools/ipv4/subnets/8e382eba-6731-4980-88de-ef1278eaf8d6"
+subnet_uri: "/rest/id-pools/ipv4/subnets/1654c5cf-0e3d-4bc2-b5af-604a150e0fc0"

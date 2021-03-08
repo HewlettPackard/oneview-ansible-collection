@@ -3,6 +3,21 @@
   collections:
     - hpe.oneview
   roles:
+    - hpe.oneview.oneview_appliance_configuration_timeconfig_facts
+    - hpe.oneview.oneview_appliance_device_read_community
+    - hpe.oneview.oneview_appliance_device_read_community_facts
+    - hpe.oneview.oneview_appliance_ssh_access
+    - hpe.oneview.oneview_appliance_ssh_access_facts
+    - hpe.oneview.oneview_appliance_time_and_locale_configuration
+    - hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
+    - hpe.oneview.oneview_appliance_device_snmp_v3_users
+    - hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
+    - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destinations
+    - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destinations_facts
+    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destinations
+    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destinations_facts
+    - hpe.oneview.oneview_id_pools_ipv4_subnet
+    - hpe.oneview.oneview_id_pools_ipv4_subnet_facts
     - hpe.oneview.oneview_fc_network
     - hpe.oneview.oneview_fc_network_facts
     - hpe.oneview.oneview_fcoe_network
@@ -11,52 +26,7 @@
     - hpe.oneview.oneview_ethernet_network_facts
     - hpe.oneview.oneview_network_set
     - hpe.oneview.oneview_network_set_facts
-    - hpe.oneview.oneview_appliance_configuration_timeconfig_facts
-    - hpe.oneview.oneview_appliance_ssh_access_facts
-    - hpe.oneview.oneview_appliance_ssh_access
-    - hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
-    - hpe.oneview.oneview_appliance_time_and_locale_configuration
     - hpe.oneview.oneview_connection_template
     - hpe.oneview.oneview_connection_template_facts
     - hpe.oneview.oneview_certificates_server
-    - hpe.oneview.oneview_certificates_server_facts
-    - hpe.oneview.oneview_enclosure
-    - hpe.oneview.oneview_enclosure_facts
-    - hpe.oneview.oneview_enclosure_group
-    - hpe.oneview.oneview_enclosure_group_facts
-    - hpe.oneview.oneview_hypervisor_manager
-    - hpe.oneview.oneview_hypervisor_manager_facts
-    - hpe.oneview.oneview_hypervisor_cluster_profile
-    - hpe.oneview.oneview_hypervisor_cluster_profile_facts
-    - hpe.oneview.oneview_interconnect
-    - hpe.oneview.oneview_interconnect_facts
-    - hpe.oneview.oneview_interconnect_type_facts
-    - hpe.oneview.oneview_logical_enclosure
-    - hpe.oneview.oneview_logical_enclosure_facts
-    - hpe.oneview.oneview_logical_interconnect
-    - hpe.oneview.oneview_logical_interconnect_facts
-    - hpe.oneview.oneview_logical_interconnect_group
-    - hpe.oneview.oneview_logical_interconnect_group_facts
-    - hpe.oneview.oneview_scope
-    - hpe.oneview.oneview_scope_facts
-    - hpe.oneview.oneview_server_hardware
-    - hpe.oneview.oneview_server_hardware_facts
-    - hpe.oneview.oneview_server_hardware_type
-    - hpe.oneview.oneview_server_hardware_type_facts
-    - hpe.oneview.oneview_server_profile_template
-    - hpe.oneview.oneview_server_profile_template_facts
-    - hpe.oneview.oneview_server_profile
-    - hpe.oneview.oneview_server_profile_facts
-    - hpe.oneview.oneview_storage_system
-    - hpe.oneview.oneview_storage_system_facts
-    - hpe.oneview.oneview_storage_pool
-    - hpe.oneview.oneview_storage_pool_facts
-    - hpe.oneview.oneview_storage_volume_template
-    - hpe.oneview.oneview_storage_volume_template_facts
-    - hpe.oneview.oneview_volume
-    - hpe.oneview.oneview_volume_facts
-    - hpe.oneview.oneview_storage_volume_attachment
-    - hpe.oneview.oneview_storage_volume_attachment_facts
-    - hpe.oneview.oneview_task_facts
-    - hpe.oneview.oneview_uplink_set
-    - hpe.oneview.oneview_uplink_set_facts
+    - hpe.oneview.oneview_certificates_server_fact
