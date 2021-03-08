@@ -1,5 +1,5 @@
 {
-    "ip": "<ip>",
+    "ip": "<oneview_ip>",
     "credentials": {
       "userName": "<userName>",
       "password": "<password>"
