@@ -52,9 +52,8 @@ options:
       type: dict
     options:
       description:
-        - List with options to gather additional facts about the Artifact Bundle.
-      options_allowed:
-        - C(allBackups) gets the list of backups for the Artifact Bundles.
+        - "List with options to gather additional facts about the Artifact Bundle.
+          Options allowed: C(allBackups) gets the list of backups for the Artifact Bundles."
       required: false
       type: list
 
