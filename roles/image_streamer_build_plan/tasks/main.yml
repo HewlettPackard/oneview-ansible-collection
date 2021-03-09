@@ -4,7 +4,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: 'Demo OS Build Plan'
+      name: "{{ name }}"
       description: "oebuildplan"
       oeBuildPlanType: "deploy"
   delegate_to: localhost
@@ -16,7 +16,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: 'Demo OS Build Plan'
+      name: "{{ name }}"
       description: "New description"
       newName: 'OS Build Plan Renamed'
   delegate_to: localhost
@@ -28,7 +28,7 @@
     config: "{{ config }}"
     state: absent
     data:
-        name: 'OS Build Plan Renamed'
+      name: 'OS Build Plan Renamed'
   delegate_to: localhost
 
 - name: Re-create an OS Build Plan for automation
@@ -36,7 +36,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: 'Demo Build Plan'
+      name: "{{ name }}"
       description: "oebuildplan"
       oeBuildPlanType: "deploy"
   delegate_to: localhost

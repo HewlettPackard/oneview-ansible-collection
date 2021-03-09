@@ -30,4 +30,5 @@ Manage the Plan Script resources.
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
+| plan_script   | Has the facts about the Image Streamer Plan Script. |  On state 'present', but can be null. |  dict |
 | plan_script_differences   | Has the Plan Script content differences. |  Always. Cannot be null. |  dict |

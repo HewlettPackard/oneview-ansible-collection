@@ -14,6 +14,7 @@ Retrieve facts about the golden images resource.
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
 | params  |  No  |  | | List of params to filter and sort the list of resources. params allowed: start: The first item to return, using 0-based indexing. count: The number of resources to return. filter: A general filter/query string to narrow the list of items returned. sort: The sort order of the returned data set.
+| name  |   No  |  | |  Golden Image name.  |
 
 ## Example Playbook
  

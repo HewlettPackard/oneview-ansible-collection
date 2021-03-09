@@ -11,6 +11,7 @@ galaxy_info:
   galaxy_tags:
     - ansible
     - hpe-oneview
+    - image-streamer
     - ansible-modules
     - sdk
 dependencies: []

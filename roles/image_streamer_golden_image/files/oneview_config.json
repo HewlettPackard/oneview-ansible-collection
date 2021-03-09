@@ -4,7 +4,7 @@
       "userName": "<userName>",
       "password": "<password>"
     },
-    "image_streamer_ip": "",
+    "image_streamer_ip": "<i3s_ip>",
     "api_version": 2010,
     "variant": "Synergy"
   }

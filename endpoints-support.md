@@ -347,11 +347,11 @@
 |<sub> /rest/golden-images/{id}</sub>                                      | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/golden-images/{id}</sub>                                      | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     **OS Build Plan**                                                                                            |
-|<sub> /rest/build-plans</sub>                                             | POST             | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub> /rest/build-plans</sub>                                             | GET              | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub> /rest/build-plans/{id}</sub>                                        | GET              | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub> /rest/build-plans/{id}</sub>                                        | PUT              | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub> /rest/build-plans/{id}</sub>                                        | DELETE           | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub> /rest/build-plans</sub>                                             | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans</sub>                                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     **Plan Scripts**                                                                                             |
 |<sub> /rest/plan-scripts</sub>                                            | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/plan-scripts/differences/{id}</sub>                           | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |

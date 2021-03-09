@@ -49,6 +49,12 @@ options:
           C(sort): The sort order of the returned data set."
       required: false
       type: dict
+    options:
+      description:
+        - "List with options to gather additional facts about image streamer plan script resources.
+          Options allowed: C(getUseby)."
+      required: false
+      type: list
 
 extends_documentation_fragment:
     - hpe.oneview.oneview

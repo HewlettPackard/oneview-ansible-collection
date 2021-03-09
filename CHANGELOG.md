@@ -1,7 +1,7 @@
 # Ansible Collections for HPE OneView Change Log
 
 ## v6.0.0(unreleased)
-This release extends the planned support of the collections to OneView REST API version 2600 (OneView v6.0)
+This release extends the planned support of the collections to OneView REST API version 2600 (OneView v6.0) and ImageStreamer REST API version 2010 (I3S v6.0)
 
 #### Bug fixes & Enhancements
 - [#66] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/66) module_utils _merge_connections_boot fails with TypeError
