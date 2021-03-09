@@ -32,7 +32,7 @@ version_added: "2.9.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 6.0.0"
-author: "Gustavo Hennig (@GustavoHennig)"
+author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
     state:
         description:

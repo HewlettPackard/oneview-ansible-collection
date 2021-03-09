@@ -33,12 +33,14 @@ requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 6.0.0"
 author:
-    - "Camila Balestrin (@balestrinc)"
+    - "Venkatesh Ravula (@VenkateshRavula)"
 options:
     name:
       description:
         - Build Plan name.
       required: false
+      type: str
+
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
