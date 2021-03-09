@@ -19,6 +19,8 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 import pytest
+import mock
+
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import IdPoolsIpv4RangeFactsModule
 
@@ -116,11 +118,14 @@ class TestIdPoolsIpv4RangeFactsModule(OneViewBaseTest):
         )
 
     def test_should_get_all_id_pools_ipv4_ranges_from_subnet(self):
-        self.mock_ov_client.id_pools_ipv4_subnets.get.return_value = DEFAULT_SUBNET_TEMPLATE_2
+        obj = mock.Mock()
+        obj = DEFAULT_SUBNET_TEMPLATE_2
+        self.mock_ov_client.id_pools_ipv4_subnets.get_by_uri.return_value = obj
         range_1 = DEFAULT_RANGE_TEMPLATE.copy()
         range_4 = DEFAULT_RANGE_TEMPLATE.copy()
         ranges = [range_1, range_4]
-        self.resource.get_by_uri().data = range_1
+        self.resource.get_by_uri.return_value = self.resource
+        self.resource.data = range_1
         self.mock_ansible_module.params = PARAMS_GET_ALL_FROM_SUBNET
 
         IdPoolsIpv4RangeFactsModule().run()
@@ -146,7 +151,8 @@ class TestIdPoolsIpv4RangeFactsModule(OneViewBaseTest):
 
     def test_should_get_id_pools_ipv4_range_from_uri(self):
 
-        self.resource.get_by_uri().data = DEFAULT_RANGE_TEMPLATE.copy()
+        self.resource.get_by_uri.return_value = self.resource
+        self.resource.data = DEFAULT_RANGE_TEMPLATE.copy()
         self.mock_ansible_module.params = PARAMS_GET_BY_URI
 
         IdPoolsIpv4RangeFactsModule().run()

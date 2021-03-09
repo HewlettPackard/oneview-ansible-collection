@@ -50,3 +50,14 @@
     state: absent
     name: "{{ destination_address }}"
   delegate_to: localhost
+
+- name: Creating the SNMPv3 Trap Destination for automation
+  oneview_appliance_device_snmp_v3_trap_destinations:
+    config: "{{ config }}"
+    state: present
+    name: "{{ destination_address }}"
+    data:
+        destinationAddress: "{{ destination_address }}"
+        port: 162
+        userName: "{{ username1 }}"
+  delegate_to: localhost
