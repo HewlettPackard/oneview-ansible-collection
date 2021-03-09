@@ -40,6 +40,16 @@ options:
         - Plan Script name.
       required: false
       type: str
+    params:
+      description:
+        - List of params to delimit, filter and sort the list of resources.
+        - "params allowed:
+          C(start): The first item to return, using 0-based indexing.
+          C(count): The number of resources to return.
+          C(sort): The sort order of the returned data set."
+      required: false
+      type: dict
+
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
