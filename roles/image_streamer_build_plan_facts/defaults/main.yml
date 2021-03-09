@@ -1,0 +1,4 @@
+---
+# defaults file for image_streamer_build_plan_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_build_plan_facts/files/oneview_config.json"
+name: "Demo Build Plan"

@@ -1,0 +1,7 @@
+---
+# defaults file for image_streamer_golden_image
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_golden_image/files/oneview_config.json"
+golden_image_name_created: 'Demo Golden Image creation'
+golden_image_name_uploaded: 'Demo Golden Image upload'
+image_download_path: './downloaded_image.zip'
+archive_download_path: './archive.log'

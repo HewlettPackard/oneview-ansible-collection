@@ -1,8 +1,8 @@
-## image_streamer_build_plan_facts
-Retrieve facts about the OS build plan.
+## image_streamer_plan_script
+Manage the Plan Script resources.
 
 #### Synopsis
- Retrieve facts about the OS build plan.
+ Manage the Plan Script resources.
 
 #### Requirements (on the host that executes the module)
   * python >= 3.4.2
@@ -13,6 +13,8 @@ Retrieve facts about the OS build plan.
 | Parameter     | Required    | Default  | Choices    | Comments |
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
+| state  |   |  | <ul> <li>present</li>  <li>absent</li>  <li>differences_retrieved</li> </ul> |  Indicates the desired state for the resource. `present` will ensure data properties are compliant with appliance. `absent` will remove the resource, if it exists. `differences_retrieved` retrieve the Plan Script content differences |
+| data  |  No  |  | | List with the Plan Scripts properties.
 
 ## Example Playbook
  
@@ -21,11 +23,11 @@ Retrieve facts about the OS build plan.
   collections:
     - hpe.oneview
   roles:
-    - hpe.oneview.image_streamer_build_plan_facts
+    - hpe.oneview.image_streamer_plan_script
 ```
 
 #### Return Values
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| build_plans   | Has all the facts about OS build plan. |  Always. Cannot be null. |  dict |
+| plan_script_differences   | Has the Plan Script content differences. |  Always. Cannot be null. |  dict |

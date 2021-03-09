@@ -1,8 +1,8 @@
-## oneview_appliance_configuration_timeconfig_facts
-Retrieve facts about the OneView Time Configuration.
+## image_streamer_build_plan
+Manage the OS build plan resource.
 
 #### Synopsis
- Retrieve facts about the OneView Time Configuration.
+ Manage the OS build plan resource.
 
 #### Requirements (on the host that executes the module)
   * python >= 3.4.2
@@ -21,11 +21,11 @@ Retrieve facts about the OneView Time Configuration.
   collections:
     - hpe.oneview
   roles:
-    - hpe.oneview.oneview_appliance_configuration_timeconfig
+    - hpe.oneview.image_streamer_build_plan
 ```
 
 #### Return Values
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| appliance_configuration_timeconfig   | Has all the OneView facts about the supported appliance locales. |  Always. Cannot be null. |  dict |
+| build_plan   | Has the OS build plan. |  Always. Cannot be null. |  dict |
