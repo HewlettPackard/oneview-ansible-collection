@@ -1,6 +1,12 @@
 plugins/modules/oneview_storage_system.py pylint:ansible-format-automatic-specification
 tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
 plugins/module_utils/oneview.py pylint:logging-not-lazy
+plugins/modules/image_streamer_build_plan.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_build_plan_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_golden_image.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_golden_image_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_plan_script.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_plan_script_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_configuration_timeconfig_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_users.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_users_facts.py validate-modules:missing-gplv3-license
