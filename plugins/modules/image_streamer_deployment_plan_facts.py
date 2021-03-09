@@ -53,11 +53,11 @@ options:
     options:
       description:
         - "List with options to gather additional facts about Deployment Plan related resource.
-          Options allowed: 
+          Options allowed:
             C(osdp)
             C(usedby)"
       required: false
-      type: list
+      type: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview

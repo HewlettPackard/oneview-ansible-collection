@@ -138,9 +138,11 @@ os_volumes:
     type: list
 storage:
     description: Storage details of an OS volume.
+    returned: On state 'getStorage'. Can be null.
     type: dict
 log_file_path:
     description: OS volume archived log file path
+    returned: On state 'getArchivedLogs'. Can be null.
     type: str
 '''
 

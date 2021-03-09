@@ -37,10 +37,9 @@
 |<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |PUT       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
 |     **Appliance SNMPv3 Users**                                                                                                                                                    |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |GET       |  :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |GET       | :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |POST      | :white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |DELETE    | 
-:white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |DELETE    | :white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}}</sub>                            |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |PUT       | :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
