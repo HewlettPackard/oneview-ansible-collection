@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: image_streamer_golden_image_facts
-  author: Shanmugam M
+  author: Venkatesh Ravula
   description: Ansible role to manage Golden Image facts resource.
   company: Hewlett Packard Enterprise
   license: Apache

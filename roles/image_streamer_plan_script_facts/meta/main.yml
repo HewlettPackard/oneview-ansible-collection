@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: image_streamer_plan_script_facts
-  author: Shanmugam M
+  author: Venkatesh Ravula
   description: Ansible role to manage Plan Script resource.
   company: Hewlett Packard Enterprise
   license: Apache
