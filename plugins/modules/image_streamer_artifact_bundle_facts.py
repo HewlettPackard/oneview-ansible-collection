@@ -114,7 +114,6 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ArtifactBundleFactsModule(OneViewModule):
     argument_spec = dict(
-        config=dict(required=False, type='str'),
         name=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict')
