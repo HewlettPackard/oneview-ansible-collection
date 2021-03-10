@@ -37,7 +37,7 @@ PARAMS_GET_BY_NAME = dict(
 
 PARAMS_GET_BY_NETWORK_ID = dict(
     config='config.json',
-    networkId='10.1.0.0'
+    networkId='172.1.0.0'
 )
 
 DEFAULT_SUBNET = {

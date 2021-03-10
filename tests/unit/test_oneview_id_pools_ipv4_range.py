@@ -33,17 +33,17 @@ DEFAULT_RANGE_TEMPLATE = dict(
     subnetUri='rest/subnet/test',
     type='Range',
     enabled=True,
-    gateway='10.10.0.1'
+    gateway='172.10.0.1'
 )
 
 DEFAULT_RANGE_TEMPLATE_Alocator_and_Collector = dict(
     name='Ipv4Range',
     uri='rest/range/test',
     subnetUri='rest/subnet/test',
-    idList=['10.0.0.0', '10.1.1.1'],
+    idList=['172.0.0.0', '172.1.1.1'],
     type='Range',
     enabled=True,
-    gateway='10.10.0.1'
+    gateway='172.10.0.1'
 )
 
 DEFAULT_NOT_RANGE_TEMPLATE = dict(
@@ -51,7 +51,7 @@ DEFAULT_NOT_RANGE_TEMPLATE = dict(
     uri='rest/range/useless',
     subnetUri='rest/subnet/test',
     type='Range',
-    gateway='10.3.3.1'
+    gateway='172.3.3.1'
 )
 
 DEFAULT_SUBNET_TEMPLATE = dict(
@@ -97,7 +97,7 @@ PARAMS_FOR_COLLECTOR = dict(
     config='config.json',
     state='present',
     data=dict(uri=DEFAULT_RANGE_TEMPLATE_Alocator_and_Collector['uri'],
-              idList=['10.0.0.0', '10.1.1.1'],
+              idList=['172.0.0.0', '172.1.1.1'],
               update_collector=True)
 )
 
@@ -105,7 +105,7 @@ PARAMS_FOR_ALLOCATOR = dict(
     config='config.json',
     state='present',
     data=dict(uri=DEFAULT_RANGE_TEMPLATE_Alocator_and_Collector['uri'],
-              idList=['10.0.0.0', '10.1.1.1'],
+              idList=['172.0.0.0', '172.1.1.1'],
               count=2,
               update_allocator=True)
 )
@@ -216,7 +216,7 @@ class TestIdPoolsIpv4RangeModule(OneViewBaseTest):
 
         IdPoolsIpv4RangeModule().run()
 
-        self.resource.update_collector.assert_called_once_with(dict(idList=['10.0.0.0', '10.1.1.1']), DEFAULT_RANGE_TEMPLATE['uri'])
+        self.resource.update_collector.assert_called_once_with(dict(idList=['172.0.0.0', '172.1.1.1']), DEFAULT_RANGE_TEMPLATE['uri'])
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
@@ -231,7 +231,7 @@ class TestIdPoolsIpv4RangeModule(OneViewBaseTest):
 
         IdPoolsIpv4RangeModule().run()
 
-        self.resource.update_allocator.assert_called_once_with(dict(idList=['10.0.0.0', '10.1.1.1'], count=2), DEFAULT_RANGE_TEMPLATE['uri'])
+        self.resource.update_allocator.assert_called_once_with(dict(idList=['172.0.0.0', '172.1.1.1'], count=2), DEFAULT_RANGE_TEMPLATE['uri'])
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,

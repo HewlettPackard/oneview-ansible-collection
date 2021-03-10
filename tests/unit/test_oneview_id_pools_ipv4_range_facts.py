@@ -32,7 +32,7 @@ DEFAULT_RANGE_TEMPLATE = dict(
     subnetUri='rest/subnet/test',
     type='Range',
     enabled=True,
-    gateway='10.10.0.1'
+    gateway='172.10.0.1'
 )
 
 DEFAULT_NOT_RANGE_TEMPLATE = dict(
@@ -40,7 +40,7 @@ DEFAULT_NOT_RANGE_TEMPLATE = dict(
     uri='rest/range/not',
     subnetUri='rest/subnet/test',
     type='Range',
-    gateway='10.3.3.1'
+    gateway='172.3.3.1'
 )
 
 DEFAULT_SUBNET_TEMPLATE_1 = dict(

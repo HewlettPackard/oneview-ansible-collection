@@ -31,7 +31,7 @@ PARAMS_MANDATORY_MISSING = dict(
 
 PARAMS_GET_BY_NAME = dict(
     config='config.json',
-    name='10.0.0.4'
+    name='172.0.0.4'
 )
 
 PARAMS_GET_ALL = dict(
@@ -40,7 +40,7 @@ PARAMS_GET_ALL = dict(
 
 PRESENT_CONFIGURATION = [{
     "communityString": "public",
-    "destination": "10.0.0.4",
+    "destination": "172.0.0.4",
     "port": 162,
     "uri": "/rest/appliance/trap-destinations/1"
 }]

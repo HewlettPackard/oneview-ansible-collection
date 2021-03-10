@@ -2,11 +2,11 @@
 # defaults file for oneview_id_pools_ipv4_subnets
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_subnet/files/oneview_config.json"
 subnet_name: Test IPv4 Subnet
-network_id: 10.1.0.0
+network_id: "<mgmt_network_id>"
 type: Subnet
-subnetmask: 255.255.192.0
-gateway: 10.1.0.1
+subnetmask: "<mgmt_subnetmask>"
+gateway: "<mgmt_gateway>"
 domain: example.com
-dnsServers: [10.10.10.215]
+dnsServers: ["<dns_server>"]
 count: 3
 newDomain: awesome.com

@@ -27,7 +27,7 @@ ERROR_MSG = 'Fake message error'
 
 DEFAULT_SNMPv1_TRAP_TEMPLATE = dict(
     communityString='public',
-    destination='10.0.0.1',
+    destination='172.0.0.1',
     uri='/rest/appliance/trap-destinations/1',
     port=162
 )

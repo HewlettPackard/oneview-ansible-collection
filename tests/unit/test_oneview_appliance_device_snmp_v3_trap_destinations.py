@@ -27,7 +27,7 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 ERROR_MSG = 'Fake message error'
 
 DEFAULT_PARAMS = dict(
-    destinationAddress='10.0.0.1',
+    destinationAddress='172.0.0.1',
     port=162,
     userId='8e57d829-2f17-4167-ae23-8fb46607c76c'
 )
@@ -35,7 +35,7 @@ DEFAULT_PARAMS = dict(
 DEFAULT_PARAMS_WITH_USERNAME = dict(
     userName='testUser1',
     port=162,
-    destinationAddress='10.0.0.1'
+    destinationAddress='172.0.0.1'
 )
 
 PARAMS_FOR_PRESENT = dict(
@@ -65,7 +65,7 @@ PARAMS_WITH_CHANGES_USING_USERNAME = dict(
     state='present',
     name=DEFAULT_PARAMS['destinationAddress'],
     data=dict(userName='testUser2',
-              destinationAddress='10.0.0.1')
+              destinationAddress='172.0.0.1')
 )
 
 PARAMS_FOR_ABSENT = dict(

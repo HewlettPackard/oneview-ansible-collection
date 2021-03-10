@@ -2,3 +2,4 @@
 # defaults file for image_streamer_deployment_plan_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_deployment_plan_facts/files/oneview_config.json"
 deployment_plan_name: "Demo Deployment Plan"
+deploy_appliance_ip: "<deployment_appliance_ip>"
