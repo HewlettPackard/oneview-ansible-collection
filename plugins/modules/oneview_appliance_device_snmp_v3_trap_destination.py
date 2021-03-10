@@ -69,9 +69,9 @@ EXAMPLES = '''
     password: my_password
     api_version: 2600
     state: present
-    name: 10.0.0.1
+    name: 172.0.0.1
     data:
-        destinationAddress: "10.0.0.1"
+        destinationAddress: "172.0.0.1"
         port: 162
         userName: "test1"
   delegate_to: localhost
@@ -83,9 +83,9 @@ EXAMPLES = '''
     password: my_password
     api_version: 2600
     state: present
-    name: 10.0.0.1
+    name: 172.0.0.1
     data:
-      destinationAddress: "10.0.0.1"
+      destinationAddress: "172.0.0.1"
       userId: "3953867c-5283-4059-a9ae-33487f901e85"
   delegate_to: localhost
 
@@ -96,7 +96,7 @@ EXAMPLES = '''
     password: my_password
     api_version: 2600
     state: absent
-    name: 10.0.0.1
+    name: 172.0.0.1
   delegate_to: localhost
 '''
 

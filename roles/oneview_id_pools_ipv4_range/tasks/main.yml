@@ -8,8 +8,8 @@
       subnetUri: '{{ subnet_uri }}'
       rangeCategory: Custom
       startStopFragments:
-        - startAddress: 192.168.1.51
-          endAddress: 192.168.1.54
+        - startAddress: "{{ start_address }}"
+          endAddress: "{{ end_address1 }}"
   delegate_to: localhost
 
 - set_fact: uri="{{ id_pools_ipv4_range['uri'] }}"
@@ -22,8 +22,8 @@
       name: '{{ range_name }}'
       uri: '{{ uri }}'
       startStopFragments:
-        - startAddress: 192.168.1.51
-          endAddress: 192.168.1.60
+        - startAddress: "{{ start_address }}"
+          endAddress: "{{ end_address2 }}"
   delegate_to: localhost
 
 - name: Ensure the IPV4 Range is enabled

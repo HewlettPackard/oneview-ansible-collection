@@ -39,12 +39,12 @@ PARAMS_GET_BY_NAME = dict(
 
 PARAMS_GET_BY_IP_HOSTNAME = dict(
     config='config.json',
-    storage_hostname='10.0.0.0'
+    storage_hostname='172.0.0.0'
 )
 
 PARAMS_GET_BY_HOSTNAME = dict(
     config='config.json',
-    storage_hostname='10.0.0.0'
+    storage_hostname='172.0.0.0'
 )
 
 PARAMS_GET_HOST_TYPES = dict(
@@ -54,13 +54,13 @@ PARAMS_GET_HOST_TYPES = dict(
 
 PARAMS_GET_REACHABLE_PORTS = dict(
     config='config.json',
-    storage_hostname='10.0.0.0',
+    storage_hostname='172.0.0.0',
     options=["reachablePorts"]
 )
 
 PARAMS_GET_TEMPLATES = dict(
     config='config.json',
-    storage_hostname='10.0.0.0',
+    storage_hostname='172.0.0.0',
     options=["templates"]
 )
 
@@ -77,7 +77,7 @@ PARAMS_GET_POOL_BY_NAME = dict(
 
 PARAMS_GET_POOL_BY_IP_HOSTNAME = dict(
     config='config.json',
-    storage_hostname='10.0.0.0',
+    storage_hostname='172.0.0.0',
     options=["storagePools"]
 )
 
@@ -112,7 +112,7 @@ class TestStorageSystemFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_storage_system_by_ip_hostname(self):
-        self.resource.data = {"ip_hostname": "10.0.0.0"}
+        self.resource.data = {"ip_hostname": "172.0.0.0"}
         self.resource.get_by_ip_hostname.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_GET_BY_HOSTNAME
 
@@ -120,12 +120,12 @@ class TestStorageSystemFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(storage_systems=([{"ip_hostname": "10.0.0.0"}]))
+            ansible_facts=dict(storage_systems=([{"ip_hostname": "172.0.0.0"}]))
         )
 
     def test_should_get_storage_system_by_hostname(self):
         self.mock_ov_client.api_version = 500
-        self.resource.data = {"hostname": "10.0.0.0"}
+        self.resource.data = {"hostname": "172.0.0.0"}
         self.resource.get_by_hostname.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_GET_BY_HOSTNAME
 
@@ -133,7 +133,7 @@ class TestStorageSystemFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(storage_systems=([{"hostname": "10.0.0.0"}]))
+            ansible_facts=dict(storage_systems=([{"hostname": "172.0.0.0"}]))
         )
 
     def test_should_get_all_host_types(self):
@@ -203,7 +203,7 @@ class TestStorageSystemFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_storage_system_pools_by_ip_hostname(self):
-        self.resource.data = {"ip_hostname": "10.0.0.0", "uri": "uri"}
+        self.resource.data = {"ip_hostname": "172.0.0.0", "uri": "uri"}
 
         self.resource.get_by_ip_hostname.return_value = self.resource
         self.resource.get_storage_pools.return_value = {"name": "Storage Pool"}
@@ -216,7 +216,7 @@ class TestStorageSystemFactsModule(OneViewBaseFactsTest):
             changed=False,
             ansible_facts=dict(
                 storage_system_pools=({"name": "Storage Pool"}),
-                storage_systems=[{"ip_hostname": "10.0.0.0", "uri": "uri"}]
+                storage_systems=[{"ip_hostname": "172.0.0.0", "uri": "uri"}]
             )
         )
 

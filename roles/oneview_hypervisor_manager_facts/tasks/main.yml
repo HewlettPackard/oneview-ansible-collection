@@ -19,7 +19,7 @@
 - name: Gather facts about a Hypervisor Manager by name
   oneview_hypervisor_manager_facts:
     config: "{{ config }}"
-    name: "172.18.13.11"
+    name: "{{ name }}"
   delegate_to: localhost
 
 - debug: var=hypervisor_managers

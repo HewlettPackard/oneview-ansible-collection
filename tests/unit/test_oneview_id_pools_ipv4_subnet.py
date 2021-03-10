@@ -29,7 +29,7 @@ DEFAULT_SUBNET_TEMPLATE = dict(
     name='Ipv4Subnet',
     uri='/rest/subnet/test',
     type='Subnet',
-    networkId='10.1.0.0',
+    networkId='172.1.0.0',
     domain='example.com'
 )
 
@@ -62,7 +62,7 @@ PARAMS_FOR_COLLECT = dict(
     config='config.json',
     state='collect',
     data=dict(networkId=DEFAULT_SUBNET_TEMPLATE['networkId'],
-              idList=['10.1.1.1', '10.1.1.2'])
+              idList=['172.1.1.1', '172.1.1.2'])
 )
 
 PARAMS_FOR_ALLOCATE = dict(
@@ -161,13 +161,13 @@ class TestIdPoolsIpv4SubnetModule(OneViewBaseTest):
 
     def test_should_collect_when_valid_ids_allocated(self):
         data_merged = DEFAULT_SUBNET_TEMPLATE.copy()
-        data_merged['idList'] = ['10.1.1.1', '10.1.1.2']
+        data_merged['idList'] = ['172.1.1.1', '172.1.1.2']
 
         data_merged['allocatorUri'] = '/rest/fake'
         self.resource.data = data_merged
 
         self.resource.get_by_field.return_value = self.resource
-        self.resource.collect.return_value = {'idList': ['10.1.1.1', '10.1.1.1']}
+        self.resource.collect.return_value = {'idList': ['172.1.1.1', '172.1.1.1']}
 
         self.mock_ansible_module.params = PARAMS_FOR_COLLECT
 
@@ -176,7 +176,7 @@ class TestIdPoolsIpv4SubnetModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=IdPoolsIpv4SubnetModule.MSG_COLLECT,
-            ansible_facts=dict(id_pools_ipv4_subnet={'idList': ['10.1.1.1', '10.1.1.1']})
+            ansible_facts=dict(id_pools_ipv4_subnet={'idList': ['172.1.1.1', '172.1.1.1']})
         )
 
     def test_should_remove_id_pools_ipv4_subnet(self):

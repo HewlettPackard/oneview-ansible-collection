@@ -66,11 +66,11 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 2600
-    name: 10.0.0.1
+    name: 172.0.0.1
     state: present
     data:
       communityString: "public"
-      destination: "10.0.0.1"
+      destination: "172.0.0.1"
       port: 162
   delegate_to: localhost
 
@@ -83,7 +83,7 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 2600
-    name: 10.0.0.1
+    name: 172.0.0.1
     state: present
     data:
       communityString: "private"
@@ -101,9 +101,9 @@ EXAMPLES = '''
     password: my_password
     api_version: 2600
     state: absent
-    name: 10.0.0.1
+    name: 172.0.0.1
     data:
-      destination: "10.0.0.1"
+      destination: "172.0.0.1"
   delegate_to: localhost
 '''
 

@@ -21,6 +21,14 @@ plugins/modules/oneview_appliance_device_snmp_v1_trap_destination.py validate-mo
 plugins/modules/oneview_appliance_device_snmp_v1_trap_destination_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_trap_destination.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_trap_destination_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_artifact_bundle.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_artifact_bundle_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_artifact_bundle_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/image_streamer_deployment_plan.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_deployment_plan_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_deployment_group_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_os_volume_facts.py validate-modules:missing-gplv3-license
+plugins/modules/image_streamer_os_volume_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile.py validate-modules:missing-gplv3-license
