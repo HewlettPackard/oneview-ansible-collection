@@ -22,8 +22,6 @@
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
-
-
 |     **Appliance SNMPv1 Trap Destinations**                                                                                                                                        |
 |<sub>/rest/appliance/trap-destinations</sub>                                             |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/trap-destinations/validation</sub>                                  |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -38,18 +36,13 @@
 |<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}}</sub>                     |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |PUT       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/destinations/{id}</sub>                      |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
-
 |     **Appliance SNMPv3 Users**                                                                                                                                                    |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |GET       |  :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |GET       | :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |POST      | :white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |DELETE    | 
-:white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/appliance/snmpv3-trap-forwarding/users</sub>                                  |DELETE    | :white_check_mark:    | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}}</sub>                            |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |PUT       | :white_check_mark:  | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/snmpv3-trap-forwarding/users/{id}</sub>                             |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-
-
-
 |     **Appliance SSH Access**
 |<sub>/rest/appliance/ssh-access</sub>                                                    |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
 |<sub>/rest/appliance/ssh-access</sub>                                                    |PUT       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  |
@@ -339,3 +332,31 @@
 |<sub>/rest/storage-volumes/{id}/snapshots</sub>                                          | POST     | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | DELETE   | :white_check_mark:   | :white_check_mark:   |
+
+## HPE Synergy Image Streamer
+
+| Endpoints                                                                | Verb     |V1600  |V2000  |V2010  |
+| ------------------------------------------------------------------------ | -------- | :------------------: | :------------------: | :------------------: |
+|     **Golden Images**                                                                                            |
+|<sub> /rest/golden-images</sub>                                           | POST(create)     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images</sub>                                           | POST(upload)     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images</sub>                                           | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/archive/{id}</sub>                              | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/download/{id}</sub>                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     **OS Build Plan**                                                                                            |
+|<sub> /rest/build-plans</sub>                                             | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans</sub>                                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     **Plan Scripts**                                                                                             |
+|<sub> /rest/plan-scripts</sub>                                            | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/differences/{id}</sub>                           | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts</sub>                                            | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}/usedby/readonly</sub>                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
