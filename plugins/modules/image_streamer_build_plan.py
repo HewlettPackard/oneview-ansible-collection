@@ -115,7 +115,7 @@ class BuildPlanModule(OneViewModuleBase):
     )
 
     def __init__(self):
-        super(BuildPlanModule, self).__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec)
         self.i3s_client = self.oneview_client.create_image_streamer_client()
         self.resource_client = self.i3s_client.build_plans
 
