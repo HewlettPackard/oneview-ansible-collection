@@ -1,0 +1,4 @@
+---
+# defaults file for image_streamer_golden_image_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_golden_image_facts/files/oneview_config.json"
+name: "Demo Golden Image" # change for the desired Golden Image name

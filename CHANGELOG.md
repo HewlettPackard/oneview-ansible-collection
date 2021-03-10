@@ -9,10 +9,16 @@ This release extends the planned support of the collections to OneView REST API 
 ### Modules supported in this release
 - image_streamer_artifact_bundle
 - image_streamer_artifact_bundle_facts
+- image_streamer_build_plan
+- image_streamer_build_plan_facts
 - image_streamer_deployment_group_facts
 - image_streamer_deployment_plan
 - image_streamer_deployment_plan_facts
+- image_streamer_golden_image
+- image_streamer_golden_image_facts
 - image_streamer_os_volume_facts
+- image_streamer_plan_script
+- image_streamer_plan_script_facts
 - oneview_appliance_configuration_timeconfig_facts
 - oneview_appliance_device_snmp_v1_trap_destination
 - oneview_appliance_device_snmp_v1_trap_destination_facts

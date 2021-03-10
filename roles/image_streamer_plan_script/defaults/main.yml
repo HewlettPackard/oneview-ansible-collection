@@ -1,0 +1,5 @@
+---
+# defaults file for image_streamer_plan_script
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_plan_script/files/oneview_config.json"
+plan_script_name: "Demo Plan Script"
+plan_script_name_changed: "Demo Plan Script (changed)"

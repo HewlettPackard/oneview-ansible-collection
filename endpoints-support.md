@@ -353,6 +353,12 @@
 |<sub>	/rest/artifact-bundles/{id} </sub>                                 | PUT(update attr) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub>	/rest/artifact-bundles/{id} </sub>                                 | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub>	/rest/artifact-bundles/{id}/stopArtifactCreate  </sub>             | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     **Build Plan**                                                                                            |
+|<sub> /rest/build-plans</sub>                                             | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans</sub>                                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/build-plans/{id}</sub>                                        | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     **Deployment Groups**                                                                                        |
 |<sub> /rest/deployment-groups</sub>                                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/deployment-groups/{id}</sub>                                  | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -364,8 +370,25 @@
 |<sub> /rest/deployment-plans/{id} </sub>                                  | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/deployment-plans/{id}/usedby </sub>                           | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/deployment-plans/{id}/osdp </sub>                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     **Golden Images**                                                                                            |
+|<sub> /rest/golden-images</sub>                                           | POST(create)     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images</sub>                                           | POST(upload)     | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images</sub>                                           | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/archive/{id}</sub>                              | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/download/{id}</sub>                             | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/golden-images/{id}</sub>                                      | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     **OS Volumes**                                                                                               |
 |<sub> /rest/os-volumes</sub>                                              | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/os-volumes/{id}</sub>                                         | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/os-volumes/archive/{name}</sub>                               | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |<sub> /rest/os-volumes/{id}/storage</sub>                                 | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|     **Plan Scripts**                                                                                             |
+|<sub> /rest/plan-scripts</sub>                                            | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/differences/{id}</sub>                           | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts</sub>                                            | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}/usedby/readonly</sub>                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
