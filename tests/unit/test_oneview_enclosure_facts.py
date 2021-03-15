@@ -69,7 +69,6 @@ ENCLOSURE_ENVIRONMENTAL_CONFIG = {
 }
 
 
-@pytest.mark.resource(TestEnclosureFactsModule='enclosures')
 class TestEnclosureFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_enclosures(self):
         self.resource.get_all.return_value = PRESENT_ENCLOSURES

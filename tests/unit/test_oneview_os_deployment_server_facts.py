@@ -31,7 +31,6 @@ SERVERS = [
 ]
 
 
-@pytest.mark.resource(TestOsDeploymentServerFactsModule='os_deployment_servers')
 class TestOsDeploymentServerFactsModule(OneViewBaseFactsTest):
     # Load scenarios from module examples
     @pytest.fixture(autouse=True)

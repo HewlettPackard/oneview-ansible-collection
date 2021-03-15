@@ -103,7 +103,6 @@ PARAMS_WITH_OPTIONS = dict(
 )
 
 
-@pytest.mark.resource(TestServerProfileFactsModule='server_profiles')
 class TestServerProfileFactsModule(OneViewBaseFactsTest):
     """
     FactsParamsTestCase has common tests for the parameters support.

@@ -36,7 +36,6 @@ PARAMS_GET_ALL = dict(
 )
 
 
-@pytest.mark.resource(TestServerHardwareTypeFactsModule='server_hardware_types')
 class TestServerHardwareTypeFactsModule(OneViewBaseFactsTest):
     def test_should_get_all(self):
         self.resource.get_all.return_value = {"name": "Server Hardware Type Name"}

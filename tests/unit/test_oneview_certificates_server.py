@@ -52,7 +52,6 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
-@pytest.mark.resource(TestCertificatesServerModule='certificates_server')
 class TestCertificatesServerModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

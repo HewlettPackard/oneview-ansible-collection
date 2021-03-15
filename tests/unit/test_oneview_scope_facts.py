@@ -43,7 +43,6 @@ SCOPE_2 = dict(name="Scope 2", uri='/rest/scopes/b3213123-44sd-y334-d111-asd34sd
 ALL_SCOPES = [SCOPE_1, SCOPE_2]
 
 
-@pytest.mark.resource(TestScopeFactsModule='scopes')
 class TestScopeFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_scopes(self):
         self.resource.get_all.return_value = ALL_SCOPES

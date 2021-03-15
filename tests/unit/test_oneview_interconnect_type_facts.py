@@ -42,7 +42,6 @@ PRESENT_TYPES = [{
 }]
 
 
-@pytest.mark.resource(TestInterconnectTypeFactsModule='interconnect_types')
 class TestInterconnectTypeFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_interconnect_types(self):
         self.resource.get_all.return_value = PRESENT_TYPES

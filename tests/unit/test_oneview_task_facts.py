@@ -69,7 +69,6 @@ TASK = {
 ALL_TASKS = [TASK]
 
 
-@pytest.mark.resource(TestTaskFactsModule='tasks')
 class TestTaskFactsModule(OneViewBaseFactsTest):
     def test_get_all(self):
         self.mock_ov_client.tasks.get_all.return_value = ALL_TASKS

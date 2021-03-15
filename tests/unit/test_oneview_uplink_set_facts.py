@@ -42,7 +42,6 @@ PRESENT_UPLINKS = [{
 }]
 
 
-@pytest.mark.resource(TestUplinkSetFactsModule='uplink_sets')
 class TestUplinkSetFactsModule(OneViewBaseFactsTest):
     def test_should_get_all(self):
         self.resource.get_all.return_value = PRESENT_UPLINKS

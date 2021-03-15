@@ -113,7 +113,6 @@ def create_params(options=None):
     return dict(config='config.json', name=LOGICAL_INTERCONNECT_NAME, options=options)
 
 
-@pytest.mark.resource(TestLogicalInterconnectFactsModule='logical_interconnects')
 class TestLogicalInterconnectFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_logical_interconnects(self):
         self.resource.get_all.return_value = ALL_INTERCONNECTS

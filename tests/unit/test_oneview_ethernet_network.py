@@ -98,10 +98,9 @@ DEFAULT_BULK_ENET_TEMPLATE = [
     {'name': 'TestNetwork_10', 'vlanId': 10},
 ]
 
-DICT_PARAMS_WITH_CHANGES = yaml.load(YAML_PARAMS_WITH_CHANGES)["data"]
+DICT_PARAMS_WITH_CHANGES = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)["data"]
 
 
-@pytest.mark.resource(TestEthernetNetworkModule='ethernet_networks')
 class TestEthernetNetworkModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case
@@ -141,7 +140,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
         obj.data = {"uri": "uri"}
         self.mock_ov_client.connection_templates.get.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)
 
         EthernetNetworkModule().run()
 
@@ -157,7 +156,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
         obj.data = {"uri": "uri"}
         self.mock_ov_client.connection_templates.get_by_uri.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)
 
         EthernetNetworkModule().run()
 
@@ -173,7 +172,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
         obj.data = {"bandwidth": DICT_PARAMS_WITH_CHANGES['bandwidth']}
         self.mock_ov_client.connection_templates.get_by_uri.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)
 
         EthernetNetworkModule().run()
 
@@ -186,7 +185,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
     def test_update_successfully_even_when_connection_template_uri_not_exists(self):
         self.resource.data = DEFAULT_ENET_TEMPLATE.copy()
         del self.resource.data["connectionTemplateUri"]
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)
 
         EthernetNetworkModule().run()
 
@@ -352,7 +351,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
             "max": 1
         }}
 
-        self.mock_ansible_module.params = yaml.load(YAML_RESET_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_RESET_CONNECTION_TEMPLATE)
 
         EthernetNetworkModule().run()
 
@@ -363,7 +362,7 @@ class TestEthernetNetworkModule(OneViewBaseTest):
     def test_should_fail_when_reset_not_existing_ethernet_network(self):
         self.resource.get_by_name.return_value = None
 
-        self.mock_ansible_module.params = yaml.load(YAML_RESET_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_RESET_CONNECTION_TEMPLATE)
 
         EthernetNetworkModule().run()
 

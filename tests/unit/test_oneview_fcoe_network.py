@@ -53,7 +53,6 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
-@pytest.mark.resource(TestFcoeNetworkModule='fcoe_networks')
 class TestFcoeNetworkModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

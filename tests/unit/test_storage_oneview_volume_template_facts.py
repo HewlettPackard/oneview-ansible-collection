@@ -58,7 +58,6 @@ PARAMS_GET_COMPATIBLE = dict(
 DEFAULT_VOLUME_TEMPLATES_RETURN = [{"name": "Storage Volume Template 1"}]
 
 
-@pytest.mark.resource(TestStorageVolumeTemplateFactsModule='storage_volume_templates')
 class TestStorageVolumeTemplateFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_storage_volume_templates(self):
         self.resource.get_all.return_value = DEFAULT_VOLUME_TEMPLATES_RETURN
