@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_id_pools_ipv4_ranges
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_range_facts/files/oneview_config.json"
+subnet_name: "<network_id>"
+range_name: Range 1

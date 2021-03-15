@@ -1,9 +1,13 @@
-[![Build Status](https://travis-ci.org/HewlettPackard/oneview-ansible.svg?branch=master)](https://travis-ci.org/HewlettPackard/oneview-ansible)
-[![Coverage Status](https://coveralls.io/repos/github/HewlettPackard/oneview-ansible/badge.svg?branch=master)](https://coveralls.io/github/HewlettPackard/oneview-ansible?branch=master)
-
 # Ansible Collection for HPE OneView
 
 This collection provides a series of Ansible modules and plugins for interacting with the HPE OneView Modules.
+
+## Build Status 
+
+OV Version | 6.00 | 5.60 | 5.50 |
+| ------------- |:-------------:| -------------:| -------------:|
+SDK Version/Tag | [v6.0.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.0.0) | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
+Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
 
 ## Requirements
 
@@ -28,14 +32,17 @@ To install HPE OneView collection from GitHub
 git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
 cd oneview-ansible-collection
 ansible-galaxy collection build .
+```
+Now a tar file is generated. Install that file.
+```
 ansible-galaxy collection install <tar_file>
 ```
 
 To install dependency packages
     
-  ```bash
-  pip install -r requirements.txt
-  ```
+```bash
+pip install -r requirements.txt
+```
 To install HPE OneView collection from Docker Image
 
 ```bash
@@ -54,13 +61,13 @@ example:
 
 ```json
 {
-  "ip": "172.25.105.12",
+  "ip": "<ip>",
   "credentials": {
-    "userName": "Administrator",
+    "userName": "<userName>",
     "authLoginDomain": "",
-    "password": "secret123"
+    "password": "<password>"
   },
-  "api_version": 2200
+  "api_version": 2600
 }
 ```
 
@@ -95,10 +102,10 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
 ```yaml
 - name: Create a Fibre Channel Network
   oneview_fc_network:
-    hostname: 172.16.101.48
-    username: administrator
-    password: my_password
-    api_version: 2200
+    hostname: <hostname>
+    username: <username>
+    password: <password>
+    api_version: 2600
     state: present
     data:
       name: "{{ network_name }}"
@@ -113,31 +120,28 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible modules for HPE OneView support the API endpoints for HPE OneView 4.20, 5.00, 5.20, 5.30, 5.40, 5.50
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60, 6.00
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 2200
+"api_version": 2600
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='2200'
+export ONEVIEWSDK_API_VERSION='2600'
 ```
 
 If this property is not specified, it will fall back to default value.
 
 The API list is as follows:
 
-- HPE OneView 4.20 API version: `1000`
-- HPE OneView 5.00 API version: `1200`
-- HPE OneView 5.20 API version: `1600`
-- HPE OneView 5.30 API version: `1800`
-- HPE OneView 5.40 API version: `2000`
 - HPE OneView 5.50 API version: `2200`
+- HPE OneView 5.60 API version: `2400`
+- HPE OneView 6.00 API version: `2600`
 
 ### HPE Synergy Image Streamer
 
@@ -146,7 +150,7 @@ To use these modules, you must set the Image Streamer IP on the OneViewClient co
 either using the JSON configuration:
 
 ```json
-"image_streamer_ip": "100.100.100.100"
+"image_streamer_ip": "<image_streamer_ip>"
 ```
 
 OR using the Environment variable:
@@ -172,6 +176,12 @@ To use a module from HPE OneView collection, please reference the full namespace
     - hpe.oneview.oneview_fc_network_facts
   ```
 
+Run the above created playbooks as shown below.
+
+```bash   
+ansible-playbook example_collection.yml
+```
+
 ## License
 
 This project is licensed under the Apache 2.0 license. Please see the [LICENSE](LICENSE) for more information.
@@ -194,4 +204,4 @@ The HPE.Oneview collection includes
 
 ## Copyright
 
-© Copyright 2020 Hewlett Packard Enterprise Development LP
+© Copyright 2021 Hewlett Packard Enterprise Development LP

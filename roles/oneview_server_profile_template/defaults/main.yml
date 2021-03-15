@@ -1,7 +1,8 @@
 ---
 # defaults file for oneview_server_profile_template
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_profile_template/files/oneview_config.json"
-server_profile_template_name: example_spt1
-server_hardware_type_name: SY 480 Gen9 2
-enclosure_group_name: SYN03_EC
 server_profile_name: RHEl76
+server_profile_template_name: Test_spt
+server_hardware_type_name: SY 480 Gen9 2
+enclosure_group_name: EG
+connection_network_name: mgmt_nw

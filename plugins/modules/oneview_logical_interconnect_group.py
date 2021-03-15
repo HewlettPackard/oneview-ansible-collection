@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -183,6 +183,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
         scope_uris = self.data.pop('scopeUris', None)
 
         self.__replace_name_by_uris()
+        self.__uplink_set_update()
         result = self.resource_present(self.RESOURCE_FACT_NAME)
 
         if scope_uris is not None:
@@ -191,8 +192,15 @@ class LogicalInterconnectGroupModule(OneViewModule):
         return result
 
     def __replace_name_by_uris(self):
-        map_template = self.data.get('interconnectMapTemplate')
+        # replace internalNetworkNames with internalNetworkUris
+        internalNetworkUris = self.data.get('internalNetworkUris', [])
+        internalNetworkNames = self.data.pop('internalNetworkNames', None)
+        if internalNetworkNames:
+            int_networkUris = [self.__get_network_uri(x) for x in internalNetworkNames]
+            internalNetworkUris.extend(int_networkUris)
+        self.data['internalNetworkUris'] = internalNetworkUris
 
+        map_template = self.data.get('interconnectMapTemplate')
         if map_template:
             map_entry_templates = map_template.get('interconnectMapEntryTemplates')
             if map_entry_templates:
@@ -202,22 +210,60 @@ class LogicalInterconnectGroupModule(OneViewModule):
                         value['permittedInterconnectTypeUri'] = self.__get_interconnect_type_by_name(
                             permitted_interconnect_type_name).get('uri')
 
+    def __uplink_set_update(self):
         if 'uplinkSets' in self.data:
-            for uplinkSet in self.data['uplinkSets']:
-                networkNames = uplinkSet.pop('networkNames', None)
+            if self.__get_all_uplink_sets():
+                allUplinkSets = self.__get_all_uplink_sets()
+                for uplinkSet in self.data['uplinkSets']:
+                    networkNames = uplinkSet.pop('networkNames', None)
+                    if networkNames and not uplinkSet.get('networkUris'):
+                        uplinkSet['networkUris'] = []
+                    if networkNames:
+                        networkUris = [self.__get_network_uri(x) for x in networkNames]
+                        uplinkSet['networkUris'].extend(networkUris)
+                    allUplinkSets = self.__update_existing_uplink_set(allUplinkSets, uplinkSet)
+                self.data['uplinkSets'] = allUplinkSets
+            else:
+                self.__update_network_uri()
 
-                if networkNames and not uplinkSet.get('networkUris'):
-                    uplinkSet['networkUris'] = []
+    def __update_network_uri(self):
+        for i in range(len(self.data['uplinkSets'])):
+            networkNames = self.data['uplinkSets'][i].pop('networkNames', None)
+            if networkNames and not self.data['uplinkSets'][i].get('networkUris'):
+                self.data['uplinkSets'][i]['networkUris'] = []
+            if networkNames:
+                networkUris = [self.__get_network_uri(x) for x in networkNames]
+                self.data['uplinkSets'][i]['networkUris'].extend(networkUris)
 
-                if networkNames:
-                    networkUris = [self.__get_network_uri(x) for x in networkNames]
+    def __update_existing_uplink_set(self, allUplinkSets, newUplinkSet):
+        temp = True
+        for i, ups in enumerate(allUplinkSets):
+            if ups['name'] == newUplinkSet['name']:
+                temp = False
+                if 'networkUris' in newUplinkSet:
+                    newUris = set(newUplinkSet['networkUris']) - set(ups['networkUris'])
+                    if newUris:
+                        ups['networkUris'].extend(newUris)
+                if 'networkSetUris' in newUplinkSet:
+                    newUris = set(newUplinkSet['networkSetUris']) - set(ups['networkSetUris'])
+                    if newUris:
+                        ups['networkSetUris'].extend(newUris)
+                allUplinkSets[i] = ups
+        if temp:
+            allUplinkSets.append(newUplinkSet)
+        return allUplinkSets
 
-                    uplinkSet['networkUris'].extend(networkUris)
+    def __get_all_uplink_sets(self):
+        lig_uri = self.oneview_client.logical_interconnect_groups.get_by('name', self.data['name'])
+        if lig_uri:
+            return lig_uri[0]['uplinkSets']
+        return False
 
     def __get_network_uri(self, name):
-
         network_name = self.oneview_client.ethernet_networks.get_by('name', name)
-        return network_name[0]['uri']
+        if network_name:
+            return network_name[0]['uri']
+        return False
 
     def __get_interconnect_type_by_name(self, name):
         i_type = self.oneview_client.interconnect_types.get_by('name', name)

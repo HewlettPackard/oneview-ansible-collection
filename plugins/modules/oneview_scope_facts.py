@@ -100,10 +100,10 @@ scopes:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
-class ScopeFactsModule(OneViewModuleBase):
+class ScopeFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
@@ -111,13 +111,11 @@ class ScopeFactsModule(OneViewModuleBase):
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)
-        self.resource_client = self.oneview_client.scopes
+        self.set_resource_object(self.oneview_client.scopes)
 
     def execute_module(self):
-        name = self.module.params.get('name')
-        if name:
-            scope = self.resource_client.get_by_name(name)
-            scopes = scope.data if scope else None
+        if self.current_resource:
+            scopes = [self.current_resource.data]
         else:
             scopes = self.resource_client.get_all(**self.facts_params)
 

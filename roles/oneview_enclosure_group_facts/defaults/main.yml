@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_enclosure_group_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_enclosure_group_facts/files/oneview_config.json"
-enclosure_group_name: "Test_EG"
+name: "EG"
 scope_uris: "/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a"

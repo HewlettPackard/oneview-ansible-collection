@@ -20,7 +20,8 @@
 - name: Gather facts about a Fibre Channel Network by name
   oneview_fc_network_facts:
     config: "{{ config }}"
-    name: "{{ network_name }}"
+    name: "{{ fc_networks[0]['name'] }}"
   delegate_to: localhost
+  when: fc_networks == True
 
 - debug: var=fc_networks

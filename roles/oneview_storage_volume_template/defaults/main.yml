@@ -3,4 +3,4 @@
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_volume_template/files/oneview_config.json"
 contents: "{{lookup('file', config)}}"
 storage_pool_uri: "/rest/storage-pools/6BC7B518-BFB8-41A0-B173-A7C801352530"
-storage_vol_templ_name: "svt1"
+volume_template_name: "svt1"

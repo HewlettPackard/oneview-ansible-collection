@@ -14,8 +14,8 @@
       name: "{{ hypervisor_manager_name }}"
       displayName: 'vcenter'
       hypervisorType: 'Vmware'
-      username: 'dcs'
-      password: 'dcs'
+      username: '{{ hypervisor_manager_username }}'
+      password: '{{ hypervisor_manager_password }}'
   delegate_to: localhost
   register: hyp_mgr_1
 
@@ -37,8 +37,8 @@
       name: "{{ hypervisor_manager_name }}"
       displayName: 'vcenter renamed'
       hypervisorType: 'Vmware'
-      username: 'dcs'
-      password: 'dcs'
+      username: '{{ hypervisor_manager_username }}'
+      password: '{{ hypervisor_manager_password }}'
   delegate_to: localhost
 
 - name: Delete the Hypervisor Manager
@@ -56,3 +56,35 @@
     data: "{{ hyp_mgr_1.ansible_facts.hypervisor_manager }}"
   delegate_to: localhost
   register: deleted
+
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    remote: "{{ hypervisor_manager_name }}"
+  delegate_to: localhost
+
+- set_fact:
+    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+
+- name: Re-create a Server Certificate
+  oneview_certificates_server:
+    config: "{{ config }}"
+    state: present
+    name: "{{ hypervisor_manager_name }}"
+    data:
+      certificateDetails:
+        - aliasName: "{{ hypervisor_manager_name }}"
+          base64Data: "{{ certificate }}"
+  delegate_to: localhost
+
+- name: Re-create a Hypervisor Manager to ensure continuity for automation script
+  oneview_hypervisor_manager:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ hypervisor_manager_name }}"
+      displayName: 'vcenter'
+      hypervisorType: 'Vmware'
+      username: '{{ hypervisor_manager_username }}'
+      password: '{{ hypervisor_manager_password }}'
+  delegate_to: localhost

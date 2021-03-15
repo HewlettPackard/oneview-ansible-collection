@@ -3,18 +3,23 @@
   oneview_version_facts:
     config: "{{ config }}"
   delegate_to: localhost
-  when: contents.api_version|string|length == 0
+  when: contents.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact:
+  set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version|string|length == 0
+  when: contents.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact:
-    currentVersion: "{{ contents.api_version }}"
-  when: contents.api_version|string|length != 0
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
+
+- name: Gather facts about all Ethernet Networks
+  oneview_ethernet_network_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
 
 - name: Create a Network Set
   oneview_network_set:
@@ -23,11 +28,16 @@
     data:
       name: 'OneViewSDK Test Network Set'
       networkUris:
-        - '{{ ethernet_network_1_name }}'  # can be a name
-        - '{{ ethernet_network_2_uri }}'   # or a URI
+        - "{{ ethernet_network_1_name }}"  # can be a name
+        - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
       bandwidth:
         maximumBandwidth: 15000
         typicalBandwidth: 3000
+  delegate_to: localhost
+
+- name: Gather facts about all Scopes
+  oneview_scope_facts:
+    config: "{{ config }}"
   delegate_to: localhost
 
 # Scope update is only supported V300 and V500
@@ -37,7 +47,9 @@
     state: present
     data:
       name: OneViewSDK Test Network Set
-      scopeUris: "{{ network_scope_uris }}"
+      scopeUris: 
+        - "{{ scopes[0]['uri'] }}"
+        - "{{ scopes[1]['uri'] }}"
   delegate_to: localhost
   when: currentVersion >= '300' and currentVersion <= '500'
 
@@ -58,4 +70,18 @@
     state: absent
     data:
       name: 'OneViewSDK Test Network Set - Renamed'
+  delegate_to: localhost
+
+- name: Create a Network Set to ensure continuity for automation script
+  oneview_network_set:
+    config: '{{ config }}'
+    state: present
+    data:
+      name: 'OneViewSDK Test Network Set'
+      networkUris:
+        - "{{ ethernet_network_1_name }}"  # can be a name
+        - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
+      bandwidth:
+        maximumBandwidth: 15000
+        typicalBandwidth: 3000
   delegate_to: localhost

@@ -6,6 +6,11 @@
 
 - debug: var=logical_enclosures
 
+- name: Gather facts about all Scopes
+  oneview_scope_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
 - name: Gather paginated, filtered and sorted facts about Logical Enclosures
   oneview_logical_enclosure_facts:
     config: "{{ config }}"
@@ -14,7 +19,7 @@
       count: 3
       sort: 'name:descending'
       filter: 'status=OK'
-      scope_uris: "{{ scope_uris }}"
+      scope_uris: "{{ scopes[0]['uri'] }}"
 
 - debug: var=logical_enclosures
 

@@ -1,0 +1,7 @@
+---
+- name: Gather facts about the Appliance SSH Access
+  oneview_appliance_ssh_access_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=appliance_ssh_access

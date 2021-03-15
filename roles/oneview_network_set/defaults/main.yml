@@ -1,10 +1,6 @@
 ---
 # defaults file for oneview_network_set
 network_name: 'Ansible Test Network Set'
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_network_set/files/oneview_config.json"
-network_scope_uris:
-  - '/rest/scopes/5438f376-b61f-45b1-8c11-052a48a474ad'
-  - '/rest/scopes/ee7e593e-fcfa-457f-b672-d478f214540f'
-ethernet_network_1_name: 'TestNetwork_1' 
-ethernet_network_2_uri: '/rest/ethernet-networks/ac6747b7-ad9c-49e7-8a32-ed5f4902207f'
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_network_set/files/oneview_config.json" 
 contents: "{{lookup('file', config)}}"
+ethernet_network_1_name: 'ovsdk_mgmt_nw'

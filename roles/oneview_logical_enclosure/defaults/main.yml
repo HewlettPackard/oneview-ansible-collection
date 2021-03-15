@@ -1,9 +1,7 @@
 ---
 # defaults file for oneview_logical_enclosure
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_enclosure/files/oneview_config.json"
-logical_enclosure_name: "SYN03_LE"  # Set the name of a Logical Enclosure
-firmware_baseline_uri: "/rest/firmware-drivers/SPP_2018_11_20190205_for_HPE_Synergy_Z7550-96592"  # Set the URI of a Firmware Driver
-enclosure_uri:
-    - "/rest/enclosures/013645CN759000AD" # Set the URI of an Enclosure
-enclosure_group_uri: "/rest/enclosure-groups/0f2a3f46-36ad-4c8f-9e88-763c062855d3" # Set the URI of an Enclosure Group
+logical_enclosure_name: "LE"  # Set the name of a Logical Enclosure
+firmware_name: "SPP_2018_11_20190205_for_HPE_Synergy_Z7550-96592"  # Set the name of a Firmware Driver
 variant: "Synergy"
+eg_name: EG

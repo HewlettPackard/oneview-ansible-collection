@@ -65,3 +65,15 @@
     data: "{{ svr_cert.ansible_facts.certificate_server }}"
   delegate_to: localhost
   register: deleted
+
+- name: Re-create a Server Certificate to support automation
+  oneview_certificates_server:
+    config: "{{ config }}"
+    state: present
+    name: "{{ remote_server }}"
+    data:
+      certificateDetails:
+        - aliasName: "{{ remote_server }}"
+          base64Data: "{{ certificate }}"
+  delegate_to: localhost
+  register: svr_cert

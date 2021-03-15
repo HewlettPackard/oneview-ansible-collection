@@ -5,7 +5,7 @@ galaxy_info:
   description: Ansible role to manage OneView OS Deployment Server resources.
   company: Hewlett Packard Enterprise
   license: Apache
-  min_ansible_version: 5.4.0
+  min_ansible_version: 2.9
   min_python_version: 2.7.9
   platforms: []
   galaxy_tags:
@@ -13,4 +13,4 @@ galaxy_info:
     - hpe-oneview
     - ansible-modules
     - sdk
-dependencies: ['oneview_ethernet_network', 'oneview_fc_network', 'oneview_fcoe_network']
+dependencies: []

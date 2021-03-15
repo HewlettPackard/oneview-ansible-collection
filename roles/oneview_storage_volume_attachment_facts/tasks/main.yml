@@ -5,7 +5,7 @@
   delegate_to: localhost
   when: contents.api_version == ""
   register: version
-   
+
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
@@ -51,6 +51,7 @@
 
 - debug: var=storage_volume_attachments
 
+
 - name: Gather facts about extra unmanaged storage volumes
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
@@ -63,6 +64,7 @@
 - debug: var=storage_volume_attachments
 - debug: var=extra_unmanaged_storage_volumes
 
+
 # NOTE: This is only compatible with API200 and API300
 - name: Gather facts about volume attachment paths
   oneview_storage_volume_attachment_facts:
@@ -71,21 +73,6 @@
     storageVolumeName: "{{ storage_volume_name }}"
     options:
       - paths
-  delegate_to: localhost
-  when: currentVersion == '200' or currentVersion == '300'
-
-- debug: var=storage_volume_attachments
-- debug: var=storage_volume_attachment_paths
-
-# NOTE: This is only compatible with API200 and API300
-- name: Gather facts about volume attachment path by id
-  oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    serverProfileName: "{{ server_profile_name }}"
-    storageVolumeName: "{{ storage_volume_name }}"
-    options:
-      - paths:
-            pathId: '9DFC8953-15A4-4EA9-AB65-23AE663F48D4'
   delegate_to: localhost
   when: currentVersion == '200' or currentVersion == '300'
 

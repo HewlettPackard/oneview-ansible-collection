@@ -1,10 +1,10 @@
 # Contribution Guide
 
-We welcome and encourage community contributions to oneview-ansible.
+We welcome and encourage community contributions to oneview-ansible-collection.
 
 ## Contributing
 
-The best way to directly collaborate with the project contributors is through GitHub: <https://github.com/HewlettPackard/oneview-ansible>
+The best way to directly collaborate with the project contributors is through GitHub: <https://github.com/HewlettPackard/oneview-ansible-collection>
 
 * If you want to contribute to our code by either fixing a problem or creating a new feature, please open a GitHub pull request.
 * If you want to raise an issue such as a defect, an enhancement request or a general issue, please open a GitHub issue.

@@ -1,4 +1,3 @@
-
 #  Managing FC Network modules
 
 This example describes how to use Ansible to manage FC Network resources

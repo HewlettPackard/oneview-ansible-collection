@@ -1,33 +1,42 @@
 ---
-- name: Get currentVersion from URL
-  oneview_version_facts:
-    config: "{{ config }}" 
+- name: Gather facts about server profile templates
+  oneview_server_profile_template_facts:
+    config: "{{ config }}"
+    name: "{{ spt_name }}"
   delegate_to: localhost
-  when: contents.api_version == ""
-  register: version
+- set_fact:
+    spt_uri: "{{ server_profile_templates[0]['uri'] }}"
 
-- name: Print currentVersion if api version is not specified in config file
-  set_fact: 
-    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+- name: Gather facts about OS deployment plans
+  oneview_os_deployment_plan_facts:
+    config: "{{ config }}"
+    name: "Basic Deployment Plan"
+  delegate_to: localhost
+- set_fact:
+    dp_uri: "{{ os_deployment_plans[0]['uri'] }}"
 
-- name: Print currentVersion if api version is specified in config file
-  set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+- name: Gather facts about hypervisor managers
+  oneview_hypervisor_manager_facts:
+    config: "{{ config }}"
+    name: "{{ hyp_mgr_name }}"
+  delegate_to: localhost
+- set_fact:
+    hyp_mgr_uri: "{{ hypervisor_managers[0]['uri'] }}"
 
 - name: Create a basic Hypervisor Cluster Profile
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
     state: present
     data:
-      type: "HypervisorClusterProfileV3"
       name: "{{ cluster_profile_name }}"
-      hypervisorManagerUri: "{{ hyp_mgr }}"
+      hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
       hypervisorType: 'Vmware'
       hypervisorHostProfileTemplate:
-        serverProfileTemplateUri: "{{ spt_name }}"
+        serverProfileTemplateUri: "{{ spt_uri }}"
+        deploymentPlan:
+          deploymentPlanUri: "{{ dp_uri }}"
+          serverPassword: 
         hostprefix: 'Test-cluster-host'
   delegate_to: localhost
   register: hyp_cp
@@ -40,7 +49,6 @@
     params:
       create_vswitch_layout: True                          # If this is true, virtual switch layout will be created
     data:
-      type: "HypervisorClusterProfileV3"
       description: "test cluster"
       hypervisorType: "Vmware"
       hypervisorClusterSettings:
@@ -50,13 +58,14 @@
         multiNicVMotion: False
         virtualSwitchType: "Standard"
       hypervisorHostProfileTemplate:
-        serverProfileTemplateUri: "{{ spt_name_ca }}"
+        serverProfileTemplateUri: "{{ spt_uri }}"
         deploymentPlan:
+          deploymentPlanUri: "{{ dp_uri }}"
           serverPassword: "test"
         hostprefix: "Test_cluster_profile_with_vswitch"
         virtualSwitches:                                 # this is the json body used to create vswitch
-          serverProfileTemplateUri: "{{ spt_name_ca }}"
-          hypervisorManagerUri: "{{ hyp_mgr }}"
+          serverProfileTemplateUri: "{{ spt_uri }}"
+          hypervisorManagerUri: "{{ hyp_mgr_uri }}"
         hostConfigPolicy:
           leaveHostInMaintenance: False
           useHostnameToRegister: False
@@ -64,7 +73,7 @@
           manageVirtualSwitches: True
           configurePortGroups: True
       name: "{{ cluster_profile_name }}_with_vswitch"
-      hypervisorManagerUri: "{{ hyp_mgr }}"
+      hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: "DC1"
 
   delegate_to: localhost
@@ -76,7 +85,7 @@
     state: present
     data:
       name: "{{ cluster_profile_name }}"
-      hypervisorManagerUri: "{{ hyp_mgr }}"
+      hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
       hypervisorType: 'Vmware'
   delegate_to: localhost
@@ -88,7 +97,7 @@
     data:
       name: "{{ cluster_profile_name }}"
       newName: "HCP-renamed"
-      hypervisorManagerUri: "{{ hyp_mgr }}"
+      hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
       hypervisorType: 'Vmware'
   delegate_to: localhost
@@ -101,25 +110,25 @@
     params:
       force: True
       soft_delete: False
-    data: "{{ hyp_cp.ansible_facts.hypervisor_cluster_profile }}"
+    data:
+      name: "HCP-renamed"
   delegate_to: localhost
-  register: deleted
 
-- name: Delete the Hypervisor Cluster Profile with vswitch
-  oneview_hypervisor_cluster_profile:
-    config: "{{ config }}"
-    state: absent
-    params:
-      force: False
-      soft_delete: False
-    data: "{{ hyp_cp_vswitch.ansible_facts.hypervisor_cluster_profile }}"
-  delegate_to: localhost
-  register: deleted
-
+#    - name: Delete the Hypervisor Cluster Profile with vswitch
+#      oneview_hypervisor_cluster_profile:
+#        config: "{{ config }}"
+#        state: absent
+#        params:
+#          force: False
+#          soft_delete: False
+#        data: "{{ hyp_cp_vswitch.ansible_facts.hypervisor_cluster_profile }}"
+#      delegate_to: localhost
+#      register: deleted
+#
 - name: Do nothing when Hypervisor Cluster Profile is absent
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
     state: absent
-    data: "{{ hyp_cp.ansible_facts.hypervisor_cluster_profile }}"
+    data:
+      name: "HCP-renamed"
   delegate_to: localhost
-  register: deleted

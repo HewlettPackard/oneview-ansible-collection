@@ -52,7 +52,7 @@ YAML_STORAGE_SYSTEM_500 = """
             credentials:
                 username: user
                 password: pass
-            hostname: '10.0.0.0'
+            hostname: '172.0.0.0'
             family: StoreServ
             deviceSpecificAttributes:
                 managedDomain: TestDomain
@@ -168,7 +168,7 @@ class TestStorageSystemModule(OneViewBaseTest):
             {
                 'username': 'user',
                 'password': 'pass',
-                'hostname': '10.0.0.0',
+                'hostname': '172.0.0.0',
                 'family': 'StoreServ'
             }
         )
@@ -231,7 +231,7 @@ class TestStorageSystemModule(OneViewBaseTest):
 
     def test_update_when_data_has_modified_attributes(self):
         data_merged = DICT_DEFAULT_STORAGE_SYSTEM.copy()
-        data_merged['credentials']['newIp_hostname'] = '10.10.10.10'
+        data_merged['credentials']['newIp_hostname'] = '172.10.10.10'
 
         obj = mock.Mock()
         obj.data = DICT_DEFAULT_STORAGE_SYSTEM
@@ -251,7 +251,7 @@ class TestStorageSystemModule(OneViewBaseTest):
     def test_update_when_data_has_modified_attributes_when_api500(self):
         self.mock_ov_client.api_version = 500
         data_merged = DICT_DEFAULT_STORAGE_SYSTEM_500.copy()
-        data_merged['credentials']['newHostname'] = '10.10.10.10'
+        data_merged['credentials']['newHostname'] = '172.10.10.10'
 
         obj = mock.Mock()
         obj.data = DICT_DEFAULT_STORAGE_SYSTEM_500
