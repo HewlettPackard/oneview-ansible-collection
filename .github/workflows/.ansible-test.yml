@@ -70,19 +70,18 @@ jobs:
           pip3 install future
           pip3 install -r tests/requirements.txt
           if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+        with:
+          path: ansible_collections/hpe/oneview
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-
-      - name: setting up env
-        run: |
-         echo "ANSIBLE_LIBRARY_UTILS=$PWD/plugins/module_utlis" >> $GITHUB_ENV
-         echo "ANSIBLE_LIBRARY=$PWD/plugins/modules" >> $GITHUB_ENV
-         echo "ANSIBLE_LIBRARY_TEST=$PWD/tests/unit/utils" >> $GITHUB_ENV
-         echo "PYTHONPATH=$ANSIBLE_LIBRARY:$ANSIBLE_LIBRARY_TEST:$ANSIBLE_LIBRARY_UTILS:$PYTHONPATH" >> $GITHUB_ENV
+        with:
+          path: ansible_collections/hpe/oneview
 
       - name: Run unit tests
         run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
+        with:
+          path: ansible_collections/hpe/oneview
 
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
