@@ -35,7 +35,7 @@ PRESENT_TIMECONFIG = [{
 }]
 
 
-@pytest.mark.resource(TestApplianceConfigurationTimeconfigFactsModule='plugins.modules.appliance_configuration_timeconfig')
+@pytest.mark.resource(TestApplianceConfigurationTimeconfigFactsModule='appliance_configuration_timeconfig')
 class TestApplianceConfigurationTimeconfigFactsModule(OneViewBaseTest):
     def test_should_get_all_timeconfiguration(self):
         self.resource.get_all.return_value = self.resource

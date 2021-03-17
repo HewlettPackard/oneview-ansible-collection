@@ -24,10 +24,8 @@ from tests.unit.utils.oneview_module_loader import ONEVIEW_MODULE_UTILS_PATH
 @pytest.fixture
 def mock_ov_client():
     patcher_json_file = patch.object(OneViewClient, 'from_json_file')
-    patcher_json_file = patcher_json_file.start()
-    from_json_module = Mock()
-    patcher_json_file.return_value = from_json_module
-    return patcher_json_file.return_value
+    client = patcher_json_file.start()
+    return client.return_value
 
 
 @pytest.fixture
