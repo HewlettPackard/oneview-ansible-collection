@@ -276,9 +276,9 @@ class TestEnclosureModule(OneViewBaseTest):
         )
 
     def test_should_fail_create_new_enclosure(self):
-        self.resource.get_by_name.return_value = []
-        self.resource.get_by_hostname.return_value = []
-        self.resource.add.return_value = []
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.get_by_hostname.return_value = self.resource
+        self.resource.add.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
         EnclosureModule().run()
