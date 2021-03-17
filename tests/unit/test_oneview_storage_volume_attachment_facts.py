@@ -54,7 +54,6 @@ ATTACHMENT = {
 RETURN_GET_BY_PROFILE_AND_VOLUME = ATTACHMENT
 
 
-@pytest.mark.resource(TestStorageVolumeAttachmentFactsModule='storage_volume_attachments')
 class TestStorageVolumeAttachmentFactsModule(OneViewBaseFactsTest):
     def test_should_get_all(self):
         attachments = [ATTACHMENT, ATTACHMENT]

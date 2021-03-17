@@ -227,7 +227,6 @@ PARAMS_FIRMWARE_WITH_SPP_URI = dict(
                             sppUri='/rest/firmware-drivers/filename-of-the-firmware-to-install')))
 
 
-@pytest.mark.resource(TestLogicalInterconnectModule='logical_interconnects')
 class TestLogicalInterconnectModule(OneViewBaseTest):
     """
     Test the module constructor and shared functions

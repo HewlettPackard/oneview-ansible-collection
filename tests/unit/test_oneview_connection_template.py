@@ -58,18 +58,17 @@ YAML_CONNECTION_TEMPLATE_MISSING_KEY = """
             state: "Configured"
     """
 
-DICT_CONNECTION_TEMPLATE = yaml.load(YAML_CONNECTION_TEMPLATE)["data"]
-DICT_CONNECTION_TEMPLATE_CHANGED = yaml.load(YAML_CONNECTION_TEMPLATE_CHANGE)["data"]
+DICT_CONNECTION_TEMPLATE = yaml.safe_load(YAML_CONNECTION_TEMPLATE)["data"]
+DICT_CONNECTION_TEMPLATE_CHANGED = yaml.safe_load(YAML_CONNECTION_TEMPLATE_CHANGE)["data"]
 
 
-@pytest.mark.resource(TestConnectionTemplateModule='connection_templates')
 class TestConnectionTemplateModule(OneViewBaseTest):
     def test_should_update_the_connection_template(self):
         self.resource.get_by_name.return_value = self.resource
         self.resource.data = DICT_CONNECTION_TEMPLATE
 #        self.resource.update.return_value = {"name": "name"}
 
-        self.mock_ansible_module.params = yaml.load(YAML_CONNECTION_TEMPLATE_CHANGE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CONNECTION_TEMPLATE_CHANGE)
 
         ConnectionTemplateModule().run()
 
@@ -83,7 +82,7 @@ class TestConnectionTemplateModule(OneViewBaseTest):
         self.resource.get_by_name.return_value = self.resource
         self.resource.data = DICT_CONNECTION_TEMPLATE
 
-        self.mock_ansible_module.params = yaml.load(YAML_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CONNECTION_TEMPLATE)
 
         ConnectionTemplateModule().run()
 
@@ -96,7 +95,7 @@ class TestConnectionTemplateModule(OneViewBaseTest):
     def test_should_fail_when_connection_template_was_not_found(self):
         self.resource.get_by_name.return_value = []
 
-        self.mock_ansible_module.params = yaml.load(YAML_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CONNECTION_TEMPLATE)
 
         ConnectionTemplateModule().run()
 

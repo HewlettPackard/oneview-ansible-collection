@@ -48,7 +48,6 @@ PARAMS_GET_REACHABLE_STORAGE_POOLS = dict(
 )
 
 
-@pytest.mark.resource(TestStoragePoolFactsModule='storage_pools')
 class TestStoragePoolFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_storage_pool(self):
         self.resource.get_all.return_value = [{"name": "Storage Pool Name"}]

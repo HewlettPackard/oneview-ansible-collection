@@ -27,7 +27,6 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 FAKE_MSG_ERROR = 'Fake message error'
 
 
-@pytest.mark.resource(TestOsDeploymentServerModule='os_deployment_servers')
 class TestOsDeploymentServerModule(OneViewBaseTest):
     """
     OneViewBaseTestCase has common test for main function,

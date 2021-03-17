@@ -52,7 +52,6 @@ ENCLOSURE_GROUPS = [{
 }]
 
 
-@pytest.mark.resource(TestEnclosureGroupFactsModule='enclosure_groups')
 class TestEnclosureGroupFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_enclosure_group(self):
         self.resource.get_all.return_value = ENCLOSURE_GROUPS

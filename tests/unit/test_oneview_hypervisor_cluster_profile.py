@@ -80,17 +80,16 @@ YAML_CLUSTER_PROFILE_ABSENT = """
             name: "hcp"
         """
 
-DICT_DEFAULT_CLUSTER_PROFILE = yaml.load(YAML_CLUSTER_PROFILE)["data"]
+DICT_DEFAULT_CLUSTER_PROFILE = yaml.safe_load(YAML_CLUSTER_PROFILE)["data"]
 
 
-@pytest.mark.resource(TestHypervisorClusterProfileModule='hypervisor_cluster_profiles')
 class TestHypervisorClusterProfileModule(OneViewBaseTest):
     def test_should_create_when_resource_not_exist(self):
         self.resource.get_by_name.return_value = None
         self.resource.create_virtual_switch_layout.return_value = "test"
         self.resource.create.return_value = self.resource
         self.resource.data = DICT_DEFAULT_CLUSTER_PROFILE
-        self.mock_ansible_module.params = yaml.load(YAML_CLUSTER_PROFILE_PRESENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CLUSTER_PROFILE_PRESENT)
 
         HypervisorClusterProfileModule().run()
 
@@ -103,7 +102,7 @@ class TestHypervisorClusterProfileModule(OneViewBaseTest):
     def test_should_not_update_when_existing_data_is_equals(self):
         self.resource.create_virtual_switch_layout.return_value = "test"
         self.resource.data = DICT_DEFAULT_CLUSTER_PROFILE
-        self.mock_ansible_module.params = yaml.load(YAML_CLUSTER_PROFILE_NO_RENAME)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CLUSTER_PROFILE_NO_RENAME)
 
         HypervisorClusterProfileModule().run()
 
@@ -119,7 +118,7 @@ class TestHypervisorClusterProfileModule(OneViewBaseTest):
         data_merged['newName'] = 'New Name'
 
         self.resource.data = DICT_DEFAULT_CLUSTER_PROFILE
-        self.mock_ansible_module.params = yaml.load(YAML_CLUSTER_PROFILE_RENAME)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CLUSTER_PROFILE_RENAME)
 
         HypervisorClusterProfileModule().run()
 
@@ -132,7 +131,7 @@ class TestHypervisorClusterProfileModule(OneViewBaseTest):
     def test_should_delete_hypervisor_cluster_profile_when_resource_exist(self):
         self.resource.data = DICT_DEFAULT_CLUSTER_PROFILE
         self.resource.delete.return_value = True
-        self.mock_ansible_module.params = yaml.load(YAML_CLUSTER_PROFILE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CLUSTER_PROFILE_ABSENT)
 
         HypervisorClusterProfileModule().run()
 
@@ -144,7 +143,7 @@ class TestHypervisorClusterProfileModule(OneViewBaseTest):
 
     def test_should_do_nothing_when_resource_already_absent(self):
         self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = yaml.load(YAML_CLUSTER_PROFILE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_CLUSTER_PROFILE_ABSENT)
 
         HypervisorClusterProfileModule().run()
 

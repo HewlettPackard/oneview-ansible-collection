@@ -85,7 +85,6 @@ PARAMS_NO_RESOURCE_ASSIGNMENTS = dict(
 )
 
 
-@pytest.mark.resource(TestScopeModule='scopes')
 class TestScopeModule(OneViewBaseTest):
     def test_should_create_new_scope_when_not_found(self):
         self.resource.get_by_name.return_value = None
