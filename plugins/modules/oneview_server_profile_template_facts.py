@@ -138,7 +138,7 @@ server_profile_template_available_networks:
     type: dict
 
 '''
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class ServerProfileTemplateFactsModule(OneViewModule):

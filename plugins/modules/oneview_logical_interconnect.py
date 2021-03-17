@@ -330,7 +330,7 @@ li_inconsistency_report:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError, compare
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError, compare
 
 
 class LogicalInterconnectModule(OneViewModule):

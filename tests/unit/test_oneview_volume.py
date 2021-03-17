@@ -23,8 +23,8 @@ import mock
 import pytest
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import VolumeModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import VolumeModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 

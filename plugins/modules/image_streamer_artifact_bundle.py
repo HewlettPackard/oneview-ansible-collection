@@ -166,7 +166,7 @@ artifact_bundle_deployment_group:
 '''
 
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare
 
 
 class ArtifactBundleModule(OneViewModule):

@@ -22,8 +22,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utlis.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utlis.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule, OneViewModuleException
+from tests.unit.utlis.hpe_test_utils import OneViewBaseTest
+from tests.unit.utlis.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule, OneViewModuleException
 
 ERROR_MSG = 'Fake message error'
 

@@ -234,7 +234,7 @@ interconnect_pluggable_module_information:
     type: list
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class InterconnectFactsModule(OneViewModule):

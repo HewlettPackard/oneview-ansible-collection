@@ -21,8 +21,8 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utlis.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utlis.oneview_module_loader import ApplianceSshAccessFactsModule
+from tests.unit.utlis.hpe_test_utils import OneViewBaseTest
+from tests.unit.utlis.oneview_module_loader import ApplianceSshAccessFactsModule
 
 PARAMS_GET_ALL = dict(
     config='config.json',

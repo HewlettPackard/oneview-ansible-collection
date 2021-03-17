@@ -22,8 +22,8 @@ import pytest
 import mock
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import HypervisorClusterProfileFactsModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from tests.unit.utils.oneview_module_loader import HypervisorClusterProfileFactsModule
 
 PROFILE_URI = '/rest/hypervisor-cluster-profiles/57d3af2a-b6d2-4446-8645-f38dd808ea4d'
 

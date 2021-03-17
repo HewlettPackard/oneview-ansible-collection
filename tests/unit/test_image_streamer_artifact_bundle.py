@@ -22,8 +22,8 @@ import mock
 import pytest
 import yaml
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import ImageStreamerBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ArtifactBundleModule
+from tests.unit.utils.hpe_test_utils import ImageStreamerBaseTest
+from tests.unit.utils.oneview_module_loader import ArtifactBundleModule
 
 
 YAML_ARTIFACT_BUNDLE = """

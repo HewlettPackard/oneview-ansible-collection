@@ -94,7 +94,7 @@ from ansible.module_utils.common._collections_compat import Mapping
 from copy import deepcopy
 from ansible.module_utils.six import iteritems
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare
 
 
 def _update_dict_with_depth(ov_resource, user_resource):

@@ -112,7 +112,7 @@ storage_pool:
 '''
 
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound, compare
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, OneViewModuleResourceNotFound, compare
 
 
 class StoragePoolModule(OneViewModule):

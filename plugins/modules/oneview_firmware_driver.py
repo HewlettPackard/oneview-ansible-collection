@@ -102,7 +102,7 @@ firmware_drivers:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleException
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleException
 from copy import deepcopy
 
 

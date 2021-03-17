@@ -121,7 +121,7 @@ plan_script_differences:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase, OneViewModuleValueError
+from plugins.module_utils.oneview import OneViewModuleBase, OneViewModuleValueError
 
 
 class PlanScriptModule(OneViewModuleBase):

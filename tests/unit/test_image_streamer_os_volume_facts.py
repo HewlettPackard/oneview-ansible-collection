@@ -20,8 +20,8 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import ImageStreamerBaseFactsTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import OsVolumeFactsModule
+from tests.unit.utils.hpe_test_utils import ImageStreamerBaseFactsTest
+from tests.unit.utils.oneview_module_loader import OsVolumeFactsModule
 
 ERROR_MSG = 'Fake message error'
 

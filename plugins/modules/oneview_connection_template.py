@@ -78,7 +78,7 @@ connection_template:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleValueError,
+from plugins.module_utils.oneview import (OneViewModule, OneViewModuleValueError,
                                                                           OneViewModuleResourceNotFound, compare)
 
 

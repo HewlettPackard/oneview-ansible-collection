@@ -115,7 +115,7 @@ uplink_set:
     returned: On state 'present'. Can be null.
     type: dict
 '''
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError
 
 
 class UplinkSetModule(OneViewModule):

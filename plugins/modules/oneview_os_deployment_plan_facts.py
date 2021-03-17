@@ -117,7 +117,7 @@ os_deployment_plan_custom_attributes:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase
+from plugins.module_utils.oneview import OneViewModuleBase
 from ansible.module_utils.six import iteritems
 
 

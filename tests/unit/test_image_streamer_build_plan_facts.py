@@ -21,8 +21,8 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utlis.hpe_test_utils import ImageStreamerBaseFactsTest
-from ansible_collections.hpe.oneview.tests.unit.utlis.oneview_module_loader import BuildPlanFactsModule
+from tests.unit.utlis.hpe_test_utils import ImageStreamerBaseFactsTest
+from tests.unit.utlis.oneview_module_loader import BuildPlanFactsModule
 
 ERROR_MSG = 'Fake message error'
 

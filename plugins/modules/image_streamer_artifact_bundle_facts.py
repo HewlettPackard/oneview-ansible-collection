@@ -109,7 +109,7 @@ artifact_bundle_backups:
     type: list
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class ArtifactBundleFactsModule(OneViewModule):

@@ -21,8 +21,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import ImageStreamerBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import DeploymentPlanModule
+from tests.unit.utils.hpe_test_utils import ImageStreamerBaseTest
+from tests.unit.utils.oneview_module_loader import DeploymentPlanModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 

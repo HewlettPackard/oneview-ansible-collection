@@ -21,8 +21,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import FirmwareDriverModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import FirmwareDriverModule
 
 FIRMWARE_DRIVER_NAME = "Service Pack for ProLiant.iso"
 

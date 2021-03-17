@@ -212,7 +212,7 @@ generated_dump_uri:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare
 
 
 class LogicalEnclosureModule(OneViewModule):

@@ -95,7 +95,7 @@ golden_images:
     type: list
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase
+from plugins.module_utils.oneview import OneViewModuleBase
 
 
 class GoldenImageFactsModule(OneViewModuleBase):

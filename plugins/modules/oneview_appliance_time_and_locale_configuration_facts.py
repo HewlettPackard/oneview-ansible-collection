@@ -58,7 +58,7 @@ appliance_time_and_locale_configuration:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class ApplianceTimeAndLocaleConfigurationFactsModule(OneViewModule):

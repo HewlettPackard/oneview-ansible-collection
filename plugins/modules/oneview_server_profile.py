@@ -227,7 +227,7 @@ import time
 
 from copy import deepcopy
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
+from plugins.module_utils.oneview import (OneViewModule,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           OneViewModuleValueError,
                                                                           ServerProfileMerger,

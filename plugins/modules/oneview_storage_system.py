@@ -150,7 +150,7 @@ storage_system:
 
 import collections
 from copy import deepcopy
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
+from plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
 
 
 class StorageSystemModule(OneViewModule):

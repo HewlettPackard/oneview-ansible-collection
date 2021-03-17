@@ -84,7 +84,7 @@ id_pools_ipv4_subnets:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class IdPoolsIpv4SubnetFactsModule(OneViewModule):

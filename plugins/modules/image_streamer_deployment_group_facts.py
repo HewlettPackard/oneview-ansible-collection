@@ -93,7 +93,7 @@ deployment_groups:
     type: list
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleBase, OneViewModuleResourceNotFound
+from plugins.module_utils.oneview import OneViewModuleBase, OneViewModuleResourceNotFound
 
 
 class DeploymentGroupFactsModule(OneViewModuleBase):

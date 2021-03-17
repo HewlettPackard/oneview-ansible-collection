@@ -114,7 +114,7 @@ storage_pools_reachable_storage_pools:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class StoragePoolFactsModule(OneViewModule):
