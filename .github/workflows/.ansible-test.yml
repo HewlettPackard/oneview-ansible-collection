@@ -70,13 +70,9 @@ jobs:
           pip3 install future
           pip3 install -r tests/requirements.txt
           if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
-        with:
-          path: ansible_collections/hpe/oneview
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-        with:
-          path: ansible_collections/hpe/oneview
 
       - name: Run unit tests
         run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
