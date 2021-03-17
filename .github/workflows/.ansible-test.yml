@@ -76,8 +76,6 @@ jobs:
 
       - name: Run unit tests
         run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
-        with:
-          path: ansible_collections/hpe/oneview/tests
 
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
