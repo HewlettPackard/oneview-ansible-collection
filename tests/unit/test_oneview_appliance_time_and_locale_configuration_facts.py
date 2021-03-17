@@ -21,8 +21,8 @@ __metaclass__ = type
 
 import pytest
 
-from tests.unit.utlis.hpe_test_utils import OneViewBaseTest
-from tests.unit.utlis.oneview_module_loader import ApplianceTimeAndLocaleConfigurationFactsModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import ApplianceTimeAndLocaleConfigurationFactsModule
 
 PARAMS_GET = dict(
     config='config.json',

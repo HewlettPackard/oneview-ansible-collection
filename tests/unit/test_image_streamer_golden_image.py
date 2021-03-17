@@ -21,8 +21,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from tests.unit.utlis.hpe_test_utils import ImageStreamerBaseTest
-from tests.unit.utlis.oneview_module_loader import GoldenImageModule
+from tests.unit.utils.hpe_test_utils import ImageStreamerBaseTest
+from tests.unit.utils.oneview_module_loader import GoldenImageModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 

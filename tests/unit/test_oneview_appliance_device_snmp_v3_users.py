@@ -22,8 +22,8 @@ __metaclass__ = type
 import mock
 import pytest
 
-from tests.unit.utlis.hpe_test_utils import OneViewBaseTest
-from tests.unit.utlis.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule, OneViewModuleException
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule, OneViewModuleException
 
 ERROR_MSG = 'Fake message error'
 

@@ -20,8 +20,8 @@ __metaclass__ = type
 
 import pytest
 
-from tests.unit.utlis.hpe_test_utils import ImageStreamerBaseFactsTest
-from tests.unit.utlis.oneview_module_loader import PlanScriptFactsModule
+from tests.unit.utils.hpe_test_utils import ImageStreamerBaseFactsTest
+from tests.unit.utils.oneview_module_loader import PlanScriptFactsModule
 
 ERROR_MSG = 'Fake message error'
 

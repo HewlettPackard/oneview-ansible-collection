@@ -21,8 +21,8 @@ __metaclass__ = type
 
 import pytest
 
-from tests.unit.utlis.hpe_test_utils import OneViewBaseTest
-from tests.unit.utlis.oneview_module_loader import ApplianceTimeAndLocaleConfigurationModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import ApplianceTimeAndLocaleConfigurationModule
 
 DEFAULT_CONFIGURATION_TEMPLATE = dict(
     locale='en_US.UTF-8',
