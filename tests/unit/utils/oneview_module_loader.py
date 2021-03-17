@@ -46,7 +46,7 @@ from plugins.module_utils.oneview import (OneViewModuleBase,
                                             transform_list_to_dict,
                                             compare,
                                             get_logger)
-from plugins.module_utils.icsp import ICspHelper
+# from plugins.module_utils.icsp import ICspHelper
 # from image_streamer_artifact_bundle import ArtifactBundleModule
 # from image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
 # from image_streamer_build_plan import BuildPlanModule
@@ -66,6 +66,7 @@ from plugins.modules.oneview_appliance_device_snmp_v1_trap_destination import Ap
 from plugins.modules.oneview_appliance_device_snmp_v1_trap_destination_facts import ApplianceDeviceSnmpV1TrapDestinationsFactsModule
 from plugins.modules.oneview_appliance_device_snmp_v3_trap_destination import ApplianceDeviceSnmpV3TrapDestinationsModule
 from plugins.modules.oneview_appliance_device_snmp_v3_trap_destination_facts import ApplianceDeviceSnmpV3TrapDestinationsFactsModule
+'''
 # from oneview_appliance_device_snmp_v3_users import ApplianceDeviceSnmpV3UsersModule
 # from oneview_appliance_device_snmp_v3_users_facts import ApplianceDeviceSnmpV3UsersFactsModule
 # from oneview_appliance_configuration_timeconfig_facts import ApplianceConfigurationTimeconfigFactsModule
@@ -176,3 +177,4 @@ from plugins.modules.oneview_uplink_set_facts import UplinkSetFactsModule
 from plugins.modules.oneview_volume import VolumeModule
 from plugins.modules.oneview_volume_facts import VolumeFactsModule
 from plugins.modules.oneview_version_facts import VersionFactsModule
+'''

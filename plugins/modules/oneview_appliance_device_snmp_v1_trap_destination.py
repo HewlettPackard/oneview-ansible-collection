@@ -114,7 +114,7 @@ appliance_device_snmp_v1_trap_destinations:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from plugins.module_utils.oneview import OneViewModule
 
 
 class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
