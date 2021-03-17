@@ -30,8 +30,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils import icsp, oneview
 
 ONEVIEW_MODULE_UTILS_PATH = 'ansible_collections.hpe.oneview.plugins.module_utils.oneview'
 
-sys.modules['ansible_collections.hpe.oneview.plugins.module_utils.oneview'] = oneview
-sys.modules['ansible_collections.hpe.oneview.plugins.module_utils.icsp'] = icsp
+sys.modules['ansible.module_utils.oneview'] = oneview
+sys.modules['ansible.module_utils.icsp'] = icsp
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
                                                                           OneViewModuleException,
