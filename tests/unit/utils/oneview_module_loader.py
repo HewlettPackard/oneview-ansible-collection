@@ -56,7 +56,7 @@ from plugins.modules.image_streamer_deployment_plan_facts import DeploymentPlanF
 from plugins.modules.image_streamer_golden_image import GoldenImageModule
 from plugins.modules.image_streamer_golden_image_facts import GoldenImageFactsModule
 from plugins.modules.image_streamer_os_volume_facts import OsVolumeFactsModule
-#from plugins.modules.mage_streamer_plan_script import PlanScriptModule
+from plugins.modules.image_streamer_plan_script import PlanScriptModule
 from plugins.modules.image_streamer_plan_script_facts import PlanScriptFactsModule
 #from plugins.modules.oneview_alert_facts import AlertFactsModule
 #from plugins.modules.oneview_appliance_device_read_community import ApplianceDeviceReadCommunityModule
@@ -124,8 +124,8 @@ from plugins.modules.oneview_logical_interconnect_group_facts import LogicalInte
 #from plugins.modules.oneview_login_detail_facts import LoginDetailFactsModule
 #from plugins.modules.oneview_managed_san import ManagedSanModule
 #from plugins.modules.oneview_managed_san_facts import ManagedSanFactsModule
-#from plugins.modules.plugins.modules.oneview_network_set import NetworkSetModule
-#from plugins.modules.plugins.modules.oneview_network_set_facts import NetworkSetFactsModule
+from plugins.modules.oneview_network_set import NetworkSetModule
+from plugins.modules.oneview_network_set_facts import NetworkSetFactsModule
 from plugins.modules.oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
 from plugins.modules.oneview_os_deployment_server import OsDeploymentServerModule
 from plugins.modules.oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
