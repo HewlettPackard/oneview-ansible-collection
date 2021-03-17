@@ -75,7 +75,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       - name: Run unit tests
-        run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
+        run: pytest
 
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
