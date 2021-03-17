@@ -16,12 +16,11 @@
 # limitations under the License.
 ###
 from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
 
 import pytest
 
-from hpe_test_utils import OneViewBaseFactsTest
-from oneview_module_loader import ApplianceDeviceSnmpV1TrapDestinationsFactsModule
+from tests.unit.utlis.hpe_test_utils import OneViewBaseFactsTest
+from tests.unit.utlis.oneview_module_loader import ApplianceDeviceSnmpV1TrapDestinationsFactsModule
 
 ERROR_MSG = 'Fake message error'
 
