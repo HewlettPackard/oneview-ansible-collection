@@ -74,14 +74,8 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-      - name: Setup the py environment
-        run: |
-         git clone https://github.com/HewlettPackard/oneview-python.git
-         echo "ANSIBLE_PATH=/home/runner/work/oneview-ansible-collection/ansible_collections/hpe/oneview/oneview-python" >> $GITHUB_ENV
-         echo "PYTHONPATH=$ANSIBLE_PATH:$PYTHONPATH" >> $GITHUB_ENV
-
       - name: Run unit tests
-        run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
+        run: pytest
 
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
