@@ -76,7 +76,7 @@ jobs:
 
       - name: Setting up the python path
         run: |
-         echo "ANSIBLE_LIBRARY=$PWD/tests/unit" >> $GITHUB_ENV
+         echo "ANSIBLE_LIBRARY=/home/runner/work/oneview-ansible-collection/ansible_collections/hpe/oneview/tests/unit" >> $GITHUB_ENV
          echo "PYTHONPATH=$ANSIBLE_LIBRARY:$PYTHONPATH" >> $GITHUB_ENV
 
       - name: Run unit tests
