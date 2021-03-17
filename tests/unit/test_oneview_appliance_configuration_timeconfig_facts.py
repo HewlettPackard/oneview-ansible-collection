@@ -21,8 +21,8 @@ __metaclass__ = type
 
 import pytest
 
-from tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from tests.unit.utils.oneview_module_loader import ApplianceConfigurationTimeconfigFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceConfigurationTimeconfigFactsModule
 
 PARAMS_GET_ALL = dict(
     config='config.json',
@@ -38,7 +38,8 @@ PRESENT_TIMECONFIG = [{
 @pytest.mark.resource(TestApplianceConfigurationTimeconfigFactsModule='appliance_configuration_timeconfig')
 class TestApplianceConfigurationTimeconfigFactsModule(OneViewBaseTest):
     def test_should_get_all_timeconfiguration(self):
-        self.resource.get_all.return_value = PRESENT_TIMECONFIG
+        self.resource.get_all.return_value = self.resource
+        self.resource.data = PRESENT_TIMECONFIG
         self.mock_ansible_module.params = PARAMS_GET_ALL
 
         ApplianceConfigurationTimeconfigFactsModule().run()
