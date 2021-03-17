@@ -17,7 +17,6 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
 
 """
 This module was created because the code in this repository is shared with Ansible Core.

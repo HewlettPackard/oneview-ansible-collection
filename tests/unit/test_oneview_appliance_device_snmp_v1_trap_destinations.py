@@ -20,8 +20,8 @@ __metaclass__ = type
 
 import pytest
 
-from utils.hpe_test_utils import OneViewBaseTest
-from utils.oneview_module_loader import ApplianceDeviceSnmpV1TrapDestinationsModule
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV1TrapDestinationsModule
 
 ERROR_MSG = 'Fake message error'
 
