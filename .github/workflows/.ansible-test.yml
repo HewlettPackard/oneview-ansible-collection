@@ -78,7 +78,7 @@ jobs:
         run: |
          git clone https://github.com/HewlettPackard/oneview-python.git
          echo "ANSIBLE_PATH=/home/runner/work/oneview-ansible-collection/ansible_collections/hpe/oneview/oneview-python" >> $GITHUB_ENV
-         echo "pythonLocation=$ANSIBLE_PATH:$PYTHONPATH" >> $GITHUB_ENV
+         echo "PYTHONPATH=$ANSIBLE_PATH:$PYTHONPATH" >> $GITHUB_ENV
 
       - name: Run unit tests
         run: ansible-test units --docker -v --color --python ${{ matrix.python_version }}
