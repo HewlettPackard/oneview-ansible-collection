@@ -4,13 +4,6 @@ on:
 
 jobs:
   sanity:
-    name: Sanity (${{ matrix.ansible }})
-    strategy:
-      matrix:
-        python_version:
-        - 3.6
-        ansible:
-        - stable-2.9
     runs-on: ubuntu-latest
     steps:
 
@@ -19,10 +12,10 @@ jobs:
         with:
           path: ansible_collections/hpe/oneview
 
-      - name: Set up Python ${{ matrix.python_version }}
+      - name: Set up Python 3.6
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python_version }}
+          python-version: 3.6
 
       - name: Install dependencies
         run: |
@@ -30,11 +23,14 @@ jobs:
           if [ -f test_requirements.txt ]; then pip install -r test_requirements.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
- 
+      - name: Install ansible-base (devel)
+        run: pip install antsibull-changelog https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
+
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
 
       - name: Run sanity tests
-        run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+        run: ansible-test sanity --docker -v --color --python 3.6
+
+      - name: Check changelog fragments syntax
+        run: antsibull-changelog lint
