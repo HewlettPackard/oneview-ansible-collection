@@ -114,6 +114,7 @@ class TestNetworkSetModule(OneViewBaseTest):
         )
 
     def test_should_not_update_when_data_is_equals(self):
+        self.resource.get_by_name.return_value = self.resource
         self.resource.data = NETWORK_SET
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
