@@ -33,6 +33,7 @@ sys.modules['ansible.module_utils.oneview'] = oneview
 sys.modules['ansible.module_utils.icsp'] = icsp
 
 from plugins.module_utils.oneview import (OneViewModuleBase,
+                                            OneViewClient,
                                             OneViewModuleException,
                                             OneViewModuleTaskError,
                                             OneViewModuleValueError,
