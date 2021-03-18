@@ -42,6 +42,7 @@ PRESENT_LIGS = [{
 }]
 
 
+@pytest.mark.resource(TestLogicalInterconnectGroupFactsModule='logical_interconnect_groups')
 class TestLogicalInterconnectGroupFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_ligs(self):
         self.resource.get_all.return_value = PRESENT_LIGS
