@@ -1,0 +1,88 @@
+---
+- name: Gather facts about OS Volume
+  image_streamer_os_volume_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- set_fact:
+    os_volume_name: "{{ os_volumes[0]['name']}}"
+  when: os_volumes == True
+
+- name: Gather facts about build plan
+  image_streamer_build_plan_facts:
+    config: "{{ config }}"
+    params:
+      filter: oeBuildPlanType=capture
+  delegate_to: localhost
+
+- set_fact:
+    build_plan_name: "{{ build_plans[0]['name']}}"
+  when: build_plans == True
+
+- name: Create a Golden Image from OS Volume
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ golden_image_name_created }}'
+      description: "Test Description"
+      imageCapture: "true"
+      osVolumeName: '{{ os_volume_name }}'
+      buildPlanName: '{{ build_plan_name }}'
+  delegate_to: localhost
+  when: os_volume_name is defined and build_plan_name is defined
+
+- name: Download the Golden Image to the file path provided
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: downloaded
+    data:
+      name: '{{ golden_image_name_created }}'
+      destination_file_path: '{{ image_download_path }}'
+  delegate_to: localhost
+
+- name: Add a Golden Image uploading from a local file
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ golden_image_name_uploaded }}'
+      description: "Test"
+      localImageFilePath: '{{ image_download_path }}'
+  delegate_to: localhost
+
+- name: Download the Golden Image archive log to the file path provided
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: archive_downloaded
+    data:
+      name: '{{ golden_image_name_created }}'
+      destination_file_path: '{{ archive_download_path }}'
+  delegate_to: localhost
+  ignore_errors: true
+
+- name: Update the Golden Image description and name
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ golden_image_name_uploaded }}'
+      description: "New description"
+      newName: 'ready to delete'
+  delegate_to: localhost
+
+- name: Remove the uploaded Golden Image
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: 'ready to delete'
+  delegate_to: localhost
+
+- name: Remove the created Golden Image
+  image_streamer_golden_image:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: '{{ golden_image_name_created }}'
+  delegate_to: localhost

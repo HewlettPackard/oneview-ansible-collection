@@ -4,10 +4,10 @@ This collection provides a series of Ansible modules and plugins for interacting
 
 ## Build Status 
 
-OV Version | 5.60 | 5.50 |
-| ------------- |:-------------:| -------------:|
-SDK Version/Tag | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
-Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
+OV Version | 6.00 | 5.60 | 5.50 |
+| ------------- |:-------------:| -------------:| -------------:|
+SDK Version/Tag | [v6.0.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.0.0) | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
+Build Status | ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)| ![Build status](https://ci.appveyor.com/api/projects/status/u84505l6syp70013?svg=true)|
 
 ## Requirements
 
@@ -67,7 +67,7 @@ example:
     "authLoginDomain": "",
     "password": "<password>"
   },
-  "api_version": 2400
+  "api_version": 2600
 }
 ```
 
@@ -105,7 +105,7 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
     hostname: <hostname>
     username: <username>
     password: <password>
-    api_version: 2400
+    api_version: 2600
     state: present
     data:
       name: "{{ network_name }}"
@@ -120,19 +120,19 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60, 6.00
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 2400
+"api_version": 2600
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='2400'
+export ONEVIEWSDK_API_VERSION='2600'
 ```
 
 If this property is not specified, it will fall back to default value.
@@ -141,6 +141,7 @@ The API list is as follows:
 
 - HPE OneView 5.50 API version: `2200`
 - HPE OneView 5.60 API version: `2400`
+- HPE OneView 6.00 API version: `2600`
 
 ### HPE Synergy Image Streamer
 

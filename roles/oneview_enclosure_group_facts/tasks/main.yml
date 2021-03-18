@@ -20,6 +20,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
       scope_uris: "{{ scopes[0]['uri'] }}"
+  delegate_to: localhost
+  when: scopes == True
 
 - debug: var=enclosure_groups
 

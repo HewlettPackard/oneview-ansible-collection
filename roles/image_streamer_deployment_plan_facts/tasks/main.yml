@@ -1,0 +1,42 @@
+---
+- name: Gather facts about all Deployment Plans
+  image_streamer_deployment_plan_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+- debug: var=deployment_plans
+
+- name: Gather paginated, filtered and sorted facts about Deployment Plans
+  image_streamer_deployment_plan_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: name:ascending
+      filter: state=active
+  delegate_to: localhost
+- debug: var=deployment_plans
+
+- name: Gather facts about a Deployment Plan by name
+  image_streamer_deployment_plan_facts:
+    config: "{{ config }}"
+    name: "{{ deployment_plan_name }}"
+  delegate_to: localhost
+- debug: var=deployment_plans
+
+# This endpoint is available only after Oneview V500
+- name: Gather facts about Server Profiles and Server Profile Templates that are using Deployment Plan
+  image_streamer_deployment_plan_facts:
+    config: "{{ config }}"
+    name: "{{ deployment_plan_name }}"
+    options: "usedby"
+  delegate_to: localhost
+- debug: var=deployment_plans
+
+# This endpoint is available only after Oneview V600
+- name: Get the OS deployment plan details from OneView for a deployment plan
+  image_streamer_deployment_plan_facts:
+    config: "{{ config }}"
+    name: "{{ deployment_plan_name }}"
+    options: "osdp"
+  delegate_to: localhost
+- debug: var=deployment_plans

@@ -1,0 +1,67 @@
+---
+- name: Get facts about the IPv4 Subnet
+  oneview_id_pools_ipv4_subnet_facts:
+    config: "{{ config }}"
+    networkId: '{{ subnet_name }}'
+  delegate_to: localhost
+
+- debug: var=id_pools_ipv4_subnets
+
+- set_fact: subnet_uri="{{ id_pools_ipv4_subnets[0]['uri'] }}"
+  when: id_pools_ipv4_subnets == True
+
+- name: Get ID Pools IPv4 Range Schema 
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    options:
+      - schema
+  delegate_to: localhost
+
+- name: Get facts about all the ranges
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=id_pools_ipv4_ranges
+
+- name: Get facts about all the ranges in in the '{{ subnet_name }}'
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    subnetUri: '{{ subnet_uri }}'
+  delegate_to: localhost
+
+- debug: var=id_pools_ipv4_ranges
+
+- name: Get facts about the range '{{ range_name }}' in the '{{ subnet_name }}'
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    name: '{{ range_name }}'
+    subnetUri: '{{ subnet_uri }}'
+  delegate_to: localhost
+
+- debug: var=id_pools_ipv4_ranges
+
+- set_fact: range_uri='{{ id_pools_ipv4_ranges[0]['uri'] }}'
+
+- name: Get facts about the range '{{ range_uri }}'
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    uri: '{{ range_uri }}'
+  delegate_to: localhost
+  when: range_uri is defined
+
+- debug: var=id_pools_ipv4_ranges
+
+- name: Get facts about the range '{{ range_uri }}' free and allocated fragments
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    options:
+      - freeFragments
+      - allocatedFragments
+    uri: '{{ range_uri }}'
+  delegate_to: localhost
+  when: range_uri is defined
+
+- debug: var=id_pools_ipv4_ranges
+- debug: var=id_pools_ipv4_ranges_free_fragments
+- debug: var=id_pools_ipv4_ranges_allocated_fragments

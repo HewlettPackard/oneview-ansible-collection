@@ -1,0 +1,42 @@
+---
+- name: Create an OS Build Plan
+  image_streamer_build_plan:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ name }}"
+      description: "oebuildplan"
+      oeBuildPlanType: "deploy"
+  delegate_to: localhost
+
+- debug: var=build_plan
+
+- name: Update the OS Build Plan description and name
+  image_streamer_build_plan:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ name }}"
+      description: "New description"
+      newName: 'OS Build Plan Renamed'
+  delegate_to: localhost
+
+- debug: var=build_plan
+
+- name: Remove an OS Build Plan
+  image_streamer_build_plan:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: 'OS Build Plan Renamed'
+  delegate_to: localhost
+
+- name: Re-create an OS Build Plan for automation
+  image_streamer_build_plan:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ name }}"
+      description: "oebuildplan"
+      oeBuildPlanType: "deploy"
+  delegate_to: localhost
