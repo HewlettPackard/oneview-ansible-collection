@@ -17,6 +17,7 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 import importlib
 import pytest
@@ -33,11 +34,18 @@ class OneViewBaseTest(object):
 
     @pytest.fixture(autouse=True)
     def setUp(self, mock_ansible_module, mock_ov_client, request, testing_module):
+        '''
         resource_name = type(self).__name__.replace('Test', '').replace('Module', '')
         word1 = re.findall('[A-Z][^A-Z]*', resource_name)
         word1 = str.join('_', word1).lower()
+        '''
 
-        self.resource = getattr(mock_ov_client, "%s" % (resource_name))
+        class_name = type(self).__name__
+        if StrictVersion(pytest.__version__) < StrictVersion("3.6"):
+            marker = request.node.get_marker('resource')
+        else:
+            marker = request.node.get_closest_marker('resource')
+        self.resource = getattr(mock_ov_client, "%s" % (marker.kwargs[class_name]))
         self.resource.get_by_name.return_value = self.resource
         self.mock_ov_client = mock_ov_client
         self.mock_ansible_module = mock_ansible_module

@@ -68,7 +68,7 @@ class ApplianceConfigurationTimeconfigFactsModule(OneViewModule):
     def execute_module(self):
         appliance_configuration_timeconfig = self.resource_client.get_all()
         return dict(changed=False,
-                    ansible_facts=dict(appliance_configuration_timeconfig=appliance_configuration_timeconfig))
+                    ansible_facts=dict(appliance_configuration_timeconfig=appliance_configuration_timeconfig.data))
 
 
 def main():

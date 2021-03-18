@@ -189,7 +189,7 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -204,7 +204,7 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -819,7 +819,7 @@ class TestOneViewModuleBase():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModuleBase()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -834,7 +834,7 @@ class TestOneViewModuleBase():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModuleBase()
 
         self.mock_ov_client_from_env_vars.not_been_called()
