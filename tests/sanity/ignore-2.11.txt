@@ -3,7 +3,6 @@ tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
 plugins/module_utils/oneview.py pylint:logging-not-lazy
 plugins/modules/image_streamer_build_plan.py validate-modules:missing-gplv3-license
 plugins/modules/image_streamer_build_plan_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_build_plan_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/image_streamer_golden_image.py validate-modules:missing-gplv3-license
 plugins/modules/image_streamer_golden_image_facts.py validate-modules:missing-gplv3-license
 plugins/modules/image_streamer_plan_script.py validate-modules:missing-gplv3-license
@@ -113,6 +112,4 @@ plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:missing-gp
 plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_id_pools_ipv4_subnet.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_subnet_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_id_pools_ipv4_subnet_facts.py validate-modules:parameter-list-no-elements
-
 tests/unit/utils/hpe_test_utils.py pylint!skip
