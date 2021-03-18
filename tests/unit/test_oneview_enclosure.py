@@ -259,8 +259,8 @@ PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE = """
 @pytest.mark.resource(TestEnclosureModule='enclosures')
 class TestEnclosureModule(OneViewBaseTest):
     def test_should_create_new_enclosure(self):
-        self.resource.get_by_name.return_value = self.resource
-        self.resource.get_by_hostname.return_value = self.resource
+        self.resource.get_by_name.return_value = []
+        self.resource.get_by_hostname.return_value = []
 
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.add.return_value = self.resource
@@ -277,9 +277,9 @@ class TestEnclosureModule(OneViewBaseTest):
         )
 
     def test_should_fail_create_new_enclosure(self):
-        self.resource.get_by_name.return_value = self.resource
-        self.resource.get_by_hostname.return_value = self.resource
-        self.resource.add.return_value = self.resource
+        self.resource.get_by_name.return_value = []
+        self.resource.get_by_hostname.return_value = []
+        self.resource.add.return_value = []
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
         EnclosureModule().run()

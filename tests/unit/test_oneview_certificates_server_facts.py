@@ -45,7 +45,7 @@ DICT_DEFAULT_CERTIFICATE = PRESENT_CERTIFICATES["data"]
 
 
 @pytest.mark.resource(TestCertificatesServerFactsModule='certificates_server')
-class TestCertificatesServerFactsModule(OneViewBaseFactsTest):
+class TestCertificatesServerFactsModule(OneViewBaseTest):
     def test_should_get_remote_certificate(self):
         self.resource.data = DICT_DEFAULT_CERTIFICATE
         self.resource.get_remote.return_value = self.resource
