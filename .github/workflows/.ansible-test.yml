@@ -4,10 +4,10 @@ on:
 
 jobs:
   sanity:
-    name: Sanity (${{ matrix.ansible }})
+    name: Sanity (${{ matrix.ansible_version }})
     strategy:
       matrix:
-        python_version: ["3.6"]
+        python_version: ["3.6", "3.7"]
         ansible_version: ["stable-2.9", "stable-2.10", "devel"]
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
           if [ -f test_requirements.txt ]; then pip install -r test_requirements.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Uninstall anisble base to avoid conflicts
+      - name: Uninstall ansible base to avoid conflicts
         run: pip uninstall -y ansible-base
 
       - name: Install ansible ${{ matrix.ansible_version }}
