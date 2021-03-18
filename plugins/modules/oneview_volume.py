@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -60,13 +60,11 @@ options:
     export_only:
       description:
         - If set to True, when the status is C(absent) and the resource exists, it will be removed only from OneView.
-      default: ''
       type: bool
       required: false
     suppress_device_updates:
       description:
         - To delete volume only from the appliance then request must contain the 'suppressDeviceUpdates' parameter set to true.
-      default: ''
       type: bool
       required: false
 extends_documentation_fragment:
