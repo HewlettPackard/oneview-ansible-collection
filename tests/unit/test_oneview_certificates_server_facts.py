@@ -20,7 +20,7 @@ __metaclass__ = type
 
 import pytest
 
-from tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from tests.unit.utils.oneview_module_loader import CertificatesServerFactsModule
 
 PRESENT_CERTIFICATES = {
