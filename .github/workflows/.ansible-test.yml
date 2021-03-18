@@ -25,16 +25,13 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Uninstall anisble base to avoid conflicts
-        run: pip uninstall ansible-base
+        run: pip uninstall -y ansible
 
       - name: Install ansible-base (devel)
-        run: pip install antsibull-changelog https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
+        run: pip install https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
 
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
 
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python 3.6
-
-      - name: Check changelog fragments syntax
-        run: antsibull-changelog lint
