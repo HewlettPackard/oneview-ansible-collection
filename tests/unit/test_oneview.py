@@ -26,7 +26,7 @@ import sys
 
 from plugins.module_utils import oneview
 
-ONEVIEW_MODULE_UTILS_PATH = 'module_utils.oneview'
+ONEVIEW_MODULE_UTILS_PATH = 'plugins.module_utils.oneview'
 
 sys.modules['ansible.module_utils.oneview'] = oneview
 
