@@ -1850,7 +1850,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_error = ServerProfileReplaceNamesByUris.SERVER_PROFILE_NETWORK_NOT_FOUND + "FC Network"
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=expected_error)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_mac_from_connections_before_update_when_mac_is_virtual(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_1, CONNECTION_2]
@@ -1867,7 +1867,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_mac_from_connections_before_update_when_mac_is_physical(self, mock_resource_compare):
         mock_resource_compare.return_value = False
 
@@ -1886,7 +1886,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_serial_number_before_update_when_serial_number_type_is_virtual(self,
                                                                                               mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -1905,7 +1905,7 @@ class TestServerProfileModule(OneViewBaseTest):
         assert(args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert(args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_serial_number_before_update_when_serial_number_type_is_physical(self,
                                                                                                mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -1924,7 +1924,7 @@ class TestServerProfileModule(OneViewBaseTest):
         assert(args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert(args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_wwpn_from_conns_before_update_when_wwpn_is_virtual(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_1_WITH_WWPN]
@@ -1940,7 +1940,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_wwpn_from_conns_before_update_when_wwpn_is_physical(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_2_WITH_WWPN]
@@ -1956,7 +1956,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_drive_number_from_controller_drives_before_update(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.LOCAL_STORAGE] = dict(controllers=[CONTROLLER_EMBEDDED.copy()])
@@ -1972,7 +1972,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][0][SPKeys.LOGICAL_DRIVES] == expected_drives)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_lun_from_san_volumes_before_update_when_luntype_is_auto(self,
                                                                                        mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -2050,7 +2050,7 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_DELETED
         )
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('plugins.modules.oneview_server_profile.compare')
     def test_should_not_update_when_mac_not_passed_in_deployment_settings(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
         profile_data['osDeploymentSettings'] = dict(osDeploymentPlanUri='/rest/fake',
