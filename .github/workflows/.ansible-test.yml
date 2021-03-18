@@ -4,6 +4,7 @@ on:
 
 jobs:
   sanity:
+    name: Sanity (${{ matrix.ansible }})
     strategy:
       matrix:
         python_version: ["3.6"]
