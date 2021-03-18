@@ -37,7 +37,7 @@ class OneViewBaseTest(object):
         word1 = re.findall('[A-Z][^A-Z]*', resource_name)
         word1 = str.join('_', word1).lower()
 
-        self.resource = getattr(mock_ov_client, "%s" % (resource_name)
+        self.resource = getattr(mock_ov_client, "%s" % (resource_name))
         self.resource.get_by_name.return_value = self.resource
         self.mock_ov_client = mock_ov_client
         self.mock_ansible_module = mock_ansible_module
