@@ -101,6 +101,7 @@ DEFAULT_BULK_ENET_TEMPLATE = [
 DICT_PARAMS_WITH_CHANGES = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)["data"]
 
 
+@pytest.mark.resource(TestEthernetNetworkModule='ethernet_networks')
 class TestEthernetNetworkModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

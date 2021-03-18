@@ -111,6 +111,7 @@ PARAMS_FOR_ABSENT_WITH_LI_NAME = dict(
 )
 
 
+@pytest.mark.resource(TestUplinkSetModule='uplink_sets')
 class TestUplinkSetModule(OneViewBaseTest):
     def test_should_create(self):
         self.resource.get_by_name.return_value = None

@@ -27,6 +27,7 @@ from tests.unit.utils.oneview_module_loader import OsDeploymentServerModule
 FAKE_MSG_ERROR = 'Fake message error'
 
 
+@pytest.mark.resource(TestOsDeploymentServerModule='os_deployment_servers')
 class TestOsDeploymentServerModule(OneViewBaseTest):
     """
     OneViewBaseTestCase has common test for main function,

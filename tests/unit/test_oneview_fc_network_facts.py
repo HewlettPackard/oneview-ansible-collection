@@ -42,6 +42,7 @@ PRESENT_NETWORKS = [{
 }]
 
 
+@pytest.mark.resource(TestFcNetworkFactsModule='fc_networks')
 class TestFcNetworkFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_fc_networks(self):
         self.resource.get_all.return_value = PRESENT_NETWORKS

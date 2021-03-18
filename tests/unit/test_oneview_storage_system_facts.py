@@ -82,6 +82,7 @@ PARAMS_GET_POOL_BY_IP_HOSTNAME = dict(
 )
 
 
+@pytest.mark.resource(TestStorageSystemFactsModule='storage_systems')
 class TestStorageSystemFactsModule(OneViewBaseFactsTest):
     @pytest.fixture(autouse=True)
     def specific_set_up(self, setUp):

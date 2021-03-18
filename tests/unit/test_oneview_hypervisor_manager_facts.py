@@ -41,6 +41,7 @@ PRESENT_HYPERVISORS = [{
 }]
 
 
+@pytest.mark.resource(TestHypervisorManagerFactsModule='hypervisor_managers')
 class TestHypervisorManagerFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_hypervisor_managers(self):
         self.resource.get_all.return_value = PRESENT_HYPERVISORS

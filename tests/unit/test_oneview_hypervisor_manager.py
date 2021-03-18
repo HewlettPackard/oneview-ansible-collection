@@ -54,6 +54,7 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
+@pytest.mark.resource(TestHypervisorManagerModule='hypervisor_managers')
 class TestHypervisorManagerModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

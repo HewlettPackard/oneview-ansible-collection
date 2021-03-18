@@ -76,6 +76,7 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
+@pytest.mark.resource(TestFcNetworkModule='fc_networks')
 class TestFcNetworkModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case

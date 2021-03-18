@@ -49,6 +49,7 @@ PARAMS_WITH_OPTIONS = dict(
 )
 
 
+@pytest.mark.resource(TestHypervisorClusterProfileFactsModule='hypervisor_cluster_profiles')
 class TestHypervisorClusterProfileFactsModule(OneViewBaseFactsTest):
     """
     FactsParamsTestCase has common tests for the parameters support.

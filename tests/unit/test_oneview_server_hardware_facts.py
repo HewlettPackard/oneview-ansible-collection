@@ -68,6 +68,7 @@ PARAMS_WITH_ALL_FIRMWARES_WITH_FILTERS = dict(
 )
 
 
+@pytest.mark.resource(TestServerHardwareFactsModule='server_hardware')
 class TestServerHardwareFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_server_hardware(self):
         self.resource.get_all.return_value = {"name": "Server Hardware Name"}

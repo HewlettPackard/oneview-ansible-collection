@@ -102,6 +102,7 @@ PROFILE = dict(
 TEMPLATES = [BASIC_TEMPLATE]
 
 
+@pytest.mark.resource(TestServerProfileTemplateFactsModule='server_profile_templates')
 class TestServerProfileTemplateFactsModule(OneViewBaseFactsTest):
     """
     FactsParamsTestCase has common tests for the parameters support and provides the mocks used in this test class.

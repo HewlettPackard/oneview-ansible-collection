@@ -90,6 +90,7 @@ PARAMS_FOR_UPDATE_CONFIGURATION = dict(
 FAKE_INTERCONNECT = dict(uri=FAKE_URI)
 
 
+@pytest.mark.resource(TestInterconnectModule='interconnects')
 class TestInterconnectModule(OneViewBaseTest):
     def test_should_ensure_powered_on_state(self):
         ansible_arguments = create_params_for('powered_on')

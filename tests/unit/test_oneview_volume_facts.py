@@ -58,6 +58,7 @@ PARAMS_GET_SNAPSHOT_BY_NAME = dict(
     options=[{"snapshots": {"name": 'snapshot_name'}}])
 
 
+@pytest.mark.resource(TestVolumeFactsModule='volumes')
 class TestVolumeFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_volumes(self):
         self.resource.get_all.return_value = [{"name": "Test Volume"}]

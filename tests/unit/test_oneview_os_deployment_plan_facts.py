@@ -86,6 +86,7 @@ OS_DEPLOYMENT_PLAN_WITHOUT_EDITABLE = {
 }
 
 
+@pytest.mark.resource(TestOsDeploymentPlanFactsModule='os_deployment_plans')
 class TestOsDeploymentPlanFactsModule(OneViewBaseFactsTest):
     """
     FactsParamsTestCase has common tests for the parameters support.

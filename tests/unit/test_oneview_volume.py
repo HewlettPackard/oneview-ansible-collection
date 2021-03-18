@@ -140,6 +140,7 @@ PARAMS_FOR_SNAPSHOT_DELETED = dict(
 )
 
 
+@pytest.mark.resource(TestVolumeModule='volumes')
 class TestVolumeModule(OneViewBaseTest):
     def test_should_create_new_volume_when_not_exist(self):
         self.resource.get_by_name.return_value = []

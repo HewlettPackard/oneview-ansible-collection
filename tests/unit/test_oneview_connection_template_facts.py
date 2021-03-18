@@ -45,6 +45,7 @@ PARAMS_GET_DEFAULT = dict(
 )
 
 
+@pytest.mark.resource(TestConnectionTemplateFactsModule='connection_templates')
 class TestConnectionTemplateFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_connection_templates(self):
         self.resource.get_all.return_value = {"name": "Storage System Name"}

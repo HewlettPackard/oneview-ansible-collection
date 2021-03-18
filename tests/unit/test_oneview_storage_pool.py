@@ -71,6 +71,7 @@ DICT_DEFAULT_STORAGE_POOL = yaml.safe_load(YAML_STORAGE_POOL)["data"]
 DICT_DEFAULT_STORAGE_POOL_500 = yaml.safe_load(YAML_STORAGE_POOL_500)["data"]
 
 
+@pytest.mark.resource(TestStoragePoolModule='storage_pools')
 class TestStoragePoolModule(OneViewBaseTest):
     @pytest.fixture(autouse=True)
     def specific_set_up(self, setUp):

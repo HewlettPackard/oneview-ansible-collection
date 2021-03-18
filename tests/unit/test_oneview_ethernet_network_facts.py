@@ -66,6 +66,7 @@ ENET_ASSOCIATED_PROFILES = [dict(uri=ENET_ASSOCIATED_PROFILE_URIS[0], name='Serv
                             dict(uri=ENET_ASSOCIATED_PROFILE_URIS[1], name='Server Profile 2')]
 
 
+@pytest.mark.resource(TestEthernetNetworkFactsModule='ethernet_networks')
 class TestEthernetNetworkFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_enets(self):
         self.resource.get_all.return_value = PRESENT_ENETS
