@@ -2050,7 +2050,7 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_DELETED
         )
 
-    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_update_when_mac_not_passed_in_deployment_settings(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
         profile_data['osDeploymentSettings'] = dict(osDeploymentPlanUri='/rest/fake',

@@ -37,4 +37,3 @@ def mock_ansible_module():
     ansible_module = Mock()
     patcher_ansible.return_value = ansible_module
     return ansible_module
-
