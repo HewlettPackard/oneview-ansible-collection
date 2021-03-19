@@ -48,7 +48,7 @@ class OneViewBaseTest(object):
         resource_name = type(self).__name__.replace('Test', '')
         resource_module_path_name = self.underscore(resource_name.replace('Module', ''))
 
-        testing_module = importlib.import_module('library.' + resource_module_path_name)
+        testing_module = importlib.import_module('ansible_collections.hpe.oneview.plugins.modules.' + resource_module_path_name)
         self.testing_class = getattr(testing_module, resource_name)
         try:
             # Load scenarios from module examples (Also checks if it is a valid yaml)

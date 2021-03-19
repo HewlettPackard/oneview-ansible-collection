@@ -32,19 +32,19 @@ sys.modules['ansible.module_utils.oneview'] = oneview
 
 from copy import deepcopy
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
-                                  OneViewModule,
-                                  OneViewClient,
-                                  OneViewModuleException,
-                                  OneViewModuleValueError,
-                                  OneViewModuleResourceNotFound,
-                                  SPKeys,
-                                  ServerProfileMerger,
-                                  ServerProfileReplaceNamesByUris,
-                                  _str_sorted,
-                                  merge_list_by_key,
-                                  transform_list_to_dict,
-                                  compare,
-                                  get_logger)
+                                                                          OneViewModule,
+                                                                          OneViewClient,
+                                                                          OneViewModuleException,
+                                                                          OneViewModuleValueError,
+                                                                          OneViewModuleResourceNotFound,
+                                                                          SPKeys,
+                                                                          ServerProfileMerger,
+                                                                          ServerProfileReplaceNamesByUris,
+                                                                          _str_sorted,
+                                                                          merge_list_by_key,
+                                                                          transform_list_to_dict,
+                                                                          compare,
+                                                                          get_logger)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
@@ -557,8 +557,8 @@ class TestOneViewModule():
         facts = ov_base.check_resource_scopes_set(dict(changed=False,
                                                        ansible_facts=dict(resource=ov_base.data),
                                                        msg=OneViewModule.MSG_ALREADY_PRESENT),
-                                                  'resource',
-                                                  action_value)
+                                                       'resource',
+                                                        action_value)
 
         assert facts == dict(changed=True,
                              msg=OneViewModule.MSG_UPDATED,
@@ -597,8 +597,8 @@ class TestOneViewModule():
         facts = ov_base.resource_scopes_set(dict(changed=False,
                                                  ansible_facts=dict(resource=ov_base.data),
                                                  msg=OneViewModule.MSG_ALREADY_PRESENT),
-                                            'resource',
-                                            ['test'])
+                                                 'resource',
+                                                  ['test'])
 
         ov_base.resource_client.patch.assert_not_called()
 
