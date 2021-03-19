@@ -31,12 +31,6 @@ jobs:
       - name: Install ansible ${{ matrix.ansible_version }}
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
 
-      - name: To avoid Ansible module error
-        run: |
-         pip3 uninstall ansible
-         rm -rf /usr/local/lib/python3.7/site-packages/ansible
-         pip3 install ansible
-
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
 
