@@ -28,7 +28,7 @@ configure the imports that change from one repository to another.
 import sys
 from ansible_collections.hpe.oneview.plugins.module_utils import icsp, oneview
 
-ONEVIEW_MODULE_UTILS_PATH = 'ansible_collections.hpe.oneview.module_utils.oneview'
+ONEVIEW_MODULE_UTILS_PATH = 'ansible_collections.hpe.oneview.plugins.module_utils.oneview'
 
 sys.modules['ansible.module_utils.oneview'] = oneview
 sys.modules['ansible.module_utils.icsp'] = icsp
