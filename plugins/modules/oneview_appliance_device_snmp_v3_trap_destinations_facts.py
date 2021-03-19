@@ -24,7 +24,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: oneview_appliance_device_snmp_v3_trap_destination_facts
+module: oneview_appliance_device_snmp_v3_trap_destinations_facts
 short_description: Retrieve the facts about the OneView appliance SNMPv3 trap forwarding destinations.
 description:
     - The appliance has the ability to forward events received from monitored or managed server hardware

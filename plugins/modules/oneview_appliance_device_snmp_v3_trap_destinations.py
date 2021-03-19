@@ -25,7 +25,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: oneview_appliance_device_snmp_v3_trap_destination
+module: oneview_appliance_device_snmp_v3_trap_destinations
 short_description: Manage the Appliance Device SNMPv3 Trap Destinations.
 description:
     - Provides an interface to manage the Appliance Device SNMPv3 Trap Destinations.
