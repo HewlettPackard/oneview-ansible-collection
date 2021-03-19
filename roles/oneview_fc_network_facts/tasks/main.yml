@@ -22,5 +22,6 @@
     config: "{{ config }}"
     name: "{{ fc_networks[0]['name'] }}"
   delegate_to: localhost
+  when: fc_networks == True
 
 - debug: var=fc_networks

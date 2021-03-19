@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_appliance_time_and_locale_configuration
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_time_and_locale_configuration/files/oneview_config.json"
+ntp_server: "<ntp_server>"

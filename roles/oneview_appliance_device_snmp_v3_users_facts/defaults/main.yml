@@ -1,0 +1,3 @@
+---
+# defaults file for oneview_appliance_device_snmp_v3_users_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_device_snmp_v3_users_facts/files/oneview_config.json"

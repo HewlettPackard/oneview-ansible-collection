@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  role_name: oneview_appliance_device_snmp_v3_trap_destination
+  author: Venkatesh Ravula
+  description: Ansible role to manage OneView Appliance Device SNMPv3 Trap Destination Facts resources.
+  company: Hewlett Packard Enterprise
+  license: Apache
+  min_ansible_version: 2.9
+  min_python_version: 3.4.2
+  platforms: []
+  galaxy_tags:
+    - ansible
+    - hpe-oneview
+    - ansible-modules
+    - sdk
+dependencies: []
