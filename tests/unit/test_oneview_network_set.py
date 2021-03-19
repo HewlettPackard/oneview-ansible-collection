@@ -45,7 +45,7 @@ PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
     data=dict(name=NETWORK_SET['name'],
-              networkUris=['/rest/ethernet-networks/aaa-bbb-ccc'])
+              networkUris=['/rest/ethernet-networks/aaa-bbb-cccc'])
 )
 
 PARAMS_WITH_CHANGES = dict(
@@ -114,8 +114,8 @@ class TestNetworkSetModule(OneViewBaseTest):
         )
 
     def test_should_not_update_when_data_is_equals(self):
-        self.resource.get_by_name.return_value = self.resource
         self.resource.data = NETWORK_SET
+        self.resource.get_by_name.return_value = self.resource
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
@@ -295,9 +295,9 @@ class TestNetworkSetModule(OneViewBaseTest):
         self.resource.patch.not_been_called()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
+            msg=NetworkSetModule.MSG_ALREADY_PRESENT,
             changed=False,
-            ansible_facts=dict(network_set=resource_data),
-            msg=NetworkSetModule.MSG_ALREADY_PRESENT
+            ansible_facts=dict(network_set=resource_data)
         )
 
 
