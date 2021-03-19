@@ -189,7 +189,8 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient', 
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -204,7 +205,8 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient', 
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -558,7 +560,7 @@ class TestOneViewModule():
                                                        ansible_facts=dict(resource=ov_base.data),
                                                        msg=OneViewModule.MSG_ALREADY_PRESENT),
                                                        'resource',
-                                                        action_value)
+                                                       action_value)
 
         assert facts == dict(changed=True,
                              msg=OneViewModule.MSG_UPDATED,
@@ -598,7 +600,7 @@ class TestOneViewModule():
                                                  ansible_facts=dict(resource=ov_base.data),
                                                  msg=OneViewModule.MSG_ALREADY_PRESENT),
                                                  'resource',
-                                                  ['test'])
+                                                 ['test'])
 
         ov_base.resource_client.patch.assert_not_called()
 

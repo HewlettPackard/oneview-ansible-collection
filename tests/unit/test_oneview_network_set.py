@@ -45,7 +45,7 @@ PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
     data=dict(name=NETWORK_SET['name'],
-              networkUris=['/rest/ethernet-networks/aaa-bbb-ccc'])
+              networkUris=['/rest/ethernet-networks/aaa-bbb-cccc'])
 )
 
 PARAMS_WITH_CHANGES = dict(
