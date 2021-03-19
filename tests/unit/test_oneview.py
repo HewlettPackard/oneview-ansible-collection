@@ -557,10 +557,10 @@ class TestOneViewModule():
         ov_base.data['scopeUris'] = before_value
 
         facts = ov_base.check_resource_scopes_set(dict(changed=False,
-                                                       ansible_facts=dict(resource=ov_base.data),
-                                                       msg=OneViewModule.MSG_ALREADY_PRESENT),
+                                                      ansible_facts=dict(resource=ov_base.data),
+                                                      msg=OneViewModule.MSG_ALREADY_PRESENT),
                                                       'resource',
-                                                       action_value)
+                                                      action_value)
 
         assert facts == dict(changed=True,
                              msg=OneViewModule.MSG_UPDATED,
@@ -597,10 +597,10 @@ class TestOneViewModule():
         ov_base.data['scopeUris'] = ['test']
 
         facts = ov_base.resource_scopes_set(dict(changed=False,
-                                                 ansible_facts=dict(resource=ov_base.data),
-                                                 msg=OneViewModule.MSG_ALREADY_PRESENT),
+                                                ansible_facts=dict(resource=ov_base.data),
+                                                msg=OneViewModule.MSG_ALREADY_PRESENT),
                                                 'resource',
-                                                 ['test'])
+                                                ['test'])
 
         ov_base.resource_client.patch.assert_not_called()
 
@@ -617,10 +617,10 @@ class TestOneViewModule():
         ov_base.data['scopeUris'] = ['test']
 
         facts = ov_base.check_resource_scopes_set(dict(changed=False,
-                                                       ansible_facts=dict(resource=ov_base.data),
-                                                       msg=OneViewModule.MSG_ALREADY_PRESENT),
-                                                  'resource',
-                                                  ['test'])
+                                                      ansible_facts=dict(resource=ov_base.data),
+                                                      msg=OneViewModule.MSG_ALREADY_PRESENT),
+                                                      'resource',
+                                                      ['test'])
 
         ov_base.resource_client.patch.assert_not_called()
 
