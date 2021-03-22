@@ -1570,7 +1570,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.resource.create.assert_called_once_with(params['data'])
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_update_when_data_changed(self, mock_resource_compare):
         profile_data = deepcopy(BASIC_PROFILE)
         profile_data['serverHardwareUri'] = None
@@ -1585,7 +1585,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.resource.update.assert_called_once_with(profile_data)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_power_off_before_update_when_required(self, mock_resource_compare):
         fake_profile_data = deepcopy(BASIC_PROFILE)
         fake_profile_data['serverHardwareUri'] = SERVER_HARDWARE_TEMPLATE_URI
@@ -1611,7 +1611,7 @@ class TestServerProfileModule(OneViewBaseTest):
         assert self.resource.update.mock_calls == [
             mock.call(fake_profile_data), mock.call(fake_profile_data)]
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_return_error_during_update_when_unrelated_to_power(self, mock_resource_compare):
         fake_profile_data = deepcopy(BASIC_PROFILE)
         fake_profile_data['serverHardwareUri'] = SERVER_HARDWARE_TEMPLATE_URI
@@ -1630,7 +1630,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg="test")
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_update_when_data_is_equals(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
 
@@ -1651,7 +1651,7 @@ class TestServerProfileModule(OneViewBaseTest):
             ansible_facts=mock_facts
         )
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_change_power_state_when_data_is_equals(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
 
@@ -1665,7 +1665,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.mock_ov_client.server_hardware.update_power_state.not_been_called()
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_fail_when_informed_template_not_exist_for_update(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
 
@@ -1686,7 +1686,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg="Informed Server Profile Template 'TemplateA200' not found")
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_fail_when_informed_hardware_not_exist_for_update(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
 
@@ -1707,7 +1707,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg="Informed Server Hardware 'ServerHardwareName' not found")
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     @mock.patch.object(ServerProfileMerger, 'merge_data')
     def test_should_call_deep_merge_when_resource_found(self, mock_deep_merge, mock_resource_compare):
         server_profile = deepcopy(BASIC_PROFILE)
@@ -1722,7 +1722,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         mock_deep_merge.assert_called_once_with(server_profile, server_profile)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     @mock.patch.object(ServerProfileMerger, 'merge_data')
     def test_should_compare_original_and_merged_resource(self, mock_deep_merge, mock_resource_compare):
         server_profile = deepcopy(BASIC_PROFILE)
@@ -1739,7 +1739,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         mock_resource_compare.assert_called_once_with(server_profile, merged_data)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_replace_os_deployment_name_by_uri_on_update(self, mock_resource_compare):
         uri = '/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493'
         mock_resource_compare.return_value = False
@@ -1850,7 +1850,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_error = ServerProfileReplaceNamesByUris.SERVER_PROFILE_NETWORK_NOT_FOUND + "FC Network"
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=expected_error)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_mac_from_connections_before_update_when_mac_is_virtual(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_1, CONNECTION_2]
@@ -1867,7 +1867,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_mac_from_connections_before_update_when_mac_is_physical(self, mock_resource_compare):
         mock_resource_compare.return_value = False
 
@@ -1886,7 +1886,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_serial_number_before_update_when_serial_number_type_is_virtual(self,
                                                                                               mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -1905,7 +1905,7 @@ class TestServerProfileModule(OneViewBaseTest):
         assert(args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert(args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_serial_number_before_update_when_serial_number_type_is_physical(self,
                                                                                                mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -1924,7 +1924,7 @@ class TestServerProfileModule(OneViewBaseTest):
         assert(args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert(args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_wwpn_from_conns_before_update_when_wwpn_is_virtual(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_1_WITH_WWPN]
@@ -1940,7 +1940,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_wwpn_from_conns_before_update_when_wwpn_is_physical(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.CONNECTIONS] = [CONNECTION_2_WITH_WWPN]
@@ -1956,7 +1956,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.CONNECTIONS] == expected_connections)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_drive_number_from_controller_drives_before_update(self, mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data'][SPKeys.LOCAL_STORAGE] = dict(controllers=[CONTROLLER_EMBEDDED.copy()])
@@ -1972,7 +1972,7 @@ class TestServerProfileModule(OneViewBaseTest):
         args, _ = self.resource.update.call_args
         assert(args[0][SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][0][SPKeys.LOGICAL_DRIVES] == expected_drives)
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_remove_lun_from_san_volumes_before_update_when_luntype_is_auto(self,
                                                                                        mock_resource_compare):
         params = deepcopy(PARAMS_FOR_PRESENT)
@@ -2050,7 +2050,7 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_DELETED
         )
 
-    @mock.patch('oneview_server_profile.compare')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
     def test_should_not_update_when_mac_not_passed_in_deployment_settings(self, mock_resource_compare):
         profile_data = deepcopy(CREATED_BASIC_PROFILE)
         profile_data['osDeploymentSettings'] = dict(osDeploymentPlanUri='/rest/fake',

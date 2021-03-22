@@ -24,27 +24,27 @@ import logging
 import pytest
 import sys
 
-from module_utils import oneview
+from ansible_collections.hpe.oneview.plugins.module_utils import oneview
 
-ONEVIEW_MODULE_UTILS_PATH = 'module_utils.oneview'
+ONEVIEW_MODULE_UTILS_PATH = 'ansible_collections.hpe.oneview.plugins.module_utils.oneview'
 
 sys.modules['ansible.module_utils.oneview'] = oneview
 
 from copy import deepcopy
-from module_utils.oneview import (OneViewModuleBase,
-                                  OneViewModule,
-                                  OneViewClient,
-                                  OneViewModuleException,
-                                  OneViewModuleValueError,
-                                  OneViewModuleResourceNotFound,
-                                  SPKeys,
-                                  ServerProfileMerger,
-                                  ServerProfileReplaceNamesByUris,
-                                  _str_sorted,
-                                  merge_list_by_key,
-                                  transform_list_to_dict,
-                                  compare,
-                                  get_logger)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
+                                                                          OneViewModule,
+                                                                          OneViewClient,
+                                                                          OneViewModuleException,
+                                                                          OneViewModuleValueError,
+                                                                          OneViewModuleResourceNotFound,
+                                                                          SPKeys,
+                                                                          ServerProfileMerger,
+                                                                          ServerProfileReplaceNamesByUris,
+                                                                          _str_sorted,
+                                                                          merge_list_by_key,
+                                                                          transform_list_to_dict,
+                                                                          compare,
+                                                                          get_logger)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
@@ -189,7 +189,8 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient',
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -204,7 +205,8 @@ class TestOneViewModule():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient',
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModule()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -819,7 +821,8 @@ class TestOneViewModuleBase():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient',
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModuleBase()
 
         self.mock_ov_client_from_env_vars.not_been_called()
@@ -834,7 +837,8 @@ class TestOneViewModuleBase():
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
-        with mock.patch('module_utils.oneview.OneViewClient', first='one', second='two') as mock_ov_client_from_credentials:
+        with mock.patch('ansible_collections.hpe.oneview.plugins.module_utils.oneview.OneViewClient',
+                        first='one', second='two') as mock_ov_client_from_credentials:
             OneViewModuleBase()
 
         self.mock_ov_client_from_env_vars.not_been_called()
