@@ -1,22 +1,19 @@
-codecov:
-  require_ci_to_pass: yes
-  max_report_age: off
-
-coverage:
-  status:
-    project:
-      default:
-        # basic
-        target: auto
-        threshold: 1%
-        base: auto 
-        branches: 
-          - master
-        if_ci_failed: error #success, failure, error, ignore
-        informational: false
-        only_pulls: false
-
-comment:
-  layout: "reach,diff,flags,files"
-  behavior: default
-  require_changes: false
+# codecov:
+#   require_ci_to_pass: yes
+#   max_report_age: off
+# 
+# coverage:
+#   status:
+#     project:
+#       default:
+#         # basic
+#         target: auto
+#         threshold: 1%
+#         base: auto 
+#         branches: 
+#           - master
+#         if_ci_failed: error #success, failure, error, ignore
+#         informational: false
+#         only_pulls: false
+# 
+comment: false
