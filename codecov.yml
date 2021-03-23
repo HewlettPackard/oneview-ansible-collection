@@ -1,5 +1,4 @@
 codecov:
-  require_ci_to_pass: yes
   max_report_age: off
 
 coverage:
@@ -19,4 +18,3 @@ coverage:
 comment:
   layout: "reach,diff,flags,files"
   behavior: default
-  require_changes: false
