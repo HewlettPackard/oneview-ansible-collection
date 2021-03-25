@@ -1,1 +1,4 @@
+#codecov:
+#  require_ci_to_pass: yes
+#  max_report_age: off
 comment: false
