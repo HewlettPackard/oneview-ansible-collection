@@ -215,7 +215,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
             if self.__get_all_uplink_sets():
                 allUplinkSets = self.__get_all_uplink_sets()
                 for uplinkSet in self.data['uplinkSets']:
-                    networkNames = uplinkSet.pop('networkNames', None)           	
+                    networkNames = uplinkSet.pop('networkNames', None)         	
                     networkSetNames = uplinkSet.pop('networkSetNames', None)
                     if networkNames and not uplinkSet.get('networkUris'):
                         uplinkSet['networkUris'] = []
