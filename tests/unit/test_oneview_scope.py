@@ -123,8 +123,8 @@ class TestScopeModule(OneViewBaseTest):
         ScopeModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            msg=ScopeModule.MSG_ALREADY_PRESENT,
-            changed=False,
+            msg=ScopeModule.MSG_UPDATED,
+            changed=True,
             ansible_facts=dict(scope=current_data)
         )
 
