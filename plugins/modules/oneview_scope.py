@@ -145,7 +145,7 @@ class ScopeModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.resource_present('scope')
+            return self.__present()
         elif self.state == 'absent':
             return self.resource_absent()
         elif self.state == 'resource_assignments_updated':
