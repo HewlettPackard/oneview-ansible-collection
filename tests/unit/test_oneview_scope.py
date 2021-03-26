@@ -123,8 +123,8 @@ class TestScopeModule(OneViewBaseTest):
         ScopeModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
-            msg=ScopeModule.MSG_UPDATED,
+            msg=ScopeModule.MSG_ALREADY_PRESENT,
+            changed=False,
             ansible_facts=dict(scope=current_data)
         )
 
@@ -132,7 +132,7 @@ class TestScopeModule(OneViewBaseTest):
         self.resource.get_by_name.return_value = self.resource
         current_data = copy.deepcopy(PARAMS_WITH_CHANGES_HAVING_RESOURCES_2['data'])
         self.resource.data = current_data
-        self.mock_ansible_module.params = PARAMS_WITH_CHANGES_HAVING_RESOURCES_2
+        self.mock_ansible_module.params = PARAMS_WITH_CHANGES_HAVING_RESOURCES_1
 
         ScopeModule().run()
 
