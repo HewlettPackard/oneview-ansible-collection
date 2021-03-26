@@ -46,6 +46,7 @@ PARAMS_FOR_GET_NAME_SERVERS = dict(
 )
 
 INTERCONNECT_URI = "/rest/interconnects/53fa7d35-1cc8-46c1-abf0-6af091a1aed3"
+INTERCONNECT_ID = "53fa7d35-1cc8-46c1-abf0-6af091a1aed3"
 PORT_NAME = "d1"
 SUBPORT_NUMBER = 1
 
@@ -90,6 +91,9 @@ MOCK_INTERCONNECTS = [
     dict(uidState='On', uri=INTERCONNECT_URI)
 ]
 
+MOCK_INTERCONNECTS_ID = [
+    dict(uidState='On', uri=INTERCONNECT_ID)
+]
 
 @pytest.mark.resource(TestInterconnectFactsModule='interconnects')
 class TestInterconnectFactsModule(OneViewBaseFactsTest):
@@ -243,6 +247,27 @@ class TestInterconnectFactsModule(OneViewBaseFactsTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             ansible_facts=dict(interconnects=MOCK_INTERCONNECTS, interconnect_port=fake_port)
+        )
+
+    def test_should_get_interconnect_port_using_id(self, testing_module):
+        fake_port = dict(t=1)
+        port_id = "53fa7d35-1cc8-46c1-abf0-6af091a1aed3:d1"
+        self.resource.data = MOCK_INTERCONNECTS_ID[0]
+        self.resource.get_by_name.return_value = self.resource
+
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.get_port.return_value = fake_port
+
+        self.mock_ansible_module.params = PARAMS_FOR_GET_PORT
+
+        InterconnectFactsModule().run()
+
+        self.resource.get_by_name.assert_called_once_with(INTERCONNECT_NAME)
+        self.resource.get_port.assert_called_once_with(port_id)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(interconnects=MOCK_INTERCONNECTS_ID, interconnect_port=fake_port)
         )
 
     def test_should_get_pluggable_module_information(self):
