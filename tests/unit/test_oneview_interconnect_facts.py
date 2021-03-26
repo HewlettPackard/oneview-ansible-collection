@@ -95,6 +95,7 @@ MOCK_INTERCONNECTS_ID = [
     dict(uidState='On', uri=INTERCONNECT_ID)
 ]
 
+
 @pytest.mark.resource(TestInterconnectFactsModule='interconnects')
 class TestInterconnectFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_interconnects(self):
