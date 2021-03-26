@@ -37,10 +37,17 @@ jobs:
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
 
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@master
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
         with:
-          targets: "./"
+          path: ansible_collections/hpe/oneview
+
+    - name: Lint Ansible Playbook
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: "./"
 
   units:
     runs-on: ubuntu-latest
