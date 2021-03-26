@@ -37,9 +37,13 @@ jobs:
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
 
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: "./"
+
   units:
     runs-on: ubuntu-latest
-    name: Units (Ⓐ${{ matrix.ansible }})
     strategy:
       # As soon as the first unit test fails, cancel the others to free up the CI queue
       fail-fast: true
@@ -78,11 +82,3 @@ jobs:
 
       - name: Run unit tests
         run: pytest
-
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@master
-        with:
-          targets: "./"
-          args: "-q"
-#          override-deps: |
-#            ansible-lint==5.0.0
