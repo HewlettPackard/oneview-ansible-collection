@@ -66,9 +66,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip3 install future
+          pip3 install future pytest-cov
           if [ -f tests/requirements.txt ]; then pip3 install -r tests/requirements.txt; fi
           if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
@@ -76,5 +77,10 @@ jobs:
         run: |
          echo "PYTHONPATH=/home/runner/work/oneview-ansible-collection:$PYTHONPATH" >> $GITHUB_ENV
 
-      - name: Run unit tests
-        run: pytest
+      - name: Generating coverage report
+        run: pytest --cov-report xml --cov=plugins/modules tests/unit/
+
+      - name: "Upload coverage to Codecov"
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
