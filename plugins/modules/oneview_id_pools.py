@@ -41,8 +41,7 @@ options:
               C(allocate) will allocate set of ID's from IPv4 Subnet.
               C(collect) will collect the allocated ID's.
               C(validate) will verify ids are valid or not.
-        choices: ['schema', 'get_pool_type', 'update_pool_type', 'allocate', 'collect',
-                  'validate', 'validate_id_pool', 'generate', 'check_range_availability']
+        choices: ['update_pool_type', 'allocate', 'collect', 'validate']
         required: true
         type: str
     data:
@@ -114,7 +113,7 @@ class IdPoolsModule(OneViewModule):
     MSG_ALREADY_PRESENT = 'Pool Updated already.'
     MSG_IDS_NOT_AVAILABLE = 'Ids not available'
     RESOURCE_FACT_NAME = 'id_pools'
- 
+
     argument_spec = dict(
         state=dict(
             required=True,
