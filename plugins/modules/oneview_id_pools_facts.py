@@ -144,7 +144,7 @@ class IdPoolsFactsModule(OneViewModule):
         elif self.state == 'check_range_availability':
             id_pool = self.resource_client.get_check_range_availability(poolType, idList)
 
-        if isinstance(id_pool, dict):
+        if not isinstance(id_pool, dict):
             id_pool = id_pool.data
 
         ansible_facts['id_pool'] = id_pool
