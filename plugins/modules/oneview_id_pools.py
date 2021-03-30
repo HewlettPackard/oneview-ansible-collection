@@ -28,7 +28,7 @@ module: oneview_id_pools
 short_description: Manage OneView Id Pools.
 description:
     - Provides an interface to manage Id pools. Can retrieve, update.
-version_added: "2.4"
+version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 6.0.0"
@@ -114,19 +114,18 @@ class IdPoolsModule(OneViewModule):
     MSG_ALREADY_PRESENT = 'Pool Updated already.'
     MSG_IDS_NOT_AVAILABLE = 'Ids not available'
     RESOURCE_FACT_NAME = 'id_pools'
-    
+ 
     argument_spec = dict(
         state=dict(
             required=True,
             choices=['allocate', 'collect', 'validate', 'update_pool_type']
         ),
         data=dict(required=True, type='dict'),
-     )
-
+    )
 
     def __init__(self):
 
-        super().__init__(additional_arg_spec=self.rgument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.id_pools)
 

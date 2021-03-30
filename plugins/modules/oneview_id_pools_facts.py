@@ -24,11 +24,11 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
 
 DOCUMENTATION = '''
 ---
-module: oneview_id_pools
+module: oneview_id_pools_facts
 short_description: Manage OneView Id Pools.
 description:
     - Provides an interface to manage Id pools. Can retrieve, update.
-version_added: "2.4"
+version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 6.0.0"
@@ -118,12 +118,12 @@ class IdPoolsFactsModule(OneViewModule):
             required=True,
             choices=['generate', 'validate_id_pool', 'check_range_availability', 'get_pool_type', 'schema']
         ),
-    data=dict(required=True, type='dict'),
+        data=dict(required=True, type='dict'),
     )
 
     def __init__(self):
 
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.id_pools)
 
@@ -144,7 +144,7 @@ class IdPoolsFactsModule(OneViewModule):
         elif self.state == 'check_range_availability':
             id_pool = self.resource_client.get_check_range_availability(poolType, idList)
 
-        if type(id_pool) is not dict:
+        if isinstance(id_pool, dict):
             id_pool = id_pool.data
 
         ansible_facts['id_pool'] = id_pool
