@@ -13,10 +13,10 @@
     - hpe.oneview.oneview_appliance_time_and_locale_configuration
     - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
     - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
-    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
-    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
     - hpe.oneview.oneview_appliance_device_snmp_v3_users
     - hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
+    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
+    - hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
     - hpe.oneview.oneview_connection_template
     - hpe.oneview.oneview_connection_template_facts
     - hpe.oneview.oneview_id_pools_ipv4_subnet
