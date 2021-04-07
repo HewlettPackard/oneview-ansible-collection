@@ -1,4 +1,12 @@
 ---
+- name: Gather facts about ID Pools IPV4 Subnets by networkId
+  oneview_id_pools_ipv4_subnet_facts:
+    config: "{{ config }}"
+    networkId: '{{ networkId }}'
+  delegate_to: localhost
+
+- set_fact: uri="{{ id_pools_ipv4_subnets['uri'] }}"
+
 - name: Ensure the IPV4 Range '{{ range_name }}' exists
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
@@ -87,4 +95,17 @@
     data:
       name: '{{ disabled_range_name }}'
       subnetUri: '{{ subnet_uri }}'
+  delegate_to: localhost
+
+- name: Create the IPV4 Range '{{ range_name }}' for automation
+  oneview_id_pools_ipv4_range:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ range_name }}'
+      subnetUri: '{{ subnet_uri }}'
+      rangeCategory: Custom
+      startStopFragments:
+        - startAddress: "{{ start_address }}"
+          endAddress: "{{ end_address1 }}"
   delegate_to: localhost

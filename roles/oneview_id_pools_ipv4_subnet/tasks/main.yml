@@ -64,3 +64,17 @@
     data:
       networkId: '{{ network_id }}'
   delegate_to: localhost
+
+- name: Create the ID Pools IPV4 Subnet for automation
+  oneview_id_pools_ipv4_subnet:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ subnet_name }}'
+      type: '{{ type }}'
+      networkId: '{{ network_id }}'
+      subnetmask: '{{ subnetmask }}'
+      gateway: '{{ gateway }}'
+      domain: '{{ domain }}'
+      dnsServers: '{{ dnsServers }}'
+  delegate_to: localhost

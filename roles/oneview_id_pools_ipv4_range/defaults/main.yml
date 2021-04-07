@@ -4,7 +4,7 @@ config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id
 subnet_name: IPv4Subnet
 range_name: Experts Range
 disabled_range_name: DISABLED - Experts Range
-subnet_uri: "/rest/id-pools/ipv4/subnets/1654c5cf-0e3d-4bc2-b5af-604a150e0fc0"
-start_address: "<starting_ip>"
-end_address1: "<ending_ip1>"
-end_address2: "<ending_ip2>"
+networkId: "192.168.20.0"
+start_address: "192.168.20.10"
+end_address1: "192.168.20.30"
+end_address2: "192.168.20.50"
