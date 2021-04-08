@@ -5,7 +5,7 @@
     networkId: '{{ networkId }}'
   delegate_to: localhost
 
-- set_fact: uri="{{ id_pools_ipv4_subnets['uri'] }}"
+- set_fact: subnet_uri="{{ id_pools_ipv4_subnets[0]['uri'] }}"
 
 - name: Ensure the IPV4 Range '{{ range_name }}' exists
   oneview_id_pools_ipv4_range:
@@ -53,7 +53,7 @@
       count: 2
       update_allocator: True
       idList:
-        - ""
+        - "192.168.20.33"
   delegate_to: localhost
 
 - name: Collects set of ID from an IPV4 Range
@@ -64,7 +64,7 @@
       uri: "{{ uri }}"
       update_collector: True
       idList:
-        - ""
+        - "192.168.20.34"
   delegate_to: localhost
 
 

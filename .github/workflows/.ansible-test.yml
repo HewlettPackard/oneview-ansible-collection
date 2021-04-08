@@ -61,7 +61,7 @@ jobs:
         ansible:
           - stable-2.9
           - stable-2.10
-          - devel
+          - stable-2.11
 
     steps:
       - name: Check out code
