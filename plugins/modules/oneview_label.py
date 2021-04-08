@@ -27,7 +27,7 @@ DOCUMENTATION = '''
 module: oneview_label
 short_description: Manage OneView Label resources.
 description:
-    - Provides an interface to manage ID pools IPV4 Range resources. Can create, update, or delete.
+    - Provides an interface to manage Label resources. Can create, update, or delete.
 version_added: "2.5.0"
 requirements:
     - "python >= 2.7.9"
