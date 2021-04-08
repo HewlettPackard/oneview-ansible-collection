@@ -22,7 +22,7 @@
 - name: Gather facts about a Trap Destination by name
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
-    name: "1.1.1.1"
+    name: "2.2.2.2"
   delegate_to: localhost
 
 - debug:

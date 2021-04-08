@@ -46,6 +46,8 @@
   * [oneview_hypervisor_cluster_profile_facts - Retrieve the facts about one or more of the OneView Hypervisor Cluster Profiles.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_hypervisor_cluster_profile_facts/README.md)
   * [oneview_hypervisor_manager - Manage OneView Hypervisor Manager resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_hypervisor_manager/README.md)
   * [oneview_hypervisor_manager_facts - Retrieve the facts about one or more of the OneView Hypervisor Managers.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_hypervisor_manager_facts/README.md)
+  * [oneview_id_pools - Manage OneView ID pools resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools/README.md)
+  * [oneview_id_pools_facts - Retrieve the facts about one or more of the OneView ID Pools.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools_facts/README.md)
   * [oneview_id_pools_ipv4_range - Manage OneView ID pools IPV4 Range resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools_ipv4_range/README.md)
   * [oneview_id_pools_ipv4_range_facts - Retrieve the facts about one or more of the OneView ID Pools IPV4 Ranges.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools_ipv4_range_facts/README.md)
   * [oneview_id_pools_ipv4_subnet - Manage OneView ID pools IPV4 Subnet resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools_ipv4_subnet/README.md)

@@ -1,10 +1,10 @@
 {
     "ip":  "<oneview_ip>",
     "credentials": {
-      "userName": "<userName>",
+      "userName": "<user_name>",
       "password": "<password>"
     },
     "image_streamer_ip": "<i3s_ip>",
-    "api_version": 2010,
+    "api_version": 2020,
     "variant": "Synergy"
   }
