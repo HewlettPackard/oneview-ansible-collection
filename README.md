@@ -5,7 +5,7 @@ This collection provides a series of Ansible modules and plugins for interacting
 ## Build Status 
 
 OV Version | 6.10 | 6.00 | 5.60 | 5.50 |
-| ------------- |:-------------:| -------------:| -------------:|
+| ------------- |:-------------:| -------------:| -------------:| -------------:|
 SDK Version/Tag | [v6.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.1.0) | [v6.0.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.0.0) | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
 Build Status | [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)|
 

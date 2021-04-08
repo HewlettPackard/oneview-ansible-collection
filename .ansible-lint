@@ -16,4 +16,3 @@ skip_list:
   - unnamed-task
   - risky-file-permissions
   - role-name
-
