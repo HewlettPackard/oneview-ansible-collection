@@ -48,3 +48,14 @@
     state: absent
     name: "{{ destination_address }}"
   delegate_to: localhost
+
+- name: Create an Appliance Device SNMPv1 Trap Destination by Destination Address for automation
+  oneview_appliance_device_snmp_v1_trap_destinations:
+    config: "{{ config }}"
+    state: present
+    name: "{{ destination_address }}"
+    data:
+      communityString: "public"
+      destination: "{{ destination_address }}"
+      port: 162
+  delegate_to: localhost

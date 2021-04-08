@@ -8,7 +8,7 @@
 - debug: var=id_pools_ipv4_subnets
 
 - set_fact: subnet_uri="{{ id_pools_ipv4_subnets[0]['uri'] }}"
-  when: id_pools_ipv4_subnets == True
+  when: id_pools_ipv4_subnets|length != 0
 
 - name: Get ID Pools IPv4 Range Schema 
   oneview_id_pools_ipv4_range_facts:
