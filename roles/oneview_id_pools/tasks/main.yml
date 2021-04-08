@@ -1,0 +1,47 @@
+---  
+- name: Enables or disables the pool type
+  oneview_id_pools:
+    config: "{{ config }}"
+    state: update_pool_type
+    data:
+      poolType: '{{ poolType }}'
+      enabled: True
+  delegate_to: localhost
+
+- name: Allocates one or more IDs from a pool
+  oneview_id_pools:
+    config: "{{ config }}"
+    state: allocate
+    data:
+      poolType: '{{ poolType }}'
+      count: 2
+  delegate_to: localhost
+- debug: var=id_pool
+
+- name: Collects one or more IDs to be returned to a pool
+  oneview_id_pools:
+    config: "{{ config }}"
+    state: collect
+    data:
+      poolType: '{{ poolType }}'
+      idList: '{{ id_pool["idList"] }}'
+  delegate_to: localhost
+
+- name: Generates a random range
+  oneview_id_pools_facts:
+    config: "{{ config }}"
+    state: generate
+    data:
+      poolType: '{{ poolType }}'
+  delegate_to: localhost
+- debug: var=id_pool
+
+- name: Validates a set of IDs to reserve in the pool
+  oneview_id_pools:
+    config: "{{ config }}"
+    state: validate
+    data:
+      poolType: '{{ poolType }}'
+      idList: ['{{ id_pool["startAddress"] }}', 
+               '{{ id_pool["endAddress"] }}']
+  delegate_to: localhost

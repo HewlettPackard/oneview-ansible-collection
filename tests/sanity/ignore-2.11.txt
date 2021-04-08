@@ -112,4 +112,6 @@ plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:missing-gp
 plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_id_pools_ipv4_subnet.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_subnet_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_id_pools.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_id_pools_facts.py validate-modules:missing-gplv3-license
 tests/unit/utils/hpe_test_utils.py pylint!skip

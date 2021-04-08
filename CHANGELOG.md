@@ -47,6 +47,8 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_hypervisor_cluster_profile_facts
 - oneview_hypervisor_manager
 - oneview_hypervisor_manager_facts
+- oneview_id_pools
+- oneview_id_pools_facts
 - oneview_id_pools_ipv4_range
 - oneview_id_pools_ipv4_range_facts
 - oneview_id_pools_ipv4_subnet

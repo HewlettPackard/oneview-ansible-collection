@@ -1,10 +1,10 @@
 {
-    "ip":  "15.129.95.215",
+    "ip":  "<oneview_ip>",
     "credentials": {
-      "userName": "Administrator",
-      "password": "ecosystem123"
+      "userName": "<user_name>",
+      "password": "<password>"
     },
-    "image_streamer_ip": "15.129.95.219",
+    "image_streamer_ip": "<i3s_ip>",
     "api_version": 2020,
     "variant": "Synergy"
   }
