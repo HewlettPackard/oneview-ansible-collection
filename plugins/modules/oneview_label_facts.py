@@ -32,7 +32,7 @@ description:
 version_added: "2.5.0"
 requirements:
     - python >= 2.7.9
-    - hpeOneView >= 5.4.0
+    - hpeOneView >= 6.1.0
 author:
     - Asis Bagga (@asisbagga)
 options:

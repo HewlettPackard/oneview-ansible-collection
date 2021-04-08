@@ -31,7 +31,7 @@ description:
 version_added: "2.5.0"
 requirements:
     - "python >= 2.7.9"
-    - "hpeOneView >= 6.0.0"
+    - "hpeOneView >= 6.1.0"
     - "ansible >= 2.9"
 author: "Asis Bagga (@asisbagga)"
 options:

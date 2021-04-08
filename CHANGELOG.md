@@ -5,6 +5,8 @@
 ### Modules supported in this release
 - oneview_id_pools
 - oneview_id_pools_facts
+- oneview_label
+- oneview_label_facts
 
 ## v6.0.0
 This release extends the planned support of the collections to OneView REST API version 2600 (OneView v6.0) and ImageStreamer REST API version 2010 (I3S v6.0) 

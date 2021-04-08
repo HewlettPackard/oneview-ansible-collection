@@ -4,10 +4,10 @@
     config: "{{ config }}"
     state: present
     data:
-      resourceUri: "/rest/enclosures/0000000000A66102"
+      resourceUri: "{{ resource_uri}}" 
       labels:
-        - name: "Test label 1"
-        - name: "Test Label 2"
+        - name: "{{ label_name_1  }}" 
+        - name: "{{ labe_name_2 }}"
   delegate_to: localhost
   register: label
 
@@ -16,13 +16,13 @@
     config: "{{ config }}"
     state: present
     data:
-      resourceUri: "/rest/enclosures/0000000000A66102"
+      resourceUri: "{{ resource_uri }}"
       labels:
-        - name: "Test label 1 Renamed"
-          uri: "/rest/labels/130"
-        - name: "Test label 2 Renamed"
+        - name: "{{ label_rename_1 }}"
+          uri: " {{ label_uri }}"
+        - name: "{{ label_rename_2 }}"
           uri: null
-        - name: "Test label 3"
+        - name: "{{ label_name_3 }}"
           uri: null
   delegate_to: localhost
 
@@ -31,5 +31,5 @@
     config: "{{ config }}"
     state: absent
     data:
-      resourceUri: "/rest/enclosures/0000000000A66102"
+      resourceUri: "{{ resource_uri }}"
   delegate_to: localhost

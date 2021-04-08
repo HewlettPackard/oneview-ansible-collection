@@ -1,3 +1,10 @@
 ---
 # defaults file for oneview_label
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_label/files/oneview_config.json"
+resource_uri: "/rest/enclosures/0000000000A66102"
+label_name_1: "Test label 1"
+label_name_2: "Test label 2"
+label_name_3: "Test label 3"
+label_rename_1: "Test label 1 Renamed"
+label_rename_2: "Test label 2 Renamed"
+label_uri: "/rest/labels/130"

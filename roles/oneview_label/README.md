@@ -6,7 +6,7 @@ Provides an interface to manage Label resources. Can create, update, or delete.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
-  * hpeOneView >= 5.4.0
+  * hpeOneView >= 6.1.0
 
 #### Options
 

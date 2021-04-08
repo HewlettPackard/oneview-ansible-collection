@@ -27,7 +27,7 @@
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
     config: "{{ config }}"
-    resourceUri: "/rest/enclosures/0000000000A66102"
+    resourceUri: "{{ resource_uri }}" 
   delegate_to: localhost
 
 - debug: var=labels
