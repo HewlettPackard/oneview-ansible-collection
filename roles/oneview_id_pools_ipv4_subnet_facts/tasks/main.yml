@@ -19,7 +19,7 @@
 - name: Gather facts about ID Pools IPV4 Subnets by networkId
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
-    networkId: '{{ id_pools_ipv4_subnets[0]["networkId"] }}'
+    networkId: '{{ networkId }}'
   delegate_to: localhost
 
 - debug: var=id_pools_ipv4_subnets

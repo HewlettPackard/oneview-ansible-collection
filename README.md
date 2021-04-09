@@ -4,15 +4,15 @@ This collection provides a series of Ansible modules and plugins for interacting
 
 ## Build Status 
 
-OV Version | 6.00 | 5.60 | 5.50 |
-| ------------- |:-------------:| -------------:| -------------:|
-SDK Version/Tag | [v6.0.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.0.0) | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
-Build Status | [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)|
+OV Version | 6.10 | 6.00 | 5.60 | 5.50 |
+| ------------- |:-------------:| -------------:| -------------:| -------------:|
+SDK Version/Tag | [v6.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.1.0) | [v6.0.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v6.0.0) | [v1.2.1](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.2.1) | [v1.1.0](https://github.com/HewlettPackard/oneview-ansible-collection/releases/tag/v1.1.0) |
+Build Status | [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)| [![Build status](https://action-badges.now.sh/JasonEtco/action-badges)](https://github.com/HewlettPackard/oneview-ansible-collection/actions/workflows/.ansible-test.yml)|
 
 ## Requirements
 
  - Ansible >= 2.9
- - python >= 2.7.9
+ - python >= 3.4.2
  - [HPE OneView Python SDK](https://pypi.org/project/hpeOneView/)
 
 # Installation
@@ -67,7 +67,7 @@ example:
     "authLoginDomain": "",
     "password": "<password>"
   },
-  "api_version": 2600
+  "api_version": 2800
 }
 ```
 
@@ -105,7 +105,7 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
     hostname: <hostname>
     username: <username>
     password: <password>
-    api_version: 2600
+    api_version: 2800
     state: present
     data:
       name: "{{ network_name }}"
@@ -120,19 +120,19 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60, 6.00
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView 5.50, 5.60, 6.00, 6.10
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 2600
+"api_version": 2800
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='2600'
+export ONEVIEWSDK_API_VERSION='2800'
 ```
 
 If this property is not specified, it will fall back to default value.
@@ -142,6 +142,7 @@ The API list is as follows:
 - HPE OneView 5.50 API version: `2200`
 - HPE OneView 5.60 API version: `2400`
 - HPE OneView 6.00 API version: `2600`
+- HPE OneView 6.10 API version: `2800`
 
 ### HPE Synergy Image Streamer
 

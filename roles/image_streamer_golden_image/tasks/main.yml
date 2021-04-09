@@ -6,7 +6,7 @@
 
 - set_fact:
     os_volume_name: "{{ os_volumes[0]['name']}}"
-  when: os_volumes == True
+  when: os_volumes|length != 0
 
 - name: Gather facts about build plan
   image_streamer_build_plan_facts:
@@ -17,7 +17,7 @@
 
 - set_fact:
     build_plan_name: "{{ build_plans[0]['name']}}"
-  when: build_plans == True
+  when: build_plans|length != 0
 
 - name: Create a Golden Image from OS Volume
   image_streamer_golden_image:
