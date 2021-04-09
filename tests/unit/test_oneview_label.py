@@ -79,7 +79,7 @@ class TestLabelModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=LabelModule.MSG_CREATED,
-            ansible_facts=dict(Labels=DEFAULT_LABEL_TEMPLATE)
+            ansible_facts=dict(labels=DEFAULT_LABEL_TEMPLATE)
         )
 
     def test_update_when_data_has_modified_attributes(self):
@@ -95,7 +95,7 @@ class TestLabelModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=LabelModule.MSG_UPDATED,
-            ansible_facts=dict(Labels=data_merged)
+            ansible_facts=dict(labels=data_merged)
         )
 
     def test_deletes_when_state_is_absent(self):
