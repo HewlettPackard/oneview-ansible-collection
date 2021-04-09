@@ -113,7 +113,7 @@ class LabelModule(OneViewModule):
     MSG_DELETED = 'Label deleted successfully.'
     MSG_ALREADY_PRESENT = 'Label is already present.'
     MSG_ALREADY_ABSENT = 'Label is already absent.'
-    RESOURCE_FACT_NAME = 'Labels'
+    RESOURCE_FACT_NAME = 'labels'
 
     def __init__(self):
         additional_arg_spec = dict(data=dict(required=True, type='dict'),

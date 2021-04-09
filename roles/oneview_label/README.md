@@ -30,4 +30,4 @@ Provides an interface to manage Label resources. Can create, update, or delete.
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| label   | Has the facts about the Label |  On state 'present'. Can be null. |  dict |
+| labels   | Has the facts about the Label |  On state 'present'. Can be null. |  dict |

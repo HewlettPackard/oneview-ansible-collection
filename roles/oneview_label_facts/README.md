@@ -31,4 +31,4 @@ Retrieve facts about one or more of the OneView labels.
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| label   | The named servers for a label. |  When requested, but can be null. |  dict |
+| labels   | The named servers for a label. |  When requested, but can be null. |  dict |
