@@ -55,6 +55,8 @@
   * [oneview_interconnect - Manage the OneView Interconnect resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect/README.md)
   * [oneview_interconnect_facts - Retrieve facts about one or more of the OneView Interconnects.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect_facts/README.md)
   * [oneview_interconnect_type_facts - Retrieve facts about one or more of the OneView Interconnect Types.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect_type_facts/README.md)
+  * [oneview_label - Manage the OneView Label resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_label/README.md)
+  * [oneview_label_facts - Retrieve facts about one or more of the OneView Labels.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_label_facts/README.md)
   * [oneview_logical_enclosure - Manage OneView Logical Enclosure resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_logical_enclosure/README.md)
   * [oneview_logical_enclosure_facts - Retrieve facts about one or more of the OneView Logical Enclosures.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_logical_enclosure_facts/README.md)
   * [oneview_logical_interconnect - Manage OneView Logical Interconnect resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_logical_interconnect/README.md)

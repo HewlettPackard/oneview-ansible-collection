@@ -117,6 +117,8 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_interconnect_facts 
 from ansible_collections.hpe.oneview.plugins.modules.oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from oneview_internal_link_set_facts import InternalLinkSetFactsModule
 # from oneview_logical_downlinks_facts import LogicalDownlinksFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_label import LabelModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_label_facts import LabelFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_enclosure import LogicalEnclosureModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_enclosure_facts import LogicalEnclosureFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_interconnect import LogicalInterconnectModule

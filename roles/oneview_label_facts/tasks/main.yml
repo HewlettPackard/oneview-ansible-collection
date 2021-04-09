@@ -1,0 +1,33 @@
+---
+- name: Gather facts about all Labels
+  oneview_label_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=labels
+
+- name: Gather paginated, filtered and sorted facts about Labels
+  oneview_label_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: ''
+- debug: var=labels
+
+- name: Gather facts about a Label by name
+  oneview_label_facts:
+    config: "{{ config }}"
+    name: "{{ labels[0]['name'] }}"
+  delegate_to: localhost
+
+- debug: var=labels
+
+- name: Gather facts about a Label by Resource
+  oneview_label_facts:
+    config: "{{ config }}"
+    resourceUri: "{{ resource_uri }}" 
+  delegate_to: localhost
+
+- debug: var=labels

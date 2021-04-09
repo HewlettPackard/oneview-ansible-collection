@@ -94,7 +94,7 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
             uri=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )
-        super(IdPoolsIpv4SubnetFactsModule, self).__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.id_pools_ipv4_subnets)
 
     def execute_module(self):

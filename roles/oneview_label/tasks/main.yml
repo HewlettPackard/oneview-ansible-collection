@@ -1,0 +1,35 @@
+---
+- name: Create Labels for enclosure resource
+  oneview_label:
+    config: "{{ config }}"
+    state: present
+    data:
+      resourceUri: "{{ resource_uri}}" 
+      labels:
+        - name: "{{ label_name_1  }}" 
+        - name: "{{ labe_name_2 }}"
+  delegate_to: localhost
+  register: labels
+
+- name: Update label of given resource for enclosure resource
+  oneview_label:
+    config: "{{ config }}"
+    state: present
+    data:
+      resourceUri: "{{ resource_uri }}"
+      labels:
+        - name: "{{ label_rename_1 }}"
+          uri: "{{ labels['labels'][0]['uri'] }}" 
+        - name: "{{ label_rename_2 }}"
+          uri: null
+        - name: "{{ label_name_3 }}"
+          uri: null
+  delegate_to: localhost
+
+- name: Delete Labels for enclosure resource
+  oneview_label:
+    config: "{{ config }}"
+    state: absent
+    data:
+      resourceUri: "{{ resource_uri }}"
+  delegate_to: localhost

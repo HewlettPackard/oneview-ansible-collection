@@ -56,6 +56,8 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_interconnect
 - oneview_interconnect_facts
 - oneview_interconnect_type_facts
+- oneview_label
+- oneview_label_facts
 - oneview_logical_enclosures
 - oneview_logical_enclosures_facts
 - oneview_logical_interconnect
