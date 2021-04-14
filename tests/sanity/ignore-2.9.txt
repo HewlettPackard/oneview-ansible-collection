@@ -57,6 +57,7 @@ plugins/modules/oneview_server_hardware_type_facts.py validate-modules:missing-g
 plugins/modules/oneview_interconnect.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_facts.py pylint:ansible-format-automatic-specification
+plugins/modules/oneview_interconnect_link_topology_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_interconnect_type_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_interconnect_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_interconnect.py validate-modules:missing-gplv3-license

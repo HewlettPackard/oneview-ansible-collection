@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_alert_facts
-  author: Andressa Cruz
-  description: Ansible role to manage OneView Alert Facts resource.
+  role_name: oneview_interconnect_link_topology_facts
+  author: Mariana Kreisig
+  description: Ansible role to manage OneView Interconnect Link Topology Facts resource.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

@@ -55,6 +55,7 @@
   * [oneview_id_pools_ipv4_subnet_facts - Retrieve the facts about one or more of the OneView ID Pools IPV4 Subnets.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_id_pools_ipv4_subnet_facts/README.md)
   * [oneview_interconnect - Manage the OneView Interconnect resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect/README.md)
   * [oneview_interconnect_facts - Retrieve facts about one or more of the OneView Interconnects.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect_facts/README.md)
+  * [oneview_interconnect_link_topology_facts - Retrieve facts about the OneView Interconnect Link Topology.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect_link_topology_facts/README.md)
   * [oneview_interconnect_type_facts - Retrieve facts about one or more of the OneView Interconnect Types.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_interconnect_type_facts/README.md)
   * [oneview_label - Manage the OneView Label resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_label/README.md)
   * [oneview_label_facts - Retrieve facts about one or more of the OneView Labels.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_label_facts/README.md)
