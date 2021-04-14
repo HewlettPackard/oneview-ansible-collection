@@ -24,6 +24,7 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'metadata_version': '1.1'}
 
 DOCUMENTATION = '''
+---
 module: oneview_alert_facts
 short_description: Retrieve facts about the OneView Alerts.
 description:
@@ -43,8 +44,8 @@ options:
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
-    - hpe.oneview.factsparams
-    - hpe.oneview.params
+    - hpe.oneview.oneview.factsparams
+    - hpe.oneview.oneview.params
 '''
 
 EXAMPLES = '''
