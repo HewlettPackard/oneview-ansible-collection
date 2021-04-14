@@ -16,11 +16,11 @@
 # limitations under the License.
 ###
 
-import copy
-import pytest
-
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
+
+import copy
+import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import AlertFactsModule
