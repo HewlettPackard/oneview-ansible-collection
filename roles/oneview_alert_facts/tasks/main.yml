@@ -1,0 +1,29 @@
+---
+- name: Gather facts about the last 2 alerts
+  oneview_alert_facts:
+    config: "{{ config }}"
+    params:
+      count: 2
+  delegate_to: localhost
+
+- debug: var=alerts
+
+- name: Gather facts about the alerts with state 'Cleared'
+  oneview_alert_facts:
+    config: "{{ config }}"
+    params:
+      count: 2
+      filter: "alertState='Cleared'"
+  delegate_to: localhost
+
+- debug: var=alerts
+
+- name: Gather facts about the alerts with urgency 'High'
+  oneview_alert_facts:
+    config: "{{ config }}"
+    params:
+      count: 5
+      filter: "urgency='High'"
+  delegate_to: localhost
+
+- debug: var=alerts
