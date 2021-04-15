@@ -67,8 +67,6 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_network_set
 - oneview_network_set_facts
 - oneview_os_deployment_plan_facts
-- oneview_os_deployment_server
-- oneview_os_deployment_server_facts
 - oneview_scope
 - oneview_scope_facts
 - oneview_server_hardware

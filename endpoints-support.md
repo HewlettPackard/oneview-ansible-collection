@@ -237,15 +237,6 @@
 |     **OS Deployment Plans**                                                                                                                      |
 |<sub>/rest/os-deployment-plans/</sub>                                                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/os-deployment-plans/{id}</sub>                                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|     **OS Deployment Servers**                                                                                                                    |
-|<sub>/rest/os-deployment-servers</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers</sub>                                                   | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/image-streamer-appliances</sub>                         | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/image-streamer-appliances/{id}</sub>                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/network</sub>                                           | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/{id}</sub>                                              | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/{id}</sub>                                              | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/os-deployment-servers/{id}</sub>                                              | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |     **Scopes**                                                                                                                                   |
 |<sub>/rest/scopes</sub>                                                                  | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/scopes</sub>                                                                  | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
@@ -314,6 +305,20 @@
 |<sub>/rest/storage-systems/{id}</sub>                                                    | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/storage-systems/{id}/reachable-ports</sub>                                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/storage-systems/{id}/templates</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|     **Storage Volumes**                                                                                                                                  |
+|<sub>/rest/storage-volumes</sub>                                                         | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes</sub>                                                         | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/attachable-volumes</sub>                                      | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/from-existing</sub>                                           | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/from-snapshot</sub>                                           | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/repair</sub>                                                  | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}</sub>                                                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}</sub>                                                    | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}</sub>                                                    | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}/snapshots</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}/snapshots</sub>                                          | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |     **Storage Volume Attachments**                                                                                                               |
 |<sub>/rest/storage-volume-attachments</sub>                                              | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/storage-volume-attachments/{id}</sub>                                         | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
@@ -337,20 +342,6 @@
 |<sub>/rest/uplink-sets/{id}</sub>                                                        | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |     **Version**                                                                                                                         |
 |<sub>/rest/version</sub>                                                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|     **Volumes**                                                                                                                                  |
-|<sub>/rest/storage-volumes</sub>                                                         | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes</sub>                                                         | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/attachable-volumes</sub>                                      | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/from-existing</sub>                                           | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/from-snapshot</sub>                                           | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/repair</sub>                                                  | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}</sub>                                                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}</sub>                                                    | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}</sub>                                                    | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}/snapshots</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}/snapshots</sub>                                          | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
-|<sub>/rest/storage-volumes/{id}/snapshots/{snapshotId}</sub>                             | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 
 ## HPE Synergy Image Streamer
 
