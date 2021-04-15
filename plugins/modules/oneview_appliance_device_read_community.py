@@ -43,6 +43,7 @@ options:
           - Indicates the desired state for the Appliance Device Read Community.
             C(present) ensures data properties are compliant with OneView.
         choices: ['present']
+        required: true
         type: str
     data:
         description:
