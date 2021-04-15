@@ -17,6 +17,7 @@ This release extends the planned support of the collections to OneView REST API 
 - image_streamer_plan_script
 - image_streamer_plan_script_facts
 - oneview_appliance_configuration_timeconfig_facts
+- oneview_appliance_device_read_community_facts
 - oneview_appliance_device_snmp_v1_trap_destination
 - oneview_appliance_device_snmp_v1_trap_destination_facts
 - oneview_appliance_device_snmp_v3_trap_destination
