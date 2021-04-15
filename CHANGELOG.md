@@ -16,6 +16,7 @@ This release extends the planned support of the collections to OneView REST API 
 - image_streamer_os_volume_facts
 - image_streamer_plan_script
 - image_streamer_plan_script_facts
+- oneview_alert_facts
 - oneview_appliance_configuration_timeconfig_facts
 - oneview_appliance_device_snmp_v1_trap_destination
 - oneview_appliance_device_snmp_v1_trap_destination_facts
@@ -55,6 +56,7 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_id_pools_ipv4_subnet_facts
 - oneview_interconnect
 - oneview_interconnect_facts
+- oneview_interconnect_link_topology_facts
 - oneview_interconnect_type_facts
 - oneview_label
 - oneview_label_facts

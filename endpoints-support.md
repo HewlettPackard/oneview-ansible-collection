@@ -20,6 +20,8 @@
 
 | Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 | V2800 |
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: | :-----------------: |
+|     **Alerts** |
+|<sub>/rest/alerts	</sub>                                                                |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |     **Appliance SNMPv1 Trap Destinations**                                                                                                                             |
@@ -155,6 +157,9 @@
 |<sub>/rest/id-pools/ipv4/subnets/{id}/allocate</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/id-pools/ipv4/subnets/{id}/collect</sub>                                      | PUT      |:white_check_mark:    | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|     **Interconnect Link Topologies** |
+|<sub>/rest/interconnect-link-topologies</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/interconnect-link-topologies/{id}</sub>                                       | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Interconnect Types**                                                                                                                       |
 |<sub>/rest/interconnect-types</sub>                                                      | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/interconnect-types/{id}</sub>                                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
