@@ -1,0 +1,11 @@
+---
+- name: Ensure that the Appliance Device Read Community is present with Community String 'public'
+  oneview_appliance_device_read_community:
+    config: "{{ config }}"
+    state: present
+    data:
+      communityString: 'public'
+  delegate_to: localhost
+
+- debug:
+    var: appliance_device_read_community
