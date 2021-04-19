@@ -27,6 +27,13 @@ To upgrade to the latest version of HPE OneView:
 ```bash
 ansible-galaxy collection install hpe.oneview --force
 ```
+
+To install dependency packages
+
+```bash
+pip install -r ~/.ansible/collections/ansible_collections/hpe/oneview/requirements.txt
+```
+
 To install HPE OneView collection from GitHub
 ```bash
 git clone https://github.com/HewlettPackard/oneview-ansible-collection.git
