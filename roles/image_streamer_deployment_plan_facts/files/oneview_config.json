@@ -2,7 +2,8 @@
     "ip":  "<oneview_ip>",
     "credentials": {
       "userName": "<user_name>",
-      "password": "<password>"
+      "password": "<password>",
+      "authLoginDomain": "<domain_directory>"
     },
     "image_streamer_ip": "<i3s_ip>",
     "api_version": 2020,
