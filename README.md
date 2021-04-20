@@ -63,7 +63,7 @@ That's it. If you would like to modify any role, simply modify role and re-run t
 #### Using a JSON Configuration File
 
 To use the HPE OneView collection, you can store the configuration in a JSON file. This file is used to define the
-settings, which will be used on the OneView appliance connection, like hostname, username, and password. Here's an
+settings, which will be used on the OneView appliance connection, like hostname, authLoginDomain, username, and password. Here's an
 example:
 
 ```json
@@ -79,7 +79,10 @@ example:
 ```
 
 The `api_version` specifies the version of the Rest API to invoke. When not defined, it will pick 
-the OneView appliance version as `default`
+the OneView appliance version as `default`.
+
+The `authLoginDomain` specifies the login domain directory of the appliance. When it is not specified, 
+it will consider the appliance's default domain directory.
 
 If your environment requires a proxy, define the proxy properties in the JSON file using the following syntax:
 
@@ -104,7 +107,7 @@ Once you have defined the config variables, you can run the roles.
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
 
-This option allows the parameters `hostname`, `username`, `password`, `api_version` and `image_streamer_hostname` to be passed directly inside your task.
+This option allows the parameters `hostname`, `auth_login_domain`, `username`, `password`, `api_version` and `image_streamer_hostname` to be passed directly inside your task.
 
 ```yaml
 - name: Create a Fibre Channel Network
@@ -112,6 +115,7 @@ This option allows the parameters `hostname`, `username`, `password`, `api_versi
     hostname: <hostname>
     username: <username>
     password: <password>
+    auth_login_domain: <domain_directory>
     api_version: 2800
     state: present
     data:
