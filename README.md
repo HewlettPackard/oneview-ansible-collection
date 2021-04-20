@@ -79,7 +79,8 @@ example:
 ```
 
 The `api_version` specifies the version of the Rest API to invoke. When not defined, it will pick 
-the OneView appliance version as `default`
+the OneView appliance version as `default`.
+
 The `authLoginDomain` specifies the login domain directory of the appliance. When it is not specified, 
 it will consider the appliance's default domain directory.
 
