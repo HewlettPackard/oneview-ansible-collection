@@ -95,3 +95,9 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
+
+      - name : print environment variables
+        run: env
+
+      - name : print github environment variables
+        run: echo $GITHUB_ENV
