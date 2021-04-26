@@ -86,7 +86,7 @@ class TaskModule(OneViewModule):
             data=dict(required=True, type='dict')
         )
 
-        super(TaskModule, self).__init__(additional_arg_spec=argument_spec)
+        super(TaskModule, self).__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.tasks)
 
