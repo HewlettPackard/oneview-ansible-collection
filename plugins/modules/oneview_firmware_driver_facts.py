@@ -44,6 +44,7 @@ options:
         - Firmware driver version.
       required: false
       default: None
+      type: str
     uri:
       description:
         - Firmware driver uri.
