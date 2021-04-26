@@ -4,7 +4,7 @@
 This release extends the planned support of the collections to OneView REST API version 2800 (OneView v6.1) and ImageStreamer REST API version 2020 (I3S v6.1) 
 
 #### Bug fixes & Enhancements
-- [#97] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/97) Fixed contents.api_version
+- [#97] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/97) contents.api_version
 
 ### Modules supported in this release
 - image_streamer_artifact_bundle
