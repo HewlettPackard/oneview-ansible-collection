@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2020) Hewlett Packard Enterprise Development LP
+# Copyright (2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ __metaclass__ = type
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import TaskFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils.oneview_module_loader import TaskFactsModule
 
 ERROR_MSG = 'Fake message error'
 

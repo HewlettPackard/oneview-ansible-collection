@@ -173,6 +173,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_volume_temp
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_switch import SwitchModule
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_switch_facts import SwitchFactsModule
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_switch_type_facts import SwitchTypeFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_task import TaskModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_task_facts import TaskFactsModule
 # from oneview_unmanaged_device import UnmanagedDeviceModule
 # from oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule

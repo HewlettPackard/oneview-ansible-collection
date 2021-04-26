@@ -90,6 +90,7 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_storage_volume_attachment_facts
 - oneview_storage_volume_template
 - oneview_storage_volume_template_facts
+- oneview_task
 - oneview_task_facts
 - oneview_uplink_set
 - oneview_uplink_set_facts

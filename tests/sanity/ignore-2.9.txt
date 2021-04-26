@@ -91,4 +91,6 @@ plugins/modules/oneview_id_pools.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_label.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_label_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_task.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_task_facts.py validate-modules:missing-gplv3-license
 tests/unit/utils/hpe_test_utils.py pylint!skip
