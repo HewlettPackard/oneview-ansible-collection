@@ -104,7 +104,7 @@ tasks:
     type: list
 '''
 
-from ansible.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
 class TaskFactsModule(OneViewModule):
@@ -113,7 +113,7 @@ class TaskFactsModule(OneViewModule):
     )
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.tasks)
 
