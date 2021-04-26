@@ -26,7 +26,13 @@ FIRMWARE_DRIVER_NAME = "Service Pack for ProLiant.iso"
 
 PARAMS_GET_BY_NAME = dict(
     config='config.json',
-    name=FIRMWARE_DRIVER_NAME
+    name=FIRMWARE_DRIVER_NAME,
+    version="SY-2021"
+)
+
+PARAMS_GET_BY_URI = dict(
+    config='config.json',
+    uri="/rest/firmware-drivers/Service_0Pack_0for_0ProLiant"
 )
 
 PARAMS_GET_ALL = dict(
@@ -66,6 +72,19 @@ class TestFirmwareDriverFactsModule(OneViewBaseFactsTest):
         self.resource.get_by_name.return_value = self.resource
 
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
+
+        FirmwareDriverFactsModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(firmware_drivers=FIRMWARE_DRIVER)
+        )
+
+    def test_should_get_firmware_drivers_by_uri(self):
+        self.resource.data = FIRMWARE_DRIVER
+        self.resource.get_by_uri.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_GET_BY_URI
 
         FirmwareDriverFactsModule().run()
 

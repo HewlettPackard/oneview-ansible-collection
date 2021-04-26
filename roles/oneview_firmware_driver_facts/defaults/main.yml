@@ -1,4 +1,5 @@
 ---
 # defaults file for oneview_firmware_driver_facts
-fw_name: "custom_firmware_bundle"
+fw_name: "Service Pack for Synergy"
+version: "SY-2021.02.01"
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_firmware_driver_facts/files/oneview_config.json"
