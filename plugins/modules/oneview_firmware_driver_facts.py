@@ -43,7 +43,6 @@ options:
       description:
         - Firmware driver version.
       required: false
-      default: None
       type: str
     uri:
       description:
@@ -133,7 +132,7 @@ class FirmwareDriverFactsModule(OneViewModule):
 
         argument_spec = dict(
             name=dict(required=False, type='str'),
-            version=dict(required=False, type='str', default=None),
+            version=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
@@ -147,7 +146,11 @@ class FirmwareDriverFactsModule(OneViewModule):
         firmware_drivers = []
 
         if self.module.params.get("name"):
-            self.current_resource = self.resource_client.get_by_name(self.module.params["name"], self.module.params["version"])
+            if self.module.params.get("version"):
+                self.current_resource = self.resource_client.get_by_name(self.module.params["name"], self.module.params["version"])
+            else:
+                self.current_resource = self.resource_client.get_by_name(self.module.params["name"])
+
         elif self.module.params.get("uri"):
             self.current_resource = self.resource_client.get_by_uri(self.module.params["uri"])
 
