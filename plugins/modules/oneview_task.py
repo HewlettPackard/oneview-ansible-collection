@@ -15,12 +15,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
+
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
 
 DOCUMENTATION = '''
-module: oneview_task_facts
+module: oneview_task
 short_description: Retrieve facts about the OneView Tasks.
 description:
     - Retrieve facts about the OneView Tasks.
@@ -31,6 +35,7 @@ requirements:
 author: "Yuvarani Chidambaram (@yuvirani)"
 options:
     data:
+       description: Get the tasks with state Running
        required: True
        type: dict
 extends_documentation_fragment:
@@ -69,7 +74,7 @@ tasks:
     type: dict
 '''
 
-from ansible.module_utils.oneview import OneViewModule, OneViewModuleException
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleException
 
 
 class TaskModule(OneViewModule):

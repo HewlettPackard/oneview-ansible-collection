@@ -109,7 +109,7 @@ from ansible.module_utils.oneview import OneViewModule
 
 class TaskFactsModule(OneViewModule):
     argument_spec = dict(
-            params=dict(required=False, type='dict')
+        params=dict(required=False, type='dict')
     )
 
     def __init__(self):
