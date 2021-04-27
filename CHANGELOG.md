@@ -10,6 +10,7 @@ This release extends the planned support of the collections to OneView REST API 
    - GET{AggregatedTree} /rest/tasks/{id}
 
 #### Bug fixes & Enhancements
+- [#85] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/85) Enhancement Request: SPP "name" too restrictive
 - [#97] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/97) contents.api_version
 
 ### Modules supported in this release

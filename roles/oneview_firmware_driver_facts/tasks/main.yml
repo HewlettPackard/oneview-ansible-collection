@@ -25,6 +25,15 @@
 
 - debug: var=firmware_drivers
 
+- name: Gather facts about a Firmware Driver by name and version
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    name: "{{ fw_name }}"
+    version: "{{ version }}"
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
 - name: Gather facts about Firmware Driver with options
   oneview_firmware_driver_facts:
     config: "{{ config }}"
