@@ -50,7 +50,7 @@ extends_documentation_fragment:
 EXAMPLES = '''
 - name: Gather facts about the last 2 tasks
   oneview_task_facts:
-    hostname: 172.16.101.48
+    hostname: <hostIp>
     username: administrator
     password: my_password
     api_version: 1600
@@ -61,7 +61,7 @@ EXAMPLES = '''
 
 - name: Gather facts about the last 2 tasks associated to Server Profile templates
   oneview_task_facts:
-    hostname: 172.16.101.48
+    hostname: <hostIp>
     username: administrator
     password: my_password
     api_version: 1600

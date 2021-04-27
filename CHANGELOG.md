@@ -3,6 +3,12 @@
 ## v6.1.0 (unreleased)
 This release extends the planned support of the collections to OneView REST API version 2800 (OneView v6.1) and ImageStreamer REST API version 2020 (I3S v6.1) 
 
+#### Major changes
+ 1. Added support for 3 new endpoints in oneview_tasks and oneview_task_facts resource.
+   - PATCH /rest/tasks/{id}
+   - GET{Tree} /rest/tasks/{id}
+   - GET{AggregatedTree} /rest/tasks/{id}
+
 #### Bug fixes & Enhancements
 - [#97] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/97) contents.api_version
 

@@ -33,4 +33,4 @@ Apache
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| task | Has the facts about the managed OneView Tasks |  On state 'collect'. Can be null. |  dict |
+| tasks | Has the facts about the managed OneView Tasks |  On state 'collect'. Can be null. |  dict |
