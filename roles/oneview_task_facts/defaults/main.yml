@@ -1,3 +1,4 @@
 ---
 # defaults file for oneview_task_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_task_facts/files/oneview_config.json"
+contents: "{{lookup('file', config)}}"

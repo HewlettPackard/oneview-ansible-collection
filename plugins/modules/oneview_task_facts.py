@@ -32,6 +32,7 @@ version_added: "2.4.0"
 requirements:
     - "python >= 3.6.9"
     - "hpeOneView >= 6.1.0"
+    - "ansible >= 2.9.0"
 author: "Yuvarani Chidambaram (@yuvirani)"
 options:
     params:

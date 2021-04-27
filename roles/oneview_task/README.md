@@ -5,6 +5,7 @@ Manage OneView Task resources.
  Provides an interface to manage Task resources. Can update.
 
 #### Requirements (on the host that executes the module)
+  * python >= 2.7.9
   * hpeOneView >= 6.1.0
 
 #### Options
