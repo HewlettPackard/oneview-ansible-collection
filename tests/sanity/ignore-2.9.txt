@@ -67,7 +67,6 @@ plugins/modules/oneview_storage_volume_template.py validate-modules:missing-gplv
 plugins/modules/oneview_storage_volume_attachment.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_scope.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_scope_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_task_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_os_deployment_server.py validate-modules:missing-gplv3-license
@@ -91,4 +90,6 @@ plugins/modules/oneview_id_pools.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_label.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_label_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_task.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_task_facts.py validate-modules:missing-gplv3-license
 tests/unit/utils/hpe_test_utils.py pylint!skip

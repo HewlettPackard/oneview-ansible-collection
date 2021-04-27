@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -28,31 +28,33 @@ module: oneview_task_facts
 short_description: Retrieve facts about the OneView Tasks.
 description:
     - Retrieve facts about the OneView Tasks.
-version_added: "2.3.0"
+version_added: "2.4.0"
 requirements:
-    - "python >= 2.7.9"
-    - "hpeOneView >= 5.4.0"
-author: "Bruno Souza (@bsouza)"
+    - "python >= 3.6.9"
+    - "hpeOneView >= 6.1.0"
+    - "ansible >= 2.9.0"
+author: "Yuvarani Chidambaram (@yuvirani)"
 options:
     params:
       description:
         - "List with parameters to help filter the tasks.
-          Params allowed: C(count), C(fields), C(filter), C(query), C(sort), C(start), and C(view)."
+          Params allowed: C(count), C(fields), C(filter), C(query), C(sort), C(start), C(childLimit), C(topCount) and C(view)."
       required: false
       type: dict
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
+    - hpe.oneview.oneview.validateetag
     - hpe.oneview.oneview.params
 '''
 
 EXAMPLES = '''
 - name: Gather facts about the last 2 tasks
   oneview_task_facts:
-    hostname: 172.16.101.48
+    hostname: <hostIp>
     username: administrator
     password: my_password
-    api_version: 2000
+    api_version: 1600
     params:
       count: 2
 
@@ -60,15 +62,40 @@ EXAMPLES = '''
 
 - name: Gather facts about the last 2 tasks associated to Server Profile templates
   oneview_task_facts:
-    hostname: 172.16.101.48
+    hostname: <hostIp>
     username: administrator
     password: my_password
-    api_version: 2000
+    api_version: 1600
     params:
       count: 2
       filter: "associatedResource.resourceCategory='server-profile-templates'"
 
 - debug: var=tasks
+
+- name: Gather facts about aggregate tree of tasks with specified filter
+  oneview_task_facts:
+     config: "{{ config }}"
+     params:
+       childLimit: 40
+       topCount: 2
+       view: "aggregatedTree"
+       filter: "taskState='Completed'"
+
+- name: Gather facts about the last 5 tasks with state 'Completed'
+  oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 5
+      view: "tree"
+      filter: "taskState='Completed'"
+
+- name: Gather facts about the last 5 tasks completed with warnings
+  oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 5
+      view: "flat-tree"
+      filter: "taskState='Warning'"
 '''
 
 RETURN = '''
@@ -82,11 +109,12 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class TaskFactsModule(OneViewModule):
+    argument_spec = dict(
+        params=dict(required=False, type='dict')
+    )
+
     def __init__(self):
-        argument_spec = dict(
-            params=dict(required=False, type='dict')
-        )
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
 
         self.set_resource_object(self.oneview_client.tasks)
 
