@@ -86,6 +86,7 @@
   * [oneview_storage_volume_attachment_facts - Retrieve facts about the OneView Storage Volume Attachments.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_storage_volume_attachment_facts/README.md)
   * [oneview_storage_volume_template - Manage OneView Storage Volume Template resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_storage_volume_template/README.md)
   * [oneview_storage_volume_template_facts - Retrieve facts about Storage Volume Templates of the OneView.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_storage_volume_template_facts/README.md)
+  * [oneview_task - Manage OneView Tasks.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_task/README.md)
   * [oneview_task_facts - Retrieve facts about the OneView Tasks.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_task_facts/README.md)
   * [oneview_uplink_set - Manage OneView Uplink Set resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_uplink_set/README.md)
   * [oneview_uplink_set_facts - Retrieve facts about one or more of the OneView Uplink Sets.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_uplink_set_facts/README.md)
