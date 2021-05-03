@@ -48,8 +48,7 @@ options:
       type: str
     options:
       description:
-        - "To gather the additonal facts about the roles associated with username.
-          Options allowed: C(getUserRoles) retrieves the list of roles associated with username."
+        - To gather the additonal facts about the roles associated with username.
       required: false
       type: list
 
@@ -108,6 +107,14 @@ users:
     description: It has all the OneView facts about the Users.
     returned: Always, but can be null.
     type: dict
+user_roles:
+    description: It has all the roles associated with username.
+    returned: Always.
+    type: list
+role:
+    description: It has list of user's role.
+    returned: Always, but can be null.
+    type: list
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule

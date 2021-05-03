@@ -213,9 +213,9 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-user:
+users:
     description: Has the facts about the OneView Users.
-    returned: On state 'present'. Can be null.
+    returned: Always.
     type: dict
 '''
 
