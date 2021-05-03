@@ -8,6 +8,7 @@ This release extends the planned support of the collections to OneView REST API 
    - PATCH /rest/tasks/{id}
    - GET{Tree} /rest/tasks/{id}
    - GET{AggregatedTree} /rest/tasks/{id}
+ 2. Added support for user resource.
 
 #### Bug fixes & Enhancements
 - [#85] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/85) Enhancement Request: SPP "name" too restrictive
@@ -101,6 +102,8 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_task_facts
 - oneview_uplink_set
 - oneview_uplink_set_facts
+- oneview_user
+- oneview_user_facts
 - oneview_version_facts
 
 ## v6.0.0

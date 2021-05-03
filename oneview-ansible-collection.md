@@ -90,6 +90,8 @@
   * [oneview_task_facts - Retrieve facts about the OneView Tasks.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_task_facts/README.md)
   * [oneview_uplink_set - Manage OneView Uplink Set resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_uplink_set/README.md)
   * [oneview_uplink_set_facts - Retrieve facts about one or more of the OneView Uplink Sets.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_uplink_set_facts/README.md)
+  * [oneview_user - Manage OneView User resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_user/README.md)
+  * [oneview_user_facts - Retrieve facts about one or more of the OneView User.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_user_facts/README.md)
   * [oneview_version_facts - Returns the range of possible API versions supported by the appliance](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_version_facts/README.md)
   * [oneview_volume - Manage OneView Volume resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_volume/README.md)
   * [oneview_volume_facts - Retrieve facts about the OneView Volumes.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_volume_facts/README.md)

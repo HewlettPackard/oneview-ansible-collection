@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_user_facts
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_user_facts/files/oneview_config.json"
+role: "Infrastructure administrator"
+

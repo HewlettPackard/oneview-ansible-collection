@@ -179,8 +179,8 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_task_facts import T
 # from oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_uplink_set import UplinkSetModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_uplink_set_facts import UplinkSetFactsModule
-# from oneview_user import UserModule
-# from oneview_user_facts import UserFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_user import UserModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_user_facts import UserFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_volume import VolumeModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_volume_facts import VolumeFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_version_facts import VersionFactsModule
