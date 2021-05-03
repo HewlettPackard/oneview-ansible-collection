@@ -87,7 +87,7 @@ def transform_list_to_dict(list_):
         return ret
 
     for value in list_:
-        if isinstance(value, Mapping):
+        if isinstance(value, collections.Mapping):
             ret.update(value)
         else:
             ret[to_native(value)] = True
@@ -101,7 +101,7 @@ def dict_merge(original_resource_dict, data_dict):
     for key, val in data_dict.items():
         if not resource_dict.get(key):
             resource_dict[key] = val
-        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
+        elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], collections.Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
             resource_dict[key] = data_dict[key]
@@ -154,7 +154,7 @@ def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None, r
 
 
 def _str_sorted(obj):
-    if isinstance(obj, Mapping):
+    if isinstance(obj, collections.Mapping):
         return json.dumps(obj, sort_keys=True)
     else:
         return str(obj)
@@ -208,7 +208,7 @@ def compare(first_resource, second_resource):
         # If both values are null, empty or False it will be considered equal.
         elif not resource1[key] and not resource2[key]:
             continue
-        elif isinstance(resource1[key], Mapping):
+        elif isinstance(resource1[key], collections.Mapping):
             # recursive call
             if not compare(resource1[key], resource2[key]):
                 logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
@@ -261,7 +261,7 @@ def compare_list(first_resource, second_resource):
     resource2 = sorted(resource2, key=_str_sorted)
 
     for i, val in enumerate(resource1):
-        if isinstance(val, Mapping):
+        if isinstance(val, collections.Mapping):
             # change comparison function to compare dictionaries
             if not compare(val, resource2[i]):
                 logger.debug("resources are different. " + debug_resources)
@@ -544,7 +544,7 @@ class OneViewModule(object):
 
     def _update_resource(self):
         updated_data = self.current_resource.data.copy()
-        updated_data.update(self.data)
+        updated_data = dict_merge(updated_data, self.data)
         changed = False
 
         if compare(self.current_resource.data, updated_data):
@@ -958,9 +958,7 @@ class ServerProfileMerger(object):
         return merged_data
 
     def _merge_connections_boot(self, merged_data, resource):
-        existing_connection_map = {}
-        for x in resource[SPKeys.CONNECTIONS]:
-            existing_connection_map.update({x[SPKeys.ID]: x.copy()})
+        existing_connection_map = {x[SPKeys.ID]: x.copy() for x in resource[SPKeys.CONNECTIONS]}
         for merged_connection in merged_data[SPKeys.CONNECTIONS]:
             conn_id = merged_connection[SPKeys.ID]
             existing_conn_has_boot = conn_id in existing_connection_map and SPKeys.BOOT in existing_connection_map[
