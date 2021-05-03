@@ -48,7 +48,9 @@ options:
       type: str
     options:
       description:
-        - To gather the additonal facts about the roles associated with username.
+        - "To gather the additonal facts about the roles associated with username.
+          Options allowed:
+          C(getUserRoles) get all the role associated with the user."
       required: false
       type: list
 
@@ -100,6 +102,7 @@ EXAMPLES = '''
   delegate_to: localhost
 
 - debug: var=users
+- debug: var=user_roles
 '''
 
 RETURN = '''
