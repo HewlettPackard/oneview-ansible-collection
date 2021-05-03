@@ -40,15 +40,18 @@ options:
       description:
         - User name.
       required: false
+      type: str
     role:
       description:
         - Role name.
       required: false
+      type: str
     options:
       description:
         - "To gather the additonal facts about the roles associated with username.
           Options allowed: C(getUserRoles) retrieves the list of roles associated with username."
       required: false
+      type: list
 
 extends_documentation_fragment:
     - hpe.oneview.oneview

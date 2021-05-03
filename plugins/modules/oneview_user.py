@@ -50,10 +50,13 @@ options:
               C(validate_user_name) will validates the existence of a user with the given user name in the appliance.
         choices: ['present', 'absent', 'set_password', 'add_role_to_username', 'update_role_to_username', 'validate_user_name',
                   'remove_role_from_username', 'add_multiple_users', 'delete_multiple_users', 'validate_full_name']
+        required: true
+        type: str
     data:
         description:
             - List with the User properties.
         required: true
+        type: dict
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
