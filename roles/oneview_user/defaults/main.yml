@@ -1,0 +1,5 @@
+---
+# defaults file for oneview_user
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_user/files/oneview_config.json"
+user_name: "testUser"
+email: "testUser@example.com"

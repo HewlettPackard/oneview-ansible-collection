@@ -1,0 +1,45 @@
+---
+- name: Gather facts about all Users
+  oneview_user_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=users
+
+- name: Gather paginated, filtered and sorted facts about Users
+  oneview_user_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'emailAddress:descending'
+      filter: 'enabled=true'
+
+- debug: var=users
+
+- name: Gather facts about a User by name
+  oneview_user_facts:
+    config: "{{ config }}"
+    userName: "testUser"
+  delegate_to: localhost
+
+- debug: var=users
+
+- name: Gather facts about the users who have permissions that use a specified role
+  oneview_user_facts:
+    config: "{{ config }}"
+    role: "{{ role }}"
+  delegate_to: localhost
+
+- debug: var=role
+
+- name: Gather facts about lists of user's roles
+  oneview_user_facts:
+    config: "{{ config }}"
+    userName: "testUser"
+    options: 
+        - getUserRoles
+  delegate_to: localhost
+
+- debug: var=users
+- debug: var=user_roles

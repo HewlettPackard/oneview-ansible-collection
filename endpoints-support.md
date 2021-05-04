@@ -344,6 +344,23 @@
 |<sub>/rest/uplink-sets/{id}</sub>                                                        | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/uplink-sets/{id}</sub>                                                        | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/uplink-sets/{id}</sub>                                                        | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
+|     **Users**   |
+|<sub>/rest/users</sub>                                                                   | GET      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users</sub>                                                                   | POST     |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users</sub>                                                                   |    POST {multiple user}    |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users</sub>                                                                   | PUT      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/role/{userName}</sub>                                                   | GET      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/validateLoginName/{userName}</sub>                                      | POST     |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/validateUserName/{fullName}</sub>                                       | POST     |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users</sub>                                                                   | DELETE      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/administrator/resetPassword</sub>                                        | PUT      |  :heavy_multiplication_x:   | :heavy_multiplication_x:   | :heavy_multiplication_x:   |  :heavy_multiplication_x:   |
+|<sub>/rest/users/changePassword</sub>                                                     | POST      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/roles</sub>                                                              | DELETE      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/roles/users/{role}</sub>                                                 | GET      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/{userName}</sub>                                                         | GET      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/{userName}</sub>                                                         | DELETE      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/{userName}/roles</sub>                                                         | POST      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
+|<sub>/rest/users/{userName}/roles</sub>                                                         | PUT      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |:white_check_mark:   |
 |     **Version**                                                                                                                         |
 |<sub>/rest/version</sub>                                                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  |
 
