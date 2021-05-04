@@ -92,6 +92,7 @@ plugins/modules/oneview_logical_enclosure.py validate-modules:missing-gplv3-lice
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_logical_interconnect_group.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_logical_interconnect_group.py validate-modules:import-error
 plugins/modules/oneview_logical_interconnect_group_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-license

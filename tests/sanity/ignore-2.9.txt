@@ -73,6 +73,7 @@ plugins/modules/oneview_os_deployment_server.py validate-modules:missing-gplv3-l
 plugins/modules/oneview_logical_enclosure.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_interconnect_group.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_logical_interconnect_group.py validate-modules:import-error
 plugins/modules/oneview_logical_interconnect_group_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_enclosure_group_facts.py validate-modules:missing-gplv3-license
