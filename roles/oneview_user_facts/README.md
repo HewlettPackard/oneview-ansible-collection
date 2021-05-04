@@ -6,7 +6,7 @@ Retrieve the facts about one or more of the OneView Users.
 
 #### Requirements (on the host that executes the module)
   * python >= 3.4.2
-  * hpeOneView >= 6.1.0
+  * hpeOneView >= 5.0.0
 
 #### Options
 

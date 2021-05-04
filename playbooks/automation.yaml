@@ -76,6 +76,8 @@
     - hpe.oneview.oneview_task_facts
     - hpe.oneview.oneview_uplink_set
     - hpe.oneview.oneview_uplink_set_facts
+    - hpe.oneview.oneview_user
+    - hpe.oneview.oneview_user_facts
     - hpe.oneview.image_streamer_plan_script
     - hpe.oneview.image_streamer_plan_script_facts
     - hpe.oneview.image_streamer_build_plan
