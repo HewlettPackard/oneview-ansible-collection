@@ -30,7 +30,7 @@ jobs:
 
       - name: Displaying Python path
         run: |
-         echo "$PYTHONPATH"
+         echo "$PATH"
 
       - name: Install ansible ${{ matrix.ansible_version }}
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
