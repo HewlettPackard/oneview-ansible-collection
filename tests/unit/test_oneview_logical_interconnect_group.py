@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
@@ -16,13 +16,15 @@
 # limitations under the License.
 ###
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
 import mock
 import pytest
 
 from copy import deepcopy
-from hpe_test_utils import OneViewBaseTest
-from oneview_module_loader import LogicalInterconnectGroupModule
-
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LogicalInterconnectGroupModule
 FAKE_MSG_ERROR = 'Fake message error'
 
 DEFAULT_LIG_NAME = 'Test Logical Interconnect Group'
