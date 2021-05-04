@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
@@ -150,7 +150,7 @@ logical_interconnect_group:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, LIGMerger
-from ansible_collections.hpe.oneview.deepdiff import DeepDiff
+from deepdiff import DeepDiff
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
