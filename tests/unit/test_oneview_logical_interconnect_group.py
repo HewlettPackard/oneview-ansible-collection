@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
@@ -16,15 +16,13 @@
 # limitations under the License.
 ###
 
-from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
-
 import mock
 import pytest
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LogicalInterconnectGroupModule
+from hpe_test_utils import OneViewBaseTest
+from oneview_module_loader import LogicalInterconnectGroupModule
+
 FAKE_MSG_ERROR = 'Fake message error'
 
 DEFAULT_LIG_NAME = 'Test Logical Interconnect Group'
@@ -74,6 +72,42 @@ DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS = dict(
         )
     )
 )
+
+DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS = dict(
+    config='config.json',
+    state='present',
+    data=dict(
+        name=DEFAULT_LIG_NAME,
+        internalNetworkNames=["test1"],
+        uplinkSets=[dict(
+            logicalPortConfigInfos=[dict(
+                desiredSpeed="Auto",
+                logicalLocation=dict(
+                    locationEntries=[dict(
+                        relativeValue=1,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=21,
+                        type="Port"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]
+                )
+            )
+            ],
+            name="EnetUplink1",
+            networkType="FibreChannel",
+            networkNames=["FC1"],
+            networkSetNames=["NetworkSet1"]
+        )],
+        enclosureType='C7000',
+        interconnectMapTemplate=dict(
+            interconnectMapEntryTemplates=[]
+        )
+    )
+)
 DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS = dict(
     config='config.json',
     state='present',
@@ -109,6 +143,7 @@ DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS = dict(
         )
     )
 )
+
 PARAMS_LIG_TEMPLATE_WITH_MAP = dict(
     config='config.json',
     state='present',
@@ -155,7 +190,7 @@ PARAMS_LIG_TEMPLATE_WITH_MAP = dict(
                             }
                         ]
                     },
-                    "permittedInterconnectTypeName": "HP VC Flex-10/10D Module"
+                    "permittedInterconnectTypeName": "HP"
                 }]
         )
     ))
@@ -169,6 +204,11 @@ PARAMS_FOR_CREATE = dict(
     config='config.json',
     state='present',
     data=DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS['data'].copy()
+)
+PARAMS_FOR_CREATE_FC = dict(
+    config='config.json',
+    state='present',
+    data=DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS['data'].copy()
 )
 PARAMS_TO_RENAME = dict(
     config='config.json',
@@ -274,6 +314,24 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
             ansible_facts=dict(logical_interconnect_group=DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS)
         )
 
+    def test_should_create_new_lig_with_fc_network_uplinkset(self):
+        self.resource.get_by_name.return_value = None
+        self.resource.data = deepcopy(DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS['data'])
+        self.resource.create.return_value = self.resource
+
+        self.mock_ov_client.fc_networks.get_by.return_value = [dict(uri='/rest/fc-networks/7568956')]
+        self.mock_ov_client.network_sets.get_by.return_value = [dict(uri='/rest/network-sets/8985690')]
+
+        self.mock_ansible_module.params = PARAMS_FOR_CREATE_FC
+
+        LogicalInterconnectGroupModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=LogicalInterconnectGroupModule.MSG_CREATED,
+            ansible_facts=dict(logical_interconnect_group=self.resource.data)
+        )
+
     def test_should_create_new_with_named_permitted_interconnect_type(self):
         self.resource.get_by_name.return_value = None
         self.resource.create.return_value = self.resource
@@ -318,7 +376,6 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
 
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
-
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
 
         LogicalInterconnectGroupModule().run()
@@ -332,7 +389,6 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
     def test_should_not_update_when_data_has_same_uplinkset_attributes(self):
         self.resource.data = deepcopy(PARAMS_LIG_TEMPLATE_WITH_MAP['data'])
         self.resource.get_by_name.return_value = self.resource
-#        self.mock_ov_client.logical_interconnect_groups.get_by.return_value = UPLINK_SETS
         self.mock_ansible_module.params = deepcopy(PARAMS_LIG_TEMPLATE_WITH_MAP)
 
         LogicalInterconnectGroupModule().run()
@@ -394,7 +450,6 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         data_merged = DEFAULT_LIG_TEMPLATE.copy()
         data_merged['name'] = RENAMED_LIG
         params_to_rename = PARAMS_TO_RENAME.copy()
-
         self.resource.data = DEFAULT_LIG_TEMPLATE
 
         self.mock_ansible_module.params = params_to_rename
@@ -403,7 +458,7 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
 
         self.resource.update.assert_called_once_with(data_merged)
 
-    def test_create_with_newName_when_resource_not_exists(self):
+    def test_create_with_new_name_when_resource_not_exists(self):
         data_merged = DEFAULT_LIG_TEMPLATE.copy()
         data_merged['name'] = RENAMED_LIG
         params_to_rename = PARAMS_TO_RENAME.copy()
