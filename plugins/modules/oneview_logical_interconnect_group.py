@@ -150,7 +150,7 @@ logical_interconnect_group:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, LIGMerger
-from hpe.oneview.deepdiff import DeepDiff
+from ansible_collections.hpe.oneview.deepdiff import DeepDiff
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
