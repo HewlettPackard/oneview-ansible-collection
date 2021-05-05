@@ -225,7 +225,7 @@ def compare_lig(first_resource, second_resource):
         # If both values are null, empty or False it will be considered equal.
         elif not resource1[key] and not resource2[key]:
             continue
-        elif isinstance(resource1[key], collections.Mapping):
+        elif isinstance(resource1[key], Mapping):
             # recursive call
             if not compare_lig(resource1[key], resource2[key]):
                 logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
@@ -381,7 +381,7 @@ def compare_list_lig(first_resource, second_resource):
     resource1, resource2 = _sort_by_keys(resource1, resource2)
 
     for i, val in enumerate(resource1):
-        if isinstance(val, collections.Mapping):
+        if isinstance(val, Mapping):
             # change comparison function to compare dictionaries
             if not compare_lig(val, resource2[i]):
                 logger.debug("resources are different. " + debug_resources)

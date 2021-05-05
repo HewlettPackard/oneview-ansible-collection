@@ -149,7 +149,7 @@ logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound,  compare_lig, dict_merge, LIGMerger
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, dict_merge, LIGMerger
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
