@@ -149,8 +149,7 @@ logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, LIGMerger
-from deepdiff import DeepDiff
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound,  compare_lig, dict_merge, LIGMerger
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
@@ -210,13 +209,6 @@ class LogicalInterconnectGroupModule(OneViewModule):
         self.current_resource = self.resource_client.create(self.data)
         return True, self.MSG_CREATED
 
-    def __compare(self, old_resource, new_resource):
-        return_value = DeepDiff(old_resource, new_resource, ignore_order=True)
-        if return_value:
-            return False
-        else:
-            return True
-
     def __update(self):
         changed = False
         current_data = self.current_resource.data.copy()
@@ -234,7 +226,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
 
         merged_data = LIGMerger().merge_data(current_data, self.data)
 
-        if self.__compare(current_data, merged_data):
+        if compare_lig(current_data, merged_data):
             msg = self.MSG_ALREADY_PRESENT
         else:
             self.current_resource.update(merged_data)

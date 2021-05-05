@@ -35,16 +35,18 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           OneViewModule,
                                                                           OneViewClient,
                                                                           OneViewModuleException,
-                                                                          OneViewModuleValueError,
-                                                                          OneViewModuleResourceNotFound,
-                                                                          SPKeys,
-                                                                          ServerProfileMerger,
-                                                                          ServerProfileReplaceNamesByUris,
-                                                                          _str_sorted,
-                                                                          merge_list_by_key,
-                                                                          transform_list_to_dict,
-                                                                          compare,
-                                                                          get_logger)
+                                  OneViewModuleValueError,
+                                  OneViewModuleResourceNotFound,
+                                  SPKeys,
+                                  ServerProfileMerger,
+                                  ServerProfileReplaceNamesByUris,
+                                  sort_by_uplink_set_location,
+                                  _sort_by_keys,
+                                  _str_sorted,
+                                  merge_list_by_key,
+                                  transform_list_to_dict,
+                                  compare,
+                                  get_logger)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
@@ -1767,12 +1769,12 @@ class TestOneViewModuleBase():
             "name": "name",
             "value": [{'name': 'value1'},
                       {'name': 'value2'},
-                      {'name': 3}]
+                      {'name': 'value3'}]
         }
 
         dict2 = {
             "name": "name",
-            "value": [{'count': 3},
+            "value": [{'count': 3, 'name': 'value0'},
                       {'name': 'value1'},
                       {'name': 'value2'}]
         }
@@ -1870,6 +1872,14 @@ class TestOneViewModuleBase():
         expected_list = [dict(id=1, value1="123", value2="345", value3="678")]
 
         assert merged_list == expected_list
+
+    def test_sort_by_keys(self):
+        resource_list = [dict(networkType="Ethernet", name="name-2"),
+                         dict(networkType="Ethernet", name="name-1")]
+        result1, result2 = _sort_by_keys(resource_list, resource_list)
+        expected_list = [dict(networkType="Ethernet", name="name-1"),
+                         dict(networkType="Ethernet", name="name-2")]
+        assert result1 == expected_list
 
 
 class TestServerProfileReplaceNamesByUris():
