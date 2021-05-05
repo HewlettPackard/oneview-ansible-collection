@@ -8,7 +8,7 @@ RUN DEBAIN_FRONTEND=noninteractive \
     && apt-get install --no-install-recommends -y \
     vim \
     curl \
-    && pip install ansible hpeOneView hpICsp deepdiff
+    && pip install ansible hpeOneView hpICsp
 
 # Adding hosts for convenience
 RUN mkdir -p /etc/ansible
