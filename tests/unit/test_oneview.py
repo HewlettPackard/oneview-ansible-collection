@@ -32,21 +32,21 @@ sys.modules['ansible.module_utils.oneview'] = oneview
 
 from copy import deepcopy
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
-                                                                        OneViewModule,
-                                                                        OneViewClient,
-                                                                        OneViewModuleException,
-                                                                        OneViewModuleValueError,
-                                                                        OneViewModuleResourceNotFound,
-                                                                        SPKeys,
-                                                                        ServerProfileMerger,
-                                                                        ServerProfileReplaceNamesByUris,
-                                                                        sort_by_uplink_set_location,
-                                                                        _sort_by_keys,
-                                                                        _str_sorted,
-                                                                        merge_list_by_key,
-                                                                        transform_list_to_dict,
-                                                                        compare,
-                                                                        get_logger)
+                                                                          OneViewModule,
+                                                                          OneViewClient,
+                                                                          OneViewModuleException,
+                                                                          OneViewModuleValueError,
+                                                                          OneViewModuleResourceNotFound,
+                                                                          SPKeys,
+                                                                          ServerProfileMerger,
+                                                                          ServerProfileReplaceNamesByUris,
+                                                                          sort_by_uplink_set_location,
+                                                                          _sort_by_keys,
+                                                                          _str_sorted,
+                                                                          merge_list_by_key,
+                                                                          transform_list_to_dict,
+                                                                          compare,
+                                                                          get_logger)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
