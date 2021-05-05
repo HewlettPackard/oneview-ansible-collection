@@ -265,6 +265,7 @@ def compare(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
     # The first resource is True / Not Null and the second resource is False / Null
     if resource1 and not resource2:
         logger.debug("resource1 and not resource2. " + debug_resources)
