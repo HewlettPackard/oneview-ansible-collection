@@ -33,7 +33,7 @@
     config: "{{ config }}"        
     uri: "{{ appliance_device_snmp_v3_users['uri'] }}"        
   delegate_to: localhost
-  when: appliance_device_snmp_v3_users == True
+  when: appliance_device_snmp_v3_users is True
 
 - debug:
     var: appliance_device_snmp_v3_users
