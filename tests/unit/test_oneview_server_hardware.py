@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -128,6 +128,56 @@ YAML_SERVER_HARDWARE_DISABLE_MAINTENANCE_MODE = """
         state: disable_maintenance_mode
         data:
             name : "172.18.6.15"
+"""
+
+YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NORMAL = """
+        config: config
+        state: one_time_boot_normal
+        data:
+            name : "172.18.6.15"
+"""
+
+YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_CDROM = """
+        config: config
+        state: one_time_boot_cdrom
+        data:
+            name : "172.18.6.15"
+"""
+YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_USB = """
+        config: config
+        state: one_time_boot_usb
+        data:
+            name : "172.18.6.15"
+"""
+
+YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_HDD = """
+        config: config
+        state: one_time_boot_hdd
+        data:
+            name : "172.18.6.15"
+"""
+
+YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NETWORK = """
+        config: config
+        state: one_time_boot_network
+        data:
+            name : "172.18.6.15"
+"""
+
+YAML_SERVER_HARDWARE_SET_PRODUCT_ID = """
+        config: config
+        state: set_product_id
+        data:
+            name : "172.18.6.15"
+            partNumber: "12345"
+"""
+
+YAML_SERVER_HARDWARE_SET_SERIAL_NUMBER = """
+        config: config
+        state: set_serial_number
+        data:
+            name : "172.18.6.15"
+            serialNumber: "ABCDE"
 """
 
 SERVER_HARDWARE_HOSTNAME = "172.18.6.15"
@@ -513,6 +563,217 @@ class TestServerHardwareModule(OneViewBaseTest):
             changed=False,
             ansible_facts=dict(server_hardware=get_results),
             msg=ServerHardwareModule.MSG_ALREADY_PRESENT
+        )
+
+    def test_should_set_one_time_boot_to_normal(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "oneTimeBoot": "NETWORK"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NORMAL)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['one_time_boot_normal']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_ONE_TIME_BOOT_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_set_when_one_time_boot_is_already_normal(self):
+        server_hardware_uri = "resourceuri"
+        server_hardware = {"uri": server_hardware_uri, "oneTimeBoot": "NORMAL"}
+
+        self.resource.data = server_hardware
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NORMAL)
+
+        ServerHardwareModule().run()
+
+        self.resource.patch.assert_not_called()
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware=server_hardware)
+        )
+
+    def test_should_set_one_time_boot_to_cdrom(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "oneTimeBoot": "NORMAL"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_CDROM)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['one_time_boot_cdrom']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_ONE_TIME_BOOT_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_set_when_one_time_boot_is_already_cdrom(self):
+        server_hardware_uri = "resourceuri"
+        server_hardware = {"uri": server_hardware_uri, "oneTimeBoot": "CDROM"}
+
+        self.resource.data = server_hardware
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_CDROM)
+
+        ServerHardwareModule().run()
+
+        self.resource.patch.assert_not_called()
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware=server_hardware)
+        )
+
+    def test_should_set_one_time_boot_to_usb(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "oneTimeBoot": "NORMAL"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_USB)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['one_time_boot_usb']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_ONE_TIME_BOOT_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_set_when_one_time_boot_is_already_usb(self):
+        server_hardware_uri = "resourceuri"
+        server_hardware = {"uri": server_hardware_uri, "oneTimeBoot": "USB"}
+
+        self.resource.data = server_hardware
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_USB)
+
+        ServerHardwareModule().run()
+
+        self.resource.patch.assert_not_called()
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware=server_hardware)
+        )
+
+    def test_should_set_one_time_boot_to_hdd(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "oneTimeBoot": "NORMAL"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_HDD)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['one_time_boot_hdd']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_ONE_TIME_BOOT_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_set_when_one_time_boot_is_already_hdd(self):
+        server_hardware_uri = "resourceuri"
+        server_hardware = {"uri": server_hardware_uri, "oneTimeBoot": "HDD"}
+
+        self.resource.data = server_hardware
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_HDD)
+
+        ServerHardwareModule().run()
+
+        self.resource.patch.assert_not_called()
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware=server_hardware)
+        )
+
+    def test_should_set_one_time_boot_to_network(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "oneTimeBoot": "NORMAL"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NETWORK)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['one_time_boot_network']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_ONE_TIME_BOOT_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_set_when_one_time_boot_is_already_network(self):
+        server_hardware_uri = "resourceuri"
+        server_hardware = {"uri": server_hardware_uri, "oneTimeBoot": "NETWORK"}
+
+        self.resource.data = server_hardware
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NETWORK)
+
+        ServerHardwareModule().run()
+
+        self.resource.patch.assert_not_called()
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware=server_hardware)
+        )
+
+    def test_should_set_product_id(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "partNumber": "123456"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_SET_PRODUCT_ID)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['set_product_id']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_PRODUCT_ID_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_set_serial_number(self):
+        server_hardware_uri = "resourceuri"
+
+        self.resource.data = {"uri": server_hardware_uri, "serialNumber": "ABCDF"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_SET_SERIAL_NUMBER)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['set_serial_number']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_SERIAL_NUMBER_CHANGED,
+            ansible_facts=dict(server_hardware=self.resource.data)
         )
 
 

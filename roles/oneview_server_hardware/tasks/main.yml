@@ -57,7 +57,6 @@
 
 - debug: var=server_hardwares
 
-
 - name: Power Off the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
@@ -112,6 +111,56 @@
     state: uid_state_off
     data:
         name: "{{ server_hardwares[0]['name'] }}"
+  delegate_to: localhost
+
+- name: Enable Server Maintenance Mode
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: enable_maintenance_mode
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
+  delegate_to: localhost
+
+- name: Disable Server Maintenance Mode
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: disable_maintenance_mode
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
+  delegate_to: localhost
+
+- name: Set the server one-time boot device to Network
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: one_time_boot_network
+    data:
+        name: '{{ server_hardwares[0]['name'] }}'
+  delegate_to: localhost
+
+- name: Set the server one-time boot device to No one-time boot
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: one_time_boot_normal
+    data:
+        name: '{{ server_hardwares[0]['name'] }}'
+  delegate_to: localhost
+
+- name: Set the server product id
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: set_product_id
+    data:
+        name: '{{ server_hardwares[0]['name'] }}'
+        partNumber: '{{ server_product_id }}'
+  delegate_to: localhost
+
+- name: Set the server serial number
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: set_serial_number
+    data:
+        name: '{{ server_hardwares[0]['name'] }}'
+        serialNumber: '{{ server_serial_number }}'
   delegate_to: localhost
 
 # Commenting below tasks to ensure continuity for automation script

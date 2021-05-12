@@ -8,3 +8,5 @@ server_hardware_password: "<server-hardware-password>"
 multiple_hosts:
   - "{{ server_hardware_hostname }}"
 variant: 'Synergy'
+server_product_id: "777072-001"
+server_serial_number: "2M203015GR"
