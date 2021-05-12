@@ -439,8 +439,6 @@ class ServerHardwareModule(OneViewModule):
 
     def __patch(self):
         state_name = self.state
-        message = self.MSG_NOTHING_TO_DO
-        changed = False
 
         state = self.patch_params[state_name].copy()
         property_name = state['path'][1:]
@@ -448,14 +446,14 @@ class ServerHardwareModule(OneViewModule):
 
         if state_name == 'ilo_state_reset':
             if self.current_resource.data.get(property_name) != 'OK':
-                return False, self.MSG_ALREADY_PRESENT, dict(server_hardware=self.current_resource.data)
+                return False, self.MSG_NOTHING_TO_DO, dict(server_hardware=self.current_resource.data)
         elif state_name == 'set_product_id':
             state['value'] = self.data['partNumber']
         elif state_name == 'set_serial_number':
             state['value'] = self.data['serialNumber']
 
         if self.current_resource.data.get(property_name).lower() == state['value'].lower():
-            changed, message = False, self.MSG_ALREADY_PRESENT
+            changed, message = False, self.MSG_NOTHING_TO_DO
         else:
             self.current_resource.patch(**state)
             changed, message = True, self.patch_success_message['state_name']
