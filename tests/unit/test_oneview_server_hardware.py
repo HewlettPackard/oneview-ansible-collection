@@ -237,6 +237,7 @@ class TestServerHardwareModule(OneViewBaseTest):
 
     def test_should_calibrate_max_power_server_hardware(self):
         self.resource.data = [{"name": "name", "uri": "uri"}]
+        self.resource.get_environmental_configuration.return_value = {"calibratedMaxPower": 2000}
 
         self.resource.update_environmental_configuration.return_value = {"name": "name"}
 
@@ -319,7 +320,8 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND)
 
     def test_should_set_refresh_state(self):
-        self.resource.data = {"uri": "resourceuri"}
+        self.resource.data = {"uri": "resourceuri", "refreshState": "OK"}
+        self.resource.get_by_name.return_value = self.resource
         self.resource.refresh_state.return_value = {"name": "name"}
 
         self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_REFRESH_STATE)
@@ -342,8 +344,9 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND)
 
     def test_should_set_ilo_firmware(self):
-        self.resource.data = {"uri": "resourceuri"}
-        self.resource.update_mp_firware_version.return_value = {"name": "name"}
+        self.resource.data = {"uri": "resourceuri", "mpFirmwareVersion": "2.70"}
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.update_mp_firware_version.return_value = {"name": "name", "mpFirmwareVersion": "2.67"}
 
         self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ILO_FIRMWARE)
 
@@ -352,7 +355,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=ServerHardwareModule.MSG_ILO_FIRMWARE_VERSION_UPDATED,
-            ansible_facts=dict(server_hardware={"name": "name"})
+            ansible_facts=dict(server_hardware={"name": "name", "mpFirmwareVersion": "2.67"})
         )
 
     def test_should_fail_when_set_ilo_firmware_and_server_hardware_was_not_found(self):
@@ -739,42 +742,6 @@ class TestServerHardwareModule(OneViewBaseTest):
             changed=False,
             msg=ServerHardwareModule.MSG_NOTHING_TO_DO,
             ansible_facts=dict(server_hardware=server_hardware)
-        )
-
-    def test_should_set_product_id(self):
-        server_hardware_uri = "resourceuri"
-        self.resource.data = {"uri": server_hardware_uri, "partNumber": "123456"}
-        self.resource.get_by_name.return_value = self.resource
-
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_SET_PRODUCT_ID)
-
-        ServerHardwareModule().run()
-
-        patch_params = ServerHardwareModule.patch_params['set_product_id']
-        self.resource.patch.assert_called_once_with(**patch_params)
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
-            msg=ServerHardwareModule.MSG_PRODUCT_ID_CHANGED,
-            ansible_facts=dict(server_hardware=self.resource.data)
-        )
-
-    def test_should_set_serial_number(self):
-        server_hardware_uri = "resourceuri"
-        self.resource.data = {"uri": server_hardware_uri, "serialNumber": "ABCDF"}
-        self.resource.get_by_name.return_value = self.resource
-
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_SET_SERIAL_NUMBER)
-
-        ServerHardwareModule().run()
-
-        patch_params = ServerHardwareModule.patch_params['set_serial_number']
-        self.resource.patch.assert_called_once_with(**patch_params)
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
-            msg=ServerHardwareModule.MSG_SERIAL_NUMBER_CHANGED,
-            ansible_facts=dict(server_hardware=self.resource.data)
         )
 
 

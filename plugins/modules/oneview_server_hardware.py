@@ -55,12 +55,10 @@ options:
               C(one_time_boot_usb) will set the server one-time boot device to USB Storage Device.
               C(one_time_boot_hdd) will set the server one-time boot device to Hard Disk Drive.
               C(one_time_boot_network) will Set the server one-time boot device to Network.
-              C(set_product_id) will set the server product ID.
-              C(set_serial_number) will Set the server serial number.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
                   'ilo_state_reset','uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
                   'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
-                  'one_time_boot_hdd', 'one_time_boot_network', 'set_product_id', 'set_serial_number']
+                  'one_time_boot_hdd', 'one_time_boot_network']
         required: true
         type: str
     data:
@@ -218,31 +216,6 @@ EXAMPLES = '''
     data:
         name : '0000A66102, bay 12'
   delegate_to: localhost
-
-- name: Set the server product id
-  oneview_server_hardware:
-    hostname: 172.16.101.48
-    username: administrator
-    password: my_password
-    api_version: 1200
-    state: set_product_id
-    data:
-        name : '0000A66102, bay 12'
-        value: '22333-112'
-  delegate_to: localhost
-
-- name: Set the server serial number
-  oneview_server_hardware:
-    hostname: 172.16.101.48
-    username: administrator
-    password: my_password
-    api_version: 1200
-    state: set_serial_number
-    data:
-        name : '0000A66102, bay 12'
-        value: 'AA1234BNG'
-  delegate_to: localhost
-
 '''
 
 RETURN = '''
@@ -251,7 +224,7 @@ server_hardware:
     returned: On states 'present', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
               'ilo_state_reset', 'uid_state_on', 'uid_state_off', 'enable_maintenance_mode', 'disable_maintenance_mode',
               'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom',
-              'one_time_boot_usb', 'one_time_boot_hdd', 'one_time_boot_network', 'set_product_id', 'set_serial_id'.
+              'one_time_boot_usb', 'one_time_boot_hdd', 'one_time_boot_network'.
               Can be null.
     type: dict
 '''
@@ -277,8 +250,6 @@ class ServerHardwareModule(OneViewModule):
     MSG_MANDATORY_FIELD_MISSING = "Mandatory field was not informed: {0}"
     MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED = "Servers added successfully."
     MSG_ONE_TIME_BOOT_CHANGED = 'Server Hardware one-time boot state changed successfully.'
-    MSG_PRODUCT_ID_CHANGED = 'Server Product ID changed successfully.'
-    MSG_SERIAL_NUMBER_CHANGED = 'Server serial number changed successfully.'
 
     patch_success_message = dict(
         ilo_state_reset=MSG_ILO_STATE_RESET,
@@ -290,9 +261,7 @@ class ServerHardwareModule(OneViewModule):
         one_time_boot_cdrom=MSG_ONE_TIME_BOOT_CHANGED,
         one_time_boot_usb=MSG_ONE_TIME_BOOT_CHANGED,
         one_time_boot_hdd=MSG_ONE_TIME_BOOT_CHANGED,
-        one_time_boot_network=MSG_ONE_TIME_BOOT_CHANGED,
-        set_product_id=MSG_PRODUCT_ID_CHANGED,
-        set_serial_number=MSG_SERIAL_NUMBER_CHANGED
+        one_time_boot_network=MSG_ONE_TIME_BOOT_CHANGED
     )
 
     patch_params = dict(
@@ -305,9 +274,7 @@ class ServerHardwareModule(OneViewModule):
         one_time_boot_cdrom=dict(operation='replace', path='/oneTimeBoot', value='CDROM'),
         one_time_boot_usb=dict(operation='replace', path='/oneTimeBoot', value='USB'),
         one_time_boot_hdd=dict(operation='replace', path='/oneTimeBoot', value='HDD'),
-        one_time_boot_network=dict(operation='replace', path='/oneTimeBoot', value='NETWORK'),
-        set_product_id=dict(operation='replace', path='/partNumber', value=''),
-        set_serial_number=dict(operation='replace', path='/serialNumber', value='')
+        one_time_boot_network=dict(operation='replace', path='/oneTimeBoot', value='NETWORK')
     )
 
     argument_spec = dict(
@@ -330,9 +297,7 @@ class ServerHardwareModule(OneViewModule):
                 'one_time_boot_cdrom',
                 'one_time_boot_usb',
                 'one_time_boot_hdd',
-                'one_time_boot_network',
-                'set_product_id',
-                'set_serial_number'
+                'one_time_boot_network'
             ]
         ),
         data=dict(required=True, type='dict')
@@ -442,17 +407,12 @@ class ServerHardwareModule(OneViewModule):
 
         state = self.patch_params[state_name].copy()
         property_name = state['path'][1:]
-#        property_value_changed = self.current_resource.data.get(property_name) != state['value']
 
         if state_name == 'ilo_state_reset':
             if self.current_resource.data.get(property_name) != 'OK':
                 return False, self.MSG_NOTHING_TO_DO, dict(server_hardware=self.current_resource.data)
-        elif state_name == 'set_product_id':
-            state['value'] = self.data['partNumber']
-        elif state_name == 'set_serial_number':
-            state['value'] = self.data['serialNumber']
 
-        if self.current_resource.data.get(property_name).lower() == state['value'].lower():
+        if str(self.current_resource.data.get(property_name)).lower() == str(state['value']).lower():
             changed, message = False, self.MSG_NOTHING_TO_DO
         else:
             self.current_resource.patch(**state)
