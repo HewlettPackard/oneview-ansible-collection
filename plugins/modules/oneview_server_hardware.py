@@ -223,7 +223,7 @@ server_hardware:
     description: Has the OneView facts about the Server Hardware.
     returned: On states 'present', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
               'ilo_state_reset', 'uid_state_on', 'uid_state_off', 'enable_maintenance_mode', 'disable_maintenance_mode',
-              'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom',
+              'environmental_configuration_set', 'one_time_boot_normal', 'one_time_boot_cdrom',
               'one_time_boot_usb', 'one_time_boot_hdd', 'one_time_boot_network'.
               Can be null.
     type: dict
@@ -421,8 +421,13 @@ class ServerHardwareModule(OneViewModule):
         return changed, message, dict(server_hardware=self.current_resource.data)
 
     def __add_multiple_rack_mount_servers(self):
-        resource = self.resource_client.add_multiple_servers(self.data)
-        return True, self.MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED, {"server_hardware": resource.data}
+        # Skips adding multiple servers if all the hostnames are already present, else adds the missing hardware
+        existing_hardwares = [hardware['name'] for hardware in self.resource_client.get_all()]
+        if set(existing_hardwares).intersection(set(self.data.get('mpHostsAndRanges'))) == set(self.data.get('mpHostsAndRanges')):
+            return False, self.MSG_ALREADY_PRESENT, {"server_hardware": {}}
+        else:
+            resource = self.resource_client.add_multiple_servers(self.data)
+            return True, self.MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED, {"server_hardware": resource.data}
 
 
 def main():

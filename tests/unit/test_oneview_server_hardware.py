@@ -221,6 +221,7 @@ class TestServerHardwareModule(OneViewBaseTest):
 
     def test_should_add_multiple_servers(self):
         self.resource.get_by_name.return_value = None
+        self.resource.get_all.return_value = [{'name':'172.18.6.16'}]
         self.resource.data = {'name': 'name'}
 
         self.resource.add_multiple_servers.return_value = self.resource
@@ -233,6 +234,23 @@ class TestServerHardwareModule(OneViewBaseTest):
             changed=True,
             msg=ServerHardwareModule.MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED,
             ansible_facts=dict(server_hardware={"name": "name"})
+        )
+
+    def test_should_not_add_multiple_servers_when_already_present(self):
+        self.resource.get_by_name.return_value = None
+        self.resource.get_all.return_value = [{'name':'172.18.6.15'}]
+        self.resource.data = {'name': 'name'}
+
+        self.resource.add_multiple_servers.return_value = self.resource
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ADD_MULTIPLE_SERVERS)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware={})
         )
 
     def test_should_calibrate_max_power_server_hardware(self):
