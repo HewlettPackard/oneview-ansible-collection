@@ -320,7 +320,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND)
 
     def test_should_set_refresh_state(self):
-        self.resource.data = {"uri": "resourceuri", "refreshState": "OK"}
+        self.resource.data = {"uri": "resourceuri", "refreshState": "NotRefreshing"}
         self.resource.get_by_name.return_value = self.resource
         self.resource.refresh_state.return_value = {"name": "name"}
 
