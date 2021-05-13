@@ -456,7 +456,7 @@ class ServerHardwareModule(OneViewModule):
             changed, message = False, self.MSG_NOTHING_TO_DO
         else:
             self.current_resource.patch(**state)
-            changed, message = True, self.patch_success_message['state_name']
+            changed, message = True, self.patch_success_message[state_name]
 
         return changed, message, dict(server_hardware=self.current_resource.data)
 
