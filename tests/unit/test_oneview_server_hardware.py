@@ -236,7 +236,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         )
 
     def test_should_calibrate_max_power_server_hardware(self):
-        self.resource.data = [{"name": "name", "uri": "uri"}]
+        self.resource.data = {"name": "name", "uri": "uri"}
         self.resource.get_environmental_configuration.return_value = {"calibratedMaxPower": 2000}
 
         self.resource.update_environmental_configuration.return_value = {"name": "name"}
@@ -252,7 +252,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         )
 
     def test_should_not_calibrate_max_power_server_hardware_when_already_exists(self):
-        self.resource.data = [{"name": "name", "uri": "uri"}]
+        self.resource.data = {"name": "name", "uri": "uri"}
         self.resource.get_by_name.return_value = self.resource
         self.resource.get_environmental_configuration.return_value = {"calibratedMaxPower": 2500}
 
@@ -413,7 +413,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
-            ansible_facts=dict(server_hardware={"name": "name", "mpFirmwareVersion": "2.70"})
+            ansible_facts=dict(server_hardware={"uri": "resourceuri", "mpFirmwareVersion": "2.70"})
         )
 
     def test_should_fail_when_set_ilo_firmware_and_server_hardware_was_not_found(self):
@@ -449,9 +449,6 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ILO_STATE_RESET)
 
         ServerHardwareModule().run()
-
-        patch_params = ServerHardwareModule.patch_params['ilo_state_reset']
-        self.resource.patch.assert_called_once_with(**patch_params)
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
