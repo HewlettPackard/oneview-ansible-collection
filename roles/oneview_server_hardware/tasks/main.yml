@@ -150,7 +150,7 @@
     config: "{{ config }}"
     state: environmental_configuration_set
     data:
-        name : "{{ server_hardware_hostname }}"
+        name: "{{ server_hardware_hostname }}"
         environmentalConfigurationData:
             calibratedMaxPower: 500
   delegate_to: localhost

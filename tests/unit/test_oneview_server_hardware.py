@@ -251,6 +251,21 @@ class TestServerHardwareModule(OneViewBaseTest):
             ansible_facts=dict(server_hardware={"name": "name"})
         )
 
+    def test_should_not_calibrate_max_power_server_hardware_when_already_exists(self):
+        self.resource.data = [{"name": "name", "uri": "uri"}]
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.get_environmental_configuration.return_value = {"calibratedMaxPower": 2500}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_SET_CALIBRATED_MAX_POWER)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware={"name": "name", "uri": "uri"})
+        )
+
     def test_present_should_fail_with_missing_hostname_attribute(self):
         self.mock_ansible_module.params = {"state": "present",
                                            "config": "config",
@@ -310,6 +325,20 @@ class TestServerHardwareModule(OneViewBaseTest):
             ansible_facts=dict(server_hardware={"name": "name"})
         )
 
+    def test_should_not_set_power_state_when_already_exists(self):
+        self.resource.data = {"uri": "resourceuri", "powerState": "On"}
+        self.resource.get_by_name.return_value = self.resource
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_POWER_STATE)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware={"uri": "resourceuri", "powerState": "On"})
+        )
+
     def test_should_fail_when_set_power_state_and_server_hardware_was_not_found(self):
         self.resource.get_by_name.return_value = None
 
@@ -332,6 +361,20 @@ class TestServerHardwareModule(OneViewBaseTest):
             changed=True,
             msg=ServerHardwareModule.MSG_REFRESH_STATE_UPDATED,
             ansible_facts=dict(server_hardware={"name": "name"})
+        )
+
+    def test_should_not_set_refresh_state_when_already_exists(self):
+        self.resource.data = {"uri": "resourceuri", "refreshState": "OK"}
+        self.resource.get_by_name.return_value = self.resource
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_REFRESH_STATE)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware={"uri": "resourceuri", "refreshState": "OK"})
         )
 
     def test_should_fail_when_set_refresh_state_and_server_hardware_was_not_found(self):
@@ -358,6 +401,21 @@ class TestServerHardwareModule(OneViewBaseTest):
             ansible_facts=dict(server_hardware={"name": "name", "mpFirmwareVersion": "2.67"})
         )
 
+    def test_should_not_set_ilo_firmware_when_already_exists(self):
+        self.resource.data = {"uri": "resourceuri", "mpFirmwareVersion": "2.70"}
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.update_mp_firware_version.return_value = {"name": "name", "mpFirmwareVersion": "2.70"}
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ILO_FIRMWARE)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(server_hardware={"name": "name", "mpFirmwareVersion": "2.70"})
+        )
+
     def test_should_fail_when_set_ilo_firmware_and_server_hardware_was_not_found(self):
         self.resource.get_by_name.return_value = []
 
@@ -368,8 +426,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND)
 
     def test_should_reset_ilo_state(self):
-        server_hardware_uri = "resourceuri"
-        self.resource.data = {"uri": server_hardware_uri, "mpState": "OK"}
+        self.resource.data = {"uri": "resourceuri", "mpState": "OK"}
         self.resource.get_by_name.return_value = self.resource
 
         self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ILO_STATE_RESET)
@@ -382,6 +439,23 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=ServerHardwareModule.MSG_ILO_STATE_RESET,
+            ansible_facts=dict(server_hardware=self.resource.data)
+        )
+
+    def test_should_not_reset_ilo_state_when_already_exists(self):
+        self.resource.data = {"uri": "resourceuri", "mpState": "RESETTING"}
+        self.resource.get_by_name.return_value = self.resource
+
+        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_ILO_STATE_RESET)
+
+        ServerHardwareModule().run()
+
+        patch_params = ServerHardwareModule.patch_params['ilo_state_reset']
+        self.resource.patch.assert_called_once_with(**patch_params)
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_NOTHING_TO_DO,
             ansible_facts=dict(server_hardware=self.resource.data)
         )
 
