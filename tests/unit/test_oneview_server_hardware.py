@@ -164,22 +164,6 @@ YAML_SERVER_HARDWARE_ONE_TIME_BOOT_AS_NETWORK = """
             name : "172.18.6.15"
 """
 
-YAML_SERVER_HARDWARE_SET_PRODUCT_ID = """
-        config: config
-        state: set_product_id
-        data:
-            name : "172.18.6.15"
-            partNumber: "12345"
-"""
-
-YAML_SERVER_HARDWARE_SET_SERIAL_NUMBER = """
-        config: config
-        state: set_serial_number
-        data:
-            name : "172.18.6.15"
-            serialNumber: "ABCDE"
-"""
-
 SERVER_HARDWARE_HOSTNAME = "172.18.6.15"
 
 DICT_DEFAULT_SERVER_HARDWARE = yaml.load(YAML_SERVER_HARDWARE_PRESENT)["data"]
