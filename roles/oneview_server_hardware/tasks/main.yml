@@ -57,13 +57,12 @@
 
 - debug: var=server_hardwares
 
-
 - name: Power Off the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
     state: power_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
         powerStateData:
             powerState: "Off"
             powerControl: "MomentaryPress"
@@ -74,7 +73,7 @@
     config: "{{ config }}"
     state: power_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
         powerStateData:
             powerState: "On"
             powerControl: "MomentaryPress"
@@ -85,7 +84,7 @@
     config: "{{ config }}"
     state: refresh_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
         refreshStateData:
             refreshState: "RefreshPending"
   delegate_to: localhost
@@ -95,7 +94,7 @@
     config: "{{ config }}"
     state: ilo_firmware_version_updated
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Reset the Server Hardware iLO State
@@ -103,7 +102,7 @@
     config: "{{ config }}"
     state: ilo_state_reset
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Set the server UID state off
@@ -111,22 +110,66 @@
     config: "{{ config }}"
     state: uid_state_off
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+        name: "{{ server_hardware_hostname }}"
   delegate_to: localhost
 
-# Commenting below tasks to ensure continuity for automation script
-# - name: Remove the server hardware by its IP
-#   oneview_server_hardware:
-#     config: "{{ config }}"
-#     state: absent
-#     data:
-#         name: '{{ server_hardware_hostname }}'
-#   delegate_to: localhost
+- name: Enable Server Maintenance Mode
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: enable_maintenance_mode
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
 
-# - name: Do nothing when the server hardware is already removed
-#   oneview_server_hardware:
-#     config: "{{ config }}"
-#     state: absent
-#     data:
-#         name: '{{ server_hardware_hostname }}'
-#   delegate_to: localhost
+- name: Disable Server Maintenance Mode
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: disable_maintenance_mode
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
+
+- name: Set the server one-time boot device to Network
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: one_time_boot_network
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
+
+- name: Set the server one-time boot device to No one-time boot
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: one_time_boot_normal
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
+
+- name: Set the calibrated max power of a server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: environmental_configuration_set
+    data:
+        name: "{{ server_hardware_hostname }}"
+        environmentalConfigurationData:
+            calibratedMaxPower: 500
+  delegate_to: localhost
+  ignore_errors: true
+
+- name: Remove the server hardware by its IP
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: absent
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
+  when: variant == 'C7000'
+
+- name: Do nothing when the server hardware is already removed
+  oneview_server_hardware:
+    config: "{{ config }}"
+    state: absent
+    data:
+        name: "{{ server_hardware_hostname }}"
+  delegate_to: localhost
+  when: variant == 'C7000'

@@ -234,7 +234,7 @@ class ServerHardwareFactsModule(OneViewModule):
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
         )
-        super().__init__(additional_arg_spec=argument_spec)
+        super(ServerHardwareFactsModule, self).__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.server_hardware)
 
     def execute_module(self):

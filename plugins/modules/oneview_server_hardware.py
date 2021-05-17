@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -50,9 +50,15 @@ options:
               C(disable_maintenance_mode) will disable maintenance mode.
               C(environmental_configuration_set) will set the environmental configuration of the Server Hardware.
               C(multiple_servers_added) will add multiple rack-mount servers.
+              C(one_time_boot_normal) will set the server one-time boot device to No one-time boot.
+              C(one_time_boot_cdrom) will set the server one-time boot device to CD/DVD Drive.
+              C(one_time_boot_usb) will set the server one-time boot device to USB Storage Device.
+              C(one_time_boot_hdd) will set the server one-time boot device to Hard Disk Drive.
+              C(one_time_boot_network) will Set the server one-time boot device to Network.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
                   'ilo_state_reset','uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
-                  'environmental_configuration_set', 'multiple_servers_added']
+                  'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
+                  'one_time_boot_hdd', 'one_time_boot_network']
         required: true
         type: str
     data:
@@ -188,17 +194,43 @@ EXAMPLES = '''
     data:
         name : '0000A66102, bay 12'
   delegate_to: localhost
+
+- name: Set the server one-time boot device to Network
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: one_time_boot_network
+    data:
+        name : '0000A66102, bay 12'
+  delegate_to: localhost
+
+- name: Set the server one-time boot device to No one-time boot
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: one_time_boot_normal
+    data:
+        name : '0000A66102, bay 12'
+  delegate_to: localhost
 '''
 
 RETURN = '''
 server_hardware:
     description: Has the OneView facts about the Server Hardware.
-    returned: On states 'present', 'power_state_set', 'refresh_state_set', and 'ilo_firmware_version_updated'.
+    returned: On states 'present', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
+              'ilo_state_reset', 'uid_state_on', 'uid_state_off', 'enable_maintenance_mode', 'disable_maintenance_mode',
+              'environmental_configuration_set', 'one_time_boot_normal', 'one_time_boot_cdrom',
+              'one_time_boot_usb', 'one_time_boot_hdd', 'one_time_boot_network'.
               Can be null.
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound,
+                                                                          OneViewModuleValueError, compare, dict_merge)
 
 
 class ServerHardwareModule(OneViewModule):
@@ -217,13 +249,19 @@ class ServerHardwareModule(OneViewModule):
     MSG_ALREADY_ABSENT = 'Server Hardware is already absent.'
     MSG_MANDATORY_FIELD_MISSING = "Mandatory field was not informed: {0}"
     MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED = "Servers added successfully."
+    MSG_ONE_TIME_BOOT_CHANGED = 'Server Hardware one-time boot state changed successfully.'
 
     patch_success_message = dict(
         ilo_state_reset=MSG_ILO_STATE_RESET,
         uid_state_on=MSG_UID_STATE_CHANGED,
         uid_state_off=MSG_UID_STATE_CHANGED,
         enable_maintenance_mode=MSG_MAINTENANCE_MODE_CHANGED,
-        disable_maintenance_mode=MSG_MAINTENANCE_MODE_CHANGED
+        disable_maintenance_mode=MSG_MAINTENANCE_MODE_CHANGED,
+        one_time_boot_normal=MSG_ONE_TIME_BOOT_CHANGED,
+        one_time_boot_cdrom=MSG_ONE_TIME_BOOT_CHANGED,
+        one_time_boot_usb=MSG_ONE_TIME_BOOT_CHANGED,
+        one_time_boot_hdd=MSG_ONE_TIME_BOOT_CHANGED,
+        one_time_boot_network=MSG_ONE_TIME_BOOT_CHANGED
     )
 
     patch_params = dict(
@@ -231,7 +269,12 @@ class ServerHardwareModule(OneViewModule):
         uid_state_on=dict(operation='replace', path='/uidState', value='On'),
         uid_state_off=dict(operation='replace', path='/uidState', value='Off'),
         enable_maintenance_mode=dict(operation='replace', path='/maintenanceMode', value='true'),
-        disable_maintenance_mode=dict(operation='replace', path='/maintenanceMode', value='false')
+        disable_maintenance_mode=dict(operation='replace', path='/maintenanceMode', value='false'),
+        one_time_boot_normal=dict(operation='replace', path='/oneTimeBoot', value='NORMAL'),
+        one_time_boot_cdrom=dict(operation='replace', path='/oneTimeBoot', value='CDROM'),
+        one_time_boot_usb=dict(operation='replace', path='/oneTimeBoot', value='USB'),
+        one_time_boot_hdd=dict(operation='replace', path='/oneTimeBoot', value='HDD'),
+        one_time_boot_network=dict(operation='replace', path='/oneTimeBoot', value='NETWORK')
     )
 
     argument_spec = dict(
@@ -249,7 +292,12 @@ class ServerHardwareModule(OneViewModule):
                 'enable_maintenance_mode',
                 'disable_maintenance_mode',
                 'environmental_configuration_set',
-                'multiple_servers_added'
+                'multiple_servers_added',
+                'one_time_boot_normal',
+                'one_time_boot_cdrom',
+                'one_time_boot_usb',
+                'one_time_boot_hdd',
+                'one_time_boot_network'
             ]
         ),
         data=dict(required=True, type='dict')
@@ -257,7 +305,7 @@ class ServerHardwareModule(OneViewModule):
 
     def __init__(self):
 
-        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
+        super(ServerHardwareModule, self).__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.server_hardware)
 
     def execute_module(self):
@@ -322,40 +370,64 @@ class ServerHardwareModule(OneViewModule):
         return result
 
     def __set_power_state(self):
-        resource = self.current_resource.update_power_state(self.data['powerStateData'])
-        return True, self.MSG_POWER_STATE_UPDATED, dict(server_hardware=resource)
+        if self.current_resource.data.get('powerState') == self.data['powerStateData']['powerState']:
+            return False, self.MSG_ALREADY_PRESENT, dict(server_hardware=self.current_resource.data)
+        else:
+            resource = self.current_resource.update_power_state(self.data['powerStateData'])
+            return True, self.MSG_POWER_STATE_UPDATED, dict(server_hardware=resource)
 
     def __set_environmental_configuration(self):
-        resource = self.current_resource.update_environmental_configuration(
-            self.data['environmentalConfigurationData'])
-        return True, self.MSG_ENV_CONFIG_UPDATED, dict(server_hardware=resource)
+        get_env_config = self.current_resource.get_environmental_configuration()
+        merged_env_config = dict_merge(get_env_config, self.data['environmentalConfigurationData'])
+        if compare(get_env_config, merged_env_config):
+            return False, self.MSG_ALREADY_PRESENT, dict(server_hardware=self.current_resource.data)
+        else:
+            resource = self.current_resource.update_environmental_configuration(
+                self.data['environmentalConfigurationData'])
+            return True, self.MSG_ENV_CONFIG_UPDATED, dict(server_hardware=resource)
 
     def __set_refresh_state(self):
-        resource = self.current_resource.refresh_state(self.data['refreshStateData'])
-        return True, self.MSG_REFRESH_STATE_UPDATED, dict(server_hardware=resource)
+        if self.current_resource.data.get('refreshState') == 'NotRefreshing':
+            resource = self.current_resource.refresh_state(self.data['refreshStateData'])
+            return True, self.MSG_REFRESH_STATE_UPDATED, dict(server_hardware=resource)
+        else:
+            return False, self.MSG_ALREADY_PRESENT, dict(server_hardware=self.current_resource.data)
 
     def __update_mp_firmware_version(self):
+        ilo_version_before_call = self.current_resource.data['mpFirmwareVersion']
         resource = self.current_resource.update_mp_firware_version()
-        return True, self.MSG_ILO_FIRMWARE_VERSION_UPDATED, dict(server_hardware=resource)
+        ilo_version_after_call = resource['mpFirmwareVersion']
+        if ilo_version_before_call == ilo_version_after_call:
+            return False, self.MSG_ALREADY_PRESENT, dict(server_hardware=self.current_resource.data)
+        else:
+            return True, self.MSG_ILO_FIRMWARE_VERSION_UPDATED, dict(server_hardware=resource)
 
     def __patch(self):
         state_name = self.state
-        message = self.MSG_NOTHING_TO_DO
-        changed = False
 
         state = self.patch_params[state_name].copy()
         property_name = state['path'][1:]
-        property_value_changed = self.current_resource.data.get(property_name) != state['value']
 
-        if state_name == 'ilo_state_reset' or property_value_changed:
+        if state_name == 'ilo_state_reset':
+            if self.current_resource.data.get(property_name) != 'OK':
+                return False, self.MSG_NOTHING_TO_DO, dict(server_hardware=self.current_resource.data)
+
+        if str(self.current_resource.data.get(property_name)).lower() == str(state['value']).lower():
+            changed, message = False, self.MSG_NOTHING_TO_DO
+        else:
             self.current_resource.patch(**state)
             changed, message = True, self.patch_success_message[state_name]
 
         return changed, message, dict(server_hardware=self.current_resource.data)
 
     def __add_multiple_rack_mount_servers(self):
-        resource = self.resource_client.add_multiple_servers(self.data)
-        return True, self.MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED, {"server_hardware": resource.data}
+        # Skips adding multiple servers if all the hostnames are already present, else adds the missing hardware
+        existing_hardwares = [hardware['name'] for hardware in self.resource_client.get_all()]
+        if set(existing_hardwares).intersection(set(self.data.get('mpHostsAndRanges'))) == set(self.data.get('mpHostsAndRanges')):
+            return False, self.MSG_ALREADY_PRESENT, {"server_hardware": {}}
+        else:
+            resource = self.resource_client.add_multiple_servers(self.data)
+            return True, self.MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED, {"server_hardware": resource.data}
 
 
 def main():
