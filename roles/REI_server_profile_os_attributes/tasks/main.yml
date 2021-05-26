@@ -1,0 +1,100 @@
+---
+- name: Getting network set info
+  oneview_network_set_facts:
+    hostname: "{{ ov_hostname }}"
+    username: "{{ ov_username }}"
+    password: "{{ cpqmonpassword }}"
+    api_version: "{{ ov_api_version }}"
+    name: "{{ network_set_name }}"
+  delegate_to: localhost
+  register: network_info
+- debug: var=network_info['ansible_facts']['network_sets'][0]['networkUris']
+
+- name: Create server from server profile template with OS deployment for ESXi
+  oneview_server_profile:
+    hostname: "{{ ov_hostname }}"
+    username: "{{ ov_username }}"
+    password: "{{ cpqmonpassword }}"
+    api_version: "{{ ov_api_version }}"
+    data:
+      name: "{{ sp_name }}"
+      serverProfileTemplateName: "{{ server_profile_template }}"
+      serverHardwareName: "{{ server_hardware_name }}"
+       connectionSettings:
+         connections:
+           - id: 1
+             name: Deployment Network A
+             functionType: Ethernet
+             portId: Mezz 3:1-a
+             requestedMbps: 2500
+             networkName: iscsi
+             boot:
+               priority: Primary
+               ethernetBootType: iSCSI
+               iscsi:
+                 initiatorNameSource: ProfileInitiatorName
+           - id: 2
+             name: Deployment Network B
+             functionType: Ethernet
+             portId: Mezz 3:2-a
+             requestedMbps: 2500
+             networkName: iscsi
+             boot:
+               priority: Secondary
+               ethernetBootType: iSCSI
+               iscsi:
+                 initiatorNameSource: ProfileInitiatorName
+           - id: 3
+             name: connection1
+             functionType: Ethernet
+             portId: Auto
+             requestedMbps: 2500
+             networkUri: "{{ network_info['ansible_facts']['network_sets'][0]['uri'] }}"
+      osDeploymentSettings:
+        osDeploymentPlanName: "{{ osdp }}"
+        osCustomAttributes:
+          - name: Hostname
+            value: "{{ hostName }}"
+          - name: DomainName
+            value: "{{ domainName }}"
+          - name: ManagementNIC.connectionid
+            value: 3
+          - name: ManagementNIC.networkuri
+            value: "{{ network_info['ansible_facts']['network_sets'][0]['networkUris'][0] }}"
+          - name: SSH
+            value: enabled
+          - name: Password
+            value: "test123"
+          - name: ManagementNIC.dns1
+            value: "{{ dns1 }}"
+          - name: ManagementNIC.dns2
+            value: "{{ dns2 }}"
+          - name: ManagementNIC.gateway
+            value: "{{ gateway }}"
+          - name: ManagementNIC.ipaddress
+            value: "{{ mgmt_ip }}"
+          - name: ManagementNIC.dhcp
+            value: false
+          - name: ManagementNIC.netmask
+            value: "{{ netmask }}"
+          - name: ManagementNIC.constraint
+            value: userspecified
+          - name: ManagementNIC.ipv4disable
+            value: false
+          - name: ManagementNIC.vlanid
+            value: "{{ vlanid }}"
+  delegate_to: localhost
+
+ - name: Power on the ESXi server
+   oneview_server_hardware:
+     hostname: "{{ ov_hostname }}"
+     username: "{{ ov_username }}"
+     password: "{{ cpqmonpassword }}"
+     api_version: "{{ ov_api_version}}"
+     state: power_state_set
+     data:
+       name : "{{ server_hardware_name }}"
+       powerStateData:
+         powerState: "On"
+         powerControl: "MomentaryPress"
+   delegate_to: localhost
