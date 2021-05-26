@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -28,6 +28,14 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 
 FAKE_MSG_ERROR = 'Fake message error'
 
+volume_template = dict(
+    name='vol-temp',
+    uri='/rest/storage-volume-templates/3B1CF17F-7657-4C89-B580-D236507A9182',
+    properties=dict(
+        size=102400,
+        storagePool='/rest/storage-pools/1')
+)
+
 EXISTENT_VOLUME = dict(
     name='Volume with Storage Pool',
     description='Test volume with common creation: Storage Pool',
@@ -50,6 +58,16 @@ PARAMS_FOR_CREATE = dict(
                                           shareable=True,
                                           requestedCapacity=1073741824,
                                           storagePoolUri='/rest/storage-pools/3B1CF17F-7657-4C89-B580-D236507A9182'))
+)
+
+PARAMS_FOR_CREATE_WITH_TEMPLATE_NAME = dict(
+    config='config.json',
+    state='present',
+    data=dict(name='Volume with Storage template',
+              templateName='vol-temp',
+              properties=dict(provisionType='Full',
+                              shareable=True)
+              )
 )
 
 PARAMS_FOR_CREATE_FROM_SNAPSHOT = dict(
@@ -156,6 +174,35 @@ class TestVolumeModule(OneViewBaseTest):
             msg=VolumeModule.MSG_CREATED,
             ansible_facts=dict(storage_volume=EXISTENT_VOLUME)
         )
+
+    def test_should_create_new_volume_with_template_name(self):
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.storage_volume_templates.data = volume_template
+        self.mock_ov_client.storage_volume_templates.get_by_name.return_value = self.mock_ov_client.storage_volume_templates
+
+        self.resource.data = EXISTENT_VOLUME
+        self.resource.create.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_FOR_CREATE_WITH_TEMPLATE_NAME
+
+        VolumeModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=VolumeModule.MSG_CREATED,
+            ansible_facts=dict(storage_volume=EXISTENT_VOLUME)
+        )
+
+    def test_should_fail_to_create_new_volume_when_template_name_not_found(self):
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.storage_volume_templates.get_by_name.return_value = None
+        self.resource.data = EXISTENT_VOLUME
+        self.resource.create.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_FOR_CREATE_WITH_TEMPLATE_NAME
+        VolumeModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg="Informed Volume Template 'vol-temp' not found")
 
     def test_should_find_from_name_in_properties(self):
         self.resource.data = {"name": "Volume with Storage Pool"}
