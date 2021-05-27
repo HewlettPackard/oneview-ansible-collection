@@ -305,7 +305,7 @@ class ServerHardwareModule(OneViewModule):
 
     def __init__(self):
 
-        super(ServerHardwareModule, self).__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.server_hardware)
 
     def execute_module(self):

@@ -32,6 +32,18 @@
 
 - debug: var=storage_volume_templates
 
+- name: Create a Volume with a volume template name
+  oneview_volume:
+    config: '{{ config }}'
+    state: present
+    data:
+      properties:
+        name: 'Volume with template name'
+        description: 'Test volume with template name'
+      templateName: "{{ volume_template_name }}"
+      isPermanent: false
+  delegate_to: localhost
+
 - name: Create a Volume with a specified Storage Pool
   oneview_volume:
     config: '{{ config }}'
