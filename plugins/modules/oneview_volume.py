@@ -278,8 +278,8 @@ class VolumeModule(OneViewModule):
             export_only=dict(required=False, type='bool'),
             suppress_device_updates=dict(required=False, type='bool')
         )
-        super(VolumeModule, self).__init__(additional_arg_spec=argument_spec,
-                                           validate_etag_support=True)
+        super().__init__(additional_arg_spec=argument_spec,
+                         validate_etag_support=True)
 
         name = self.__find_resource_name()
         self.set_resource_object(self.oneview_client.volumes, name)
