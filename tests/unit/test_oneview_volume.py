@@ -161,6 +161,16 @@ PARAMS_FOR_SNAPSHOT_DELETED = dict(
 
 @pytest.mark.resource(TestVolumeModule='volumes')
 class TestVolumeModule(OneViewBaseTest):
+    def test_should_raise_error_volume_with_template_name(self):
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.storage_volume_templates.get_by_name.return_value = None
+
+        self.mock_ansible_module.params = PARAMS_FOR_CREATE_WITH_TEMPLATE_NAME
+
+        VolumeModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=VolumeModule.MSG_TEMPLATE_NOT_FOUND.format("vol-temp"))
+
     def test_should_create_new_volume_when_not_exist(self):
         self.resource.get_by_name.return_value = []
         self.resource.create.return_value = self.resource
