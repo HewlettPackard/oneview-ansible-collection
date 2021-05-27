@@ -2,16 +2,16 @@
 #  require_ci_to_pass: yes
 #  max_report_age: off
 
-coverage:
-  status:
-    project:
-      default:
-        threshold: 1
-        target: 98% #overall project/ repo coverage
-    # Disable patch since it is noisy and not required
-    patch:
-      default:
-        enabled: no
-        if_not_found: success
+#coverage:
+#  status:
+#    project:
+#      default:
+#        threshold: 1
+#        target: 98% #overall project/ repo coverage
+#    # Disable patch since it is noisy and not required
+#    patch:
+#      default:
+#        enabled: no
+#        if_not_found: success
 
 comment: false
