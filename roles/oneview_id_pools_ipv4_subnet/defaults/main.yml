@@ -10,3 +10,5 @@ domain: example.com
 dnsServers: ["192.170.20.20"]
 count: 3
 newDomain: awesome.com
+start_address: "192.168.20.10"
+end_address: "192.168.20.20"
