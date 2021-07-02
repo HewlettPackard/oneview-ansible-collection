@@ -40,7 +40,7 @@ options:
             - Indicates the desired state for the Server Profile Template.
               C(present) will ensure data properties are compliant with OneView.
               C(absent) will remove the resource from OneView, if it exists.
-        choices: ['present', 'absent']
+        choices: ['present', 'absent', 'refresh_state']
         required: true
         type: str
     data:
@@ -126,7 +126,10 @@ server_profile_template:
 '''
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, ServerProfileReplaceNamesByUris, ServerProfileMerger, compare, OneViewModuleException
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, 
+                                                                          ServerProfileReplaceNamesByUris, 
+                                                                          ServerProfileMerger, 
+                                                                          compare)
 
 
 class ServerProfileTemplateModule(OneViewModule):
