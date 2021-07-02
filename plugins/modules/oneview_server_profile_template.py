@@ -126,9 +126,9 @@ server_profile_template:
 '''
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, 
-                                                                          ServerProfileReplaceNamesByUris, 
-                                                                          ServerProfileMerger, 
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
+                                                                          ServerProfileReplaceNamesByUris,
+                                                                          ServerProfileMerger,
                                                                           compare)
 
 
