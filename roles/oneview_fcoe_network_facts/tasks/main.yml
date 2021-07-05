@@ -22,5 +22,6 @@
      config: "{{ config }}"
      name: "{{ fcoe_networks[0]['name'] }}"
    delegate_to: localhost
+   when: fcoe_networks | default('', True)
 
  - debug: var=fcoe_networks

@@ -31,6 +31,37 @@
       domain: '{{ newDomain }}'
   delegate_to: localhost
 
+- debug: var=id_pools_ipv4_subnet
+
+- name: Create an Ethernet Network
+  oneview_ethernet_network:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "SubnetNet"
+      vlanId: "212"
+      ethernetNetworkType: Tagged
+      purpose: General
+      smartLink: false
+      privateNetwork: false
+      subnetUri: '{{ id_pools_ipv4_subnet["uri"] }}'
+      bandwidth:
+          maximumBandwidth: 2000
+          typicalBandwidth: 1000
+
+
+- name: Create IPV4 Range 
+  oneview_id_pools_ipv4_range:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "SubnetRange"
+      subnetUri: '{{ id_pools_ipv4_subnet["uri"] }}'
+      rangeCategory: Custom
+      startStopFragments:
+        - startAddress: "{{ start_address }}"
+          endAddress: "{{ end_address }}"
+
 - name: Allocate the no of IPv4 ID's
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
@@ -48,6 +79,13 @@
       networkId: '{{ network_id }}'
       idList: '{{ id_pools_ipv4_subnet["idList"] }}'
   delegate_to: localhost
+
+- name: Delete the Ethernet Network
+  oneview_ethernet_network:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: 'SubnetNet'
 
 - name: Delete the ID Pools IPV4 Subnet
   oneview_id_pools_ipv4_subnet:

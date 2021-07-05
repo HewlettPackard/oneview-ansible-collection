@@ -44,6 +44,18 @@
       enabled: True
   delegate_to: localhost
 
+- name: Create an Enclosure Group
+  oneview_enclosure_group:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "EGRange"
+      ipAddressingMode: "ipPool"
+      enclosureCount: 3
+      ipRangeUris:
+        - '{{ id_pools_ipv4_range["uri"]}}'
+
+
 - name: Allocates ID from an IPV4 Range
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
@@ -52,8 +64,7 @@
       uri: "{{ uri }}"
       count: 2
       update_allocator: True
-      idList:
-        - "192.168.20.33"
+      idList: '{{ idList }}'
   delegate_to: localhost
 
 - name: Collects set of ID from an IPV4 Range
@@ -63,10 +74,16 @@
     data:
       uri: "{{ uri }}"
       update_collector: True
-      idList:
-        - "192.168.20.34"
+      idList: '{{ id_pools_ipv4_range["idList"] }}'
   delegate_to: localhost
 
+- name: Delete the Enclosure Group
+  oneview_enclosure_group:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "EGRange"
+  delegate_to: localhost
 
 - name: Ensure the IPV4 Range is disabled with DISABLED tag in the name
   oneview_id_pools_ipv4_range:
@@ -108,4 +125,4 @@
       startStopFragments:
         - startAddress: "{{ start_address }}"
           endAddress: "{{ end_address1 }}"
-  delegate_to: localhost
+  delegate_to: localhost 

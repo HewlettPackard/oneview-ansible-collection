@@ -40,7 +40,7 @@ options:
             - Indicates the desired state for the Server Profile Template.
               C(present) will ensure data properties are compliant with OneView.
               C(absent) will remove the resource from OneView, if it exists.
-        choices: ['present', 'absent']
+        choices: ['present', 'absent', 'refresh_state']
         required: true
         type: str
     data:
@@ -126,13 +126,17 @@ server_profile_template:
 '''
 
 from copy import deepcopy
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, ServerProfileReplaceNamesByUris, ServerProfileMerger, compare
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
+                                                                          ServerProfileReplaceNamesByUris,
+                                                                          ServerProfileMerger,
+                                                                          compare)
 
 
 class ServerProfileTemplateModule(OneViewModule):
     MSG_CREATED = 'Server Profile Template created successfully.'
     MSG_UPDATED = 'Server Profile Template updated successfully.'
     MSG_DELETED = 'Server Profile Template deleted successfully.'
+    MSG_REFRESHED = 'Server Profile Template refreshed successfully.'
     MSG_ALREADY_PRESENT = 'Server Profile Template is already present.'
     MSG_ALREADY_ABSENT = 'Server Profile Template is already absent.'
     MSG_SRV_HW_TYPE_NOT_FOUND = 'Server Hardware Type not found: '
@@ -141,7 +145,7 @@ class ServerProfileTemplateModule(OneViewModule):
     argument_spec = dict(
         state=dict(
             required=True,
-            choices=['present', 'absent']
+            choices=['present', 'absent', 'refresh_state']
         ),
         data=dict(required=True, type='dict'),
         params=dict(required=False, type='dict')
@@ -159,6 +163,8 @@ class ServerProfileTemplateModule(OneViewModule):
 
         if self.state == 'present':
             result = self.__present()
+        elif self.state == 'refresh_state':
+            result = self.__patch()
         else:
             result = self.__absent()
 
@@ -214,6 +220,20 @@ class ServerProfileTemplateModule(OneViewModule):
         changed = not equal
 
         return changed, msg, self.current_resource.data
+
+    def __patch(self):
+        refresh_state = self.current_resource.data.get('refreshState', '')
+
+        if refresh_state != 'RefreshPending':
+            self.current_resource.patch('replace', '/refreshState', 'RefreshPending')
+            changed = True
+            msg = self.MSG_REFRESHED
+
+        return dict(
+            changed=changed,
+            msg=msg,
+            ansible_facts=dict(server_profile_template=self.current_resource.data)
+        )
 
     def __absent(self):
         if self.current_resource:
