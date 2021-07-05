@@ -70,6 +70,7 @@
     - hpe.oneview.oneview_storage_volume_template_facts
     - hpe.oneview.oneview_storage_volume_attachment
     - hpe.oneview.oneview_storage_volume_attachment_facts
+    - hpe.oneview.oneview_task
     - hpe.oneview.oneview_task_facts
     - hpe.oneview.oneview_uplink_set
     - hpe.oneview.oneview_uplink_set_facts
