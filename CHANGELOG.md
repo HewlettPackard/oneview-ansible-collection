@@ -1,6 +1,6 @@
 # Ansible Collections for HPE OneView Change Log
 
-## v6.2.0(Unreleased)
+## v6.2.0
 This release extends the planned support of the collections to OneView REST API version 3000 (OneView v6.2).
 
 #### Major changes
@@ -86,8 +86,6 @@ This release extends the planned support of the collections to OneView REST API 
 - oneview_user
 - oneview_user_facts
 - oneview_version_facts
-
-# Ansible Collections for HPE OneView Change Log
 
 ## v6.1.0
 This release extends the planned support of the collections to OneView REST API version 2800 (OneView v6.1) and ImageStreamer REST API version 2020 (I3S v6.1) 
