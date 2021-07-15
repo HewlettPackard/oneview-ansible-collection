@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2021) Hewlett Packard Enterprise Development LP
@@ -111,6 +111,17 @@ class TestFirmwareBundleModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             msg=FirmwareBundleModule.MSG_SIG_ALREADY_PRESENT
+        )
+
+    def test_should_fail_to_add_compsig_when_hotfix_is_absent(self):
+        self.resource.get_by_name.return_value = None
+        self.mock_ansible_module.params = PARAMS_FOR_ADD_SIGNATURE
+
+        FirmwareBundleModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            failed=True,
+            msg=FirmwareBundleModule.MSG_HOTFIX_ABSENT
         )
 
 
