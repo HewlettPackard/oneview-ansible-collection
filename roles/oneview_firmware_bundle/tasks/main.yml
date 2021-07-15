@@ -1,0 +1,42 @@
+---
+- name: Upload the firmware bundle
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: present
+    file_path: "{{ spp_bundle_path }}"
+  delegate_to: localhost
+
+- name: Ensure the firmware bundle is present
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: present
+    file_path: "{{ spp_bundle_path }}"
+  delegate_to: localhost
+
+- name: Upload the hotfix
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: present
+    file_path: "{{ hotfix_path }}"
+  delegate_to: localhost
+
+- name: Ensure the hotfix is present
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: present
+    file_path: "{{ hotfix_path }}"
+  delegate_to: localhost
+
+- name: Upload the compsig file
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: add_signature
+    file_path: "{{ compsig_file }}"
+  delegate_to: localhost
+
+- name: Ensure the compsig file is already present
+  oneview_firmware_bundle:
+    config: "{{ config }}"
+    state: add_signature
+    file_path: "{{ compsig_file }}"
+  delegate_to: localhost

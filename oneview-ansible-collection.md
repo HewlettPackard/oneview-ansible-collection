@@ -40,6 +40,7 @@
   * [oneview_fc_network_facts - Retrieve the facts about one or more of the OneView Fibre Channel Networks](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_fc_network_facts/README.md)
   * [oneview_fcoe_network - Manage OneView FCoE Network resources](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_fcoe_network/README.md)
   * [oneview_fcoe_network_facts - Retrieve the facts about one or more of the OneView FCoE Networks](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_fcoe_network_facts/README.md)
+  * [oneview_firmware_bundle - Provides an interface to upload Firmware Bundle resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_firmware_bundle/README.md)
   * [oneview_firmware_driver - Provides an interface to remove Firmware Driver resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_firmware_driver/README.md)
   * [oneview_firmware_driver_facts - Retrieve the facts about one or more of the OneView Firmware Drivers.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_firmware_driver_facts/README.md)
   * [oneview_hypervisor_cluster_profile - Manage OneView Hypervisor Cluster Profile resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_hypervisor_cluster_profile/README.md)
