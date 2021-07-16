@@ -15,7 +15,7 @@ Provides an interface to upload Firmware Bundle resources.
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
 | data  |   No  |  | |  List with the Firmware Bundle properties.  |
 | name  |   No  |  | |  Firmware Bundle name.  |
-| state  |  Yes |  | <ul> <li>present</li>  <li>absent</li> </ul> |  Indicates the desired state for the Firmware Bundle. `present` will ensure data properties are compliant with OneView.|
+| state  |  Yes |  | <ul> <li>present</li>  <li>add_signature</li> </ul> |  Indicates the desired state for the Firmware Bundle. `present` will ensure data properties are compliant with OneView.|
 
 
 ## Example Playbook
