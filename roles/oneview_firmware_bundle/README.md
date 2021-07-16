@@ -37,3 +37,4 @@ Apache
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
 | firmware_bundle   | Has the facts about the managed OneView Firmware Bundle. |  On state 'present'. Can be null. |  dict |
+| compsig      | Has the facts about the signature of OneView Firmware Bundle. |  On state 'add_signature'.        |  dict |

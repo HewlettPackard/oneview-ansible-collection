@@ -90,7 +90,7 @@ class FirmwareBundleModule(OneViewModule):
     MSG_ADD_SIG = 'Added the compsig successfully.'
     MSG_SIG_ALREADY_PRESENT = 'Signature already present.'
     MSG_HOTFIX_ABSENT = 'Hotfix is not present.'
-    RESOURCE_FACT_NAME = 'firmware_bundles'
+    RESOURCE_FACT_NAME = 'firmware_bundle'
 
     def __init__(self):
         argument_spec = dict(state=dict(required=True, choices=['present', 'add_signature']),

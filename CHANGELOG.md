@@ -1,7 +1,7 @@
 # Ansible Collections for HPE OneView Change Log
 
 ## v6.3.0 (unreleased)
-This release extends the planned support of the collections to OneView REST API version 3000 (OneView v6.2).
+This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
 
 ### Modules supported in this release
 - oneview_firmware_bundle
