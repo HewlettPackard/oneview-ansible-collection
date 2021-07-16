@@ -37,8 +37,8 @@ options:
     state:
         description:
             - Indicates the desired state for the Firmware Driver resource.
-              C(present) will ensure that the firmware bundle is at OneView.
-              C(add_signature) will add the compsig to hotfix.
+              C(present) will ensure that the hotfix/firmware bundle is at OneView.
+              C(add_signature) will add the compsig to the hotfix/firmware bundle in OneView.
         choices: ['present', 'add_signature']
         required: True
         type: str
@@ -78,6 +78,11 @@ RETURN = '''
 firmware_bundle:
     description: Has the facts about the OneView firmware bundle.
     returned: On state 'present'. Can be null.
+    type: dict
+
+compsig:
+    description: Has the facts about the signature of OneView firmware bundle.
+    returned: On state 'add_signature'.
     type: dict
 '''
 
