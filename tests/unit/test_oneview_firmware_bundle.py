@@ -120,6 +120,7 @@ class TestFirmwareBundleModule(OneViewBaseTest):
         FirmwareBundleModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
             failed=True,
             msg=FirmwareBundleModule.MSG_HOTFIX_ABSENT
         )
