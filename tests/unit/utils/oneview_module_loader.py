@@ -99,7 +99,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_fc_network import F
 from ansible_collections.hpe.oneview.plugins.modules.oneview_fc_network_facts import FcNetworkFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_fcoe_network import FcoeNetworkModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_fcoe_network_facts import FcoeNetworkFactsModule
-# from oneview_firmware_bundle import FirmwareBundleModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_firmware_bundle import FirmwareBundleModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_firmware_driver import FirmwareDriverModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_firmware_driver_facts import FirmwareDriverFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_hypervisor_cluster_profile import HypervisorClusterProfileModule

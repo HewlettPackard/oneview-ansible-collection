@@ -1,0 +1,6 @@
+---
+# defaults file for oneview_firmware_bundle
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_firmware_bundle/files/oneview_config.json"
+spp_bundle_path: "<spp_path>"
+hotfix_path: "<hotfix_path>"
+compsig_file: "<compsig_file>"
