@@ -58,17 +58,15 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class ApplianceProxyConfigurationFactsModule(OneViewModule):
-    argument_spec = dict(
-        params=dict(required=False, type='dict')
-    )
-
+    
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):
         ansible_facts = {}
-        ansible_facts['appliance_proxy_configuration'] = (self.resource_client.get_all()).data
+        proxy_configuration = self.resource_client.get_all()
+        ansible_facts['appliance_proxy_configuration'] = proxy_configuration.data
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)
