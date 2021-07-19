@@ -68,7 +68,7 @@ class ApplianceProxyConfigurationFactsModule(OneViewModule):
 
     def execute_module(self):
         ansible_facts = {}
-        ansible_facts['appliance_proxy_configuration'] = self.resource_client.get_all(**self.facts_params).data
+        ansible_facts['appliance_proxy_configuration'] = (self.resource_client.get_all()).data
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)
