@@ -1,0 +1,12 @@
+{
+    "ip":  "10.1.19.120",
+    "credentials": {
+      "userName": "Administrator",
+      "password": "admin123",
+      "authLoginDomain": "LOCAL"
+},
+    "image_streamer_ip": "",
+    "api_version": 3000,
+    "variant": "Synergy"
+  }
+  

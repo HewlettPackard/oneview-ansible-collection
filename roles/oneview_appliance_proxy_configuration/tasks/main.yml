@@ -1,0 +1,33 @@
+---
+- name: Creates Proxy with HTTP protocol 
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "16.85.88.10"
+      port: 8080
+      username: "proxydcs"
+      password: "dcs"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost
+- debug: var=appliance_proxy_configuration
+
+- name: Deletes the configured proxy
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: absent
+    data:
+      server: "16.85.88.10"
+  delegate_to: localhost
+
+- name: Re-creates Proxy for automation
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "16.85.88.10"
+      port: 8080
+      username: "proxydcs"
+      password: "dcs"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost

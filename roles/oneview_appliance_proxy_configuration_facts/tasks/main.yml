@@ -1,0 +1,7 @@
+---
+- name: Gather facts about the Appliance Proxy
+  oneview_appliance_proxy_configuration_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=appliance_proxy_configuration
