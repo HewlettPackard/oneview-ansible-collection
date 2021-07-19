@@ -4,10 +4,10 @@
     config: "{{ config }}"
     state: present
     data:
-      server: "16.85.88.10"
-      port: 8080
-      username: "proxydcs"
-      password: "dcs"
+      server: "<server_ip>"
+      port: 443
+      username: "<username>"
+      password: "<password>"
       communicationProtocol: "HTTP"
   delegate_to: localhost
 - debug: var=appliance_proxy_configuration
@@ -17,7 +17,7 @@
     config: "{{ config }}"
     state: absent
     data:
-      server: "16.85.88.10"
+      server: "<server_ip>"
   delegate_to: localhost
 
 - name: Re-creates Proxy for automation
@@ -25,9 +25,9 @@
     config: "{{ config }}"
     state: present
     data:
-      server: "16.85.88.10"
-      port: 8080
-      username: "proxydcs"
-      password: "dcs"
+      server: "<server_ip>"
+      port: 443
+      username: "<username>"
+      password: "<password>"
       communicationProtocol: "HTTP"
   delegate_to: localhost

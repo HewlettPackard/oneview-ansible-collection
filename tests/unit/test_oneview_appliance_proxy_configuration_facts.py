@@ -43,7 +43,7 @@ class TestApplianceProxyConfigurationFactsModule(OneViewBaseTest):
         self.resource.data = PROXY_DATA
         self.mock_ansible_module.params = PARAMS_GET_ALL
 
-        ApplianceSshAccessFactsModule().run()
+        ApplianceProxyConfigurationFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
