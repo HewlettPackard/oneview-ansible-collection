@@ -96,7 +96,6 @@ class ApplianceProxyConfigurationModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             data=dict(required=False, type='dict'),
-            name=dict(required=False, type='str'),
             state=dict(
                 required=True,
                 choices=['present', 'absent']),

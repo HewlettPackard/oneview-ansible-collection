@@ -25,7 +25,7 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
 
 DOCUMENTATION = '''
 ---
-module: oneview_appliance_proxy_configuration
+module: oneview_appliance_proxy_configuration_facts
 short_description: Retrieve the facts about the OneView appliance proxy configuration.
 description:
     - Retrieve the facts about the OneView appliance proxy configuration.
@@ -58,7 +58,6 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class ApplianceProxyConfigurationFactsModule(OneViewModule):
-    
     def __init__(self):
         super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
