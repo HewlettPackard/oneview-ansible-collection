@@ -21,7 +21,7 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
+from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceProxyConfigurationFactsModule
 
 PARAMS_GET_ALL = dict(
@@ -38,7 +38,7 @@ PROXY_DATA = [{
 
 
 @pytest.mark.resource(TestApplianceProxyConfigurationFactsModule='appliance_proxy_configuration')
-class TestApplianceProxyConfigurationFactsModule(OneViewBaseFactsTest):
+class TestApplianceProxyConfigurationFactsModule(OneViewBaseTest):
     def test_should_get_all_proxy_configuration(self):
         self.resource.get_all.return_value = self.resource
         self.resource.data = PROXY_DATA
