@@ -37,7 +37,7 @@ PROXY_DATA = [{
 
 
 @pytest.mark.resource(TestApplianceProxyConfigurationFactsModule='appliance_proxy_configuration')
-class TestApplianceProxyConfigurationFactsModule(OneViewBaseTest):
+class TestApplianceProxyConfigurationFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_proxy_configuration(self):
         self.resource.get_all.return_value = self.resource
         self.resource.data = PROXY_DATA
