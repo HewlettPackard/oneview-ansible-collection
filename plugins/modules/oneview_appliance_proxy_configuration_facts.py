@@ -63,7 +63,6 @@ class ApplianceProxyConfigurationFactsModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):
-        ansible_facts = {}
         proxy_configuration = self.resource_client.get_all()
         proxy_configuration = proxy_configuration.data
 

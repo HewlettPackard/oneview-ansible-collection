@@ -26,6 +26,7 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 
 PARAMS_GET_ALL = dict(
     config='config.json',
+    name=None
 )
 PROXY_DATA = [{
     "server": "1.1.1.1",
@@ -39,7 +40,8 @@ PROXY_DATA = [{
 @pytest.mark.resource(TestApplianceProxyConfigurationFactsModule='appliance_proxy_configuration')
 class TestApplianceProxyConfigurationFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_proxy_configuration(self):
-        self.resource.get_all.return_value = PROXY_DATA
+        self.resource.get_all.return_value = self.resource
+        self.resource.data = PROXY_DATA
         self.mock_ansible_module.params = PARAMS_GET_ALL
 
         ApplianceProxyConfigurationFactsModule().run()
