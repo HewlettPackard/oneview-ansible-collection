@@ -27,7 +27,7 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 PARAMS_GET_ALL = dict(
     config='config.json',
 )
-PROXY_DATA =[{
+PROXY_DATA = [{
     "server": "1.1.1.1",
     "port": 443,
     "username": "testuser",
