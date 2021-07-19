@@ -63,17 +63,15 @@ class ApplianceProxyConfigurationFactsModule(OneViewModule):
     )
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=self.argument_spec)
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):
-        appliance_proxy_configuration = []
-
-        if self.current_resource:
-            appliance_proxy_configuration = self.current_resource.data
+        ansible_facts = {}
+        ansible_facts['appliance_proxy_configuration'] = self.resource_client.get_all(**self.facts_params).data
 
         return dict(changed=False,
-                    ansible_facts=dict(appliance_proxy_configuration=appliance_proxy_configuration))
+                    ansible_facts=ansible_facts)
 
 
 def main():
