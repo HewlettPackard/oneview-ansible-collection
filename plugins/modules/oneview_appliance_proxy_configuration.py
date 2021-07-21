@@ -107,7 +107,7 @@ class ApplianceProxyConfigurationModule(OneViewModule):
             return self.__absent()
 
     def __present(self):
-        changed, field_changed = False, False 
+        changed, field_changed = False, False
         # password field always null for existing resource
         # ignored for comparison
         if self.current_resource:
