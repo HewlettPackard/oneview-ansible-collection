@@ -82,7 +82,7 @@ appliance_proxy_configuration:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, dict_merge, compare
 
 
 class ApplianceProxyConfigurationModule(OneViewModule):
@@ -108,15 +108,17 @@ class ApplianceProxyConfigurationModule(OneViewModule):
 
     def __present(self):
         changed, field_changed = False, False
-
+        
         # password field always null for existing resource
         # ignored for comparison
         if self.current_resource:
-            for key in self.data.keys():
-                matched = self.current_resource.data.get(key) != self.data.get(key)
-                if key != 'password' and matched:
-                    field_changed = True
-                    break
+            user_data = self.data.copy()
+            user_data.pop('password')
+            existing_data = self.current_resource.data.copy()
+            existing_data.pop('password')
+            updated_data = dict_merge(existing_data, user_data)
+            if not compare(existing_data, updated_data):
+                field_changed = True
 
         if not self.current_resource or field_changed:
             self.current_resource = self.resource_client.create(self.data)
