@@ -1,4 +1,4 @@
-## oneview_appliance_proxy_configuration
+## oneview_appliance_proxy_configuration_facts
 Retrieve facts about the OneView Appliance Proxy Configuration.
 
 #### Synopsis
@@ -21,7 +21,7 @@ Retrieve facts about the OneView Appliance Proxy Configuration.
   collections:
     - hpe.oneview
   roles:
-    - hpe.oneview.oneview_appliance_proxy_configuration
+    - hpe.oneview.oneview_appliance_proxy_configuration_facts
 ```
 
 #### Return Values
