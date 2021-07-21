@@ -141,6 +141,7 @@ class ApplianceProxyConfigurationModule(OneViewModule):
             changed=changed,
         )
 
+
 def main():
     ApplianceProxyConfigurationModule().run()
 
