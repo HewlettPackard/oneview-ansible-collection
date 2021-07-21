@@ -45,13 +45,13 @@ PARAMS_FOR_PRESENT = dict(
 PARAMS_FOR_ABSENT = dict(
     config='config.json',
     state='absent',
-    name=DEFAULT_PARAMS['server'])
+    server=DEFAULT_PARAMS['server'])
 
 
 @pytest.mark.resource(TestApplianceProxyConfigurationModule='appliance_proxy_configuration')
 class TestApplianceProxyConfigurationModule(OneViewBaseTest):
     def test_should_create_proxy_configuration(self):
-        self.resource.get_by_name.return_value = None
+        self.resource.get_by_proxy.return_value = None
         self.resource.data = DEFAULT_PARAMS
         self.resource.create.return_value = self.resource
 
@@ -66,7 +66,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         )
 
     def test_should_remove_proxy_configuration(self):
-        self.resource.get_by.return_value = [DEFAULT_PARAMS]
+        self.resource.get_by_proxy.return_value = [DEFAULT_PARAMS]
         self.mock_ansible_module.params = PARAMS_FOR_ABSENT
 
         ApplianceProxyConfigurationModule().run()
@@ -77,7 +77,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         )
 
     def test_should_do_nothing_when_proxy_configuration_not_exist(self):
-        self.resource.get_by_name.return_value = []
+        self.resource.get_by_proxy.return_value = []
 
         self.mock_ansible_module.params = PARAMS_FOR_ABSENT
 
