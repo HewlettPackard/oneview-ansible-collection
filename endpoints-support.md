@@ -22,6 +22,10 @@
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: | :-----------------: | :-----------------: |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+|     **Appliance Proxy Configuration**  |
+|<sub>/rest/appliance/proxy-config</sub>                                              |    GET       |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
+|<sub>/rest/appliance/proxy-config</sub>                                              |    POST      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
+|<sub>/rest/appliance/proxy-config</sub>                                              |   DELETE    |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:   |
 |     **Appliance SNMPv1 Trap Destinations**                                                                                                                             |
 |<sub>/rest/appliance/trap-destinations</sub>                                             |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/appliance/trap-destinations/validation</sub>                                  |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |

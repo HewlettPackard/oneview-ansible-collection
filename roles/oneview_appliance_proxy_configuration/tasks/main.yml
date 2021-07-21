@@ -1,0 +1,67 @@
+---
+- name: Creates Proxy with HTTP protocol 
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "{{ server_ip }}"
+      port: 8080
+      username: "{{ username }}"
+      password: "{{ password }}"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost
+- debug: var=appliance_proxy_configuration
+
+- name: Do nothing when proxy already exists
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "{{ server_ip }}"
+      port: 8080
+      username: "{{ username }}"
+      password: "{{ password }}"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost
+- debug: var=appliance_proxy_configuration
+
+- name: Creates proxy with updated username
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "{{ server_ip }}"
+      port: 8080
+      username: "testuser"
+      password: "{{ password }}"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost
+- debug: var=appliance_proxy_configuration
+
+- name: Deletes the configured proxy
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: absent
+    data:
+      server: "{{ server_ip }}"
+  delegate_to: localhost
+
+- name: Do nothing when proxy already absent
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: absent
+    data:
+      server: "{{ server_ip }}"
+  delegate_to: localhost
+
+- name: Re-creates Proxy for automation
+  oneview_appliance_proxy_configuration:
+    config: "{{ config }}"
+    state: present
+    data:
+      server: "{{ server_ip }}"
+      port: 443
+      username: "{{ username }}"
+      password: "{{ password }}"
+      communicationProtocol: "HTTP"
+  delegate_to: localhost
