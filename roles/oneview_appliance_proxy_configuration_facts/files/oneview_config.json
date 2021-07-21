@@ -1,8 +1,8 @@
 {
-    "ip":  "10.1.19.120",
+    "ip":  "<oneview_ip>",
     "credentials": {
-      "userName": "Administrator",
-      "password": "admin123",
+      "userName": "<username>",
+      "password": "<password>",
       "authLoginDomain": "LOCAL"
 },
     "image_streamer_ip": "",
