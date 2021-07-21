@@ -107,8 +107,7 @@ class ApplianceProxyConfigurationModule(OneViewModule):
             return self.__absent()
 
     def __present(self):
-        changed = False
-        field_changed = False
+        changed, field_changed = False, False
 
         # password field always null for existing resource
         # ignored for comparison
@@ -131,6 +130,7 @@ class ApplianceProxyConfigurationModule(OneViewModule):
         )
 
     def __absent(self):
+        changed = False
         if self.current_resource:
             self.resource_client.delete()
             changed, msg = True, self.MSG_DELETED
@@ -140,8 +140,6 @@ class ApplianceProxyConfigurationModule(OneViewModule):
             msg=msg,
             changed=changed,
         )
-
-
 
 def main():
     ApplianceProxyConfigurationModule().run()
