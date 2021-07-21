@@ -45,7 +45,7 @@ PARAMS_FOR_PRESENT = dict(
 PARAMS_FOR_ABSENT = dict(
     config='config.json',
     state='absent',
-    server=DEFAULT_PARAMS['server'])
+    data=DEFAULT_PARAMS)
 
 
 @pytest.mark.resource(TestApplianceProxyConfigurationModule='appliance_proxy_configuration')
