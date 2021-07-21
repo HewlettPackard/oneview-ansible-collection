@@ -60,8 +60,8 @@ EXAMPLES = '''
     config: "{{ config }}"
     state: present
     data:
-      server: "16.85.88.10"
-      port: 8080
+      server: "<server_ip>"
+      port: 443
       username: "proxydcs"
       password: "dcs"
       communicationProtocol: "HTTP"
@@ -82,16 +82,12 @@ appliance_proxy_configuration:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound
 
 
 class ApplianceProxyConfigurationModule(OneViewModule):
     MSG_CREATED = 'Appliance Proxy Configured successfully.'
-    MSG_UPDATED = 'Appliance Proxy updated successfully.'
-    MSG_DELETED = 'Appliance Proxy deleted successfully.'
     MSG_ALREADY_PRESENT = 'Appliance Proxy Configuration is already present.'
-    MSG_ALREADY_ABSENT = 'Appliance Proxy Configuration is already absent.'
-    RESOURCE_FACT_NAME = 'appliance_proxy_configuration'
 
     def __init__(self):
         argument_spec = dict(
@@ -101,13 +97,50 @@ class ApplianceProxyConfigurationModule(OneViewModule):
                 choices=['present', 'absent']),
         )
         super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
-        self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
+        self.resource_client = self.oneview_client.appliance_proxy_configuration
 
     def execute_module(self):
+        self.current_resource = self.resource_client.get_by_proxy(self.data.get('server'))
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            return self.__present()
         elif self.state == 'absent':
-            return self.resource_absent(self.RESOURCE_FACT_NAME)
+            return self.__absent()
+
+    def __present(self):
+        changed = False
+        field_changed = False
+
+        # password field always null for existing resource
+        # ignored for comparison
+        if self.current_resource:
+            for key in self.data.keys():
+                matched = self.current_resource.data.get(key) != self.data.get(key)
+                if key != 'password' and matched:
+                    field_changed = True
+                    break
+
+        if not self.current_resource or field_changed:
+            self.current_resource = self.resource_client.create(self.data)
+            changed, msg = True, self.MSG_CREATED
+        else:
+            msg = self.MSG_ALREADY_PRESENT
+        return dict(
+            msg=msg,
+            changed=changed,
+            ansible_facts=dict(appliance_proxy_configuration=self.current_resource.data)
+        )
+
+    def __absent(self):
+        if self.current_resource:
+            self.resource_client.delete()
+            changed, msg = True, self.MSG_DELETED
+        else:
+            msg = self.MSG_ALREADY_ABSENT
+        return dict(
+            msg=msg,
+            changed=changed,
+        )
+
 
 
 def main():

@@ -1,3 +1,6 @@
 ---
 # defaults file for oneview_appliance_proxy_configuration
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_proxy_configuration/files/oneview_config.json"
+server_ip: "16.85.88.10"
+username: "dcs"
+password: "dcs"
