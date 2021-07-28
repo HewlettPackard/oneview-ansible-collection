@@ -29,27 +29,31 @@ PARAMS_GET_ALL = dict(
     name=None
 )
 
-DEFAULT_PARAMS = dict(
-    macAddress="00:00:11:28:j8:90",
-    ipv4Type="STATIC",
-    ipv6Type="UNCONFIGURE",
-    hostname="ci-00505698f13e.com",
-    app1Ipv4Addr="1.1.1.1",
-    app2Ipv4Addr="1.1.1.2",
-    virtIpv4Addr="1.1.1.3",
-    ipv4Subnet="255.255.0.0",
-    ipv4Gateway="10.10.1.1",
-    ipv4NameServers=[
+DEFAULT_PARAMS = {
+    "macAddress": "00:00:11:28:j8:90",
+    "ipv4Type": "STATIC",
+    "ipv6Type": "UNCONFIGURE",
+    "hostname": "ci-00505698f13e.com",
+    "app1Ipv4Addr": "1.1.1.1",
+    "app2Ipv4Addr": "1.1.1.2",
+    "virtIpv4Addr": "1.1.1.3",
+    "ipv4Subnet": "255.255.0.0",
+    "ipv4Gateway": "10.10.1.1",
+    "ipv4NameServers": [
         "16.17.18.19",
         "16.17.18.20"
-    ],
+    ]
+}
+
+NETWORK_INTERFACE = dict(
+    config='config.json',
+    data=dict(applianceNetworks=[
+    DEFAULT_PARAMS])
 )
 
-NETWORK_INTERFACE = dict(applianceNetworks=[
-    DEFAULT_PARAMS
-]
-
-PARAMS_GET_BY_MAC = dict(macAddress="00:00:11:28:j8:90")
+PARAMS_GET_BY_MAC = dict(
+    config='config.json',
+    macAddress="00:00:11:28:j8:90")
 
 
 @pytest.mark.resource(TestApplianceNetworkInterfaceFactsModule='appliance_network_interfaces')
