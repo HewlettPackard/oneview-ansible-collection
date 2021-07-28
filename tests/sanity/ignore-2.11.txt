@@ -13,6 +13,8 @@ plugins/modules/oneview_appliance_device_snmp_v3_users.py validate-modules:missi
 plugins/modules/oneview_appliance_device_snmp_v3_users_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_proxy_configuration.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_proxy_configuration_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_network_interfaces.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_network_interface_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_ssh_access_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_ssh_access.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_time_and_locale_configuration_facts.py validate-modules:missing-gplv3-license

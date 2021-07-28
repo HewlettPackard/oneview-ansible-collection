@@ -1,0 +1,42 @@
+---
+- name: Creates Network Interface if doesn't exist
+  oneview_appliance_network_interfaces:
+    config: "{{ config }}"
+    state: present
+    data:
+      macAddress: "{{mac_address}}"
+      ipv4Type: "STATIC"
+      ipv6Type: "UNCONFIGURE"
+      hostname: "{{hostname}}"
+      app1Ipv4Addr: "{{app1_ipv4_address}}"
+      app2Ipv4Addr: "{{app2_ipv4_address}}"
+      virtIpv4Addr: "{{ ipv4_address }}"
+      ipv4Subnet: "{{ ipv4_subnet }}"
+      ipv4Gateway: "{{ gateway }}"
+      ipv4NameServers: 
+         - "{{ dnsServer1 }}"
+         - "{{ dnsServer2 }}"
+  delegate_to: localhost
+- debug: var=appliance_network_interfaces
+
+- name: Do nothing when network interface exists
+  oneview_appliance_network_interfaces:
+    config: "{{ config }}"
+    state: present
+    data:
+      macAddress: "{{mac_address}}"
+  delegate_to: localhost
+- debug: var=appliance_network_interfaces
+
+- name: Updates dns servers of the network interface
+  oneview_appliance_network_interfaces:
+    config: "{{ config }}"
+    state: present
+    data:
+      macAddress: "{{mac_address}}"
+      ipv4NameServers:
+         - "{{ dnsServer1 }}"
+         - "{{ dnsServer3 }}"
+  delegate_to: localhost
+- debug: var=appliance_network_interfaces
+
