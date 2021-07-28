@@ -39,4 +39,3 @@
          - "{{ dnsServer3 }}"
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
-

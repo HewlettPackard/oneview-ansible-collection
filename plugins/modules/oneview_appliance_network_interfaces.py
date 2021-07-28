@@ -17,7 +17,7 @@
 ###
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
-import json
+
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
