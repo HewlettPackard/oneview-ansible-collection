@@ -24,7 +24,7 @@ import pytest
 
 from copy import deepcopy
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceNetworkInterfaceModule
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceNetworkInterfacesModule
 
 ERROR_MSG = 'Fake message error'
 
@@ -51,8 +51,8 @@ PARAMS_FOR_PRESENT = dict(
 )
 
 
-@pytest.mark.resource(TestApplianceNetworkInterfaceModule='appliance_network_interfaces')
-class TestApplianceNetworkInterfaceModule(OneViewBaseTest):
+@pytest.mark.resource(TestApplianceNetworkInterfacesModule='appliance_network_interfaces')
+class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
     def test_should_create_network_interface(self):
         self.resource.get_by_mac_address.return_value = None
         self.resource.data = DEFAULT_PARAMS
@@ -60,11 +60,11 @@ class TestApplianceNetworkInterfaceModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        ApplianceNetworkInterfaceModule().run()
+        ApplianceNetworkInterfacesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=ApplianceNetworkInterfaceModule.MSG_CREATED,
+            msg=ApplianceNetworkInterfacesModule.MSG_CREATED,
             ansible_facts=dict(appliance_network_interfaces=DEFAULT_PARAMS)
         )
 
@@ -73,11 +73,11 @@ class TestApplianceNetworkInterfaceModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        ApplianceNetworkInterfaceModule().run()
+        ApplianceNetworkInterfacesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=ApplianceNetworkInterfaceModule.MSG_ALREADY_PRESENT
+            msg=ApplianceNetworkInterfacesModule.MSG_ALREADY_PRESENT
         )
 
     def test_should_update_when_network_interface_has_different_attributes(self):
@@ -90,11 +90,11 @@ class TestApplianceNetworkInterfaceModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        ApplianceNetworkInterfaceModule().run()
+        ApplianceNetworkInterfacesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=ApplianceNetworkInterfaceModule.MSG_CREATED,
+            msg=ApplianceNetworkInterfacesModule.MSG_CREATED,
             ansible_facts=dict(appliance_network_interfaces=network_data)
         )
 

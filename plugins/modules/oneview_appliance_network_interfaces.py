@@ -89,7 +89,7 @@ appliance_network_interface:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, dict_merge, compare
 
 
-class ApplianceNetworkInterfaceModule(OneViewModule):
+class ApplianceNetworkInterfacesModule(OneViewModule):
     MSG_CREATED = 'Appliance Network Interface created successfully.'
     MSG_ALREADY_PRESENT = 'Appliance Proxy Configuration is already present.'
 
@@ -130,7 +130,7 @@ class ApplianceNetworkInterfaceModule(OneViewModule):
 
 
 def main():
-    ApplianceNetworkInterfaceModule().run()
+    ApplianceNetworkInterfacesModule().run()
 
 
 if __name__ == '__main__':

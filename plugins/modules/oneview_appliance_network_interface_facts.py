@@ -35,7 +35,7 @@ requirements:
     - "hpeOneView >= 6.3.0"
 author:
     "Yuvarani Chidambaram (@yuvirani)"
-paramss:
+params:
     mac_address:
       description:
         - mac address of the Network interface.

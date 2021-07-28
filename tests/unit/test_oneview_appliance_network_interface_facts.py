@@ -47,8 +47,7 @@ DEFAULT_PARAMS = {
 
 NETWORK_INTERFACE = dict(
     config='config.json',
-    data=dict(applianceNetworks=[
-    DEFAULT_PARAMS])
+    data=dict(applianceNetworks=[DEFAULT_PARAMS])
 )
 
 PARAMS_GET_BY_MAC = dict(
@@ -80,8 +79,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
             changed=False,
             ansible_facts=dict(appliance_network_interfaces=NETWORK_INTERFACE)
         )
-
-
+        
 
 if __name__ == '__main__':
     pytest.main([__file__])
