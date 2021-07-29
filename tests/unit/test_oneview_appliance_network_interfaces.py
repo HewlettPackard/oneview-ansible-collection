@@ -94,11 +94,12 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         )
 
     def test_should_update_when_network_interface_has_different_attributes(self):
-
         network_data = DEFAULT_PARAMS.copy()
-        network_data['ipv4NameServers'] = ['16.17.18.21', '16.17.18.22']
-
+        network_data['ipv4NameServers'] = ['16.17.18.21', '16.17.18.22']       
+        
+        self.resource.get_by_mac_address.return_value = DEFAULT_PARAMS
         self.resource.data = network_data
+        self.resource.create.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_FOR_UPDATE
 
         ApplianceNetworkInterfacesModule().run()
@@ -106,7 +107,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=ApplianceNetworkInterfacesModule.MSG_CREATED,
-            ansible_facts=dict(appliance_network_interfaces=self.resource.data)
+            ansible_facts=dict(appliance_network_interfaces=network_data)
         )
 
 
