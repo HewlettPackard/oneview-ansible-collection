@@ -43,11 +43,22 @@ DEFAULT_PARAMS = {
         "16.17.18.20"
     ]
 }
-
+UPDATE_DNS = {
+    "ipv4NameServers": [
+        "16.17.18.21",
+        "16.17.18.22"
+    ]
+}
 PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
     data=DEFAULT_PARAMS,
+)
+
+PARAMS_FOR_UPDATE = dict(
+    config='config.json',
+    state='present',
+    data=UPDATE_DNS,
 )
 
 
@@ -77,7 +88,8 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=ApplianceNetworkInterfacesModule.MSG_ALREADY_PRESENT
+            msg=ApplianceNetworkInterfacesModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(appliance_network_interfaces=DEFAULT_PARAMS)
         )
 
     def test_should_update_when_network_interface_has_different_attributes(self):
@@ -89,7 +101,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
 
         self.resource.create.return_value = network_data
 
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = PARAMS_FOR_UPDATE
 
         ApplianceNetworkInterfacesModule().run()
 
