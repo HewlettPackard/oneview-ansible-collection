@@ -22,7 +22,6 @@ __metaclass__ = type
 import mock
 import pytest
 
-from copy import deepcopy
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceNetworkInterfacesModule
 
@@ -81,6 +80,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
 
     def test_should_do_nothing_when_network_interface_exist(self):
         self.resource.data = DEFAULT_PARAMS
+        self.resource.get_by_mac_address.return_value = self.resource
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
@@ -93,13 +93,13 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         )
 
     def test_should_update_when_network_interface_has_different_attributes(self):
-        network_data = deepcopy(DEFAULT_PARAMS)
+        self.resource.data = DEFAULT_PARAMS
+        network_data = DEFAULT_PARAMS.copy()
         network_data['ipv4NameServers'] = ['16.17.18.21', '16.17.18.22']
 
         self.resource.get_by_mac_address.return_value = self.resource
-        self.resource.data = deepcopy(DEFAULT_PARAMS)
-
-        self.resource.create.return_value = network_data
+       
+        self.resource.create.return_value = self.resource
 
         self.mock_ansible_module.params = PARAMS_FOR_UPDATE
 

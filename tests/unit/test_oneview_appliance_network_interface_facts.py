@@ -80,7 +80,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
             changed=False,
             ansible_facts=dict(appliance_network_interfaces=NETWORK_INTERFACE)
         )
-    
+
 
 if __name__ == '__main__':
     pytest.main([__file__])

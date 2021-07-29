@@ -35,6 +35,12 @@ requirements:
     - "hpeOneView >= 6.3.0"
 author:
     "Yuvarani Chidambaram (@yuvirani)"
+options:
+    params:
+        description:
+          - mac_address of the Appliance Network Interface.
+        type: str
+        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
