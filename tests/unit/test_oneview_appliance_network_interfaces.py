@@ -69,7 +69,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         )
 
     def test_should_do_nothing_when_network_interface_exist(self):
-        self.resource.get_by_mac_address.return_value = []
+        self.resource.data = DEFAULT_PARAMS
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
@@ -87,7 +87,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         self.resource.get_by_mac_address.return_value = self.resource
         self.resource.data = deepcopy(DEFAULT_PARAMS)
 
-        self.resource.create.return_value = self.resource
+        self.resource.create.return_value = network_data
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 

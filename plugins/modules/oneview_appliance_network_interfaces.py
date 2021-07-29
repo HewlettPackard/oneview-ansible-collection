@@ -39,7 +39,6 @@ options:
         description:
           - Indicates the desired state for the Appliance Network Interface.
             C(present) ensures data properties are compliant with OneView.
-            C(absent) removes the resource from OneView, if it exists.
         choices: ['present']
         type: str
         required: true
