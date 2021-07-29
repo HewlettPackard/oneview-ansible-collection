@@ -100,7 +100,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         self.resource.get_by_mac_address.return_value = self.resource
         self.resource.data = network_data
         self.resource.create.return_value = self.resource
-        self.mock_ansible_module.params = PARAMS_FOR_UPDATE
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
         ApplianceNetworkInterfacesModule().run()
 
