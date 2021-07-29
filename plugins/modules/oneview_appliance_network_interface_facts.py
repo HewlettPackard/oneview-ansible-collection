@@ -39,7 +39,7 @@ options:
     params:
         description:
           - mac_address of the Appliance Network Interface.
-        type: str
+        type: dict
         required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
