@@ -43,6 +43,7 @@ DEFAULT_PARAMS = {
     ]
 }
 UPDATE_DNS = {
+    "macAddress": "00:00:11:28:j8:90",
     "ipv4NameServers": [
         "16.17.18.21",
         "16.17.18.22"
@@ -93,7 +94,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         )
 
     def test_should_update_when_network_interface_has_different_attributes(self):
-   
+
         network_data = DEFAULT_PARAMS.copy()
         network_data['ipv4NameServers'] = ['16.17.18.21', '16.17.18.22']
         self.resource.get_by_mac_address.return_value = self.resource
