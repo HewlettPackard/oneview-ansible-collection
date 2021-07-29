@@ -70,6 +70,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
         )
 
     def test_should_get_network_interface_by_mac_address(self):
+        self.resource.get_all.return_value = self.resource
         self.resource.data = NETWORK_INTERFACE
         self.mock_ansible_module.params = PARAMS_GET_BY_MAC
 
@@ -79,7 +80,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
             changed=False,
             ansible_facts=dict(appliance_network_interfaces=NETWORK_INTERFACE)
         )
-        
+    
 
 if __name__ == '__main__':
     pytest.main([__file__])

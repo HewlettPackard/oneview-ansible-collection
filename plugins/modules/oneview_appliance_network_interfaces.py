@@ -117,7 +117,7 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
                 field_changed = True
 
         if not self.current_resource or field_changed:
-            data["applianceNetworks"] = [updated_data]
+            data["applianceNetworks"] = [self.data]
             self.current_resource = self.resource_client.create(data)
             changed, msg = True, self.MSG_CREATED
         else:

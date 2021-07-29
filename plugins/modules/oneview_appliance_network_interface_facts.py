@@ -35,11 +35,6 @@ requirements:
     - "hpeOneView >= 6.3.0"
 author:
     "Yuvarani Chidambaram (@yuvirani)"
-params:
-    mac_address:
-      description:
-        - mac address of the Network interface.
-      type: str
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -49,6 +44,13 @@ EXAMPLES = '''
 - name: Gather facts about the Appliance Network Interface
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
+  delegate_to: localhost
+
+- name: Gather facts about the Network Interfaces by Mac Address
+  oneview_appliance_network_interface_facts:
+    config: "{{ config }}"
+    params:
+       mac_address: "{{ mac_address }}"
   delegate_to: localhost
 '''
 

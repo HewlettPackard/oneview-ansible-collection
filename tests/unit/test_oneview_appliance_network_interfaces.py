@@ -84,6 +84,7 @@ class TestApplianceNetworkInterfacesModule(OneViewBaseTest):
         network_data = deepcopy(DEFAULT_PARAMS)
         network_data['ipv4NameServers'] = ['16.17.18.21', '16.17.18.22']
 
+        self.resource.get_by_mac_address.return_value = self.resource
         self.resource.data = deepcopy(DEFAULT_PARAMS)
 
         self.resource.create.return_value = self.resource
