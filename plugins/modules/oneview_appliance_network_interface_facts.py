@@ -79,7 +79,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceNetworkInterfaceFactsModule(OneViewModule):
     argument_spec = dict(
-        params=dict(required=False, type='dict')
+        params=dict(required=False, type='dict'),
+        options=dict(required=False, type='list')
     )
 
     def __init__(self):
@@ -87,7 +88,7 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_network_interfaces)
 
     def execute_module(self):
-        
+
         if self.module.params.get('mac_address'):
             network_interfaces = self.resource_client.get_by_mac_address(self.module.params.get('mac_address')).data
         elif 'getAllMacAddress' in self.options:
