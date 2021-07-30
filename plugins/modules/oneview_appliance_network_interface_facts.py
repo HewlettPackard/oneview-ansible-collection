@@ -80,21 +80,16 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_network_interfaces)
 
     def execute_module(self):
-        ansible_facts = {}
-
+        
         if self.module.params.get('mac_address'):
-            network_interfaces = self.resource_client.get_by_mac_address(self.module.params.get('mac_address'))
-        else:
-            network_interfaces = self.resource_client.get_all()
-
-        if network_interfaces:
-            ansible_facts['appliance_network_interfaces'] = network_interfaces.data
+            network_interfaces = self.resource_client.get_by_mac_address(self.module.params.get('mac_address')).data
         elif self.module.params.get('get_all_mac_address'):
-            network_interfaces_mac = self.resource_client.get_all_mac_addresses()
-            ansible_facts['appliance_network_interfaces'] = network_interfaces_mac
+            network_interfaces = self.resource_client.get_all_mac_address()
+        else:
+            network_interfaces = self.resource_client.get_all().data
 
         return dict(changed=False,
-                    ansible_facts=ansible_facts)
+                    ansible_facts=dict(appliance_network_interfaces=network_interfaces))
 
 
 def main():
