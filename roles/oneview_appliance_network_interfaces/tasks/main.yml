@@ -25,6 +25,17 @@
     state: present
     data:
       macAddress: "{{mac_address}}"
+      ipv4Type: "STATIC"
+      ipv6Type: "UNCONFIGURE"
+      hostname: "{{hostname}}"
+      app1Ipv4Addr: "{{app1_ipv4_address}}"
+      app2Ipv4Addr: "{{app2_ipv4_address}}"
+      virtIpv4Addr: "{{ ipv4_address }}"
+      ipv4Subnet: "{{ ipv4_subnet }}"
+      ipv4Gateway: "{{ gateway }}"
+      ipv4NameServers: 
+         - "{{ dnsServer1 }}"
+         - "{{ dnsServer2 }}"
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
 

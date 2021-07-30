@@ -45,7 +45,7 @@ options:
     data:
         description:
             - List with the Network Interface.
-        required: false
+        required: true
         type: dict
 
 extends_documentation_fragment:
@@ -94,7 +94,7 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
-            data=dict(required=False, type='dict'),
+            data=dict(required=True, type='dict'),
             state=dict(
                 required=True,
                 choices=['present']),

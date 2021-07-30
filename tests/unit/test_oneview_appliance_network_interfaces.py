@@ -42,23 +42,11 @@ DEFAULT_PARAMS = {
         "16.17.18.20"
     ]
 }
-UPDATE_DNS = {
-    "macAddress": "00:00:11:28:j8:90",
-    "ipv4NameServers": [
-        "16.17.18.21",
-        "16.17.18.22"
-    ]
-}
+
 PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
     data=DEFAULT_PARAMS,
-)
-
-PARAMS_FOR_UPDATE = dict(
-    config='config.json',
-    state='present',
-    data=UPDATE_DNS,
 )
 
 

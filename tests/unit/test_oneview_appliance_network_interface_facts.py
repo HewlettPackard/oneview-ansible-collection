@@ -81,6 +81,19 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
             ansible_facts=dict(appliance_network_interfaces=NETWORK_INTERFACE)
         )
 
+    def test_should_get_all_unconfigured_mac_addresses(self):
+        mac_addresses = [DEFAULT_PARAMS]
+        self.resource.get_all.return_value = mac_addresses
+
+        self.mock_ansible_module.params = PARAMS_GET_ALL
+
+        ApplianceNetworkInterfaceFactsModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(appliance_network_interfaces=mac_addresses)
+        )
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
