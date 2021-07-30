@@ -70,7 +70,7 @@ EXAMPLES = '''
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
     options:
-       - 'getAllMacAddress'
+       - getAllMacAddress
   delegate_to: localhost
 
 - debug: var=appliance_network_interfaces
