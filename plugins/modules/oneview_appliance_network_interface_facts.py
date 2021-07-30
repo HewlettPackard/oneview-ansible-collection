@@ -65,6 +65,15 @@ EXAMPLES = '''
     params:
        mac_address: "{{ mac_address }}"
   delegate_to: localhost
+
+- name: Gather facts about the all unconfigured Mac Addresses
+  oneview_appliance_network_interface_facts:
+    config: "{{ config }}"
+    options:
+       - 'getAllMacAddress'
+  delegate_to: localhost
+
+- debug: var=appliance_network_interfaces
 '''
 
 RETURN = '''
