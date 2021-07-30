@@ -86,7 +86,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
 
     def test_should_get_all_unconfigured_mac_address(self):
         mac_addresses = [DEFAULT_PARAMS]
-        self.resource.get_all_mac_address.return_value = mac_addresses
+        self.resource.get_all.return_value = mac_addresses
 
         self.mock_ansible_module.params = PARAMS_GET_ALL_MAC_ADDRESS
 
