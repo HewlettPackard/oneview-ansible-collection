@@ -41,6 +41,13 @@ options:
           - mac_address of the Appliance Network Interface.
         type: dict
         required: false
+    options:
+      description:
+        - "List with options to gather additional facts about unconfigured mac addresses.
+           Options allowed:
+           C(getAllMacAddress)."
+      required: false
+      type: list
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -83,7 +90,7 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
         
         if self.module.params.get('mac_address'):
             network_interfaces = self.resource_client.get_by_mac_address(self.module.params.get('mac_address')).data
-        elif self.module.params.get('get_all_mac_address'):
+        elif 'getAllMacAddress' in self.options:
             network_interfaces = self.resource_client.get_all_mac_address()
         else:
             network_interfaces = self.resource_client.get_all().data
