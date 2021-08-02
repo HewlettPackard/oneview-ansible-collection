@@ -22,6 +22,11 @@
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: | :-----------------: | :-----------------: |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+|     **Appliance Network Interfaces**  |
+|<sub>/rest/appliance/network-interfaces</sub>                                              |    GET       |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
+|<sub>/rest/appliance/network-interfaces</sub>                                              |    POST      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
+|<sub>/rest/appliance/network-interfaces/{macAddress}</sub>                                 |    GET       |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
+|<sub>/rest/appliance/network-interfaces/mac-addresses</sub>                                |    GET       |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
 |     **Appliance Proxy Configuration**  |
 |<sub>/rest/appliance/proxy-config</sub>                                              |    GET       |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |
 |<sub>/rest/appliance/proxy-config</sub>                                              |    POST      |  :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |  :white_check_mark:   |  :white_check_mark:  |

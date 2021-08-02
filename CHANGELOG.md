@@ -2,8 +2,11 @@
 This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
 
 ### Modules supported in this release
+- oneview_appliance_network_interfaces
+- oneview_appliance_network_interface_facts
 - oneview_appliance_proxy_configuration
 - oneview_appliance_proxy_configuration_facts
+
 
 # Ansible Collections for HPE OneView Change Log
 
