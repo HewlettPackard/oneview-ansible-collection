@@ -112,8 +112,10 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
         if self.current_resource:
             existing_data = self.current_resource.data.copy()
             updated_data = dict_merge(existing_data, self.data)
+
             if not compare(self.current_resource.data, updated_data):
                 field_changed = True
+                self.data = updated_data
 
         if not self.current_resource or field_changed:
             data["applianceNetworks"] = [self.data]

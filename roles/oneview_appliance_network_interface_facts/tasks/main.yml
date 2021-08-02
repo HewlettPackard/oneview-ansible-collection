@@ -3,7 +3,6 @@
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
   delegate_to: localhost
-
 - debug: var=appliance_network_interfaces
 
 - name: Gather facts about the Network Interfaces by Mac Address
@@ -12,6 +11,7 @@
     params:
        mac_address: "{{ mac_address }}"
   delegate_to: localhost
+- debug: var=appliance_network_interfaces
 
 - name: Gather facts about the all unconfigured Mac Addresses
   oneview_appliance_network_interface_facts:
@@ -19,5 +19,4 @@
     options:
        - getAllMacAddress
   delegate_to: localhost
-
 - debug: var=appliance_network_interfaces
