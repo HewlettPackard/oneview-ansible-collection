@@ -46,6 +46,11 @@ options:
         - ID Pools IPV4 Subnet ID or URI.
       required: false
       type: str
+    name:
+      description:
+        - ID Pools IPV4 Subnet name.
+      required: false
+      type: str
 
 extends_documentation_fragment:
    - hpe.oneview.oneview
@@ -116,7 +121,7 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
     def execute_module(self):
         id_pools_ipv4_subnets = []
         if self.module.params.get('networkId', ''):
-            id_pools_ipv4_subnets = [self.resource_client.get_by('networkId', self.module.params['networkId']).data]
+            id_pools_ipv4_subnets = [self.resource_client.get_by_field('networkId', self.module.params['networkId']).data]
         elif self.module.params.get('name', ''):
             id_pools_ipv4_subnets = self.resource_client.get_by("name", self.module.params['name'].data)
         elif self.module.params.get('uri', ''):
