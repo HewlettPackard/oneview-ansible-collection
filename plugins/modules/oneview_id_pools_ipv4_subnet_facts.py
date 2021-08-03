@@ -56,23 +56,38 @@ extends_documentation_fragment:
 EXAMPLES = '''
 - name: Gather facts about all ID Pools IPV4 Subnets
   oneview_id_pools_ipv4_subnet_facts:
-    config: "{{ config_file_path }}"
+    config: "{{ config }}"
+  delegate_to: localhost
 
 - debug: var=id_pools_ipv4_subnets
 
-- name: Gather paginated, filtered and sorted facts about ID Pools IPV4 Subnets
+- name: Gather paginated, and sorted facts about ID Pools IPV4 Subnets
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
     params:
-      start: 1
+      start: 0
       count: 3
       sort: 'name:descending'
+
 - debug: var=id_pools_ipv4_subnets
+
+- name: Gather facts about a ID pools by uri
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
+  delegate_to: localhost
+
+- name: Gather facts about ID Pools IPV4 Subnets by networkId
+  oneview_id_pools_ipv4_subnet_facts:
+    config: "{{ config }}"
+    networkId: "{{ id_pools_ipv4_subnets[0]['networkId'] }}"
+  delegate_to: localhost
 
 - name: Gather facts about a ID Pools IPV4 Subnet by name
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config_file_path }}"
-    name: IPV4Subnet_01
+    name: "{{ id_pools_ipv4_subnets[0]['name'] }}"
+  delegate_to: localhost
 
 - debug: var=id_pools_ipv4_subnets
 '''
@@ -90,6 +105,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class IdPoolsIpv4SubnetFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
+            name=dict(required=False, type='str'),
             networkId=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
@@ -99,10 +115,12 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
 
     def execute_module(self):
         id_pools_ipv4_subnets = []
-        if self.current_resource:
-            id_pools_ipv4_subnets = self.current_resource.data
-        elif self.module.params.get('networkId', ''):
-            id_pools_ipv4_subnets = [self.resource_client.get_by_field('networkId', self.module.params['networkId']).data]
+        if self.module.params.get('networkId', ''):
+            id_pools_ipv4_subnets = [self.resource_client.get_by('networkId', self.module.params['networkId']).data]
+        elif self.module.params.get('name', ''):
+            id_pools_ipv4_subnets = self.resource_client.get_by("name", self.module.params['name'].data)
+        elif self.module.params.get('uri', ''):
+            id_pools_ipv4_subnets = self.resource_client.get_by("uri", self.module.params['uri'].data)
         else:
             id_pools_ipv4_subnets = self.resource_client.get_all(**self.facts_params)
 

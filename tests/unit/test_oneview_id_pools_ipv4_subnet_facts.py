@@ -40,6 +40,11 @@ PARAMS_GET_BY_NETWORK_ID = dict(
     networkId='172.1.0.0'
 )
 
+PARAMS_GET_BY_URI = dict(
+    config='config.json',
+    networkId='/rest/ipv4-subnet/test'
+)
+
 DEFAULT_SUBNET = {
     "name": "Test IPV4 Subnet",
     "uri": '/rest/ipv4-subnet/test'
@@ -83,6 +88,18 @@ class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
             changed=False,
             ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
         )
+
+    def test_should_get_id_pools_ipv4_subnet_by_uri(self):
+        self.resource.data = DEFAULT_SUBNET
+        self.resource.get_by_field.return_value = self.resource
+        self.mock_ansible_module.params = PARAMS_GET_BY_URI
+
+        IdPoolsIpv4SubnetFactsModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
+        )    
 
 
 if __name__ == '__main__':
