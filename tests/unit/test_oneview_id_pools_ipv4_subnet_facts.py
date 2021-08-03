@@ -18,7 +18,7 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import pytest
+import pytest, mock
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import IdPoolsIpv4SubnetFactsModule
@@ -79,8 +79,10 @@ class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_id_pools_ipv4_subnet_by_uri(self):
-        self.resource.data = DEFAULT_SUBNET
-        self.resource.get_by_uri.return_value = self.resource
+        default_subnet = DEFAULT_SUBNET
+        obj = mock.Mock()
+        obj.data = default_subnet
+        self.resource.get_by_uri.return_value = obj
         self.mock_ansible_module.params = PARAMS_GET_BY_URI
 
         IdPoolsIpv4SubnetFactsModule().run()
