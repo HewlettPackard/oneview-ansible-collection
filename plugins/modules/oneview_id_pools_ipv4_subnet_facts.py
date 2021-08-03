@@ -59,6 +59,7 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
+---
 - name: Gather facts about all ID Pools IPV4 Subnets
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
@@ -75,12 +76,6 @@ EXAMPLES = '''
       sort: 'name:descending'
 
 - debug: var=id_pools_ipv4_subnets
-
-- name: Gather facts about a ID pools by uri
-  oneview_server_hardware_facts:
-    config: "{{ config }}"
-    uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
-  delegate_to: localhost
 
 - name: Gather facts about ID Pools IPV4 Subnets by networkId
   oneview_id_pools_ipv4_subnet_facts:

@@ -18,7 +18,7 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import pytest, mock
+import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import IdPoolsIpv4SubnetFactsModule
@@ -40,11 +40,6 @@ PARAMS_GET_BY_NETWORK_ID = dict(
     networkId='172.1.0.0'
 )
 
-PARAMS_GET_BY_URI = dict(
-    config='config.json',
-    uri='/rest/ipv4-subnet/test'
-)
-
 DEFAULT_SUBNET = {
     "name": "Test IPV4 Subnet",
     "uri": '/rest/ipv4-subnet/test'
@@ -55,6 +50,17 @@ PRESENT_SUBNETS = [DEFAULT_SUBNET.copy()]
 
 @pytest.mark.resource(TestIdPoolsIpv4SubnetFactsModule='id_pools_ipv4_subnets')
 class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
+    def test_should_get_subnet_by_name(self):
+        self.resource.data = PRESENT_SUBNETS
+        self.mock_ansible_module.params = PARAMS_GET_BY_NAME
+
+        IdPoolsIpv4SubnetFactsModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
+        )
+
     def test_should_get_all_id_pools_ipv4_subnets(self):
         self.resource.get_all.return_value = PRESENT_SUBNETS
         self.mock_ansible_module.params = PARAMS_GET_ALL
@@ -77,17 +83,6 @@ class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
             changed=False,
             ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
         )
-
-    def test_should_get_id_pools_ipv4_subnet_by_name(self):
-        self.resource.data = DEFAULT_SUBNET
-        self.resource.get_by_field.return_value = self.resource
-        self.mock_ansible_module.params = PARAMS_GET_BY_NAME
-
-        IdPoolsIpv4SubnetFactsModule().run()
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=False,
-            ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS))
 
 
 if __name__ == '__main__':
