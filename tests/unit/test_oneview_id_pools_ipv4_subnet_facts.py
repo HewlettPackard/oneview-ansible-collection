@@ -84,5 +84,6 @@ class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
             ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
         )
 
+
 if __name__ == '__main__':
     pytest.main([__file__])
