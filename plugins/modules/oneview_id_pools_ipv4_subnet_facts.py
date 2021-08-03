@@ -85,7 +85,7 @@ EXAMPLES = '''
 
 - name: Gather facts about a ID Pools IPV4 Subnet by name
   oneview_id_pools_ipv4_subnet_facts:
-    config: "{{ config_file_path }}"
+    config: "{{ config }}"
     name: "{{ id_pools_ipv4_subnets[0]['name'] }}"
   delegate_to: localhost
 
