@@ -78,29 +78,16 @@ class TestIdPoolsIpv4SubnetFactsModule(OneViewBaseFactsTest):
             ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
         )
 
-    def test_should_get_id_pools_ipv4_subnet_by_uri(self):
-        default_subnet = DEFAULT_SUBNET
-        obj = mock.Mock()
-        obj.data = default_subnet
-        self.resource.get_by_uri.return_value = obj
-        self.mock_ansible_module.params = PARAMS_GET_BY_URI
-
-        IdPoolsIpv4SubnetFactsModule().run()
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=False,
-            ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS)
-        )
-
     def test_should_get_id_pools_ipv4_subnet_by_name(self):
-        self.resource.get_by.return_value = [{"name": "Subnet Name"}]
+        self.resource.data = DEFAULT_SUBNET
+        self.resource.get_by_field.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
         IdPoolsIpv4SubnetFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(id_pools_ipv4_subnets=[{"name": "Subnet Name"}]))
+            ansible_facts=dict(id_pools_ipv4_subnets=PRESENT_SUBNETS))
 
 
 if __name__ == '__main__':
