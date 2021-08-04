@@ -1,19 +1,15 @@
+# Ansible Collections for HPE OneView Change Log
 ## v6.3.0 (unreleased)
 This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
+
+#### Bug fixes & Enhancements
+- [#131] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/131) Gather facts about a ID Pools IPV4 Subnet by name doesnt supported.
 
 ### Modules supported in this release
 - oneview_appliance_network_interfaces
 - oneview_appliance_network_interface_facts
 - oneview_appliance_proxy_configuration
 - oneview_appliance_proxy_configuration_facts
-
-
-# Ansible Collections for HPE OneView Change Log
-
-## v6.3.0 (unreleased)
-This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
-
-### Modules supported in this release
 - oneview_firmware_bundle
 
 ## v6.2.0
