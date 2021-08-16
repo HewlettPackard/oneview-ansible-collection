@@ -108,8 +108,7 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
             ansible_facts=dict(appliance_device_snmp_v3_trap_destinations=DEFAULT_PARAMS)
         )
 
-
-    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.appliance_device_snmp_v3_users.get_by')
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_appliance_device_snmp_v3_users.get_by')
     def test_should_throw_exception_when_no_user_found(self, mock_getby):
         self.resource.data = DEFAULT_PARAMS
         mock_getby.return_value = []
@@ -120,8 +119,7 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
         try:
             TestApplianceDeviceSnmpV3TrapDestinationsModule().__replace_snmpv3_username_by_userid()
         except OneViewModuleResourceNotFound as e:
-            assert e.msg == ApplianceDeviceSnmpV3TrapDestinationsModule.MSG_USER_NOT_FOUND 
-
+            assert e.msg == ApplianceDeviceSnmpV3TrapDestinationsModule.MSG_USER_NOT_FOUND
 
     def test_should_not_update_when_data_is_equals(self):
         self.resource.data = DEFAULT_PARAMS
