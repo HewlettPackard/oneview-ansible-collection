@@ -113,9 +113,17 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
             destinationAddress='172.0.0.1',
             port=162
         )
+
+        PARAMS_FOR_PRESENT_WITH_NO_USERID = dict(
+            config='config.json',
+            state='present',
+            name=DEFAULT_PARAMS['destinationAddress'],
+            data=DEFAULT_PARAMS_WITH_NO_USERID
+        )
+
         self.resource.data = DEFAULT_PARAMS_WITH_NO_USERID
 
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT_WITH_NO_USERID
 
         ApplianceDeviceSnmpV3TrapDestinationsModule().run()
         try:
