@@ -387,11 +387,6 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         )
 
     def test_update_fail_when_has_exception(self):
-        UPDATE_EXCEPTION = dict(
-            error_code='CRM_ETAG_CHECK_FAILED'
-        )
-        obj = mock.Mock()
-        obj.data = UPDATE_EXCEPTION
         FAKE_MSG_ERROR = "fake message error"
         self.resource.data = DEFAULT_LIG_TEMPLATE
 

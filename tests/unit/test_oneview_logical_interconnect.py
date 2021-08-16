@@ -17,15 +17,15 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
-from tests.unit.test_oneview_server_profile import TASK_ERROR
 __metaclass__ = type
 
 import mock
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LogicalInterconnectModule
-
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import (LogicalInterconnectModule,
+                                                                                    OneViewModuleException, 
+                                                                                    OneViewModuleTaskError)
 FAKE_MSG_ERROR = 'Fake message error'
 
 LOGICAL_INTERCONNECT = {'uri': '/rest/logical-interconnects/id',
@@ -299,19 +299,14 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
         )
 
     def test_should_not_return_to_a_consistent_state_when_there_is_an_exception(self):
-        COMPLIANCE_EXCEPTION = dict(
-            oneview_response=dict(
-                errorCode='CRM_ONGOING_OPERATION_ON_LOGICAL_INTERCONNECT'
-            )
-        )
-        obj = mock.Mock()
-        obj.data = COMPLIANCE_EXCEPTION
         self.resource.data = LOGICAL_INTERCONNECT
-        self.resource.update_compliance.side_effect = obj
+        self.resource.update_compliance.side_effect = OneViewModuleTaskError(msg=FAKE_MSG_ERROR, error_code='unexpected')
 
         self.mock_ansible_module.params = PARAMS_COMPLIANCE
-
-        LogicalInterconnectModule().run()
+        try:
+            LogicalInterconnectModule().run()
+        except OneViewModuleException as e:
+            assert(e.args[0] == FAKE_MSG_ERROR)
 
     def test_should_fail_when_logical_interconnect_not_found(self):
         self.resource.get_by_name.return_value = None
