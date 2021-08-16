@@ -102,7 +102,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=ApplianceProxyConfigurationModule.MSG_CREATED,
-            ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
+            ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS_FOR_UPDATE)
         )
 
     def test_should_remove_proxy_configuration(self):
