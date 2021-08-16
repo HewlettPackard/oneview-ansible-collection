@@ -66,7 +66,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         )
 
     def test_should_do_nothing_when_proxy_configuration_exists(self):
-        self.resource.get_by_proxy.return_value = DEFAULT_PARAMS
+        self.resource.get_by_proxy.return_value = PARAMS_FOR_PRESENT
         self.resource.data = DEFAULT_PARAMS
         self.resource.create.return_value = self.resource
 
