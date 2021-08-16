@@ -385,6 +385,18 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
             ansible_facts=dict(logical_interconnect_group=DEFAULT_LIG_TEMPLATE)
         )
 
+    def test_update_fail_when_has_exception(self):
+        FAKE_MSG_ERROR = "fake message error"
+        self.resource.data = DEFAULT_LIG_TEMPLATE
+
+        self.mock_ansible_module.params = PARAMS_WITH_CHANGES
+
+        self.resource.update.side_effect = Exception(FAKE_MSG_ERROR)
+
+        LogicalInterconnectGroupModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=FAKE_MSG_ERROR)
+
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
