@@ -65,6 +65,21 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
             ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
         )
 
+    def test_should_do_nothing_when_proxy_configuration_exists(self):
+        self.resource.get_by_proxy.return_value = DEFAULT_PARAMS
+        self.resource.data = DEFAULT_PARAMS
+        self.resource.create.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+
+        ApplianceProxyConfigurationModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ApplianceProxyConfigurationModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
+        )
+
     def test_should_remove_proxy_configuration(self):
         self.resource.get_by_proxy.return_value = [DEFAULT_PARAMS]
         self.mock_ansible_module.params = PARAMS_FOR_ABSENT

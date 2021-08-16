@@ -108,10 +108,10 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
             ansible_facts=dict(appliance_device_snmp_v3_trap_destinations=DEFAULT_PARAMS)
         )
 
-    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_appliance_device_snmp_v3_users.get_by')
     def test_should_throw_exception_when_no_user_found(self, mock_getby):
         self.resource.data = DEFAULT_PARAMS
         mock_getby.return_value = []
+        self.mock_ov_client.appliance_device_snmp_v3_users.get_by.return_value = []
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 

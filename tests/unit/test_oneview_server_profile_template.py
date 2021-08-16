@@ -306,7 +306,7 @@ class TestServerProfileTemplateModule(OneViewBaseTest):
         self.mock_ansible_module.params = params_to_refresh_state
 
         patch_return = BASIC_TEMPLATE_REFRESH_STATE.copy()
-        patch_return['refreshStateData']['refreshStateData'] = ['test']
+        patch_return['refreshStateData']['refreshState'] = ['NonRefreshPending']
         obj = mock.Mock()
         obj.data = patch_return
         self.resource.patch.return_value = obj
