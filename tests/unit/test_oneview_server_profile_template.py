@@ -90,7 +90,7 @@ BASIC_TEMPLATE_REFRESH_STATE = dict(
     serverHardwareTypeUri=SHT_URI,
     enclosureGroupUri=ENCLOSURE_GROUP_URI,
     refreshStateData=dict(
-        refreshState= "Refresh")
+        refreshState="Refresh")
 )
 
 
@@ -316,7 +316,7 @@ class TestServerProfileTemplateModule(OneViewBaseTest):
 
         self.resource.patch.assert_called_once_with(operation='replace',
                                                     path='/refreshState',
-                                                    value=['test'])        
+                                                    value=['test'])     
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
