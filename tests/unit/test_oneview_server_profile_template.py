@@ -312,9 +312,9 @@ class TestServerProfileTemplateModule(OneViewBaseTest):
 
         ServerProfileTemplateModule().run()
 
-        self.resource.patch.assert_called_once_with(operation='replace',
-                                                    path='/refreshState',
-                                                    value='RefreshPending')
+        self.resource.patch.assert_called_once_with('replace',
+                                                    '/refreshState',
+                                                    'RefreshPending')
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
