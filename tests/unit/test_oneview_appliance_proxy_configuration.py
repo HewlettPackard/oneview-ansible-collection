@@ -35,6 +35,14 @@ DEFAULT_PARAMS = dict(
     communicationProtocol="HTTP"
 )
 
+DEFAULT_PARAMS_FOR_UPDATE = dict(
+    server="1.1.1.2",
+    port=443,
+    username="testuser",
+    password="test",
+    communicationProtocol="HTTP"
+)
+
 PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
@@ -78,6 +86,22 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             msg=ApplianceProxyConfigurationModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
+        )
+
+    def test_should_update_when_proxy_configuration(self):
+        self.resource.data = DEFAULT_PARAMS_FOR_UPDATE
+        self.resource.get_by_proxy.return_value = self.resource
+
+        self.resource.create.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+
+        ApplianceProxyConfigurationModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ApplianceProxyConfigurationModule.MSG_CREATED,
             ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
         )
 
