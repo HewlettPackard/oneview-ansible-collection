@@ -299,7 +299,7 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
         )
 
     def test_should_not_return_to_a_consistent_state_when_there_is_an_exception(self):
-        COMPLIANCE_EXCEPTION=dict(
+        COMPLIANCE_EXCEPTION = dict(
             oneview_response=dict(
                 errorCode='CRM_ONGOING_OPERATION_ON_LOGICAL_INTERCONNECT'
             )
@@ -307,13 +307,11 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
         obj = mock.Mock()
         obj.data = COMPLIANCE_EXCEPTION
         self.resource.data = LOGICAL_INTERCONNECT
-        self.resource.update_compliance.side_effect = obj 
+        self.resource.update_compliance.side_effect = obj
 
         self.mock_ansible_module.params = PARAMS_COMPLIANCE
 
         LogicalInterconnectModule().run()
-        
-        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=LogicalInterconnectModule.MSG_NOT_FOUND)
 
     def test_should_fail_when_logical_interconnect_not_found(self):
         self.resource.get_by_name.return_value = None

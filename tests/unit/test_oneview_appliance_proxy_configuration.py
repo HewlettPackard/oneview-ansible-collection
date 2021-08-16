@@ -68,7 +68,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
     def test_should_do_nothing_when_proxy_configuration_exists(self):
         self.resource.data = DEFAULT_PARAMS
         self.resource.get_by_proxy.return_value = self.resource
-        
+
         self.resource.create.return_value = self.resource
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT

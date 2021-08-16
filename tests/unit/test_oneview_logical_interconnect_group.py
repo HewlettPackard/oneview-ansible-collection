@@ -395,8 +395,6 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
 
         LogicalInterconnectGroupModule().run()
 
-        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=FAKE_MSG_ERROR)
-
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
