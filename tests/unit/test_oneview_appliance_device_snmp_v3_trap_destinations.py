@@ -22,7 +22,7 @@ import mock
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV3TrapDestinationsModule, OneViewModuleException
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV3TrapDestinationsModule, OneViewModuleResourceNotFound, ApplianceDeviceSnmpV3UsersModule
 
 ERROR_MSG = 'Fake message error'
 
@@ -74,7 +74,7 @@ PARAMS_FOR_ABSENT = dict(
     name=DEFAULT_PARAMS['destinationAddress'],
 )
 
-
+@pytest.mark.resource(ApplianceDeviceSnmpV3UsersModule='appliance_device_snmp_v3_users')
 @pytest.mark.resource(TestApplianceDeviceSnmpV3TrapDestinationsModule='appliance_device_snmp_v3_trap_destinations')
 class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
     def test_should_raise_exception_when_api_is_lower_than_600(self):
@@ -105,7 +105,20 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
             changed=True,
             msg=ApplianceDeviceSnmpV3TrapDestinationsModule.MSG_CREATED,
             ansible_facts=dict(appliance_device_snmp_v3_trap_destinations=DEFAULT_PARAMS)
-        )
+        )        
+            
+    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.appliance_device_snmp_v3_users.get_by')
+    def test_should_throw_exception_when_no_user_found(self, mock_getby):
+        self.resource.data = DEFAULT_PARAMS
+        mock_getby.return_value = []]
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+
+        ApplianceDeviceSnmpV3TrapDestinationsModule().run()
+        try:
+            TestApplianceDeviceSnmpV3TrapDestinationsModule().__replace_snmpv3_username_by_userid()
+        except OneViewModuleResourceNotFound as e:
+            assert e.msg == ApplianceDeviceSnmpV3TrapDestinationsModule.MSG_USER_NOT_FOUND 
+
 
     def test_should_not_update_when_data_is_equals(self):
         self.resource.data = DEFAULT_PARAMS
