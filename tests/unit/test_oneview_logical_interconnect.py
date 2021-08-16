@@ -24,8 +24,9 @@ import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import (LogicalInterconnectModule,
-                                                                                    OneViewModuleException, 
+                                                                                    OneViewModuleException,
                                                                                     OneViewModuleTaskError)
+
 FAKE_MSG_ERROR = 'Fake message error'
 
 LOGICAL_INTERCONNECT = {'uri': '/rest/logical-interconnects/id',

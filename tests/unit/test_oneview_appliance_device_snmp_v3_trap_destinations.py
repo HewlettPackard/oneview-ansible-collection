@@ -109,21 +109,12 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
         )
 
     def test_should_throw_exception_when_no_user_found(self):
-        DEFAULT_PARAMS_WITH_NO_USERID = dict(
-            destinationAddress='172.0.0.1',
-            port=162
-        )
 
-        PARAMS_FOR_PRESENT_WITH_NO_USERID = dict(
-            config='config.json',
-            state='present',
-            name=DEFAULT_PARAMS['destinationAddress'],
-            data=DEFAULT_PARAMS_WITH_NO_USERID
-        )
+        self.resource.data = DEFAULT_PARAMS
 
-        self.resource.data = DEFAULT_PARAMS_WITH_NO_USERID
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT_WITH_NO_USERID
+        self.mock_ov_client.appliance_device_snmp_v3_users.get_by.return_value = None
 
         ApplianceDeviceSnmpV3TrapDestinationsModule().run()
         try:
