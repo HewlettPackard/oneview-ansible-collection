@@ -114,9 +114,8 @@ class TestApplianceDeviceSnmpV3TrapDestinationsModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        self.mock_ov_client.appliance_device_snmp_v3_users.get_by.return_value = None
+        self.mock_ov_client.appliance_device_snmp_v3_users.get_by_name.return_value = None
 
-        ApplianceDeviceSnmpV3TrapDestinationsModule().run()
         try:
             ApplianceDeviceSnmpV3TrapDestinationsModule().run()
         except OneViewModuleResourceNotFound as e:
