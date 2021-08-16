@@ -386,12 +386,17 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         )
 
     def test_update_fail_when_has_exception(self):
+        UPDATE_EXCEPTION = dict(
+            error_code='CRM_ETAG_CHECK_FAILED'
+        )
+        obj = mock.Mock()
+        obj.data = UPDATE_EXCEPTION
         FAKE_MSG_ERROR = "fake message error"
         self.resource.data = DEFAULT_LIG_TEMPLATE
 
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
 
-        self.resource.update.side_effect = Exception(FAKE_MSG_ERROR)
+        self.resource.update.side_effect = obj
 
         LogicalInterconnectGroupModule().run()
 
