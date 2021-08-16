@@ -76,7 +76,7 @@ class TestApplianceProxyConfigurationModule(OneViewBaseTest):
         ApplianceProxyConfigurationModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
+            changed=False,
             msg=ApplianceProxyConfigurationModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(appliance_proxy_configuration=DEFAULT_PARAMS)
         )
