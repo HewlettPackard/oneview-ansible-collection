@@ -17,6 +17,7 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from tests.unit.test_oneview_server_profile import TASK_ERROR
 __metaclass__ = type
 
 import mock
@@ -296,6 +297,18 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
             msg=LogicalInterconnectModule.MSG_CONSISTENT,
             ansible_facts=dict(logical_interconnect=LOGICAL_INTERCONNECT)
         )
+
+    def test_should_not_return_to_a_consistent_state_when_there_is_an_exception(self):
+        TASK_ERROR = Exception(msg="fake_message_error", error_code='CRM_ONGOING_OPERATION_ON_LOGICAL_INTERCONNECT')
+        self.resource.data = LOGICAL_INTERCONNECT
+        self.resource.update_compliance.side_effect = TASK_ERROR 
+
+        self.mock_ansible_module.params = PARAMS_COMPLIANCE
+
+        try:
+            LogicalInterconnectModule().run()
+        except Exception as e:
+            assert(e.error_code == 'CRM_ONGOING_OPERATION_ON_LOGICAL_INTERCONNECT')
 
     def test_should_fail_when_logical_interconnect_not_found(self):
         self.resource.get_by_name.return_value = None
