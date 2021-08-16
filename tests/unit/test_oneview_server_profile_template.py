@@ -316,7 +316,7 @@ class TestServerProfileTemplateModule(OneViewBaseTest):
 
         self.resource.patch.assert_called_once_with(operation='replace',
                                                     path='/refreshState',
-                                                    value='RefreshPending')     
+                                                    value='RefreshPending')
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,

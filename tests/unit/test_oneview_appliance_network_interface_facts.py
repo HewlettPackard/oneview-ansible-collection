@@ -52,7 +52,7 @@ NETWORK_INTERFACE = dict(
 
 PARAMS_GET_BY_MAC = dict(
     config='config.json',
-    macAddress="00:00:11:28:j8:90")
+    mac_address="00:00:11:28:j8:90")
 
 PARAMS_GET_ALL_MAC_ADDRESS = dict(
     config='config.json',
@@ -74,7 +74,7 @@ class TestApplianceNetworkInterfaceFactsModule(OneViewBaseTest):
         )
 
     def test_should_get_network_interface_by_mac_address(self):
-        self.resource.get_all.return_value = self.resource
+        self.resource.get_by_mac_address.return_value = self.resource
         self.resource.data = NETWORK_INTERFACE
         self.mock_ansible_module.params = PARAMS_GET_BY_MAC
 
