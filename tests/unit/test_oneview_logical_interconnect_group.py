@@ -17,6 +17,7 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from plugins.module_utils.oneview import OneViewModuleException
 __metaclass__ = type
 
 import mock
@@ -397,10 +398,10 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
 
         self.resource.update.side_effect = OneViewModuleTaskError(msg=FAKE_MSG_ERROR, error_code='unexpected')
-
-        LogicalInterconnectGroupModule().run()
-
-        assert(e.args[0] == FAKE_MSG_ERROR)
+        try:
+            LogicalInterconnectGroupModule().run()
+        except OneViewModuleException as e:
+            assert(e.args[0] == FAKE_MSG_ERROR)
 
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
