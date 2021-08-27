@@ -85,10 +85,24 @@ CREATED_BASIC_TEMPLATE_WITH_CONNECTIONS = dict(
     wwnType="Virtual"
 )
 
+BASIC_TEMPLATE_REFRESH_STATE = dict(
+    name=TEMPLATE_NAME,
+    serverHardwareTypeUri=SHT_URI,
+    enclosureGroupUri=ENCLOSURE_GROUP_URI,
+    refreshState='Refresh'
+)
+
+
 PARAMS_FOR_PRESENT = dict(
     config='config.json',
     state='present',
     data=BASIC_TEMPLATE
+)
+
+PARAMS_FOR_REFRESH_STATE = dict(
+    config='config.json',
+    state='refresh_state',
+    data=BASIC_TEMPLATE_REFRESH_STATE
 )
 
 PARAMS_FOR_PRESENT_WITH_CONNECTIONS = dict(
@@ -281,6 +295,31 @@ class TestServerProfileTemplateModule(OneViewBaseTest):
             changed=True,
             msg=ServerProfileTemplateModule.MSG_CREATED,
             ansible_facts=dict(server_profile_template=CREATED_BASIC_TEMPLATE)
+        )
+
+    def test_should_refresh_template_when_it_not_refreshpending_state(self):
+
+        self.resource.data = BASIC_TEMPLATE_REFRESH_STATE
+
+        params_to_refresh_state = PARAMS_FOR_REFRESH_STATE.copy()
+        self.mock_ansible_module.params = params_to_refresh_state
+
+        patch_return = BASIC_TEMPLATE_REFRESH_STATE.copy()
+        patch_return['refreshState'] = ['NonRefreshPending']
+        obj = mock.Mock()
+        obj.data = patch_return
+        self.resource.patch.return_value = obj
+
+        ServerProfileTemplateModule().run()
+
+        self.resource.patch.assert_called_once_with('replace',
+                                                    '/refreshState',
+                                                    'RefreshPending')
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerProfileTemplateModule.MSG_REFRESHED,
+            ansible_facts=dict(server_profile_template=BASIC_TEMPLATE_REFRESH_STATE)
         )
 
 

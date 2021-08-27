@@ -17,6 +17,7 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from plugins.module_utils.oneview import OneViewModuleException
 __metaclass__ = type
 
 import mock
@@ -24,8 +25,8 @@ import pytest
 
 from copy import deepcopy
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LogicalInterconnectGroupModule
-FAKE_MSG_ERROR = 'Fake message error'
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import (LogicalInterconnectGroupModule,
+                                                                                    OneViewModuleTaskError)
 
 DEFAULT_LIG_NAME = 'Test Logical Interconnect Group'
 RENAMED_LIG = 'Renamed Logical Interconnect Group'
@@ -384,6 +385,18 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
             msg=LogicalInterconnectGroupModule.MSG_UPDATED,
             ansible_facts=dict(logical_interconnect_group=DEFAULT_LIG_TEMPLATE)
         )
+
+    def test_update_fail_when_has_exception(self):
+        FAKE_MSG_ERROR = "fake message error"
+        self.resource.data = DEFAULT_LIG_TEMPLATE
+
+        self.mock_ansible_module.params = PARAMS_WITH_CHANGES
+
+        self.resource.update.side_effect = OneViewModuleTaskError(msg=FAKE_MSG_ERROR, error_code='unexpected')
+        try:
+            LogicalInterconnectGroupModule().run()
+        except OneViewModuleException as e:
+            assert(e.args[0] == FAKE_MSG_ERROR)
 
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE

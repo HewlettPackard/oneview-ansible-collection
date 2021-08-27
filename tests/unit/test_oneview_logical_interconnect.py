@@ -23,7 +23,9 @@ import mock
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LogicalInterconnectModule
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import (LogicalInterconnectModule,
+                                                                                    OneViewModuleException,
+                                                                                    OneViewModuleTaskError)
 
 FAKE_MSG_ERROR = 'Fake message error'
 
@@ -296,6 +298,16 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
             msg=LogicalInterconnectModule.MSG_CONSISTENT,
             ansible_facts=dict(logical_interconnect=LOGICAL_INTERCONNECT)
         )
+
+    def test_should_not_return_to_a_consistent_state_when_there_is_an_exception(self):
+        self.resource.data = LOGICAL_INTERCONNECT
+        self.resource.update_compliance.side_effect = OneViewModuleTaskError(msg=FAKE_MSG_ERROR, error_code='unexpected')
+
+        self.mock_ansible_module.params = PARAMS_COMPLIANCE
+        try:
+            LogicalInterconnectModule().run()
+        except OneViewModuleException as e:
+            assert(e.args[0] == FAKE_MSG_ERROR)
 
     def test_should_fail_when_logical_interconnect_not_found(self):
         self.resource.get_by_name.return_value = None
