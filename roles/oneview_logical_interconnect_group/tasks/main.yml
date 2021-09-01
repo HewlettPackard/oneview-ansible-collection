@@ -152,8 +152,62 @@
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
-    - { name: 'LIG' }
+#    - { name: 'LIG' }
     - { name: 'Test Logical Interconnect Group' }
+
+- name: Update the Logical Interconnect Group by deleting an uplink set "e23 uplink set2" with an Ethernet network
+  oneview_logical_interconnect_group:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: 'Test Logical Interconnect Group'
+      enclosureType: 'SY12000'
+      uplinkSets:
+        - name: 'e23 uplink set'
+          mode: 'Auto'
+          networkType: 'Ethernet'
+          ethernetNetworkType: 'Tagged'
+          networkNames:
+            - 'TestNetwork_1'
+            - 'TestNetwork_2'
+          logicalPortConfigInfos:
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 82
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 82
+                      type: 'Port'
+                    - relativeValue: 6
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 1
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 3
+                      type: 'Bay'
+            - desiredSpeed: 'Auto'
+              logicalLocation:
+                  locationEntries:
+                    - relativeValue: 2
+                      type: 'Enclosure'
+                    - relativeValue: 87
+                      type: 'Port'
+                    - relativeValue: 6
+                      type: 'Bay'
+  delegate_to: localhost
 
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
   oneview_logical_interconnect_group:

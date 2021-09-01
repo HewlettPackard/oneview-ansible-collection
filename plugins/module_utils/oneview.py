@@ -110,6 +110,16 @@ def dict_merge(original_resource_dict, data_dict):
 
     return resource_dict
 
+# Makes a deep delete of a dictionary and returns the output dictionary
+def dict_delete(input_to_delete, request_to_delete):
+    for key,val in request_to_delete.items():
+        if key in input_to_delete.keys() and isinstance(val,list):
+            for ele in val:
+                if ele in input_to_delete.get(key):
+                    input_to_delete[key].remove(ele)
+
+    return input_to_delete
+
 
 def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None, replace_key=None, replace_value=None):
     """

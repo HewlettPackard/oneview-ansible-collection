@@ -149,7 +149,7 @@ logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger, dict_delete
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
@@ -178,7 +178,16 @@ class LogicalInterconnectGroupModule(OneViewModule):
         if self.state == 'present':
             return self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            uplinkSets = self.data.pop('uplinkSets', None)
+            if uplinkSets:
+                return self.__delete_uplinksets()
+            else:
+                return self.resource_absent()
+
+    def __delete_uplinksets(self):
+        dict_after_delete = dict_delete(self.current_resource, self.data)
+        self.current_resource = self.resource_client.create(dict_after_delete)
+        return True, self.MSG_UPDATED
 
     def __present(self):
         changed = False
