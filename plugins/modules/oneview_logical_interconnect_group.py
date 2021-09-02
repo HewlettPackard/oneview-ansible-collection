@@ -17,6 +17,8 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from copy import deepcopy
+
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
@@ -149,7 +151,7 @@ logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger, dict_merge
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger, sortedDeep, sort_by_uplink_set_location, compare_json_data
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
@@ -187,18 +189,33 @@ class LogicalInterconnectGroupModule(OneViewModule):
     def __delete_uplinksets(self):
         self.__replace_name_by_uris()
         self.__replace_uplinkset_network_uris()
-        dict_to_delete = dict_merge(self.current_resource.data, self.data)
-        if not compare_lig(self.current_resource.data, dict_to_delete):
-            self.current_resource.update(dict_to_delete)
-            result = dict(
-                    changed=True,
-                    msg=self.MSG_UPDATED,
-                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
-        else:
-            result = dict(
-                    changed=False,
-                    msg=self.MSG_ALREADY_PRESENT,
-                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+
+        current_resource_copy = deepcopy(self.current_resource.data)
+        data_copy = deepcopy(self.data)
+
+        resource_uplinksets = current_resource_copy['uplinkSets']
+        data_uplinksets = data_copy['uplinkSets']
+
+        for resource_uplinkset in resource_uplinksets:
+            for data_uplinkset in data_uplinksets:
+                if resource_uplinkset['name'] == data_uplinkset['name']:
+                    resource_portconfig = resource_uplinkset.pop("logicalPortConfigInfos")
+                    data_portconfig = data_uplinkset.pop("logicalPortConfigInfos")
+                    resource_uplinksets_sorted = sortedDeep(resource_uplinkset)
+                    data_uplinksets_sorted = sortedDeep(data_uplinkset)
+                    result = compare_json_data(data_uplinksets_sorted, resource_uplinksets_sorted) and sort_by_uplink_set_location(resource_portconfig, data_portconfig)
+                    if result == True:
+                        current_resource_copy['uplinkSets'].remove(resource_uplinkset)
+                        self.current_resource.update(current_resource_copy)
+                        result = dict(
+                                changed=True,
+                                msg=self.MSG_UPDATED,
+                                ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+                    else:
+                        result = dict(
+                                changed=False,
+                                msg=self.MSG_ALREADY_PRESENT,
+                                ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
         return result
             
     def __present(self):
