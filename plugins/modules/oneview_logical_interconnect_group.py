@@ -149,7 +149,7 @@ logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger, dict_delete
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger, dict_merge
 
 
 class LogicalInterconnectGroupModule(OneViewModule):
@@ -178,17 +178,29 @@ class LogicalInterconnectGroupModule(OneViewModule):
         if self.state == 'present':
             return self.__present()
         elif self.state == 'absent':
-            uplinkSets = self.data.pop('uplinkSets', None)
+            uplinkSets = self.data['uplinkSets']
             if uplinkSets:
                 return self.__delete_uplinksets()
             else:
                 return self.resource_absent()
 
     def __delete_uplinksets(self):
-        dict_after_delete = dict_delete(self.current_resource, self.data)
-        self.current_resource = self.resource_client.create(dict_after_delete)
-        return True, self.MSG_UPDATED
-
+        self.__replace_name_by_uris()
+        self.__replace_uplinkset_network_uris()
+        dict_to_delete = dict_merge(self.current_resource.data, self.data)
+        if not compare_lig(self.current_resource.data, dict_to_delete):
+            self.current_resource.update(dict_to_delete)
+            result = dict(
+                    changed=True,
+                    msg=self.MSG_UPDATED,
+                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+        else:
+            result = dict(
+                    changed=False,
+                    msg=self.MSG_ALREADY_PRESENT,
+                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+        return result
+            
     def __present(self):
         changed = False
         scope_uris = self.data.pop('scopeUris', None)

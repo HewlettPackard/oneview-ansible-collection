@@ -152,13 +152,13 @@
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
-#    - { name: 'LIG' }
+   - { name: 'LIG' }
     - { name: 'Test Logical Interconnect Group' }
 
-- name: Update the Logical Interconnect Group by deleting an uplink set "e23 uplink set2" with an Ethernet network
+- name: Update the Logical Interconnect Group by deleting an uplink set "e23 uplink set" with an Ethernet network
   oneview_logical_interconnect_group:
     config: "{{ config }}"
-    state: present
+    state: absent
     data:
       name: 'Test Logical Interconnect Group'
       enclosureType: 'SY12000'
