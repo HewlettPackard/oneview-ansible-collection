@@ -214,7 +214,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
                         compare_results.append(False)
                 else:
                     compare_results.append(False)
-        if (all(compare_results) == 'True' or any(compare_results) == 'True'):
+        if any(compare_results) == True:
             result = dict(
                     changed=True,
                     msg=self.MSG_UPDATED,

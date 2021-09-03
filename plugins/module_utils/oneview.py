@@ -751,8 +751,8 @@ class OneViewModule(object):
         )
 
     def _update_resource(self):
-        updated_data = self.current_resource.data.copy()
-        updated_data = dict_merge(updated_data, self.data)
+        current_resource_data = self.current_resource.data.copy()
+        updated_data = dict_merge(current_resource_data, self.data)
         changed = False
 
         if compare(self.current_resource.data, updated_data):

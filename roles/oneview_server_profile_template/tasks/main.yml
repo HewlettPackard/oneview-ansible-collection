@@ -17,12 +17,36 @@
             portId: Auto
             requestedMbps: 2500
             networkName: "{{ connection_network_name }}"
+          - id: 2
+            name: deploy
+            functionType: Ethernet
+            portId: Auto
+            requestedMbps: 2500
+            networkName: "{{ connection_network_name1 }}"
     params:
       force: "True" # Supported only for API version >= 600
   delegate_to: localhost
   with_items:
     - { name: '{{ server_profile_template_name }}' }
     - { name: '{{ server_profile_template_name }}-1' }
+
+- name: Update a server profile template by deleting one connection
+  oneview_server_profile_template:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ server_profile_template_name }}"
+      connectionSettings:
+        manageConnections: true
+        complianceControl: Checked
+        connections:
+          - id: 1
+            name: mgmt
+            functionType: Ethernet
+            portId: Auto
+            requestedMbps: 2500
+            networkName: "{{ connection_network_name }}"
+  delegate_to: localhost
 
 - name: Update bootMode from recently created template
   oneview_server_profile_template:

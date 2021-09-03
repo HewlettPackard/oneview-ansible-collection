@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2019) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@ from copy import deepcopy
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           ServerProfileMerger,
-                                                                          compare)
+                                                                          compare, sortedDeep, compare_json_data)
 
 
 class ServerProfileTemplateModule(OneViewModule):
@@ -235,8 +235,44 @@ class ServerProfileTemplateModule(OneViewModule):
             ansible_facts=dict(server_profile_template=self.current_resource.data)
         )
 
+    def __delete_connectionSettings(self):
+        compare_results = []
+        current_resource_copy = deepcopy(self.current_resource.data)
+        data_copy = deepcopy(self.data)
+
+        resource_connections = current_resource_copy['connectionSettings']['connections']
+        data_connections = data_copy['connectionSettings']['connections']
+
+        for resource_connection in resource_connections:
+            for data_connection in data_connections:
+                if resource_connection['id'] == data_connection['id']:
+                    resource_uplinksets_sorted = sortedDeep(resource_connection)
+                    data_uplinksets_sorted = sortedDeep(data_connection)
+                    result = compare_json_data(data_uplinksets_sorted, resource_uplinksets_sorted)
+                    if result == True:
+                        current_resource_copy['connectionSettings']['connections'].remove(resource_connection)
+                        self.current_resource.update(current_resource_copy)
+                    else:
+                        compare_results.append(False)
+                else:
+                    compare_results.append(False)
+        if any(compare_results) == True:
+            result = dict(
+                    changed=True,
+                    msg=self.MSG_UPDATED,
+                    ansible_facts=dict(server_profile_template=self.current_resource.data))
+        else:
+            result = dict(
+                    changed=False,
+                    msg=self.MSG_NOT_FOUND,
+                    ansible_facts=dict(server_profile_template=self.current_resource.data))
+        return result
+    
     def __absent(self):
-        if self.current_resource:
+        connectionSettings =  self.data['connectionSettings']
+        if connectionSettings:
+            self.__delete_connectionSettings()
+        elif self.current_resource:
             self.current_resource.delete(**self.params)
             msg = self.MSG_DELETED
             changed = True
