@@ -160,6 +160,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
     MSG_DELETED = 'Logical Interconnect Group deleted successfully.'
     MSG_ALREADY_PRESENT = 'Logical Interconnect Group is already present.'
     MSG_ALREADY_ABSENT = 'Logical Interconnect Group is already absent.'
+    MSG_NOT_FOUND = 'Logical Interconnect Group was not found.'
     MSG_INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
     MSG_NETWORK_NOT_FOUND = 'Given Network was not found.'
     MSG_NETWORK_SET_NOT_FOUND = 'Network Set was not found.'
@@ -187,7 +188,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
                 return self.resource_absent()
 
     def __delete_uplinksets(self):
-        changed = False
+        compare_results = []
         self.__replace_name_by_uris()
         self.__replace_uplinkset_network_uris()
 
@@ -205,26 +206,24 @@ class LogicalInterconnectGroupModule(OneViewModule):
                     resource_uplinksets_sorted = sortedDeep(resource_uplinkset)
                     data_uplinksets_sorted = sortedDeep(data_uplinkset)
                     compare_result = compare_json_data(data_uplinksets_sorted, resource_uplinksets_sorted) and sort_by_uplink_set_location(resource_portconfig, data_portconfig)
-                    if compare_result == True:
+                    compare_results.append(compare_result)
+                    if compare_result:
                         current_resource_copy['uplinkSets'].remove(resource_uplinkset)
                         self.current_resource.update(current_resource_copy)
-                        changed = True
-                        result = dict(
-                                changed=changed,
-                                msg=self.MSG_UPDATED,
-                                ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
                     else:
-                        changed = False
-                        result = dict(
-                                changed=changed,
-                                msg=self.MSG_ALREADY_PRESENT,
-                                ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+                        compare_results.append(False)
                 else:
-                    changed = False
-                    result = dict(
-                            changed=changed,
-                            msg=self.MSG_ALREADY_PRESENT,
-                            ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+                    compare_results.append(False)
+        if (all(compare_results) == 'True' or any(compare_results) == 'True'):
+            result = dict(
+                    changed=True,
+                    msg=self.MSG_UPDATED,
+                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
+        else:
+            result = dict(
+                    changed=False,
+                    msg=self.MSG_NOT_FOUND,
+                    ansible_facts=dict(logical_interconnect_group=self.current_resource.data))
         return result
             
     def __present(self):
