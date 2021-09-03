@@ -1105,6 +1105,8 @@ class LIGMerger(object):
 
                     if not compare_lig(current_uplink, existing_uplink):
                         existing_uplinksets[index] = dict_merge(current_uplink, existing_uplink)
+                        if "newName" in existing_uplinksets[index].keys():
+                            existing_uplinksets[index]["name"] = existing_uplinksets[index].pop("newName")
 
             # checks to ignore extra parameters in uplink set to achieve idempotency
             if existing_uplink.get('logicalPortConfigInfos') and isinstance(existing_uplink['logicalPortConfigInfos'], list):
