@@ -9,7 +9,7 @@ namespace: hpe
 name: oneview
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 6.2.0
+version: 6.3.0
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -18,8 +18,6 @@ readme: README.md
 # @nicks:irc/im.site#channel'
 authors:
 - Chebrolu Harika <chebroluharika@gmail.com>
-- VenkateshRavula <venkatesh.ravula1992@gmail.com>
-
 
 ### OPTIONAL but strongly recommended
 
