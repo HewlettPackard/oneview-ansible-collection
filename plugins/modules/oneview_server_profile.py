@@ -534,7 +534,8 @@ class ServerProfileModule(OneViewModule):
         else:
             user_name = self.oneview_client._OneViewClient__connection._cred['userName']
             scope_user = self.oneview_client.users.get_by_userName(user_name)
-            if scope_user and user_name != 'Administrator':
+            user_name_string = 'Administrator'
+            if scope_user and user_name != user_name_string.lower():
                 permissions = scope_user.data["permissions"]
                 scope_uris = set([each_role.get("scopeUri") for each_role in permissions])
                 scope_uri = '%20OR%20'.join(list(scope_uris))
