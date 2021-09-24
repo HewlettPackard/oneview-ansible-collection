@@ -1,4 +1,10 @@
 # Ansible Collections for HPE OneView Change Log
+
+## v6.4.0 (unreleased)
+#### Bug fixes & Enhancements
+- [#131] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/131) Gather facts about a ID Pools IPV4 Subnet by name doesnt supported.
+
+
 ## v6.3.0
 This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
 

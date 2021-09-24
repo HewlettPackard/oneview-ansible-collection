@@ -234,7 +234,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           OneViewModuleTaskError,
                                                                           SPKeys,
                                                                           OneViewModuleException,
-                                                                          compare)
+                                                                          compare,
+                                                                          OneViewModuleResourceNotFound)
 
 
 class ServerProfileModule(OneViewModule):
@@ -255,6 +256,7 @@ class ServerProfileModule(OneViewModule):
     MSG_ERROR_ALLOCATE_SERVER_HARDWARE = 'Could not allocate server hardware'
     MSG_MAKE_COMPLIANT_NOT_SUPPORTED = "Update from template is not supported for server profile '{}' because it is" \
                                        " not associated with a server profile template."
+    MSG_SERVER_PROFILE_NOT_FOUND = "The Server Profile was not found."
 
     CONCURRENCY_FAILOVER_RETRIES = 25
 
@@ -601,6 +603,9 @@ class ServerProfileModule(OneViewModule):
 
         changed = False
         msg = self.MSG_ALREADY_COMPLIANT
+
+        if not self.current_resource:
+            raise OneViewModuleResourceNotFound(self.MSG_SERVER_PROFILE_NOT_FOUND)
 
         if not self.current_resource.data.get('serverProfileTemplateUri'):
             self.module.log("Make the Server Profile compliant is not supported for this profile")
