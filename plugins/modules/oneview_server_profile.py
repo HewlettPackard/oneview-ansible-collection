@@ -328,6 +328,9 @@ class ServerProfileModule(OneViewModule):
             created = True
             msg = self.MSG_CREATED
         else:
+            # This allows updating name of ServerProfile
+            if "newName" in self.data:
+                self.data["name"] = self.data.pop("newName")
             # This allows unassigning a profile if a SH key is specifically passed in as None
             if not self.auto_assign_server_hardware:
                 server_hardware_uri_exists = False
