@@ -1,0 +1,229 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###
+
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+ANSIBLE_METADATA = {'status': ['stableinterface'],
+                    'supported_by': 'community',
+                    'metadata_version': '1.1'}
+
+DOCUMENTATION = '''
+---
+module: oneview_repositories
+short_description: Manage OneView Repository resources.
+description:
+    - Provides an interface to manage repositories. Can create, update, or delete repositories, and modify the repository membership by
+      adding or removing resource assignments.
+version_added: "2.3.0"
+requirements:
+    - "python >= 2.7.9"
+    - "hpeOneView >= 5.4.0"
+author: "Chebrolu Harika"
+options:
+    state:
+        description:
+            - Indicates the desired state for the repository resource.
+              C(present) ensures data properties are compliant with OneView.
+              C(absent) removes the resource from OneView, if it exists.
+              C(resource_assignments_updated) modifies repository membership by adding or removing resource assignments.
+              This operation is non-idempotent.
+        choices: ['present', 'absent', 'resource_assignments_updated']
+        required: true
+        type: str
+    data:
+        description:
+            - List with the repositories properties.
+        required: true
+        type: dict
+notes:
+    - This resource is available for API version 300 or later.
+extends_documentation_fragment:
+    - hpe.oneview.oneview
+    - hpe.oneview.oneview.validateetag
+    - hpe.oneview.oneview.params
+'''
+
+EXAMPLES = '''
+---
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    remote: "{{ remote_server }}"
+  delegate_to: localhost
+
+- set_fact:
+    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+
+- name: Create a Repository
+  oneview_repositories:
+    config: "{{ config }}"
+    state: present
+    validate_etag: False
+    data:
+      name: "{{ repository_name }}"
+      userName: 'Admin',
+      password: '*******',
+      repositoryURI: 'https://172.20.3.65/repositoryFolder',
+      repositoryType: 'FirmwareExternalRepo',
+      base64data: "{{ certificate }}"
+  delegate_to: localhost
+  register: repository
+
+- name: Do nothing with the Repository when no changes are provided
+  oneview_repositories:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ repository_name }}"
+      userName: 'Admin',
+      password: '*******',
+      repositoryURI: 'https://172.20.3.65/repositoryFolder',
+      repositoryType: 'FirmwareExternalRepo',
+      base64data: "{{ certificate }}"
+  delegate_to: localhost
+
+- name: Update the repository changing the attribute name
+  oneview_repositories:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ repository_name }}"
+      newName: "{{ repository_name }}-updated"
+  delegate_to: localhost
+
+- name: Update the repository resource
+  oneview_repositories:
+    config: '{{ config }}'
+    state: patch
+    data:
+      name: {{ repository_name }}"
+  delegate_to: localhost
+
+- name: Delete the Repository
+  oneview_repositories:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when Repository is absent
+  oneview_repositories:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+  delegate_to: localhost
+  register: deleted
+'''
+
+RETURN = '''
+repository:
+    description: Has the facts about the Repository.
+    returned: On state 'present' and 'patch', but can be null.
+    type: dict
+'''
+
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge
+
+
+class RepositoryModule(OneViewModule):
+    MSG_CREATED = 'Repository created successfully.'
+    MSG_UPDATED = 'Repository updated successfully.'
+    MSG_ALREADY_PRESENT = 'Repository is already present.'
+    MSG_RESOURCE_NOT_FOUND = 'Repository not found.'
+
+    argument_spec = dict(
+        state=dict(
+            required=True,
+            choices=['present', 'absent', 'patch']
+        ),
+        data=dict(required=True, type='dict'),
+    )
+
+    def __init__(self):
+
+        super().__init__(additional_arg_spec=self.argument_spec,
+                         validate_etag_support=True)
+
+        self.set_resource_object(self.oneview_client.repositories)
+
+    def execute_module(self):
+        if self.state == 'present':
+            return self.__present()
+        elif self.state == 'absent':
+            return self.resource_absent()
+        elif self.state == 'patch':
+            return self.__patch()
+
+    def __present(self):
+        changed = False
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
+
+        if self.current_resource:
+            changed, msg = self.__update()
+        else:
+            changed, msg = self.__create(self.data)
+
+        return dict(
+            msg=msg,
+            changed=changed,
+            ansible_facts=dict(repository=self.current_resource.data)
+        )
+
+    def __create(self, data):
+        self.current_resource = self.resource_client.create(data)
+        return True, self.MSG_CREATED
+
+    def __update(self):
+        changed = False
+        existing_data = self.current_resource.data.copy()
+        updated_data = dict_merge(existing_data, self.data)
+
+        if compare(self.current_resource.data, updated_data):
+            msg = self.MSG_ALREADY_PRESENT
+        else:
+            self.current_resource.update(updated_data)
+            changed = True
+            msg = self.MSG_UPDATED
+
+        return changed, msg
+
+    # This method is available only for API300
+    def __patch(self):
+        # returns None if Repository doesn't exist
+        if not self.current_resource:
+            raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
+        self.current_resource.patch(operation='replace',
+                                    path='/repositoryName',
+                                    value=self.data.get('name'))
+
+        return dict(changed=True,
+                msg=self.MSG_RESOURCE_ASSIGNMENTS_UPDATED,
+                ansible_facts=dict(Repository=self.current_resource.data))
+
+
+def main():
+    RepositoryModule().run()
+
+
+if __name__ == '__main__':
+    main()

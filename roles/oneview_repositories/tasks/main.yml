@@ -1,6 +1,15 @@
 ---
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    remote: "{{ remote_server }}"
+  delegate_to: localhost
+
+- set_fact:
+    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+
 - name: Create a Repository
-  oneview_fc_network:
+  oneview_repositories:
     config: "{{ config }}"
     state: present
     validate_etag: False
@@ -10,12 +19,12 @@
       password: '*******',
       repositoryURI: 'https://172.20.3.65/repositoryFolder',
       repositoryType: 'FirmwareExternalRepo',
-      base64data: '{certificate of the repository web server}'
+      base64data: "{{ certificate }}"
   delegate_to: localhost
   register: repository
 
 - name: Do nothing with the Repository when no changes are provided
-  oneview_fc_network:
+  oneview_repositories:
     config: "{{ config }}"
     state: present
     data:
@@ -24,11 +33,11 @@
       password: '*******',
       repositoryURI: 'https://172.20.3.65/repositoryFolder',
       repositoryType: 'FirmwareExternalRepo',
-      base64data: '{certificate of the repository web server}'
+      base64data: "{{ certificate }}"
   delegate_to: localhost
 
 - name: Update the repository changing the attribute name
-  oneview_fc_network:
+  oneview_repositories:
     config: "{{ config }}"
     state: present
     data:
@@ -36,8 +45,16 @@
       newName: "{{ repository_name }}-updated"
   delegate_to: localhost
 
+- name: Update the repository resource
+  oneview_repositories:
+    config: '{{ config }}'
+    state: patch
+    data:
+      name: {{ repository_name }}"
+  delegate_to: localhost
+
 - name: Delete the Repository
-  oneview_fc_network:
+  oneview_repositories:
     config: "{{ config }}"
     state: absent
     data:
@@ -46,7 +63,7 @@
   register: deleted
 
 - name: Do nothing when Repository is absent
-  oneview_fc_network:
+  oneview_repositories:
     config: "{{ config }}"
     state: absent
     data:

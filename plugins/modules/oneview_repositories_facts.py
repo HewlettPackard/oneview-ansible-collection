@@ -25,7 +25,7 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
 
 DOCUMENTATION = '''
 ---
-module: oneview_scope_facts
+module: oneview_repositories_facts
 short_description: Retrieve facts about one or more of the OneView repositories.
 description:
     - Retrieve facts about one or more of the repositories from OneView.
@@ -44,7 +44,7 @@ options:
       type: path
     name:
       description:
-        - Name of the scope.
+        - Name of the repository.
       required: false
       type: str
     params:
