@@ -1,0 +1,55 @@
+---
+- name: Create a Repository
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: present
+    validate_etag: False
+    data:
+      name: "{{ repository_name }}"
+      userName: 'Admin',
+      password: '*******',
+      repositoryURI: 'https://172.20.3.65/repositoryFolder',
+      repositoryType: 'FirmwareExternalRepo',
+      base64data: '{certificate of the repository web server}'
+  delegate_to: localhost
+  register: repository
+
+- name: Do nothing with the Repository when no changes are provided
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ repository_name }}"
+      userName: 'Admin',
+      password: '*******',
+      repositoryURI: 'https://172.20.3.65/repositoryFolder',
+      repositoryType: 'FirmwareExternalRepo',
+      base64data: '{certificate of the repository web server}'
+  delegate_to: localhost
+
+- name: Update the repository changing the attribute name
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: "{{ repository_name }}"
+      newName: "{{ repository_name }}-updated"
+  delegate_to: localhost
+
+- name: Delete the Repository
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when Repository is absent
+  oneview_fc_network:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+  delegate_to: localhost
+  register: deleted

@@ -159,6 +159,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_serve
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_sas_logical_jbod_facts import SasLogicalJbodFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_scope import ScopeModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_scope_facts import ScopeFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_repositories_facts import RepositoryFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware import ServerHardwareModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_facts import ServerHardwareFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_type import ServerHardwareTypeModule

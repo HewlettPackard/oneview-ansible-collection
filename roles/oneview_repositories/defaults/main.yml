@@ -1,0 +1,4 @@
+---
+# defaults file for oneview_repositories
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_repositories/files/oneview_config.json"
+repository_name: "RepoName"

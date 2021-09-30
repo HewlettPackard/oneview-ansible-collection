@@ -6,6 +6,10 @@ This release extends the planned support of the collections to OneView REST API 
 #### Bug fixes & Enhancements
 - [#141] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/141) add storage to list of tags in galaxy.yml
 
+### Modules supported in this release
+- oneview_repositories
+- oneview_repositories_facts
+
 ## v6.3.0
 This release extends the planned support of the collections to OneView REST API version 3200 (OneView v6.3).
 
