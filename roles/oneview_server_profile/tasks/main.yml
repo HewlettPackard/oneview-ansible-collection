@@ -61,6 +61,16 @@
   delegate_to: localhost
   register: result
 
+- name: Rename Server Profile
+  oneview_server_profile:
+    config: "{{ config }}"
+    state: "present"
+    data:
+      newName: "{{ inventory_hostname }}-updated"
+      name: "{{ inventory_hostname }}"
+  delegate_to: localhost
+  register: result
+
 - debug: msg = "{{result.msg}}"
 
 - debug: var=server_profile
