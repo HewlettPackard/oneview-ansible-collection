@@ -32,7 +32,7 @@
     data:
       name: "{{ repository_name }}"
       newName: "{{ repository_name }}-updated"
- delegate_to: localhost
+  delegate_to: localhost
 
 - name: Delete the Repository
   oneview_repositories:
@@ -42,8 +42,8 @@
       name: "{{ repository_name }}"
     params:
       force: True
- delegate_to: localhost
- register: deleted
+  delegate_to: localhost
+  register: deleted
 
 - name: Do nothing when Repository is absent
   oneview_repositories:
@@ -51,5 +51,5 @@
     state: absent
     data:
       name: "{{ repository_name }}"
- delegate_to: localhost
- register: deleted
+  delegate_to: localhost
+  register: deleted

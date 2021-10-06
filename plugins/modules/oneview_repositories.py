@@ -169,19 +169,16 @@ class RepositoriesModule(OneViewModule):
             self.data["name"] = self.data.pop("newName")
 
         if self.current_resource:
-            changed, msg = self.__update()
+            response = self.__update()
         else:
-            changed, msg = self.__create(self.data)
+            response = self.__create(self.data)
 
-        return dict(
-            msg=msg,
-            changed=changed,
-            ansible_facts=dict(repository=self.current_resource.data)
-        )
+        return response
 
     def __create(self, data):
         self.current_resource = self.resource_client.create(data)
-        return True, self.MSG_CREATED
+        changed = True
+        return dict(changed=changed, msg=self.MSG_CREATED, ansible_facts=dict(repository=self.current_resource.data))
 
     def __update(self):
         changed = False
@@ -195,7 +192,7 @@ class RepositoriesModule(OneViewModule):
             changed = True
             msg = self.MSG_UPDATED
 
-        return dict(changed=changed, msg=msg, ansible_facts=dict(Repository=self.current_resource.data))
+        return dict(changed=changed, msg=msg, ansible_facts=dict(repository=self.current_resource.data))
 
     def __patch(self):
         # returns None if Repository doesn't exist
@@ -209,8 +206,8 @@ class RepositoriesModule(OneViewModule):
             raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
 
         return dict(changed=True,
-                msg=self.MSG_UPDATED,
-                ansible_facts=dict(Repository=self.current_resource.data))
+                    msg=self.MSG_UPDATED,
+                    ansible_facts=dict(repository=self.current_resource.data))
 
     def __absent(self):
         if self.current_resource:
@@ -220,7 +217,7 @@ class RepositoriesModule(OneViewModule):
         else:
             changed = False
             msg = self.MSG_ALREADY_ABSENT
-        return dict(changed=changed, msg=msg, ansible_facts=dict(Repository=None))
+        return dict(changed=changed, msg=msg, ansible_facts=dict(repository=None))
 
 def main():
     RepositoriesModule().run()

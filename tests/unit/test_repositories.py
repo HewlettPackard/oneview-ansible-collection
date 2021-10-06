@@ -20,6 +20,7 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 import pytest
+import mock
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import RepositoriesModule
@@ -120,7 +121,8 @@ class TestRepositoriesModule(OneViewBaseTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=RepositoriesModule.MSG_DELETED
+            msg=RepositoriesModule.MSG_DELETED,
+            ansible_facts=dict(repository= None)
         )
 
     def test_should_do_nothing_when_repository_not_exist(self):
@@ -132,7 +134,8 @@ class TestRepositoriesModule(OneViewBaseTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=RepositoriesModule.MSG_ALREADY_ABSENT
+            msg=RepositoriesModule.MSG_ALREADY_ABSENT,
+            ansible_facts=dict(repository= None)
         )
 
 
