@@ -103,7 +103,7 @@ class TestRepositoriesModule(OneViewBaseTest):
 
         self.resource.patch.assert_called_once_with(operation='replace',
                                                     path='/repositoryName',
-                                                    value=['newName'])
+                                                    value='New Name')
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,

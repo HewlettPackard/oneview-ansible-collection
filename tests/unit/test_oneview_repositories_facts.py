@@ -36,10 +36,10 @@ PARAMS_GET_BY_NAME = dict(
     name="Test Repositories"
 )
 
-PRESENT_REPOSITORIES = [{
-    "name": "Test Repositories",
-    "uri": "/rest/repositories/c6bf9af9-48e7-4236-b08a-77684dc258a5"
-}]
+REPOSITORY_1 = dict(name="Test Repository 1", uri='/rest/repositories/a0336853-58d7-e021-b740-511cf971e21f0')
+REPOSITORY_2 = dict(name="Test Repository 2", uri='/rest/repositories/b3213123-44sd-y334-d111-asd34sdf34df3')
+
+PRESENT_REPOSITORIES = [REPOSITORY_1, REPOSITORY_2]
 
 
 @pytest.mark.resource(TestRepositoriesFactsModule='repositories')
@@ -56,7 +56,7 @@ class TestRepositoriesFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_repositories_by_name(self):
-        self.resource.data = PRESENT_REPOSITORIES
+        self.resource.data = REPOSITORY_2
         self.resource.get_by.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
@@ -64,7 +64,7 @@ class TestRepositoriesFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(repositories=PRESENT_REPOSITORIES)
+            ansible_facts=dict(repositories=REPOSITORY_2)
         )
 
 
