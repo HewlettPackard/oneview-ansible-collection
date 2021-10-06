@@ -19,7 +19,16 @@
 - name: Gather facts about a Repository by Id
   oneview_repositories_facts:
     config: "{{ config }}"
-    name: "{{ repositories[0]['id'] }}"
+    name: "{{ repositories[0]['uuid'] }}"
+  delegate_to: localhost
+  when: repositories | default('', True)
+
+- debug: var=repositories
+
+- name: Gather facts about a Repository by name
+  oneview_repositories_facts:
+    config: "{{ config }}"
+    name: "{{ repositories[0]['name'] }}"
   delegate_to: localhost
   when: repositories | default('', True)
 

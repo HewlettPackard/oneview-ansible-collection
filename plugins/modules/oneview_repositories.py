@@ -61,15 +61,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 ---
-- name: Gather facts about a Server Certificate by remote address
-  oneview_certificates_server_facts:
-    config: "{{ config }}"
-    remote: "{{ remote_server }}"
-  delegate_to: localhost
-
-- set_fact:
-    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
-
+---
 - name: Create a Repository
   oneview_repositories:
     config: "{{ config }}"
@@ -77,11 +69,10 @@ EXAMPLES = '''
     validate_etag: False
     data:
       name: "{{ repository_name }}"
-      userName: 'Admin',
-      password: '*******',
-      repositoryURI: 'https://172.20.3.65/repositoryFolder',
-      repositoryType: 'FirmwareExternalRepo',
-      base64data: "{{ certificate }}"
+      userName: "{{ repository_username }}"
+      password: "{{ repository_password }}"
+      repositoryURI: "{{ repository_uri }}"
+      repositoryType: 'FirmwareExternalRepo'
   delegate_to: localhost
   register: repository
 
@@ -91,20 +82,10 @@ EXAMPLES = '''
     state: present
     data:
       name: "{{ repository_name }}"
-      userName: 'Admin',
-      password: '*******',
-      repositoryURI: 'https://172.20.3.65/repositoryFolder',
-      repositoryType: 'FirmwareExternalRepo',
-      base64data: "{{ certificate }}"
-  delegate_to: localhost
-
-- name: Update the repository changing the attribute name
-  oneview_repositories:
-    config: "{{ config }}"
-    state: present
-    data:
-      name: "{{ repository_name }}"
-      newName: "{{ repository_name }}-updated"
+      userName: "{{ repository_username }}"
+      password: "{{ repository_password }}"
+      repositoryURI: "{{ repository_uri }}"
+      repositoryType: 'FirmwareExternalRepo'
   delegate_to: localhost
 
 - name: Update the repository resource
@@ -112,7 +93,8 @@ EXAMPLES = '''
     config: '{{ config }}'
     state: patch
     data:
-      name: {{ repository_name }}"
+      newName: "{{ repository_name }}-updated"
+      name: "{{ repository_name }}"
   delegate_to: localhost
 
 - name: Delete the Repository
@@ -121,6 +103,8 @@ EXAMPLES = '''
     state: absent
     data:
       name: "{{ repository_name }}"
+    params:
+      force: True
   delegate_to: localhost
   register: deleted
 
@@ -149,6 +133,8 @@ class RepositoryModule(OneViewModule):
     MSG_UPDATED = 'Repository updated successfully.'
     MSG_ALREADY_PRESENT = 'Repository is already present.'
     MSG_RESOURCE_NOT_FOUND = 'Repository not found.'
+    MSG_DELETED = 'Repository deleted successfully.'
+    MSG_ALREADY_ABSENT = 'Repository is already absent.'
 
     argument_spec = dict(
         state=dict(
@@ -156,6 +142,7 @@ class RepositoryModule(OneViewModule):
             choices=['present', 'absent', 'patch']
         ),
         data=dict(required=True, type='dict'),
+        params=dict(required=False, type='dict')
     )
 
     def __init__(self):
@@ -169,7 +156,7 @@ class RepositoryModule(OneViewModule):
         if self.state == 'present':
             return self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            return self.__absent()
         elif self.state == 'patch':
             return self.__patch()
 
@@ -205,21 +192,32 @@ class RepositoryModule(OneViewModule):
             changed = True
             msg = self.MSG_UPDATED
 
-        return changed, msg
+        return dict(changed=changed, msg=msg, ansible_facts=dict(Repository=self.current_resource.data))
 
-    # This method is available only for API300
     def __patch(self):
         # returns None if Repository doesn't exist
-        if not self.current_resource:
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
+        if self.current_resource:
+            self.current_resource.patch(operation='replace',
+                                        path='/repositoryName',
+                                        value=self.data['name'])
+        else:
             raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
-        self.current_resource.patch(operation='replace',
-                                    path='/repositoryName',
-                                    value=self.data.get('name'))
 
         return dict(changed=True,
-                msg=self.MSG_RESOURCE_ASSIGNMENTS_UPDATED,
+                msg=self.MSG_UPDATED,
                 ansible_facts=dict(Repository=self.current_resource.data))
 
+    def __absent(self):
+        if self.current_resource:
+            changed = True
+            msg = self.MSG_DELETED
+            self.current_resource.delete(**self.facts_params)
+        else:
+            changed = False
+            msg = self.MSG_ALREADY_ABSENT
+        return dict(changed=changed, msg=msg, ansible_facts=dict(Repository=None))
 
 def main():
     RepositoryModule().run()
