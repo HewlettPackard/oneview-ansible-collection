@@ -219,6 +219,7 @@ class RepositoriesModule(OneViewModule):
             msg = self.MSG_ALREADY_ABSENT
         return dict(changed=changed, msg=msg, ansible_facts=dict(repository=None))
 
+
 def main():
     RepositoriesModule().run()
 

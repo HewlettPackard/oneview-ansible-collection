@@ -95,7 +95,6 @@ class TestRepositoriesModule(OneViewBaseTest):
         self.resource.get_by_name.return_value = self.resource
 
         patch_return = self.resource.copy()
-        patch_return['repositoryName'] = ['test']
         obj = mock.Mock()
         obj.data = patch_return
         self.resource.patch.return_value = obj
@@ -104,7 +103,7 @@ class TestRepositoriesModule(OneViewBaseTest):
 
         self.resource.patch.assert_called_once_with(operation='replace',
                                                     path='/repositoryName',
-                                                    value=['test'])
+                                                    value=['newName'])
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
@@ -122,7 +121,7 @@ class TestRepositoriesModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=RepositoriesModule.MSG_DELETED,
-            ansible_facts=dict(repository= None)
+            ansible_facts=dict(repository=None)
         )
 
     def test_should_do_nothing_when_repository_not_exist(self):
@@ -135,7 +134,7 @@ class TestRepositoriesModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             msg=RepositoriesModule.MSG_ALREADY_ABSENT,
-            ansible_facts=dict(repository= None)
+            ansible_facts=dict(repository=None)
         )
 
 

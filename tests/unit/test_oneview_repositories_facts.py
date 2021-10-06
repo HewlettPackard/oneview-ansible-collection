@@ -56,7 +56,8 @@ class TestRepositoriesFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_repositories_by_name(self):
-        self.resource.get_by.return_value = PRESENT_REPOSITORIES
+        self.resource.data = PRESENT_REPOSITORIES
+        self.resource.get_by.return_value = self.resource
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
         RepositoriesFactsModule().run()
