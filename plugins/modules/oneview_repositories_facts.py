@@ -33,7 +33,7 @@ version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
-author: "Chebrolu Harika"
+author: "Chebrolu Harika (@ChebroluHarika)"
 options:
     config:
       description:
@@ -87,7 +87,16 @@ EXAMPLES = '''
 - name: Gather facts about a Repository by Id
   oneview_repositories_facts:
     config: "{{ config }}"
-    name: "{{ repositories[0]['id'] }}"
+    name: "{{ repositories[0]['uuid'] }}"
+  delegate_to: localhost
+  when: repositories | default('', True)
+
+- debug: var=repositories
+
+- name: Gather facts about a Repository by name
+  oneview_repositories_facts:
+    config: "{{ config }}"
+    name: "{{ repositories[0]['name'] }}"
   delegate_to: localhost
   when: repositories | default('', True)
 
@@ -105,7 +114,7 @@ repositories:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
-class RepositoryFactsModule(OneViewModule):
+class RepositoriesFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
@@ -125,7 +134,7 @@ class RepositoryFactsModule(OneViewModule):
 
 
 def main():
-    RepositoryFactsModule().run()
+    RepositoriesFactsModule().run()
 
 
 if __name__ == '__main__':

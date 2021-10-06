@@ -22,7 +22,7 @@ __metaclass__ = type
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import RepositoryModule
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import RepositoriesModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 
@@ -54,8 +54,8 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 
-@pytest.mark.resource(TestRepositoryModule='repositories')
-class TestRepositoryModule(OneViewBaseTest):
+@pytest.mark.resource(TestRepositoriesModule='repositories')
+class TestRepositoriesModule(OneViewBaseTest):
     """
     OneViewBaseTestCase provides the mocks used in this test case
     """
@@ -67,11 +67,11 @@ class TestRepositoryModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
 
-        RepositoryModule().run()
+        RepositoriesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=RepositoryModule.MSG_CREATED,
+            msg=RepositoriesModule.MSG_CREATED,
             ansible_facts=dict(repository=DEFAULT_REPOSITORY_TEMPLATE)
         )
 
@@ -79,11 +79,11 @@ class TestRepositoryModule(OneViewBaseTest):
         self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT.copy()
 
-        RepositoryModule().run()
+        RepositoriesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=RepositoryModule.MSG_ALREADY_PRESENT,
+            msg=RepositoriesModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(repository=DEFAULT_REPOSITORY_TEMPLATE)
         )
 
@@ -99,7 +99,7 @@ class TestRepositoryModule(OneViewBaseTest):
         obj.data = patch_return
         self.resource.patch.return_value = obj
 
-        RepositoryModule().run()
+        RepositoriesModule().run()
 
         self.resource.patch.assert_called_once_with(operation='replace',
                                                     path='/repositoryName',
@@ -108,7 +108,7 @@ class TestRepositoryModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             ansible_facts=dict(repository=patch_return),
-            msg=RepositoryModule.MSG_UPDATED
+            msg=RepositoriesModule.MSG_UPDATED
         )
 
     def test_should_remove_repository(self):
@@ -116,11 +116,11 @@ class TestRepositoryModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_ABSENT
 
-        RepositoryModule().run()
+        RepositoriesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=RepositoryModule.MSG_DELETED
+            msg=RepositoriesModule.MSG_DELETED
         )
 
     def test_should_do_nothing_when_repository_not_exist(self):
@@ -128,11 +128,11 @@ class TestRepositoryModule(OneViewBaseTest):
 
         self.mock_ansible_module.params = PARAMS_FOR_ABSENT
 
-        RepositoryModule().run()
+        RepositoriesModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=RepositoryModule.MSG_ALREADY_ABSENT
+            msg=RepositoriesModule.MSG_ALREADY_ABSENT
         )
 
 

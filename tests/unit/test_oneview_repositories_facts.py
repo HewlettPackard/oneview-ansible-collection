@@ -22,7 +22,7 @@ __metaclass__ = type
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseFactsTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import RepositoryFactsModule
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import RepositoriesFactsModule
 
 ERROR_MSG = 'Fake message error'
 
@@ -42,13 +42,13 @@ PRESENT_REPOSITORIES = [{
 }]
 
 
-@pytest.mark.resource(TestRepositoryFactsModule='repositories')
-class TestRepositoryFactsModule(OneViewBaseFactsTest):
+@pytest.mark.resource(TestRepositoriesFactsModule='repositories')
+class TestRepositoriesFactsModule(OneViewBaseFactsTest):
     def test_should_get_all_repositories(self):
         self.resource.get_all.return_value = PRESENT_REPOSITORIES
         self.mock_ansible_module.params = PARAMS_GET_ALL
 
-        RepositoryFactsModule().run()
+        RepositoriesFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
@@ -59,7 +59,7 @@ class TestRepositoryFactsModule(OneViewBaseFactsTest):
         self.resource.get_by.return_value = PRESENT_REPOSITORIES
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
-        RepositoryFactsModule().run()
+        RepositoriesFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,

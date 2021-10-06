@@ -26,7 +26,7 @@
   delegate_to: localhost
 
 - name: Update the repository resource
- oneview_repositories:
+  oneview_repositories:
     config: '{{ config }}'
     state: patch
     data:
@@ -35,7 +35,7 @@
  delegate_to: localhost
 
 - name: Delete the Repository
- oneview_repositories:
+  oneview_repositories:
     config: "{{ config }}"
     state: absent
     data:
@@ -46,7 +46,7 @@
  register: deleted
 
 - name: Do nothing when Repository is absent
- oneview_repositories:
+  oneview_repositories:
     config: "{{ config }}"
     state: absent
     data:

@@ -34,22 +34,27 @@ version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
-author: "Chebrolu Harika"
+author: "Chebrolu Harika (@ChebroluHarika)"
 options:
     state:
         description:
             - Indicates the desired state for the repository resource.
               C(present) ensures data properties are compliant with OneView.
               C(absent) removes the resource from OneView, if it exists.
-              C(resource_assignments_updated) modifies repository membership by adding or removing resource assignments.
+              C(patch) modifies repository membership by updating required properties.
               This operation is non-idempotent.
-        choices: ['present', 'absent', 'resource_assignments_updated']
+        choices: ['present', 'absent', 'patch']
         required: true
         type: str
     data:
         description:
             - List with the repositories properties.
         required: true
+        type: dict
+    params:
+        description:
+            - Dict with query parameters.
+        required: False
         type: dict
 notes:
     - This resource is available for API version 300 or later.
@@ -60,8 +65,6 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
----
----
 - name: Create a Repository
   oneview_repositories:
     config: "{{ config }}"
@@ -128,7 +131,7 @@ repository:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge
 
 
-class RepositoryModule(OneViewModule):
+class RepositoriesModule(OneViewModule):
     MSG_CREATED = 'Repository created successfully.'
     MSG_UPDATED = 'Repository updated successfully.'
     MSG_ALREADY_PRESENT = 'Repository is already present.'
@@ -220,7 +223,7 @@ class RepositoryModule(OneViewModule):
         return dict(changed=changed, msg=msg, ansible_facts=dict(Repository=None))
 
 def main():
-    RepositoryModule().run()
+    RepositoriesModule().run()
 
 
 if __name__ == '__main__':
