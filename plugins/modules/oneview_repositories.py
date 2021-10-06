@@ -165,8 +165,6 @@ class RepositoriesModule(OneViewModule):
 
     def __present(self):
         changed = False
-        if "newName" in self.data:
-            self.data["name"] = self.data.pop("newName")
 
         if self.current_resource:
             response = self.__update()
@@ -188,7 +186,7 @@ class RepositoriesModule(OneViewModule):
         if compare(self.current_resource.data, updated_data):
             msg = self.MSG_ALREADY_PRESENT
         else:
-            self.current_resource.update(updated_data)
+            response_patch = self.__patch()
             changed = True
             msg = self.MSG_UPDATED
 
