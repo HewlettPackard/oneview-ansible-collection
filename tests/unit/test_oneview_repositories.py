@@ -94,7 +94,7 @@ class TestRepositoriesModule(OneViewBaseTest):
 
         self.resource.get_by_name.return_value = self.resource
 
-        patch_return = self.resource.copy()
+        patch_return = self.resource.data.copy()
         obj = mock.Mock()
         obj.data = patch_return
         self.resource.patch.return_value = obj
