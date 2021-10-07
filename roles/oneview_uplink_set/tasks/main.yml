@@ -18,6 +18,7 @@
       # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
       networkUris: 
         - "{{ ethernet_networks[0]['uri'] }}"
+        - "{{ ethernet_networks[1]['name'] }}"
       fcNetworkUris: []
       fcoeNetworkUris: []
       portConfigInfos: []
