@@ -118,39 +118,10 @@ class TestRepositoriesModule(OneViewBaseTest):
             msg=RepositoriesModule.MSG_UPDATED
         )
 
-    def test_update_repositoryName(self):
-        PARAMS_FOR_UPDATE = dict(
-            config='config.json',
-            state='present',
-            data=dict(name='New Repository',
-                      userName='New Repository1',
-                      newName='New Name')
-        )
-
-        self.mock_ansible_module.params = PARAMS_FOR_UPDATE
-        self.resource.get_by_name.return_value = self.resource
-        self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
-
-        patch_return = self.resource.data
-        obj = mock.Mock()
-        obj.data = patch_return
-        self.resource.patch.return_value = obj
-
-        RepositoriesModule().run()
-
-        self.resource.patch.assert_called_once_with(operation='replace',
-                                                    path='/repositoryName',
-                                                    value='New Name')
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
-            ansible_facts=dict(repository=patch_return),
-            msg=RepositoriesModule.MSG_UPDATED
-        )
-
     def test_raise_exception_when_update_repositoryName(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PATCH
+        self.mock_ansible_module.params = PARAMS_FOR_PATCH.copy()
         self.resource.get_by_name.return_value = []
+        self.resource.data = []
 
         RepositoriesModule().run()
 
