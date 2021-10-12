@@ -119,17 +119,10 @@ class TestRepositoriesModule(OneViewBaseTest):
         )
 
     def test_update_repositoryName(self):
-        DEFAULT_REPOSITORY_TEMPLATE_UPDATE = dict(
-            name='New Repository1',
-            userName='username',
-            password='password',
-            repositoryURI='uri',
-            repositoryType='FirmwareExternalRepo'
-)
         PARAMS_FOR_UPDATE = dict(
             config='config.json',
             state='present',
-            data=dict(name=DEFAULT_REPOSITORY_TEMPLATE_UPDATE['name'])
+            data=dict(name='New Repository1')
         )
 
         self.mock_ansible_module.params = PARAMS_FOR_UPDATE
