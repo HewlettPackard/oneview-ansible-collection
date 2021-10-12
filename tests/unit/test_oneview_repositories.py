@@ -122,7 +122,9 @@ class TestRepositoriesModule(OneViewBaseTest):
         PARAMS_FOR_UPDATE = dict(
             config='config.json',
             state='present',
-            data=dict(name='New Repository1')
+            data=dict(name='New Repository',
+                      userName='New Repository1',
+                      newName='New Name')
         )
 
         self.mock_ansible_module.params = PARAMS_FOR_UPDATE
@@ -147,10 +149,8 @@ class TestRepositoriesModule(OneViewBaseTest):
         )
 
     def test_raise_exception_when_update_repositoryName(self):
-        params_to_repository = PARAMS_FOR_PATCH.copy()
-        self.mock_ansible_module.params = params_to_repository
-
-        self.resource.get_by_name.return_value = None
+        self.mock_ansible_module.params = PARAMS_FOR_PATCH
+        self.resource.get_by_name.return_value = []
 
         RepositoriesModule().run()
 
@@ -158,9 +158,7 @@ class TestRepositoriesModule(OneViewBaseTest):
             exception=mock.ANY, msg=RepositoriesModule.MSG_RESOURCE_NOT_FOUND)
 
     def test_raise_exception_when_update_repositoryName_no_newName(self):
-
-        params_to_repository_no_newname = PARAMS_FOR_PATCH_NO_NEWNAME.copy()
-        self.mock_ansible_module.params = params_to_repository_no_newname
+        self.mock_ansible_module.params = PARAMS_FOR_PATCH_NO_NEWNAME
 
         RepositoriesModule().run()
 

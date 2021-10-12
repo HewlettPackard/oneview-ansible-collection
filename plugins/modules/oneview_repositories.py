@@ -91,7 +91,7 @@ EXAMPLES = '''
       repositoryType: 'FirmwareExternalRepo'
   delegate_to: localhost
 
-- name: Update the repository resource
+- name: Update the name of repository resource
   oneview_repositories:
     config: '{{ config }}'
     state: patch
