@@ -128,7 +128,7 @@ repository:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge, OneViewModuleValueError
 
 
 class RepositoriesModule(OneViewModule):
@@ -138,6 +138,7 @@ class RepositoriesModule(OneViewModule):
     MSG_RESOURCE_NOT_FOUND = 'Repository not found.'
     MSG_DELETED = 'Repository deleted successfully.'
     MSG_ALREADY_ABSENT = 'Repository is already absent.'
+    MSG_CANT_UPDATE = 'Operation is not supported on Repository resource'
 
     argument_spec = dict(
         state=dict(
@@ -196,12 +197,14 @@ class RepositoriesModule(OneViewModule):
         # returns None if Repository doesn't exist
         if "newName" in self.data:
             self.data["name"] = self.data.pop("newName")
-        if self.current_resource:
-            self.current_resource.patch(operation='replace',
-                                        path='/repositoryName',
-                                        value=self.data['name'])
+            if self.current_resource:
+                self.current_resource.patch(operation='replace',
+                                            path='/repositoryName',
+                                            value=self.data['name'])
+            else:
+                raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
         else:
-            raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
+            raise OneViewModuleValueError(self.MSG_CANT_UPDATE)
 
         return dict(changed=True,
                     msg=self.MSG_UPDATED,

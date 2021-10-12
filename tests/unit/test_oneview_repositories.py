@@ -54,6 +54,13 @@ PARAMS_FOR_ABSENT = dict(
     data=dict(name=DEFAULT_REPOSITORY_TEMPLATE['name'])
 )
 
+PARAMS_FOR_PATCH_NO_NEWNAME = dict(
+    config='config.json',
+    state='patch',
+    data=dict(name=DEFAULT_REPOSITORY_TEMPLATE['name'],
+              userName='New Name')
+)
+
 
 @pytest.mark.resource(TestRepositoriesModule='repositories')
 class TestRepositoriesModule(OneViewBaseTest):
@@ -88,9 +95,9 @@ class TestRepositoriesModule(OneViewBaseTest):
             ansible_facts=dict(repository=DEFAULT_REPOSITORY_TEMPLATE)
         )
 
-    def test_update_repositoryName(self):
-        params_to_scope = PARAMS_FOR_PATCH.copy()
-        self.mock_ansible_module.params = params_to_scope
+    def test_patch_repositoryName(self):
+        params_to_repository = PARAMS_FOR_PATCH.copy()
+        self.mock_ansible_module.params = params_to_repository
 
         self.resource.get_by_name.return_value = self.resource
 
@@ -110,6 +117,62 @@ class TestRepositoriesModule(OneViewBaseTest):
             ansible_facts=dict(repository=patch_return),
             msg=RepositoriesModule.MSG_UPDATED
         )
+
+    def test_update_repositoryName(self):
+        DEFAULT_REPOSITORY_TEMPLATE_UPDATE = dict(
+            name='New Repository1',
+            userName='username',
+            password='password',
+            repositoryURI='uri',
+            repositoryType='FirmwareExternalRepo'
+)
+        PARAMS_FOR_UPDATE = dict(
+            config='config.json',
+            state='present',
+            data=dict(name=DEFAULT_REPOSITORY_TEMPLATE_UPDATE['name'])
+        )
+
+        self.mock_ansible_module.params = PARAMS_FOR_UPDATE
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
+
+        patch_return = self.resource.data
+        obj = mock.Mock()
+        obj.data = patch_return
+        self.resource.patch.return_value = obj
+
+        RepositoriesModule().run()
+
+        self.resource.patch.assert_called_once_with(operation='replace',
+                                                    path='/repositoryName',
+                                                    value='New Name')
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            ansible_facts=dict(repository=patch_return),
+            msg=RepositoriesModule.MSG_UPDATED
+        )
+
+    def test_raise_exception_when_update_repositoryName(self):
+        params_to_repository = PARAMS_FOR_PATCH.copy()
+        self.mock_ansible_module.params = params_to_repository
+
+        self.resource.get_by_name.return_value = None
+
+        RepositoriesModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            exception=mock.ANY, msg=RepositoriesModule.MSG_RESOURCE_NOT_FOUND)
+
+    def test_raise_exception_when_update_repositoryName_no_newName(self):
+
+        params_to_repository_no_newname = PARAMS_FOR_PATCH_NO_NEWNAME.copy()
+        self.mock_ansible_module.params = params_to_repository_no_newname
+
+        RepositoriesModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            exception=mock.ANY, msg=RepositoriesModule.MSG_CANT_UPDATE)
 
     def test_should_remove_repository(self):
         self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
