@@ -128,8 +128,8 @@ repository:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge, 
-                                                                         OneViewModuleValueError
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge,
+                                                                          OneViewModuleValueError)
 
 
 class RepositoriesModule(OneViewModule):
