@@ -119,7 +119,9 @@ class TestRepositoriesModule(OneViewBaseTest):
         )
 
     def test_raise_exception_when_update_repositoryName(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PATCH.copy()
+        params_to_repository = PARAMS_FOR_PATCH.copy()
+        self.mock_ansible_module.params = params_to_repository
+
         self.resource.get_by_name.return_value = []
         self.resource.data = []
 
