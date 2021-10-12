@@ -196,16 +196,16 @@ class RepositoriesModule(OneViewModule):
 
     def __patch(self):
         # returns None if Repository doesn't exist
-        if "newName" in self.data:
-            self.data["name"] = self.data.pop("newName")
-            if self.current_resource:
+        if self.current_resource:
+            if "newName" in self.data:
+                self.data["name"] = self.data.pop("newName")
                 self.current_resource.patch(operation='replace',
                                             path='/repositoryName',
                                             value=self.data['name'])
             else:
-                raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
+                raise OneViewModuleValueError(self.MSG_CANT_UPDATE)
         else:
-            raise OneViewModuleValueError(self.MSG_CANT_UPDATE)
+            raise OneViewModuleResourceNotFound(self.MSG_RESOURCE_NOT_FOUND)
 
         return dict(changed=True,
                     msg=self.MSG_UPDATED,

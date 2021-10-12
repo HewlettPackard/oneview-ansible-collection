@@ -133,6 +133,9 @@ class TestRepositoriesModule(OneViewBaseTest):
     def test_raise_exception_when_update_repositoryName_no_newName(self):
         self.mock_ansible_module.params = PARAMS_FOR_PATCH_NO_NEWNAME
 
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
+
         RepositoriesModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
