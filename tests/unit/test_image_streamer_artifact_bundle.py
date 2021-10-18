@@ -108,7 +108,7 @@ YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD = """
             destinationFilePath: "ab_backup"
         """
 
-DICT_DEFAULT_ARTIFACT_BUNDLE = yaml.load(YAML_ARTIFACT_BUNDLE)["data"]
+DICT_DEFAULT_ARTIFACT_BUNDLE = yaml.safe_load(YAML_ARTIFACT_BUNDLE)["data"]
 
 
 @pytest.mark.resource(TestArtifactBundleModule='artifact_bundles')
@@ -121,7 +121,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
         self.resource.get_by_name.return_value = None
         self.resource.create.return_value = self.resource
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_PRESENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_PRESENT)
 
         ArtifactBundleModule().run()
 
@@ -133,7 +133,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_should_not_update_when_existing_data_is_equals(self):
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_PRESENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_PRESENT)
 
         ArtifactBundleModule().run()
 
@@ -148,7 +148,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
         data_merged['newName'] = 'New Name'
 
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_RENAME)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_RENAME)
 
         ArtifactBundleModule().run()
 
@@ -162,7 +162,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
         self.resource.get_by_name.return_value = None
         self.resource.upload_bundle_from_file.return_value = DICT_DEFAULT_ARTIFACT_BUNDLE
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_UPLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_UPLOAD)
 
         ArtifactBundleModule().run()
 
@@ -175,7 +175,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
     def test_should_delete_when_resource_exist(self):
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
         self.resource.delete.return_value = True
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_ABSENT)
 
         ArtifactBundleModule().run()
 
@@ -186,7 +186,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_should_do_nothing_when_resource_already_absent(self):
         self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_ABSENT)
 
         ArtifactBundleModule().run()
 
@@ -198,7 +198,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
     def test_should_download(self):
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
         self.resource.download.return_value = True
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_DOWNLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_DOWNLOAD)
 
         ArtifactBundleModule().run()
 
@@ -210,7 +210,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_download_should_fail(self):
         self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_DOWNLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_DOWNLOAD)
 
         ArtifactBundleModule().run()
 
@@ -219,7 +219,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
     def test_should_extract(self):
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
         self.resource.extract.return_value = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_EXTRACT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_EXTRACT)
 
         ArtifactBundleModule().run()
 
@@ -231,7 +231,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_extract_should_fail(self):
         self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_EXTRACT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_EXTRACT)
 
         ArtifactBundleModule().run()
 
@@ -240,7 +240,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
     def test_should_create_backup(self):
         self.resource.create_backup.return_value = self.resource
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_CREATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_CREATE)
 
         ArtifactBundleModule().run()
 
@@ -255,7 +255,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
         self.resource.get_all_backups.return_value = [DICT_DEFAULT_ARTIFACT_BUNDLE]
         self.resource.get_backup.return_value = self.resource
         self.resource.download_archive.return_value = True
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD)
 
         ArtifactBundleModule().run()
 
@@ -267,7 +267,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_backup_download_should_fail(self):
         self.resource.get_all_backups.return_value = []
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD)
 
         ArtifactBundleModule().run()
 
@@ -278,7 +278,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
         self.resource.get_all_backups.return_value = [DICT_DEFAULT_ARTIFACT_BUNDLE]
         self.resource.get_backup.return_value = self.resource
         self.resource.extract_backup.return_value = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_EXTRACT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_EXTRACT)
 
         ArtifactBundleModule().run()
 
@@ -290,7 +290,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
 
     def test_backup_extract_should_fail(self):
         self.resource.get_all_backups.return_value = []
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_EXTRACT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_EXTRACT)
 
         ArtifactBundleModule().run()
 
@@ -299,7 +299,7 @@ class TestArtifactBundleModule(ImageStreamerBaseTest):
     def test_should_upload_backup(self):
         self.resource.data = DICT_DEFAULT_ARTIFACT_BUNDLE
         self.resource.upload_backup_bundle_from_file.return_value = DICT_DEFAULT_ARTIFACT_BUNDLE
-        self.mock_ansible_module.params = yaml.load(YAML_ARTIFACT_BUNDLE_BACKUP_UPLOAD)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ARTIFACT_BUNDLE_BACKUP_UPLOAD)
 
         ArtifactBundleModule().run()
 
