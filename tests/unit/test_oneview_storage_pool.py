@@ -67,7 +67,7 @@ YAML_STORAGE_POOL_ABSENT = """
            poolName: "FST_CPG2"
         """
 
-DICT_DEFAULT_STORAGE_POOL = yaml.load(YAML_STORAGE_POOL)["data"]
+DICT_DEFAULT_STORAGE_POOL = yaml.safe_load(YAML_STORAGE_POOL)["data"]
 DICT_DEFAULT_STORAGE_POOL_500 = yaml.load(YAML_STORAGE_POOL_500)["data"]
 
 

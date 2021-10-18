@@ -80,7 +80,7 @@ YAML_CLUSTER_PROFILE_ABSENT = """
             name: "hcp"
         """
 
-DICT_DEFAULT_CLUSTER_PROFILE = yaml.load(YAML_CLUSTER_PROFILE)["data"]
+DICT_DEFAULT_CLUSTER_PROFILE = yaml.safe_load(YAML_CLUSTER_PROFILE)["data"]
 
 
 @pytest.mark.resource(TestHypervisorClusterProfileModule='hypervisor_cluster_profiles')

@@ -108,7 +108,7 @@ YAML_ARTIFACT_BUNDLE_BACKUP_DOWNLOAD = """
             destinationFilePath: "ab_backup"
         """
 
-DICT_DEFAULT_ARTIFACT_BUNDLE = yaml.load(YAML_ARTIFACT_BUNDLE)["data"]
+DICT_DEFAULT_ARTIFACT_BUNDLE = yaml.safe_load(YAML_ARTIFACT_BUNDLE)["data"]
 
 
 @pytest.mark.resource(TestArtifactBundleModule='artifact_bundles')

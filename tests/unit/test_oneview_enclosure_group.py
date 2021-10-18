@@ -77,7 +77,7 @@ YAML_ENCLOSURE_GROUP_ABSENT = """
           name: "Enclosure Group 1 (renamed)"
         """
 
-DICT_DEFAULT_ENCLOSURE_GROUP = yaml.load(YAML_ENCLOSURE_GROUP)["data"]
+DICT_DEFAULT_ENCLOSURE_GROUP = yaml.safe_load(YAML_ENCLOSURE_GROUP)["data"]
 
 
 @pytest.mark.resource(TestEnclosureGroupModule='enclosure_groups')

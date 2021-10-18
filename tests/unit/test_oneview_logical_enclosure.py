@@ -113,7 +113,7 @@ YAML_LOGICAL_ENCLOSURE_ABSENT = """
             name: "Encl1"
         """
 
-DICT_DEFAULT_LOGICAL_ENCLOSURE = yaml.load(YAML_LOGICAL_ENCLOSURE)["data"]
+DICT_DEFAULT_LOGICAL_ENCLOSURE = yaml.safe_load(YAML_LOGICAL_ENCLOSURE)["data"]
 
 
 @pytest.mark.resource(TestLogicalEnclosureModule='logical_enclosures')

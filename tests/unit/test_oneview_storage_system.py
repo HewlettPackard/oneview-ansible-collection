@@ -129,7 +129,7 @@ YAML_STORAGE_SYSTEM_ABSENT = """
                 ip_hostname: 172.18.11.12
 """
 
-DICT_DEFAULT_STORAGE_SYSTEM = yaml.load(YAML_STORAGE_SYSTEM)["data"]
+DICT_DEFAULT_STORAGE_SYSTEM = yaml.safe_load(YAML_STORAGE_SYSTEM)["data"]
 del DICT_DEFAULT_STORAGE_SYSTEM['credentials']['password']
 DICT_DEFAULT_STORAGE_SYSTEM_500 = yaml.load(YAML_STORAGE_SYSTEM_500)["data"]
 del DICT_DEFAULT_STORAGE_SYSTEM_500['credentials']['password']
