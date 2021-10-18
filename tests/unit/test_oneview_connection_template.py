@@ -59,7 +59,7 @@ YAML_CONNECTION_TEMPLATE_MISSING_KEY = """
     """
 
 DICT_CONNECTION_TEMPLATE = yaml.safe_load(YAML_CONNECTION_TEMPLATE)["data"]
-DICT_CONNECTION_TEMPLATE_CHANGED = yaml.load(YAML_CONNECTION_TEMPLATE_CHANGE)["data"]
+DICT_CONNECTION_TEMPLATE_CHANGED = yaml.safe_load(YAML_CONNECTION_TEMPLATE_CHANGE)["data"]
 
 
 @pytest.mark.resource(TestConnectionTemplateModule='connection_templates')
