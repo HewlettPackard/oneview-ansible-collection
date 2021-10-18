@@ -111,7 +111,7 @@ class TestStorageVolumeAttachmentModule(OneViewBaseTest):
     def test_should_remove_extra_presentation_by_profile_uri(self):
         self.resource.remove_extra_presentations.return_value = MOCK_SERVER_PROFILE
 
-        self.mock_ansible_module.params = yaml.load(YAML_EXTRA_REMOVED_BY_URI)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_EXTRA_REMOVED_BY_URI)
 
         StorageVolumeAttachmentModule().run()
 
