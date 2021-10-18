@@ -53,7 +53,7 @@ YAML_SERVER_HARDWARE_TYPE_ABSENT = """
         """
 
 DICT_DEFAULT_SERVER_HARDWARE_TYPE = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE)["data"]
-DICT_DEFAULT_SERVER_HARDWARE_TYPE_CHANGED = yaml.load(YAML_SERVER_HARDWARE_TYPE_CHANGE)["data"]
+DICT_DEFAULT_SERVER_HARDWARE_TYPE_CHANGED = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE_CHANGE)["data"]
 
 
 @pytest.mark.resource(TestServerHardwareTypeModule='server_hardware_types')

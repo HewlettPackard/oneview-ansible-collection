@@ -88,7 +88,7 @@ PARAMS_FOR_ABSENT = dict(
 )
 
 DICT_PARAMS_WITH_CHANGES = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)["data"]
-DICT_PARAMS_CONNECTION_TEMPLATE = yaml.load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)["data"]
+DICT_PARAMS_CONNECTION_TEMPLATE = yaml.safe_load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)["data"]
 
 
 @pytest.mark.resource(TestNetworkSetModule='network_sets')
