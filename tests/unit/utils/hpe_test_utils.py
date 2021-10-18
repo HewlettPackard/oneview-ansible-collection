@@ -52,7 +52,7 @@ class OneViewBaseTest(object):
         self.testing_class = getattr(testing_module, resource_name)
         try:
             # Load scenarios from module examples (Also checks if it is a valid yaml)
-            self.EXAMPLES = yaml.load(testing_module.EXAMPLES, yaml.SafeLoader)
+            self.EXAMPLES = yaml.safe_load(testing_module.EXAMPLES, yaml.SafeLoader)
 
         except yaml.scanner.ScannerError:
             message = "Something went wrong while parsing yaml from {}.EXAMPLES".format(self.testing_class.__module__)
