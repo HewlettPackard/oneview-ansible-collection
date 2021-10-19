@@ -5,6 +5,7 @@ Retrieve the facts about one or more of the OneView Repositories
  Retrieve the facts about one or more of the Repositories from OneView.
 
 #### Requirements (on the host that executes the module)
+  * python >= 2.7.9
   * hpeOneView >= 5.4.0
 
 #### Options
