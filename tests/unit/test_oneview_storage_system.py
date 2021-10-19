@@ -146,7 +146,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         obj = mock.Mock()
         obj.data = DICT_DEFAULT_STORAGE_SYSTEM
         self.resource.add.return_value = obj
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM)
         StorageSystemModule().run()
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
@@ -161,7 +161,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         obj.data = DICT_DEFAULT_STORAGE_SYSTEM_500
         self.resource.add.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_500)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_500)
 
         StorageSystemModule().run()
 
@@ -186,7 +186,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         self.resource.get_by_ip_hostname.return_value = obj
         self.resource.update.return_value = DICT_DEFAULT_STORAGE_SYSTEM
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM)
 
         StorageSystemModule().run()
 
@@ -197,11 +197,11 @@ class TestStorageSystemModule(OneViewBaseTest):
         )
 
     def test_should_not_update_when_data_is_equals_using_name(self):
-        dict_by_name = yaml.load(YAML_STORAGE_SYSTEM_BY_NAME)["data"]
+        dict_by_name = yaml.safe_load(YAML_STORAGE_SYSTEM_BY_NAME)["data"]
         self.resource.data = dict_by_name
         self.resource.get_by_name.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_BY_NAME)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_BY_NAME)
 
         StorageSystemModule().run()
 
@@ -224,7 +224,7 @@ class TestStorageSystemModule(OneViewBaseTest):
     def test_should_fail_when_credentials_attribute_is_missing(self):
         self.resource.get_by_name.return_value = []
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_BY_NAME)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_BY_NAME)
 
         StorageSystemModule().run()
 
@@ -239,7 +239,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         self.resource.get_by_ip_hostname.return_value = obj
         self.resource.update.return_value = data_merged
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_CHANGES)
 
         StorageSystemModule().run()
 
@@ -259,7 +259,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         self.resource.get_by_hostname.return_value = obj
         self.resource.update.return_value = data_merged
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_CHANGES_500)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_CHANGES_500)
 
         StorageSystemModule().run()
 
@@ -274,7 +274,7 @@ class TestStorageSystemModule(OneViewBaseTest):
         obj.data = DICT_DEFAULT_STORAGE_SYSTEM
         self.resource.get_by_ip_hostname.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_ABSENT)
 
         StorageSystemModule().run()
 
@@ -286,7 +286,7 @@ class TestStorageSystemModule(OneViewBaseTest):
     def test_should_do_nothing_when_storage_system_not_exist(self):
         self.resource.get_by_ip_hostname.return_value = []
 
-        self.mock_ansible_module.params = yaml.load(YAML_STORAGE_SYSTEM_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_STORAGE_SYSTEM_ABSENT)
 
         StorageSystemModule().run()
 

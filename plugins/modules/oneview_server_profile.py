@@ -234,7 +234,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           OneViewModuleTaskError,
                                                                           SPKeys,
                                                                           OneViewModuleException,
-                                                                          compare)
+                                                                          compare,
+                                                                          OneViewModuleResourceNotFound)
 
 
 class ServerProfileModule(OneViewModule):
@@ -255,6 +256,7 @@ class ServerProfileModule(OneViewModule):
     MSG_ERROR_ALLOCATE_SERVER_HARDWARE = 'Could not allocate server hardware'
     MSG_MAKE_COMPLIANT_NOT_SUPPORTED = "Update from template is not supported for server profile '{}' because it is" \
                                        " not associated with a server profile template."
+    MSG_SERVER_PROFILE_NOT_FOUND = "The Server Profile was not found."
 
     CONCURRENCY_FAILOVER_RETRIES = 25
 
@@ -326,6 +328,9 @@ class ServerProfileModule(OneViewModule):
             created = True
             msg = self.MSG_CREATED
         else:
+            # This allows updating name of ServerProfile
+            if "newName" in self.data:
+                self.data["name"] = self.data.pop("newName")
             # This allows unassigning a profile if a SH key is specifically passed in as None
             if not self.auto_assign_server_hardware:
                 server_hardware_uri_exists = False
@@ -534,7 +539,7 @@ class ServerProfileModule(OneViewModule):
         else:
             user_name = self.oneview_client._OneViewClient__connection._cred['userName']
             scope_user = self.oneview_client.users.get_by_userName(user_name)
-            if scope_user and user_name != 'Administrator':
+            if (scope_user and user_name.lower() != 'administrator'):
                 permissions = scope_user.data["permissions"]
                 scope_uris = set([each_role.get("scopeUri") for each_role in permissions])
                 scope_uri = '%20OR%20'.join(list(scope_uris))
@@ -601,6 +606,9 @@ class ServerProfileModule(OneViewModule):
 
         changed = False
         msg = self.MSG_ALREADY_COMPLIANT
+
+        if not self.current_resource:
+            raise OneViewModuleResourceNotFound(self.MSG_SERVER_PROFILE_NOT_FOUND)
 
         if not self.current_resource.data.get('serverProfileTemplateUri'):
             self.module.log("Make the Server Profile compliant is not supported for this profile")

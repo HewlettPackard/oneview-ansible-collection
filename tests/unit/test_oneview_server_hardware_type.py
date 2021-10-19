@@ -64,7 +64,7 @@ class TestServerHardwareTypeModule(OneViewBaseTest):
 
         self.resource.data = srv_hw_type
 
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_TYPE_CHANGE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE_CHANGE)
 
         ServerHardwareTypeModule().run()
 
@@ -77,7 +77,7 @@ class TestServerHardwareTypeModule(OneViewBaseTest):
     def test_should_not_update_when_data_is_equals(self):
         self.resource.data = DICT_DEFAULT_SERVER_HARDWARE_TYPE
 
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_TYPE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE)
 
         ServerHardwareTypeModule().run()
 
@@ -90,7 +90,7 @@ class TestServerHardwareTypeModule(OneViewBaseTest):
     def test_should_remove_server_hardware_type(self):
         self.resource.data = DICT_DEFAULT_SERVER_HARDWARE_TYPE
 
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_TYPE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE_ABSENT)
 
         ServerHardwareTypeModule().run()
 
@@ -102,7 +102,7 @@ class TestServerHardwareTypeModule(OneViewBaseTest):
     def test_should_do_nothing_when_server_hardware_type_not_exist(self):
         self.resource.get_by_name.return_value = None
 
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_TYPE_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE_ABSENT)
 
         ServerHardwareTypeModule().run()
 
@@ -114,7 +114,7 @@ class TestServerHardwareTypeModule(OneViewBaseTest):
     def test_should_fail_when_server_hardware_type_was_not_found(self):
         self.resource.get_by_name.return_value = None
 
-        self.mock_ansible_module.params = yaml.load(YAML_SERVER_HARDWARE_TYPE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_TYPE)
 
         ServerHardwareTypeModule().run()
 

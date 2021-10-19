@@ -187,7 +187,7 @@ class TestNetworkSetModule(OneViewBaseTest):
         obj.data = CONNECTION_TEMPLATE
         self.mock_ov_client.connection_templates.get_by_uri.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CHANGES)
 
         NetworkSetModule().run()
 
@@ -219,7 +219,7 @@ class TestNetworkSetModule(OneViewBaseTest):
         obj.data = CONNECTION_TEMPLATE
         self.mock_ov_client.connection_templates.get_by_uri.return_value = obj
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)
 
         NetworkSetModule().run()
 
@@ -232,7 +232,7 @@ class TestNetworkSetModule(OneViewBaseTest):
     def test_should_fail_when_connection_template_was_not_found(self):
         self.mock_ov_client.connection_templates.get_by_uri.return_value = []
 
-        self.mock_ansible_module.params = yaml.load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_PARAMS_WITH_CONNECTION_TEMPLATE)
 
         NetworkSetModule().run()
 

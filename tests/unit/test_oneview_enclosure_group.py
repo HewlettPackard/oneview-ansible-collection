@@ -91,7 +91,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
         self.resource.create.return_value = self.resource
         self.resource.data = DICT_DEFAULT_ENCLOSURE_GROUP
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP)
 
         EnclosureGroupModule().run()
 
@@ -104,7 +104,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
     def test_should_not_update_when_data_is_equals(self):
         self.resource.data = DICT_DEFAULT_ENCLOSURE_GROUP
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP)
 
         EnclosureGroupModule().run()
 
@@ -120,7 +120,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
 
         self.resource.data = DICT_DEFAULT_ENCLOSURE_GROUP
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP_CHANGES)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP_CHANGES)
 
         EnclosureGroupModule().run()
 
@@ -138,7 +138,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
         self.resource.data = data_merged
         self.resource.get_script.return_value = "# test script"
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP_CHANGE_SCRIPT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP_CHANGE_SCRIPT)
 
         EnclosureGroupModule().run()
 
@@ -157,7 +157,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
         self.resource.update_script.return_value = ""
         self.resource.get_script.return_value = "# test script "
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP_CHANGE_SCRIPT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP_CHANGE_SCRIPT)
 
         EnclosureGroupModule().run()
 
@@ -170,7 +170,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
     def test_should_remove_enclosure_group(self):
         self.resource.data = DICT_DEFAULT_ENCLOSURE_GROUP
 
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP_ABSENT)
 
         EnclosureGroupModule().run()
 
@@ -181,7 +181,7 @@ class TestEnclosureGroupModule(OneViewBaseTest):
 
     def test_should_do_nothing_when_enclosure_group_not_exist(self):
         self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = yaml.load(YAML_ENCLOSURE_GROUP_ABSENT)
+        self.mock_ansible_module.params = yaml.safe_load(YAML_ENCLOSURE_GROUP_ABSENT)
 
         EnclosureGroupModule().run()
 
