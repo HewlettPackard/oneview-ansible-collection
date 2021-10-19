@@ -71,7 +71,7 @@ EXAMPLES = '''
     state: present
     validate_etag: False
     data:
-      name: "{{ repository_name }}"
+      repositoryName: "{{ repository_name }}"
       userName: "{{ repository_username }}"
       password: "{{ repository_password }}"
       repositoryURI: "{{ repository_uri }}"
@@ -84,7 +84,7 @@ EXAMPLES = '''
     config: "{{ config }}"
     state: present
     data:
-      name: "{{ repository_name }}"
+      repositoryName: "{{ repository_name }}"
       userName: "{{ repository_username }}"
       password: "{{ repository_password }}"
       repositoryURI: "{{ repository_uri }}"
