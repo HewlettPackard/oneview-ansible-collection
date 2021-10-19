@@ -1,0 +1,35 @@
+---
+- name: Gather facts about all Repositories
+  oneview_repositories_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=repositories
+
+- name: Gather paginated, filtered and sorted facts about Repositories
+  oneview_repositories_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+
+- debug: var=repositories
+
+- name: Gather facts about a Repository by Id
+  oneview_repositories_facts:
+    config: "{{ config }}"
+    name: "{{ repositories[0]['uuid'] }}"
+  delegate_to: localhost
+  when: repositories | default('', True)
+
+- debug: var=repositories
+
+- name: Gather facts about a Repository by name
+  oneview_repositories_facts:
+    config: "{{ config }}"
+    name: "{{ repositories[0]['name'] }}"
+  delegate_to: localhost
+  when: repositories | default('', True)
+
+- debug: var=repositories
