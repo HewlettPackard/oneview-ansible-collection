@@ -130,7 +130,7 @@ class TestRepositoriesModule(OneViewBaseTest):
         self.mock_ansible_module.params = params_to_repository
 
         self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
-        self.resource.get_by_name.return_value = self.resource.data
+        self.resource.get_by_name.return_value = self.resource
 
         patch_return = self.resource.data
         obj = mock.Mock()
