@@ -195,13 +195,12 @@ class UplinkSetModule(OneViewModule):
                 raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
 
     def __replace_network_name_by_uri(self):
-        data = self.data.copy()
-        if 'networkUris' in data and data['networkUris']:
-            data['networkUris'] = [self.__get_ethernet_network_by_name(record) for record in data['networkUris']]
-        if 'fcNetworkUris' in data and data['fcNetworkUris']:
-            data['fcNetworkUris'] = [self.__get_fc_network_by_name(record) for record in data['fcNetworkUris']]
-        if 'fcoeNetworkUris' in data and data['fcoeNetworkUris']:
-            data['fcoeNetworkUris'] = [self.__get_fcoe_network_by_name(record) for record in data['fcoeNetworkUris']]
+        if 'networkUris' in self.data and self.data['networkUris']:
+            self.data['networkUris'] = [self.__get_ethernet_network_by_name(record) for record in self.data['networkUris']]
+        if 'fcNetworkUris' in self.data and self.data['fcNetworkUris']:
+            self.data['fcNetworkUris'] = [self.__get_fc_network_by_name(record) for record in self.data['fcNetworkUris']]
+        if 'fcoeNetworkUris' in self.data and self.data['fcoeNetworkUris']:
+            self.data['fcoeNetworkUris'] = [self.__get_fcoe_network_by_name(record) for record in self.data['fcoeNetworkUris']]
 
     def __set_current_resource(self, name, logical_interconnect_uri):
         uplink_sets = self.resource_client.get_by('name', name)
