@@ -164,45 +164,44 @@ class UplinkSetModule(OneViewModule):
             else:
                 raise OneViewModuleResourceNotFound(self.MSG_LOGICAL_INTERCONNECT_NOT_FOUND)
 
-    def __get_ethernet_network_by_name(self, name):
-
-        result = self.oneview_client.ethernet_networks.get_by_name(name)
-        return result if result else None
-
-    def __get_fc_network_by_name(self, name):
-
-        result = self.oneview_client.fc_networks.get_by_name(name)
-        return result if result else None
-
-    def __get_fcoe_network_by_name(self, name):
-
-        result = self.oneview_client.fcoe_networks.get_by_name(name)
-        return result if result else None
-
-    def __get_network_uri(self, network_name_or_uri, net_type):
-
-        if network_name_or_uri and network_name_or_uri.startswith('/rest/'):
-            return network_name_or_uri
+    def __get_ethernet_network_by_name(self, record):
+        if record and record.startsWith('/rest/'):
+            return record
         else:
-            if net_type == 'Ethernet':
-                network = self.__get_ethernet_network_by_name(network_name_or_uri)
-            elif net_type == 'FcNetwork':
-                network = self.__get_fc_network_by_name(network_name_or_uri)
-            elif net_type == 'FcoeNetwork':
-                network = self.__get_fcoe_network_by_name(network_name_or_uri)
-            if network:
-                return network.data['uri']
-            else:
-                raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + network_name_or_uri)
+            result = self.oneview_client.ethernet_networks.get_by_name(record)
+            if result:
+                return result.data['uri']
+            else: 
+                raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
+
+    def __get_fc_network_by_name(self, record):
+        if record and record.startsWith('/rest/'):
+            return record
+        else:
+            result = self.oneview_client.fc_networks.get_by_name(record)
+            if result:
+                return result.data['uri']
+            else: 
+                raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
+
+    def __get_fcoe_network_by_name(self, record):
+        if record and record.startsWith('/rest/'):
+            return record
+        else:
+            result = self.oneview_client.fcoe_networks.get_by_name(record)
+            if result:
+                return result.data['uri']
+            else: 
+                raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
 
     def __replace_network_name_by_uri(self):
-        data = self.data
+        data = self.data.copy()
         if 'networkUris' in data and data['networkUris']:
-            data['networkUris'] = [self.__get_network_uri(x, 'Ethernet') for x in data['networkUris']]
+            data['networkUris'] = [self.__get_ethernet_network_by_name(record) for record in data['networkUris']]
         if 'fcNetworkUris' in data and data['fcNetworkUris']:
-            data['fcNetworkUris'] = [self.__get_network_uri(x, 'FcNetwork') for x in data['fcNetworkUris']]
+            data['fcNetworkUris'] = [self.__get_fc_network_by_name(record) for record in data['fcNetworkUris']]
         if 'fcoeNetworkUris' in data and data['fcoeNetworkUris']:
-            data['fcoeNetworkUris'] = [self.__get_network_uri(x, 'FcoeNetwork') for x in data['fcoeNetworkUris']]
+            data['fcoeNetworkUris'] = [self.__get_fcoe_network_by_name(record) for record in data['fcoeNetworkUris']]
 
     def __set_current_resource(self, name, logical_interconnect_uri):
         uplink_sets = self.resource_client.get_by('name', name)
