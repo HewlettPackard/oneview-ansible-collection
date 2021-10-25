@@ -165,33 +165,33 @@ class UplinkSetModule(OneViewModule):
                 raise OneViewModuleResourceNotFound(self.MSG_LOGICAL_INTERCONNECT_NOT_FOUND)
 
     def __get_ethernet_network_by_name(self, record):
-        if record and record.startsWith('/rest/'):
+        if record and record.startswith('/rest/'):
             return record
         else:
             result = self.oneview_client.ethernet_networks.get_by_name(record)
             if result:
                 return result.data['uri']
-            else: 
+            else:
                 raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
 
     def __get_fc_network_by_name(self, record):
-        if record and record.startsWith('/rest/'):
+        if record and record.startswith('/rest/'):
             return record
         else:
             result = self.oneview_client.fc_networks.get_by_name(record)
             if result:
                 return result.data['uri']
-            else: 
+            else:
                 raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
 
     def __get_fcoe_network_by_name(self, record):
-        if record and record.startsWith('/rest/'):
+        if record and record.startswith('/rest/'):
             return record
         else:
             result = self.oneview_client.fcoe_networks.get_by_name(record)
             if result:
                 return result.data['uri']
-            else: 
+            else:
                 raise OneViewModuleResourceNotFound(self.MSG_NETWORK_NOT_FOUND + record)
 
     def __replace_network_name_by_uri(self):
