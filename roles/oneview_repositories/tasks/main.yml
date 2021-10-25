@@ -1,0 +1,55 @@
+---
+- name: Create a Repository
+  oneview_repositories:
+    config: "{{ config }}"
+    state: present
+    validate_etag: False
+    data:
+      repositoryName: "{{ repository_name }}"
+      userName: "{{ repository_username }}"
+      password: "{{ repository_password }}"
+      repositoryURI: "{{ repository_uri }}"
+      repositoryType: "FirmwareExternalRepo"
+  delegate_to: localhost
+  register: repository
+
+- name: Do nothing with the Repository when no changes are provided
+  oneview_repositories:
+    config: "{{ config }}"
+    state: present
+    data:
+      repositoryName: "{{ repository_name }}"
+      userName: "{{ repository_username }}"
+      password: "{{ repository_password }}"
+      repositoryURI: "{{ repository_uri }}"
+      repositoryType: "FirmwareExternalRepo"
+  delegate_to: localhost
+
+- name: Update the attributes of repository resource
+  oneview_repositories:
+    config: '{{ config }}'
+    state: patch
+    data:
+      name: "{{ repository_name }}"
+      newName: "{{ repository_name }}-updated"
+  delegate_to: localhost
+
+- name: Delete the Repository
+  oneview_repositories:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+    params:
+      force: True
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when Repository is absent
+  oneview_repositories:
+    config: "{{ config }}"
+    state: absent
+    data:
+      name: "{{ repository_name }}"
+  delegate_to: localhost
+  register: deleted
