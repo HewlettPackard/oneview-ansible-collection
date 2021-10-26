@@ -34,13 +34,13 @@ PARAMS_GET_BY_NAME = dict(
     config='config.json',
     name="Test Label",
     resourceUri=None,
-    get_resources = False
+    get_resources=False
 )
 
 PARAMS_GET_RESOURCES_BY_NAME = dict(
     config='config.json',
     name="Test Label",
-    get_resources = True
+    get_resources=True
 )
 
 PARAMS_GET_BY_RESOURCE = dict(
