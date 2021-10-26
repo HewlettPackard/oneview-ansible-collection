@@ -69,14 +69,15 @@ class TestLabelFactsModule(OneViewBaseFactsTest):
         )
 
     def test_should_get_label_by_name(self):
-        self.resource.get_by.return_value = PRESENT_LABELS
+        result = {'assignedResourceUris': ['uri1', 'uri2'], 'name': 'test'}
+        self.resource.get_assigned_resources.return_value = result
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
         LabelFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(labels=PRESENT_LABELS)
+            ansible_facts=dict(labels=result)
         )
 
     def test_should_get_resource_lables(self):

@@ -120,7 +120,7 @@ class LabelFactsModule(OneViewModule):
 
     def execute_module(self):
         if self.module.params['name']:
-            labels = self.resource_client.get_by('name', self.module.params['name'])
+            labels = self.oneview_client.labels.get_assigned_resources(self.module.params['name'])
         elif self.module.params.get('resourceUri'):
             labels = self.oneview_client.labels.get_by_resource(self.module.params['resourceUri']).data
         else:
