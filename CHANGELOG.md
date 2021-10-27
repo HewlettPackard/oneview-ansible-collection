@@ -4,6 +4,7 @@
 This release extends the planned support of the collections to OneView REST API version 3400 (OneView v6.4).
 
 #### Bug fixes & Enhancements
+- [#150] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/150) Labels - Get the resources associated with label
 - [#141] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/141) add storage to list of tags in galaxy.yml
 - [#139] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/139) Suspected bug with oneview_server_profile when using state: compliant
 
