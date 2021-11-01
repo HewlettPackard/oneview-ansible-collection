@@ -44,6 +44,10 @@ options:
       description:
         - Uri of the resource which labels are associated with.
       type: str
+    get_resources:
+      description:
+        - Boolean value to get resources of a label
+      type: bool
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -86,6 +90,18 @@ EXAMPLES = '''
 
 - debug: var=labels
 
+- name: Gather facts about a Label resources by name
+  oneview_label_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2600
+    name: "{{ labels[0]['name'] }}"
+    get_resources: True
+  delegate_to: localhost
+
+- debug: var=labels
+
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
     hostname: 172.16.101.48
@@ -113,7 +129,8 @@ class LabelFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             resourceUri=dict(required=False, type='str'),
-            params=dict(required=False, type='dict')
+            params=dict(required=False, type='dict'),
+            get_resources=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.resource_client = self.oneview_client.labels
