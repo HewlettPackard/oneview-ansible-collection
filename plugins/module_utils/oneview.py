@@ -29,7 +29,7 @@ from ansible.module_utils.common._collections_compat import Mapping
 
 try:
     from hpeOneView.oneview_client import OneViewClient
-    from hpeOneView.exceptions import HPEOneViewTaskError
+    from hpeOneView import exceptions
 
     HAS_HPE_ONEVIEW = True
 except ImportError:
