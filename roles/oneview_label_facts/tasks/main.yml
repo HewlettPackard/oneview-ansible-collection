@@ -24,6 +24,15 @@
 
 - debug: var=labels
 
+- name: Gets all resources assigned with label name
+  oneview_label_facts:
+    config: "{{ config }}"
+    name: "{{ labels[0]['name'] }}"
+    get_resources: True
+  delegate_to: localhost
+
+- debug: var=labels
+
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
     config: "{{ config }}"
