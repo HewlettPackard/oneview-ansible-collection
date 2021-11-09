@@ -20,6 +20,7 @@ import logging
 import mock
 import pytest
 
+from hpeOneView.exceptions import HPEOneViewTaskError
 from copy import deepcopy
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import (ServerProfileModule,
@@ -27,8 +28,8 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
                                                                                     OneViewModuleTaskError,
                                                                                     SPKeys,
                                                                                     ServerProfileMerger,
-                                                                                    ServerProfileReplaceNamesByUris,
-                                                                                    exceptions)
+                                                                                    ServerProfileReplaceNamesByUris
+                                                                                    )
 
 
 SERVER_PROFILE_NAME = "Profile101"
@@ -43,7 +44,7 @@ FAKE_SERVER_HARDWARE = {'uri': '/rest/server-hardware/31393736-3831-4753-567h-30
 MESSAGE_COMPLIANT_ERROR = ServerProfileModule.MSG_MAKE_COMPLIANT_NOT_SUPPORTED.format(SERVER_PROFILE_NAME)
 FAKE_MSG_ERROR = 'Fake message error'
 
-TASK_ERROR = exceptions.HPEOneViewTaskError(msg=FAKE_MSG_ERROR, error_code='AssignProfileToDeviceBayError')
+TASK_ERROR = HPEOneViewTaskError(msg=FAKE_MSG_ERROR, error_code='AssignProfileToDeviceBayError')
 
 BASIC_PROFILE = dict(
     name=SERVER_PROFILE_NAME,
