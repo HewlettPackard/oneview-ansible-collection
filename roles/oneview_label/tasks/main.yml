@@ -7,9 +7,8 @@
       resourceUri: "{{ resource_uri}}" 
       labels:
         - name: "{{ label_name_1  }}" 
-        - name: "{{ labe_name_2 }}"
+        - name: "{{ label_name_2 }}"
   delegate_to: localhost
-  register: labels
 
 - name: Update label of given resource for enclosure resource
   oneview_label:

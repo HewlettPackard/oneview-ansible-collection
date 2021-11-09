@@ -578,7 +578,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_UID_ON)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_UID_ON)
 
         EnclosureModule().run()
 
@@ -596,7 +596,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_uid_on = dict(ENCLOSURE_FROM_ONEVIEW, uidState='On')
         self.resource.data = enclosure_uid_on
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_UID_ON)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_UID_ON)
 
         EnclosureModule().run()
 
@@ -613,7 +613,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = enclosure_uid_on
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_UID_OFF)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_UID_OFF)
 
         EnclosureModule().run()
 
@@ -630,7 +630,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_not_set_to_off_when_it_is_already_off(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_UID_OFF)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_UID_OFF)
 
         EnclosureModule().run()
 
@@ -646,7 +646,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_ON)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_ON)
 
         EnclosureModule().run()
 
@@ -663,7 +663,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_not_set_to_on_when_state_already_on(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_manager_bay_uid = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_ON)
+        params_manager_bay_uid = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_ON)
         params_manager_bay_uid['data']['bayNumber'] = '1'
 
         self.mock_ansible_module.params = params_manager_bay_uid
@@ -681,7 +681,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_manager_bay_not_found(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_ON)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_ON)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -696,7 +696,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, managerBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_ON)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_ON)
 
         EnclosureModule().run()
 
@@ -709,7 +709,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
 
         EnclosureModule().run()
 
@@ -726,7 +726,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_not_set_to_off_when_state_already_off(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_manager_bay_uid = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
+        params_manager_bay_uid = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
         params_manager_bay_uid['data']['bayNumber'] = '2'
 
         self.mock_ansible_module.params = params_manager_bay_uid
@@ -744,7 +744,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_manager_bay_not_found_uid_off(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -759,7 +759,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, managerBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_UID_OFF)
 
         EnclosureModule().run()
 
@@ -775,7 +775,7 @@ class TestEnclosureModule(OneViewBaseTest):
         updated_resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = updated_resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -792,7 +792,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_manager_bay_not_found_e_fuse(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -807,7 +807,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, managerBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -820,7 +820,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
 
         EnclosureModule().run()
 
@@ -837,7 +837,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_manager_bay_not_found_power_reset(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -852,7 +852,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, managerBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_MANAGER_BAY_POWER_STATE_RESET)
 
         EnclosureModule().run()
 
@@ -865,7 +865,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -882,7 +882,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_appliance_bay_not_found_appliance_bay(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -897,7 +897,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, applianceBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_APPLIANCE_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -910,7 +910,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -927,7 +927,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_device_bay_not_found_e_fuse(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -942,7 +942,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, deviceBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -955,7 +955,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
 
         EnclosureModule().run()
 
@@ -972,7 +972,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_device_bay_not_found_reset(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -987,7 +987,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, deviceBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_POWER_STATE_RESET)
 
         EnclosureModule().run()
 
@@ -1000,7 +1000,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -1017,7 +1017,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_interconnect_bay_not_found_e_fuse(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -1031,7 +1031,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, interconnectBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_INTERCONNECT_BAY_POWER_STATE_E_FUSE)
 
         EnclosureModule().run()
 
@@ -1043,7 +1043,7 @@ class TestEnclosureModule(OneViewBaseTest):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
 
         EnclosureModule().run()
 
@@ -1062,7 +1062,7 @@ class TestEnclosureModule(OneViewBaseTest):
 
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_INTERCONNECT_BAY_IPV4_RELEASE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_INTERCONNECT_BAY_IPV4_RELEASE)
 
         EnclosureModule().run()
 
@@ -1079,7 +1079,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_device_bay_not_found_ipv4_release(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -1093,7 +1093,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, deviceBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
 
         EnclosureModule().run()
 
@@ -1104,7 +1104,7 @@ class TestEnclosureModule(OneViewBaseTest):
     def test_should_fail_when_interconnect_bay_not_found_ipv4(self):
         self.resource.data = ENCLOSURE_FROM_ONEVIEW
 
-        params_power_on_not_found_bay = yaml.load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
+        params_power_on_not_found_bay = yaml.safe_load(PARAMS_FOR_DEVICE_BAY_IPV4_RELEASE)
         params_power_on_not_found_bay['data']['bayNumber'] = 3
         self.mock_ansible_module.params = params_power_on_not_found_bay
 
@@ -1118,7 +1118,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_without_appliance_bays = dict(ENCLOSURE_FROM_ONEVIEW, interconnectBays=[])
         self.resource.data = enclosure_without_appliance_bays
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_INTERCONNECT_BAY_IPV4_RELEASE)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_INTERCONNECT_BAY_IPV4_RELEASE)
 
         EnclosureModule().run()
 
@@ -1131,7 +1131,7 @@ class TestEnclosureModule(OneViewBaseTest):
 
         self.resource.patch.return_value = self.resource
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DATA_COL_SET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DATA_COL_SET)
 
         EnclosureModule().run()
 
@@ -1149,7 +1149,7 @@ class TestEnclosureModule(OneViewBaseTest):
         enclosure_uid_on = dict(ENCLOSURE_FROM_ONEVIEW, supportDataCollectionState='PendingCollection')
         self.resource.data = enclosure_uid_on
 
-        self.mock_ansible_module.params = yaml.load(PARAMS_FOR_DATA_COL_SET)
+        self.mock_ansible_module.params = yaml.safe_load(PARAMS_FOR_DATA_COL_SET)
 
         EnclosureModule().run()
 

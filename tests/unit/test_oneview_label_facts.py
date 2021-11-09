@@ -33,7 +33,14 @@ PARAMS_GET_ALL = dict(
 PARAMS_GET_BY_NAME = dict(
     config='config.json',
     name="Test Label",
-    resourceUri=None
+    resourceUri=None,
+    get_resources=False
+)
+
+PARAMS_GET_RESOURCES_BY_NAME = dict(
+    config='config.json',
+    name="Test Label",
+    get_resources=True
 )
 
 PARAMS_GET_BY_RESOURCE = dict(
@@ -66,6 +73,18 @@ class TestLabelFactsModule(OneViewBaseFactsTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             ansible_facts=dict(labels=PRESENT_LABELS)
+        )
+
+    def test_should_get_resource_label_by_name(self):
+        result = {'assignedResourceUris': ['uri1', 'uri2'], 'name': 'test'}
+        self.resource.get_assigned_resources.return_value = result
+        self.mock_ansible_module.params = PARAMS_GET_RESOURCES_BY_NAME
+
+        LabelFactsModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            ansible_facts=dict(labels=result)
         )
 
     def test_should_get_label_by_name(self):
