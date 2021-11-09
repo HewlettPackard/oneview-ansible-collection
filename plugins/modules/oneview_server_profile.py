@@ -231,11 +231,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           ServerProfileReplaceNamesByUris,
                                                                           OneViewModuleValueError,
                                                                           ServerProfileMerger,
-                                                                          exceptions,
                                                                           SPKeys,
                                                                           OneViewModuleException,
                                                                           compare,
-                                                                          OneViewModuleResourceNotFound)
+                                                                          OneViewModuleResourceNotFound, 
+                                                                          exceptions)
 
 
 class ServerProfileModule(OneViewModule):
