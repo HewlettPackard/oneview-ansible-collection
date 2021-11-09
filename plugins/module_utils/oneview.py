@@ -26,7 +26,6 @@ import os
 import traceback
 import collections
 from ansible.module_utils.common._collections_compat import Mapping
-from past.builtins import basestring
 
 try:
     from hpeOneView.oneview_client import OneViewClient
@@ -466,47 +465,6 @@ class OneViewModuleException(Exception):
             Exception.__init__(self, self.msg, self.oneview_response)
         else:
             Exception.__init__(self, self.msg)
-
-
-class HPEOneViewException(Exception):
-    """
-    OneView base Exception.
-
-    Attributes:
-       msg (str): Exception message.
-       oneview_response (dict): OneView rest response.
-   """
-
-    def __init__(self, data, error=None):
-        self.msg = None
-        self.oneview_response = None
-
-        if isinstance(data, basestring):
-            self.msg = data
-        else:
-            self.oneview_response = data
-
-            if data and isinstance(data, dict):
-                self.msg = data.get('message')
-
-        if self.oneview_response:
-            Exception.__init__(self, self.msg, self.oneview_response)
-        else:
-            Exception.__init__(self, self.msg)
-
-
-class HPEOneViewTaskError(HPEOneViewException):
-    """
-    OneView Task Error Exception.
-
-    Attributes:
-       msg (str): Exception message.
-       error_code (str): A code which uniquely identifies the specific error.
-    """
-
-    def __init__(self, msg, error_code=None):
-        super(HPEOneViewTaskError, self).__init__(msg)
-        self.error_code = error_code
 
 
 class OneViewModuleTaskError(OneViewModuleException):
