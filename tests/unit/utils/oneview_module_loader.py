@@ -33,6 +33,7 @@ ONEVIEW_MODULE_UTILS_PATH = 'ansible_collections.hpe.oneview.plugins.module_util
 sys.modules['ansible.module_utils.oneview'] = oneview
 sys.modules['ansible.module_utils.icsp'] = icsp
 
+from hpeOneView.exceptions import HPEOneViewTaskError
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModuleBase,
                                                                           OneViewClient,
                                                                           OneViewModuleException,
@@ -47,8 +48,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           transform_list_to_dict,
                                                                           compare,
                                                                           get_logger,
-                                                                          LIGMerger,
-                                                                          exceptions)
+                                                                          LIGMerger
+                                                                          )
 # from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
 from ansible_collections.hpe.oneview.plugins.modules.image_streamer_artifact_bundle import ArtifactBundleModule
 from ansible_collections.hpe.oneview.plugins.modules.image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule

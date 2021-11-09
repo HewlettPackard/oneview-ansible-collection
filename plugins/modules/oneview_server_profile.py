@@ -227,6 +227,7 @@ import time
 
 from copy import deepcopy
 
+from hpeOneView.exceptions import HPEOneViewTaskError
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           OneViewModuleValueError,
@@ -234,8 +235,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           SPKeys,
                                                                           OneViewModuleException,
                                                                           compare,
-                                                                          OneViewModuleResourceNotFound, 
-                                                                          exceptions)
+                                                                          OneViewModuleResourceNotFound
+                                                                          )
 
 
 class ServerProfileModule(OneViewModule):
@@ -465,7 +466,7 @@ class ServerProfileModule(OneViewModule):
                 self.module.log(msg="Request Server Profile creation")
                 return self.resource_client.create(server_profile, **self.params)
 
-            except exceptions.HPEOneViewTaskError as task_error:
+            except HPEOneViewTaskError as task_error:
                 self.module.log("Error code: {0} Message: {1}".format(str(task_error.error_code), str(task_error.msg)))
                 if task_error.error_code in self.ASSIGN_HARDWARE_ERROR_CODES:
                     # if this is because the server is already assigned, someone grabbed it before we assigned,
