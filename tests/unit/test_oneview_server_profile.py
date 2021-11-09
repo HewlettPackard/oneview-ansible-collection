@@ -28,8 +28,7 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
                                                                                     OneViewModuleTaskError,
                                                                                     SPKeys,
                                                                                     ServerProfileMerger,
-                                                                                    ServerProfileReplaceNamesByUris
-                                                                                    )
+                                                                                    ServerProfileReplaceNamesByUris)
 
 
 SERVER_PROFILE_NAME = "Profile101"
