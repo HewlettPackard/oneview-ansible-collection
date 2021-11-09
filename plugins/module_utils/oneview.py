@@ -26,6 +26,7 @@ import os
 import traceback
 import collections
 from ansible.module_utils.common._collections_compat import Mapping
+from past.builtins import basestring
 
 try:
     from hpeOneView.oneview_client import OneViewClient
