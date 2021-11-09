@@ -102,4 +102,4 @@ plugins/modules/oneview_user_facts.py validate-modules:missing-gplv3-license
 tests/unit/utils/hpe_test_utils.py pylint!skip
 plugins/modules/oneview_repositories_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_repositories.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_server_profile.py validate-modules:import-error
+plugins/modules/oneview_server_profile.py validate-modules:import
