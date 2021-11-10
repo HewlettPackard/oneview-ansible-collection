@@ -227,7 +227,6 @@ import time
 
 from copy import deepcopy
 
-from hpeOneView.exceptions import HPEOneViewTaskError
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           OneViewModuleValueError,
@@ -235,7 +234,8 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           SPKeys,
                                                                           OneViewModuleException,
                                                                           compare,
-                                                                          OneViewModuleResourceNotFound
+                                                                          OneViewModuleResourceNotFound,
+                                                                          HPEOneViewTaskError
                                                                           )
 
 
