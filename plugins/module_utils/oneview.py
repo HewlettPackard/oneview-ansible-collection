@@ -29,6 +29,7 @@ from ansible.module_utils.common._collections_compat import Mapping
 
 try:
     from hpeOneView.oneview_client import OneViewClient
+
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
@@ -464,6 +465,20 @@ class OneViewModuleException(Exception):
             Exception.__init__(self, self.msg, self.oneview_response)
         else:
             Exception.__init__(self, self.msg)
+
+
+class HPEOneViewTaskError(OneViewModuleException):
+    """
+    OneView Task Error Exception.
+
+    Attributes:
+       msg (str): Exception message.
+       error_code (str): A code which uniquely identifies the specific error.
+    """
+
+    def __init__(self, msg, error_code=None):
+        super(HPEOneViewTaskError, self).__init__(msg)
+        self.error_code = error_code
 
 
 class OneViewModuleTaskError(OneViewModuleException):
