@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -48,9 +48,10 @@ PARAMS_WITH_OPTIONS = dict(
     options=[
         'bios', 'javaRemoteConsoleUrl', 'environmentalConfig', 'iloSsoUrl', 'physicalServerHardware',
         'chassis', 'processors', 'thermal', 'softwareInventory', 'powerSupplies', 'firmwareInventory',
-        'networkAdapters', 'remoteConsoleUrl', 'firmware', {"utilization": {"fields": 'AveragePower',
+        'remoteConsoleUrl', 'firmware', {"utilization": {"fields": 'AveragePower',
                                                          "filter": 'startDate=2016-05-30T03:29:42.000Z',
-                                                         "view": 'day'}}]
+                                                         "view": 'day'}}, 'networkAdapters']
+
 )
 
 PARAMS_WITH_ALL_FIRMWARES_WITHOUT_FILTER = dict(
