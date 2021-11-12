@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -47,7 +47,8 @@ PARAMS_WITH_OPTIONS = dict(
     name="Test Server Hardware",
     options=[
         'bios', 'javaRemoteConsoleUrl', 'environmentalConfig', 'iloSsoUrl', 'physicalServerHardware',
-        'remoteConsoleUrl', 'firmware', {"utilization": {"fields": 'AveragePower',
+        'chassis', 'processors', 'thermal', 'softwareInventory', 'powerSupplies', 'firmwareInventory',
+        'networkAdapters', 'remoteConsoleUrl', 'firmware', {"utilization": {"fields": 'AveragePower',
                                                          "filter": 'startDate=2016-05-30T03:29:42.000Z',
                                                          "view": 'day'}}]
 )
@@ -113,6 +114,13 @@ class TestServerHardwareFactsModule(OneViewBaseFactsTest):
         self.resource.get_remote_console_url.return_value = {'subresource': 'value'}
         self.resource.get_utilization.return_value = {'subresource': 'value'}
         self.resource.get_firmware.return_value = {'subresource': 'firmware'}
+        self.resource.get_chassis.return_value = {'subresource': 'chassis'}
+        self.resource.get_processors.return_value = {'subresource': 'processors'}
+        self.resource.get_thermal.return_value = {'subresource': 'thermal'}
+        self.resource.get_firmware_inventory.return_value = {'subresource': 'value'}
+        self.resource.get_software_inventory.return_value = {'subresource': 'value'}
+        self.resource.get_network_adapters.return_value = {'subresource': 'value'}
+        self.resource.get_power_supplies.return_value = {'subresource': 'value'}
         self.mock_ansible_module.params = PARAMS_WITH_OPTIONS
 
         ServerHardwareFactsModule().run()
@@ -127,7 +135,14 @@ class TestServerHardwareFactsModule(OneViewBaseFactsTest):
                            'server_hardware_bios': {'subresource': 'value'},
                            'server_hardware_java_remote_console_url': {'subresource': 'value'},
                            'server_hardware_env_config': {'subresource': 'value'},
-                           'server_hardware_firmware': {'subresource': 'firmware'}}
+                           'server_hardware_firmware': {'subresource': 'firmware'},
+                           'server_hardware_chassis': {'subresource': 'chassis'},
+                           'server_hardware_thermal': {'subresource': 'thermal'},
+                           'server_hardware_processors': {'subresource': 'processors'},
+                           'server_hardware_firmware_inventory': {'subresource': 'value'},
+                           'server_hardware_power_supplies': {'subresource': 'value'},
+                           'server_hardware_software_inventory': {'subresource': 'value'},
+                           'server_hardware_network_adapters': {'subresource': 'value'}}
         )
 
     def test_should_get_all_firmwares_across_the_servers(self):

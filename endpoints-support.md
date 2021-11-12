@@ -18,8 +18,8 @@
 
 ## HPE OneView
 
-| Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 | V2800 | V3000 | V3200 |
-| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
+| Endpoints                                                                               | Verb     | V2200 | V2400 | V2600 | V2800 | V3000 | V3200 | V3400 |
+| --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: | :-----------------: |
 |     **Appliance Configuration Timeconfig**
 |<sub>/rest/appliance/configuration/timeconfig/locales</sub>                              |GET       | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 |     **Appliance Network Interfaces**  |
@@ -282,6 +282,13 @@
 |<sub>/rest/server-hardware/*/firmware                                                    | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/server-hardware/{id}/firmware                                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/server-hardware/discovery                                                     | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/chassis</sub>                                            | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/firmwareInventory</sub>                                  | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/networkAdapters</sub>                                    | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/powerSupplies</sub>                                      | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/processors</sub>                                         | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/softwareInventory</sub>                                  | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
+|<sub>/rest/server-hardware/{id}/thermal</sub>                                            | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :heavy_minus_sign:  | :white_check_mark:  |
 |     **Server Hardware Types**                                                                                                                    |
 |<sub>/rest/server-hardware-types</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 |<sub>/rest/server-hardware-types/{id}</sub>                                              | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |

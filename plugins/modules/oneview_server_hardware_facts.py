@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -275,6 +275,20 @@ class ServerHardwareFactsModule(OneViewModule):
             ansible_facts['server_hardware_utilization'] = self.get_utilization()
         if self.options.get('firmware'):
             ansible_facts['server_hardware_firmware'] = self.current_resource.get_firmware()
+        if self.options.get('chassis'):
+            ansible_facts['server_hardware_chassis'] = self.current_resource.get_chassis()
+        if self.options.get('firmwareInventory'):
+            ansible_facts['server_hardware_firmware_inventory'] = self.current_resource.get_firmware_inventory()
+        if self.options.get('thermal'):
+            ansible_facts['server_hardware_thermal'] = self.current_resource.get_thermal()
+        if self.options.get('networkAdapters'):
+            ansible_facts['server_hardware_network_adapters'] = self.current_resource.get_network_adapters()
+        if self.options.get('powerSupplies'):
+            ansible_facts['server_hardware_power_supplies'] = self.current_resource.get_power_supplies()
+        if self.options.get('processors'):
+            ansible_facts['server_hardware_processors'] = self.current_resource.get_processors()
+        if self.options.get('softwareInventory'):
+            ansible_facts['server_hardware_software_inventory'] = self.current_resource.get_software_inventory()
 
         return ansible_facts
 

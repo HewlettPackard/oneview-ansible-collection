@@ -1,4 +1,9 @@
 ---
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: contents.api_version != ""
+
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
     config: "{{ config }}"
@@ -70,6 +75,31 @@
 - debug: var=server_hardware_physical_server_hardware
 - debug: var=server_hardware_remote_console_url
 - debug: var=server_hardware_utilization
+
+
+- name: Gather all facts about a Server Hardware with apiVersion above 3400
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    name: server_hardware_name
+    options:
+        - chassis                # optional
+        - thermal                # optional
+        - firmwareInventory      # optional
+        - networkAdapters        # optional
+        - powerSupplies          # optional
+        - processors             # optional
+        - softwareInventory      # optional
+  delegate_to: localhost
+  when: currentVersion >= '3400'
+
+- debug: var=server_hardware_chassis
+- debug: var=server_hardware_thermal
+- debug: var=server_hardware_processors
+- debug: var=server_hardware_firmware_inventory
+- debug: var=server_hardware_network_adapters
+- debug: var=server_hardware_power_supplies
+- debug: var=server_hardware_software_inventory
+
 
 # This option is available for API version 300 or later.
 - name: Gather facts about the Server Hardware firmware
