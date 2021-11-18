@@ -50,7 +50,6 @@ PARAMS_WITH_OPTIONS = dict(
         'remoteConsoleUrl', 'firmware', {"utilization": {"fields": 'AveragePower',
                                                          "filter": 'startDate=2016-05-30T03:29:42.000Z',
                                                          "view": 'day'}}]
-
 )
 
 PARAMS_WITH_ALL_FIRMWARES_WITHOUT_FILTER = dict(

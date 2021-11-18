@@ -1,9 +1,4 @@
 ---
-- name: Print currentVersion if api version is specified in config file
-  set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
-
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
     config: "{{ config }}"
