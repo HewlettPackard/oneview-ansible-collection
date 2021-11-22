@@ -6,6 +6,6 @@
       "authLoginDomain": "<domain_directory>"
 },
     "image_streamer_ip": "",
-    "api_version": 3200,
+    "api_version": 3400,
     "variant": "Synergy"
 }  
