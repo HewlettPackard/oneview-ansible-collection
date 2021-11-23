@@ -114,6 +114,15 @@ EXAMPLES = '''
       userName: "{{ user_name }}"
       enabled: false
   delegate_to: localhost
+- name: Update the User's password
+  oneview_user:
+    config: "{{ config }}"
+    state: present
+    data:
+      userName: "{{ user_name }}"
+      currentPassword: "{{ currentPassword }}"
+      password: "{{ password }}"
+  delegate_to: localhost
 - name: Adds multiple new local users to the appliance
   oneview_user:
     config: "{{ config }}"
@@ -324,23 +333,25 @@ class UserModule(OneViewModule):
             msg = self.MSG_CREATED
             changed = True
         else:
-            merged_data = resource.data.copy()
-            merged_data.update(self.data)
+          if 'newPassword' in self.data:
+            self.data['password'] = self.data.pop('newPassword')
+          merged_data = resource.data.copy()
+          merged_data.update(self.data)
 
-            # remove password, it cannot be used in comparison
-            if 'password' in merged_data:
-                del merged_data['password']
+          # remove password, it cannot be used in comparison
+          if 'password' in merged_data and 'currentPassword' not in merged_data:
+              del merged_data['password']
 
-            if compare(resource.data, merged_data):
-                msg = self.MSG_ALREADY_PRESENT
-            else:
-                resource = self.resource_client.update(merged_data)
-                changed = True
-                msg = self.MSG_UPDATED
+          if compare(resource.data, merged_data):
+              msg = self.MSG_ALREADY_PRESENT
+          else:
+              resource = self.resource_client.update(merged_data)
+              changed = True
+              msg = self.MSG_UPDATED
 
         return dict(changed=changed,
-                    msg=msg,
-                    ansible_facts=dict(user=resource.data))
+                   msg=msg,
+                   ansible_facts=dict(user=resource.data))
 
 
 def main():

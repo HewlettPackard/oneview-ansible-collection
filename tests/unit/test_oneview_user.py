@@ -47,6 +47,15 @@ PARAMS_WITH_CHANGES = dict(
               enabled=False)
 )
 
+PARAMS_FOR_UPDATED_PASSWORD = dict(
+    config='config.json',
+    state='present',
+    data=dict(userName=DEFAULT_PARAMS['userName'],
+              currentPassword=DEFAULT_PARAMS['password'],
+              newPassword='newPassword',
+              enabled=False)
+)
+
 PARAMS_FOR_SET_PASSWORD = dict(
     config='config.json',
     state='set_password',
@@ -153,6 +162,24 @@ class TestUserModule(OneViewBaseTest):
             changed=False,
             msg=UserModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(user=data_for_comparison)
+        )
+
+    def test_should_update_password(self):
+        data_merged = DEFAULT_PARAMS.copy()
+
+        self.resource.data = DEFAULT_PARAMS
+        self.resource.get_by_userName.return_value = self.resource
+        self.resource.data = data_merged
+        self.resource.update.return_value = self.resource
+
+        self.mock_ansible_module.params = PARAMS_FOR_UPDATED_PASSWORD
+
+        UserModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=UserModule.MSG_UPDATED,
+            ansible_facts=dict(user=data_merged)
         )
 
     def test_update_when_data_has_modified_attributes(self):

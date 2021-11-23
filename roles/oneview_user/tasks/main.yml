@@ -52,6 +52,26 @@
       enabled: false
   delegate_to: localhost
 
+- name: Update the User's password
+  oneview_user:
+    config: "{{ config }}"
+    state: present
+    data:
+      userName: "{{ user_name }}"
+      currentPassword: "{{ currentPassword }}"
+      newPassword: "{{ password }}"
+  delegate_to: localhost
+
+- name: Change the User's password during first-time setup
+  oneview_user:
+    config: "{{ config }}"
+    state: set_password
+    data:
+      userName: "{{ user_name }}"
+      oldPassword: "{{ oldPassword }}"
+      newPassword: "{{ newPassword }}"
+  delegate_to: localhost
+
 - name: Adds multiple new local users to the appliance
   oneview_user:
     config: "{{ config }}"
