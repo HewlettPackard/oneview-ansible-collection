@@ -1,6 +1,6 @@
 # Ansible Collections for HPE OneView Change Log
 
-## v6.4.0(unreleased)
+## v6.4.0
 This release extends the planned support of the collections to OneView REST API version 3400 (OneView v6.4).
 
 #### Bug fixes & Enhancements
