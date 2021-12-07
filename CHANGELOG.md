@@ -1,5 +1,11 @@
 # Ansible Collections for HPE OneView Change Log
 
+## v6.5.0(unreleased)
+This release extends the planned support of the collections to OneView REST API version 3600 (OneView v6.5).
+
+#### Bug fixes & Enhancements
+- [#159] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/159) The OneView Ansible Collection doesn't permit to update user password
+
 ## v6.4.0
 This release extends the planned support of the collections to OneView REST API version 3400 (OneView v6.4).
 
