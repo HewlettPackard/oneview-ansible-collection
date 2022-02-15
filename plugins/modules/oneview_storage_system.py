@@ -16,6 +16,9 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
+from copy import deepcopy
+import collections
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
@@ -148,10 +151,6 @@ storage_system:
     type: dict
 '''
 
-import collections
-from copy import deepcopy
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
-
 
 class StorageSystemModule(OneViewModule):
     MSG_ADDED = 'Storage System added successfully.'
@@ -195,7 +194,8 @@ class StorageSystemModule(OneViewModule):
                 raise OneViewModuleValueError(self.MSG_CREDENTIALS_MANDATORY)
 
             if self.oneview_client.api_version < 500:
-                self.current_resource = self.resource_client.add(self.data['credentials'])
+                self.current_resource = self.resource_client.add(
+                    self.data['credentials'])
             else:
                 options = self.data['credentials'].copy()
                 options['family'] = self.data.get('family', None)
@@ -217,7 +217,8 @@ class StorageSystemModule(OneViewModule):
                     for managedPool in merged_data['deviceSpecificAttributes']['managedPools']:
                         if discoveredPool['name'] == managedPool['name']:
                             temp_list.append(discoveredPool)
-                            merged_data['deviceSpecificAttributes']['discoveredPools'].remove(discoveredPool)
+                            merged_data['deviceSpecificAttributes']['discoveredPools'].remove(
+                                discoveredPool)
                 merged_data['deviceSpecificAttributes']['managedPools'] = temp_list
 
             # remove password, it cannot be used in comparison
@@ -243,11 +244,13 @@ class StorageSystemModule(OneViewModule):
             hostname = self.data['credentials'].get(hostname_key, None)
 
         if hostname:
-            get_method = getattr(self.oneview_client.storage_systems, "get_by_{}".format(hostname_key))
+            get_method = getattr(
+                self.oneview_client.storage_systems, "get_by_{0}".format(hostname_key))
             self.current_resource = get_method(hostname)
 
             if self.data['credentials'].get(new_hostname_key):
-                self.data['credentials'][hostname_key] = self.data['credentials'].pop(new_hostname_key)
+                self.data['credentials'][hostname_key] = self.data['credentials'].pop(
+                    new_hostname_key)
             elif self.data.get(new_hostname_key):
                 self.data[hostname_key] = self.data.pop(new_hostname_key)
 
