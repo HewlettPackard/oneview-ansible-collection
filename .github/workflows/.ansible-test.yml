@@ -3,7 +3,7 @@ on:
 - pull_request
 
 jobs:
-  # sanity:
+  sanity:
     strategy:
       matrix:
         python_version: ["3.6", "3.7"]
