@@ -3,51 +3,51 @@ on:
 - pull_request
 
 jobs:
-  # # sanity:
-  #   strategy:
-  #     matrix:
-  #       python_version: ["3.6", "3.7"]
-  #       ansible_version: ["stable-2.9", "stable-2.10", "stable-2.11"]
-  #   runs-on: ubuntu-latest
-  #   steps:
-
-  #     - name: Check out code
-  #       uses: actions/checkout@v1
-  #       with:
-  #         path: ansible_collections/hpe/oneview
-
-  #     - name: Set up Python ${{ matrix.python_version }}
-  #       uses: actions/setup-python@v1
-  #       with:
-  #         python-version: ${{ matrix.python_version }}
-
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install future
-  #         if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
-  #         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-  #     - name: Install ansible ${{ matrix.ansible_version }}
-  #       run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
-
-  #     - name: Install ansible_collections.hpe.oneview
-  #       run: ansible-galaxy collection install hpe.oneview -p ../../
-
-  #     - name: Run sanity tests
-  #       run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
-
-  lint:
+  # sanity:
+    strategy:
+      matrix:
+        python_version: ["3.6", "3.7"]
+        ansible_version: ["stable-2.9", "stable-2.10", "stable-2.11"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+
+      - name: Check out code
+        uses: actions/checkout@v1
         with:
           path: ansible_collections/hpe/oneview
 
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@master
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v1
         with:
-          targets: "./"
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install future
+          if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Install ansible ${{ matrix.ansible_version }}
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
+
+      - name: Install ansible_collections.hpe.oneview
+        run: ansible-galaxy collection install hpe.oneview -p ../../
+
+      - name: Run sanity tests
+        run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         path: ansible_collections/hpe/oneview
+
+  #     - name: Lint Ansible Playbook
+  #       uses: ansible/ansible-lint-action@master
+  #       with:
+  #         targets: "./"
 
   # units:
   #   runs-on: ubuntu-latest
