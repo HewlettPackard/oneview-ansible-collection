@@ -45,7 +45,7 @@ jobs:
           path: ansible_collections/hpe/oneview
 
       - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@5.3.2
+        uses: ansible/ansible-lint-action@4.1.0.post0
         with:
           targets: "./"
 
