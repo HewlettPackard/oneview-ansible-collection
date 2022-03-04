@@ -233,6 +233,7 @@ interconnect_pluggable_module_information:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
 
+
 class InterconnectFactsModule(OneViewModule):
     MSG_INTERCONNECT_NOT_FOUND = 'Interconnect not found'
 
