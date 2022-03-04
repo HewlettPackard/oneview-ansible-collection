@@ -15,12 +15,6 @@
 # limitations under the License.
 ###
 
-from __future__ import (absolute_import, division, print_function)
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
-from copy import deepcopy
-import collections
-__metaclass__ = type
-
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
@@ -150,7 +144,11 @@ storage_system:
     returned: On state 'present'. Can be null.
     type: dict
 '''
-
+from __future__ import (absolute_import, division, print_function)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
+from copy import deepcopy
+import collections
+__metaclass__ = type
 
 class StorageSystemModule(OneViewModule):
     MSG_ADDED = 'Storage System added successfully.'
