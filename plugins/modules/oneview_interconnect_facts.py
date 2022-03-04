@@ -16,10 +16,6 @@
 # limitations under the License.
 ###
 
-from __future__ import (absolute_import, division, print_function)
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-__metaclass__ = type
-
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['stableinterface'],
                     'supported_by': 'community'}
@@ -234,7 +230,9 @@ interconnect_pluggable_module_information:
     returned: When requested, but can be null.
     type: list
 '''
-
+from __future__ import (absolute_import, division, print_function)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+__metaclass__ = type
 
 class InterconnectFactsModule(OneViewModule):
     MSG_INTERCONNECT_NOT_FOUND = 'Interconnect not found'
