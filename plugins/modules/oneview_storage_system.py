@@ -149,6 +149,7 @@ from copy import deepcopy
 import collections
 __metaclass__ = type
 
+
 class StorageSystemModule(OneViewModule):
     MSG_ADDED = 'Storage System added successfully.'
     MSG_UPDATED = 'Storage System updated successfully.'
