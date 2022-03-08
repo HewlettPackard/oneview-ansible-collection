@@ -2,8 +2,7 @@
 - hosts: all
   collections:
     - hpe.oneview
-  roles:
-    - hpe.oneview.oneview_appliance_configuration_timeconfig_facts
+  roles:   
     - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
     - hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
     - hpe.oneview.oneview_appliance_device_snmp_v3_users
