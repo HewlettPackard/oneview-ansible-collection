@@ -39,12 +39,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           path: ansible_collections/hpe/oneview
 
       - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@v5
+        uses: ansible/ansible-lint-action@master
         with:
           targets: "./"
           override-deps: |
