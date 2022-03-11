@@ -16,6 +16,8 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
+from datetime import datetime
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
@@ -86,8 +88,6 @@ compsig:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-
 
 class FirmwareBundleModule(OneViewModule):
     MSG_ADDED = 'Firmware Bundle or Hotfix added successfully.'
@@ -107,7 +107,6 @@ class FirmwareBundleModule(OneViewModule):
     def execute_module(self):
         file_path = self.module.params['file_path']
         self.current_resource = self.resource_client.get_by_name(file_path)
-
         if self.state == 'present':
             return self.__present(file_path)
         elif self.state == 'add_signature':
@@ -121,10 +120,13 @@ class FirmwareBundleModule(OneViewModule):
             return dict(changed=False, msg=self.MSG_ALREADY_PRESENT, ansible_facts=dict(firmware_bundle=self.current_resource.data))
 
     def __add_compsig(self, file_path):
-        if self.current_resource and self.current_resource.data.get('signatureFileRequired') is False:
-            self.current_resource = self.resource_client.upload_compsig(file_path)
+
+        if self.current_resource and self.current_resource.data.get('resourceState') == 'AddFailed':
+
+            self.current_resource = self.resource_client.upload_compsig(
+                file_path)
             return dict(changed=True, msg=self.MSG_ADD_SIG, ansible_facts=dict(compsig=self.current_resource))
-        elif self.current_resource and self.current_resource.data.get('signatureFileRequired') is True:
+        elif self.current_resource and self.current_resource.data.get('signatureFileRequired') is True and self.current_resource.data.get('resourceState') == 'Created':
             return dict(changed=False, msg=self.MSG_SIG_ALREADY_PRESENT)
         else:
             return dict(failed=True, msg=self.MSG_HOTFIX_ABSENT)
