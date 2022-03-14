@@ -14,10 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
-from __future__ import (absolute_import, division, print_function)
-from datetime import datetime
-from posixpath import basename
-
 DOCUMENTATION = '''
 ---
 module: oneview_firmware_bundle
@@ -81,16 +77,15 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
-
+from __future__ import (absolute_import, division, print_function)
+from datetime import datetime
+from posixpath import basename
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
-
-
-
 
 class FirmwareBundleModule(OneViewModule):
     MSG_ADDED = 'Firmware Bundle or Hotfix added successfully.'
