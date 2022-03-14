@@ -16,12 +16,10 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
-from datetime import datetime
-from posixpath import basename
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-__metaclass__ = type
-
 ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+                    from posixpath import basename
+                    from datetime import datetime
                     'status': ['preview'],
                     'supported_by': 'community'}
 
@@ -88,6 +86,7 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
+__metaclass__ = type
 
 
 class FirmwareBundleModule(OneViewModule):
@@ -136,7 +135,7 @@ class FirmwareBundleModule(OneViewModule):
             self.current_resource = self.resource_client.upload_compsig(
                 file_path)
             return dict(changed=True, msg=self.MSG_ADD_SIG, ansible_facts=dict(compsig=self.current_resource))
-            
+
         elif self.current_resource and self.current_resource.data.get('resourceState') == 'AddFailed' and\
                 file_name in self.current_resource.data.get('signatureFileName'):
             return dict(changed=False, msg=self.MSG_SIG_ALREADY_PRESENT)
