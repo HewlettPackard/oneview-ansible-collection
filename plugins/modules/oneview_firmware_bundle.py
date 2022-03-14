@@ -14,11 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
-from __future__ import (absolute_import, division, print_function)
-from datetime import datetime
-from posixpath import basename
 
+
+from __future__ import (absolute_import, division, print_function)
 DOCUMENTATION = '''
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+from posixpath import basename
+from datetime import datetime
 ---
 module: oneview_firmware_bundle
 short_description: Provides an interface to Upload Firmware Bundle resources.
@@ -81,15 +83,11 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
-
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
-
-
 
 
 class FirmwareBundleModule(OneViewModule):
