@@ -14,6 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
+<<<<<<< HEAD
+=======
+
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    'status': ['preview'],
+                    'supported_by': 'community'}
+>>>>>>> 2d1bbd335718866e85f5f25f07b80123aec49424
 
 
 from __future__ import (absolute_import, division, print_function)
@@ -83,11 +93,17 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
+<<<<<<< HEAD
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
                     'supported_by': 'community'}
+=======
+
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+import os.path
+>>>>>>> 2d1bbd335718866e85f5f25f07b80123aec49424
 
 
 class FirmwareBundleModule(OneViewModule):
@@ -108,6 +124,7 @@ class FirmwareBundleModule(OneViewModule):
     def execute_module(self):
         file_path = self.module.params['file_path']
         self.current_resource = self.resource_client.get_by_name(file_path)
+
         if self.state == 'present':
             return self.__present(file_path)
         elif self.state == 'add_signature':
