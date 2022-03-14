@@ -1,5 +1,11 @@
 # Ansible Collections for HPE OneView Change Log
 
+## v6.6.0 (unreleased)
+This release extends the planned support of the collections to OneView REST API version 3800 (OneView v6.6.
+
+#### Bug fixes & Enhancements
+- [#168] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/168) Firmware-bundle - Upload of compsig file fails, hotfix not present
+
 ## v6.5.0
 This release extends the planned support of the collections to OneView REST API version 3600 (OneView v6.5).
 
