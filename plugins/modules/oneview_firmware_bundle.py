@@ -14,6 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
+
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    'status': ['preview'],
+                    'supported_by': 'community'}
+
 DOCUMENTATION = '''
 ---
 module: oneview_firmware_bundle
@@ -77,15 +85,10 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
-from __future__ import (absolute_import, division, print_function)
-from datetime import datetime
-from posixpath import basename
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-__metaclass__ = type
 
-ANSIBLE_METADATA = {'metadata_version': '1.1',
-                    'status': ['preview'],
-                    'supported_by': 'community'}
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+import os.path
+
 
 class FirmwareBundleModule(OneViewModule):
     MSG_ADDED = 'Firmware Bundle or Hotfix added successfully.'
@@ -105,6 +108,7 @@ class FirmwareBundleModule(OneViewModule):
     def execute_module(self):
         file_path = self.module.params['file_path']
         self.current_resource = self.resource_client.get_by_name(file_path)
+
         if self.state == 'present':
             return self.__present(file_path)
         elif self.state == 'add_signature':
