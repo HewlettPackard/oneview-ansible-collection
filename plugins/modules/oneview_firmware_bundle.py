@@ -14,14 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
-
 from __future__ import (absolute_import, division, print_function)
-ANSIBLE_METADATA = {'metadata_version': '1.1',
-                    from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-                    from posixpath import basename
-                    from datetime import datetime
-                    'status': ['preview'],
-                    'supported_by': 'community'}
+from datetime import datetime
+from posixpath import basename
 
 DOCUMENTATION = '''
 ---
@@ -86,7 +81,15 @@ compsig:
     returned: On state 'add_signature'.
     type: dict
 '''
+
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
+
+ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    'status': ['preview'],
+                    'supported_by': 'community'}
+
+
 
 
 class FirmwareBundleModule(OneViewModule):
