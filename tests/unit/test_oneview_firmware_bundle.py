@@ -84,6 +84,8 @@ class TestFirmwareBundleModule(OneViewBaseTest):
     def test_should_add_compsig(self):
         SPP_TEMPLATE = deepcopy(DEFAULT_FIRMWARE_TEMPLATE)
         SPP_TEMPLATE['signatureFileRequired'] = False
+        SPP_TEMPLATE['resourceState'] = 'AddFailed'
+
         self.resource.data = SPP_TEMPLATE
         self.resource.get_by_name.return_value = self.resource
         self.resource.upload_compsig.return_value = DEFAULT_FIRMWARE_TEMPLATE
@@ -101,6 +103,7 @@ class TestFirmwareBundleModule(OneViewBaseTest):
     def test_should_not_add_compsig_when_already_present(self):
         SPP_TEMPLATE = deepcopy(DEFAULT_FIRMWARE_TEMPLATE)
         SPP_TEMPLATE['signatureFileRequired'] = True
+        SPP_TEMPLATE['resourceState'] = 'Created'
         self.resource.data = SPP_TEMPLATE
         self.resource.get_by_name.return_value = self.resource
 
