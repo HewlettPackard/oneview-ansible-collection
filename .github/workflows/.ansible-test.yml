@@ -36,7 +36,7 @@ jobs:
 
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
-
+        
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -47,8 +47,11 @@ jobs:
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@master
         with:
-          targets: "./"
+          targets: "./"                      
+          override-deps: |
+                 rich>=9.5.1,<11.0.0
 
+  
   units:
     runs-on: ubuntu-latest
     strategy:
