@@ -87,7 +87,8 @@ compsig:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-import os.path
+from os.path import basename
+
 
 class FirmwareBundleModule(OneViewModule):
     MSG_ADDED = 'Firmware Bundle or Hotfix added successfully.'
