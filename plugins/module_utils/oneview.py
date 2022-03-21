@@ -134,7 +134,8 @@ def merge_list_by_key(original_list, updated_list, key, ignore_when_null=None, r
     if not original_list:
         return updated_list
 
-    items_map = collections.OrderedDict([(i[key], i.copy()) for i in original_list])
+    items_map = collections.OrderedDict(
+        [(i[key], i.copy()) for i in original_list])
 
     merged_items = collections.OrderedDict()
 
@@ -203,10 +204,11 @@ def compare_lig(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(
+        resource1, resource2)
     # The first resource is True / Not Null and the second resource is False / Null
     if resource1 and not resource2:
-        logger.debug("resource1 and not resource2. " + debug_resources)
+        logger.debug("resource1 and not resource2. %s", debug_resources)
         return False
 
     # Checks all keys in first dict against the second dict
@@ -216,12 +218,14 @@ def compare_lig(first_resource, second_resource):
             if sort_by_uplink_set_location(resource1[key], resource2[key]):
                 continue
             else:
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         if key not in resource2:
             if resource1[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         # If both values are null, empty or False it will be considered equal.
         elif not resource1[key] and not resource2[key]:
@@ -229,15 +233,18 @@ def compare_lig(first_resource, second_resource):
         elif isinstance(resource1[key], Mapping):
             # recursive call
             if not compare_lig(resource1[key], resource2[key]):
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         elif isinstance(resource1[key], list):
             # change comparison function to compare_list
             if not compare_list_lig(resource1[key], resource2[key]):
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         elif _standardize_value(resource1[key]) != _standardize_value(resource2[key]):
-            logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+            logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                key), debug_resources)
             return False
 
     # Checks all keys in the second dict, looking for missing elements
@@ -245,7 +252,8 @@ def compare_lig(first_resource, second_resource):
         if key not in resource1:
             if resource2[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
 
     return True
@@ -266,10 +274,11 @@ def compare(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(
+        resource1, resource2)
     # The first resource is True / Not Null and the second resource is False / Null
     if resource1 and not resource2:
-        logger.debug("resource1 and not resource2. " + debug_resources)
+        logger.debug("resource1 and not resource2. %s", debug_resources)
         return False
 
     # Checks all keys in first dict against the second dict
@@ -277,7 +286,8 @@ def compare(first_resource, second_resource):
         if key not in resource2:
             if resource1[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         # If both values are null, empty or False it will be considered equal.
         elif not resource1[key] and not resource2[key]:
@@ -285,15 +295,18 @@ def compare(first_resource, second_resource):
         elif isinstance(resource1[key], Mapping):
             # recursive call
             if not compare(resource1[key], resource2[key]):
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         elif isinstance(resource1[key], list):
             # change comparison function to compare_list
             if not compare_list(resource1[key], resource2[key]):
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
         elif _standardize_value(resource1[key]) != _standardize_value(resource2[key]):
-            logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+            logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                key), debug_resources)
             return False
 
     # Checks all keys in the second dict, looking for missing elements
@@ -301,7 +314,8 @@ def compare(first_resource, second_resource):
         if key not in resource1:
             if resource2[key] is not None:
                 # Inexistent key is equivalent to exist with value None
-                logger.debug(OneViewModuleBase.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
+                    key), debug_resources)
                 return False
 
     return True
@@ -320,15 +334,16 @@ def compare_list(first_resource, second_resource):
     resource1 = first_resource
     resource2 = second_resource
 
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(
+        resource1, resource2)
 
     # The second list is null / empty  / False
     if not resource2:
-        logger.debug("resource 2 is null. " + debug_resources)
+        logger.debug("resource 2 is null. %s", debug_resources)
         return False
 
     if len(resource1) != len(resource2):
-        logger.debug("resources have different length. " + debug_resources)
+        logger.debug("resources have different length. %s", debug_resources)
         return False
 
     resource1 = sorted(resource1, key=_str_sorted)
@@ -338,15 +353,15 @@ def compare_list(first_resource, second_resource):
         if isinstance(val, Mapping):
             # change comparison function to compare dictionaries
             if not compare(val, resource2[i]):
-                logger.debug("resources are different. " + debug_resources)
+                logger.debug("resources are different. %s", debug_resources)
                 return False
         elif isinstance(val, list):
             # recursive call
             if not compare_list(val, resource2[i]):
-                logger.debug("lists are different. " + debug_resources)
+                logger.debug("lists are different. %s", debug_resources)
                 return False
         elif _standardize_value(val) != _standardize_value(resource2[i]):
-            logger.debug("values are different. " + debug_resources)
+            logger.debug("values are different. %s", debug_resources)
             return False
 
     # no differences found
@@ -365,14 +380,15 @@ def compare_list_lig(first_resource, second_resource):
 
     resource1 = first_resource
     resource2 = second_resource
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(
+        resource1, resource2)
     # The second list is null / empty  / False
     if not resource2:
-        logger.debug("resource 2 is null. " + debug_resources)
+        logger.debug("resource 2 is null. %s", debug_resources)
         return False
 
     if len(resource1) != len(resource2):
-        logger.debug("resources have different length. " + debug_resources)
+        logger.debug("resources have different length. %s", debug_resources)
         return False
 
     resource1 = sorted(resource1, key=_str_sorted)
@@ -385,15 +401,15 @@ def compare_list_lig(first_resource, second_resource):
         if isinstance(val, Mapping):
             # change comparison function to compare dictionaries
             if not compare_lig(val, resource2[i]):
-                logger.debug("resources are different. " + debug_resources)
+                logger.debug("resources are different. %s", debug_resources)
                 return False
         elif isinstance(val, list):
             # recursive call
             if not compare_list_lig(val, resource2[i]):
-                logger.debug("lists are different. " + debug_resources)
+                logger.debug("lists are different. %s", debug_resources)
                 return False
         elif _standardize_value(val) != _standardize_value(resource2[i]):
-            logger.debug("values are different. " + debug_resources)
+            logger.debug("values are different. %s", debug_resources)
             return False
 
     # no differences found
@@ -417,7 +433,8 @@ def sort_by_uplink_set_location(resource1, resource2):
         each_location = []
         for local_entry in location_entries:
             # Combine the values for comparison, 'Bay_3' if type='Bay' and relative value=3
-            value = local_entry.get('type', '') + "_" + str(local_entry.get('relativeValue', ''))
+            value = local_entry.get('type', '') + "_" + \
+                str(local_entry.get('relativeValue', ''))
             each_location.append(value)
 
         # Check second elements and add each entry in all_entries list
@@ -427,7 +444,8 @@ def sort_by_uplink_set_location(resource1, resource2):
 
             each_location_res2 = []
             for local_entry_res2 in location_entries_res2:
-                value_res2 = local_entry_res2.get('type', '') + "_" + str(local_entry_res2.get('relativeValue', ''))
+                value_res2 = local_entry_res2.get(
+                    'type', '') + "_" + str(local_entry_res2.get('relativeValue', ''))
                 each_location_res2.append(value_res2)
 
             if each_location_res2 not in all_entries:
@@ -538,7 +556,8 @@ class OneViewModule(object):
         auth_login_domain=dict(type='str')
     )
 
-    ONEVIEW_VALIDATE_ETAG_ARGS = dict(validate_etag=dict(type='bool', default=True))
+    ONEVIEW_VALIDATE_ETAG_ARGS = dict(
+        validate_etag=dict(type='bool', default=True))
 
     def __init__(self, additional_arg_spec=None, validate_etag_support=False):
         """
@@ -547,9 +566,11 @@ class OneViewModule(object):
         :arg dict additional_arg_spec: Additional argument spec definition.
         :arg bool validate_etag_support: Enables support to eTag validation.
         """
-        argument_spec = self._build_argument_spec(additional_arg_spec, validate_etag_support)
+        argument_spec = self._build_argument_spec(
+            additional_arg_spec, validate_etag_support)
 
-        self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
+        self.module = AnsibleModule(
+            argument_spec=argument_spec, supports_check_mode=True)
 
         self.resource_client = None
         self.current_resource = None
@@ -564,7 +585,8 @@ class OneViewModule(object):
         self.facts_params = self.module.params.get('params') or {}
 
         # Preload options as dict - used by facts
-        self.options = transform_list_to_dict(self.module.params.get('options'))
+        self.options = transform_list_to_dict(
+            self.module.params.get('options'))
 
         self.validate_etag_support = validate_etag_support
 
@@ -596,7 +618,8 @@ class OneViewModule(object):
         elif not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(self.module.params['config'])
+            self.oneview_client = OneViewClient.from_json_file(
+                self.module.params['config'])
 
     def set_resource_object(self, resource_client, name=None):
         self.resource_client = resource_client
@@ -657,7 +680,8 @@ class OneViewModule(object):
 
         except OneViewModuleException as exception:
             error_msg = '; '.join(to_native(e) for e in exception.args)
-            self.module.fail_json(msg=error_msg, exception=traceback.format_exc())
+            self.module.fail_json(
+                msg=error_msg, exception=traceback.format_exc())
 
     def resource_absent(self, method='delete'):
         """
@@ -704,7 +728,8 @@ class OneViewModule(object):
             self.data["name"] = self.data.pop("newName")
 
         if not self.current_resource:
-            self.current_resource = getattr(self.resource_client, create_method)(self.data)
+            self.current_resource = getattr(
+                self.resource_client, create_method)(self.data)
             msg = self.MSG_CREATED
             changed = True
         else:
@@ -748,7 +773,8 @@ class OneViewModule(object):
         resource = state['ansible_facts'][fact_name]
 
         if resource.get('scopeUris') is None or set(resource['scopeUris']) != set(scope_uris):
-            operation_data = dict(operation='replace', path='/scopeUris', value=scope_uris)
+            operation_data = dict(operation='replace',
+                                  path='/scopeUris', value=scope_uris)
             updated_resource = self.current_resource.patch(**operation_data)
             state['ansible_facts'][fact_name] = updated_resource.data
             state['changed'] = True
@@ -757,7 +783,6 @@ class OneViewModule(object):
         return state
 
     def check_resource_present(self, fact_name):
-
         """
         The following implementation will work for resource_present under check mode.
         Generic implementation of the present state to be run under check mode for the OneView resources.
@@ -859,7 +884,8 @@ class OneViewModuleBase(object):
 
     resource_client = None
 
-    ONEVIEW_VALIDATE_ETAG_ARGS = dict(validate_etag=dict(type='bool', default=True))
+    ONEVIEW_VALIDATE_ETAG_ARGS = dict(
+        validate_etag=dict(type='bool', default=True))
 
     def __init__(self, additional_arg_spec=None, validate_etag_support=False):
         """
@@ -868,9 +894,11 @@ class OneViewModuleBase(object):
         :arg dict additional_arg_spec: Additional argument spec definition.
         :arg bool validate_etag_support: Enables support to eTag validation.
         """
-        argument_spec = self._build_argument_spec(additional_arg_spec, validate_etag_support)
+        argument_spec = self._build_argument_spec(
+            additional_arg_spec, validate_etag_support)
 
-        self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
+        self.module = AnsibleModule(
+            argument_spec=argument_spec, supports_check_mode=False)
 
         self._check_hpe_oneview_sdk()
         self._create_oneview_client()
@@ -882,7 +910,8 @@ class OneViewModuleBase(object):
         self.facts_params = self.module.params.get('params') or {}
 
         # Preload options as dict - used by facts
-        self.options = transform_list_to_dict(self.module.params.get('options'))
+        self.options = transform_list_to_dict(
+            self.module.params.get('options'))
 
         self.validate_etag_support = validate_etag_support
 
@@ -914,7 +943,8 @@ class OneViewModuleBase(object):
         elif not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(self.module.params['config'])
+            self.oneview_client = OneViewClient.from_json_file(
+                self.module.params['config'])
 
     @abc.abstractmethod
     def execute_module(self):
@@ -954,7 +984,8 @@ class OneViewModuleBase(object):
 
         except OneViewModuleException as exception:
             error_msg = '; '.join(to_native(e) for e in exception.args)
-            self.module.fail_json(msg=error_msg, exception=traceback.format_exc())
+            self.module.fail_json(
+                msg=error_msg, exception=traceback.format_exc())
 
     def resource_absent(self, resource, method='delete'):
         """
@@ -1038,10 +1069,12 @@ class OneViewModuleBase(object):
         if scope_uris is None:
             scope_uris = []
         resource = state['ansible_facts'][fact_name]
-        operation_data = dict(operation='replace', path='/scopeUris', value=scope_uris)
+        operation_data = dict(operation='replace',
+                              path='/scopeUris', value=scope_uris)
 
         if resource['scopeUris'] is None or set(resource['scopeUris']) != set(scope_uris):
-            state['ansible_facts'][fact_name] = self.resource_client.patch(resource['uri'], **operation_data)
+            state['ansible_facts'][fact_name] = self.resource_client.patch(
+                resource['uri'], **operation_data)
             state['changed'] = True
             state['msg'] = self.MSG_UPDATED
 
@@ -1054,7 +1087,8 @@ class LIGMerger(object):
         merged_data = dict_merge(current_data, data)
 
         if current_data.get('uplinkSets') and data.get('uplinkSets'):
-            merged_data['uplinkSets'] = self._merge_uplink_set(current_data, data)
+            merged_data['uplinkSets'] = self._merge_uplink_set(
+                current_data, data)
 
         return merged_data
 
@@ -1068,10 +1102,12 @@ class LIGMerger(object):
         for index, existing_uplink in enumerate(existing_uplinksets):
             for current_uplink in current_uplinksets:
                 if current_uplink['name'] == existing_uplink['name']:
-                    current_uplinks_left.remove(current_uplink)  # removes the common uplinksets from current uplinksets
+                    # removes the common uplinksets from current uplinksets
+                    current_uplinks_left.remove(current_uplink)
 
                     if not compare_lig(current_uplink, existing_uplink):
-                        existing_uplinksets[index] = dict_merge(current_uplink, existing_uplink)
+                        existing_uplinksets[index] = dict_merge(
+                            current_uplink, existing_uplink)
 
             # checks to ignore extra parameters in uplink set to achieve idempotency
             if existing_uplink.get('logicalPortConfigInfos') and isinstance(existing_uplink['logicalPortConfigInfos'], list):
@@ -1129,18 +1165,22 @@ class ServerProfileMerger(object):
         merged_data = self._merge_bios_and_boot(merged_data, resource, data)
         merged_data = self._merge_connections(merged_data, resource, data)
         merged_data = self._merge_san_storage(merged_data, data, resource)
-        merged_data = self._merge_os_deployment_settings(merged_data, resource, data)
+        merged_data = self._merge_os_deployment_settings(
+            merged_data, resource, data)
         merged_data = self._merge_local_storage(merged_data, resource, data)
 
         return merged_data
 
     def _merge_bios_and_boot(self, merged_data, resource, data):
         if self._should_merge(data, resource, key=SPKeys.BIOS):
-            merged_data = self._merge_dict(merged_data, resource, data, key=SPKeys.BIOS)
+            merged_data = self._merge_dict(
+                merged_data, resource, data, key=SPKeys.BIOS)
         if self._should_merge(data, resource, key=SPKeys.BOOT):
-            merged_data = self._merge_dict(merged_data, resource, data, key=SPKeys.BOOT)
+            merged_data = self._merge_dict(
+                merged_data, resource, data, key=SPKeys.BOOT)
         if self._should_merge(data, resource, key=SPKeys.BOOT_MODE):
-            merged_data = self._merge_dict(merged_data, resource, data, key=SPKeys.BOOT_MODE)
+            merged_data = self._merge_dict(
+                merged_data, resource, data, key=SPKeys.BOOT_MODE)
         return merged_data
 
     def _merge_connections(self, merged_data, resource, data):
@@ -1164,7 +1204,8 @@ class ServerProfileMerger(object):
         if self._should_merge(data, resource, key=SPKeys.CONNECTIONS):
             existing_connections = resource[SPKeys.CONNECTIONS]
             params_connections = data[SPKeys.CONNECTIONS]
-            merged_data[SPKeys.CONNECTIONS] = merge_list_by_key(existing_connections, params_connections, key=SPKeys.ID)
+            merged_data[SPKeys.CONNECTIONS] = merge_list_by_key(
+                existing_connections, params_connections, key=SPKeys.ID)
 
             merged_data = self._merge_connections_boot(merged_data, resource)
         return merged_data
@@ -1179,16 +1220,20 @@ class ServerProfileMerger(object):
                 conn_id]
             if existing_conn_has_boot and SPKeys.BOOT in merged_connection:
                 current_connection = existing_connection_map[conn_id]
-                boot_settings_merged = deepcopy(current_connection[SPKeys.BOOT])
-                boot_settings_merged = dict_merge(boot_settings_merged, merged_connection[SPKeys.BOOT])
+                boot_settings_merged = deepcopy(
+                    current_connection[SPKeys.BOOT])
+                boot_settings_merged = dict_merge(
+                    boot_settings_merged, merged_connection[SPKeys.BOOT])
                 merged_connection[SPKeys.BOOT] = boot_settings_merged
         return merged_data
 
     def _merge_san_storage(self, merged_data, data, resource):
         if self._removed_data(data, resource, key=SPKeys.SAN):
-            merged_data[SPKeys.SAN] = dict(volumeAttachments=[], manageSanStorage=False)
+            merged_data[SPKeys.SAN] = dict(
+                volumeAttachments=[], manageSanStorage=False)
         elif self._should_merge(data, resource, key=SPKeys.SAN):
-            merged_data = self._merge_dict(merged_data, resource, data, key=SPKeys.SAN)
+            merged_data = self._merge_dict(
+                merged_data, resource, data, key=SPKeys.SAN)
 
             merged_data = self._merge_san_volumes(merged_data, resource, data)
         return merged_data
@@ -1197,7 +1242,8 @@ class ServerProfileMerger(object):
         if self._should_merge(data[SPKeys.SAN], resource[SPKeys.SAN], key=SPKeys.VOLUMES):
             existing_volumes = resource[SPKeys.SAN][SPKeys.VOLUMES]
             params_volumes = data[SPKeys.SAN][SPKeys.VOLUMES]
-            merged_volumes = merge_list_by_key(existing_volumes, params_volumes, key=SPKeys.ID)
+            merged_volumes = merge_list_by_key(
+                existing_volumes, params_volumes, key=SPKeys.ID)
             merged_data[SPKeys.SAN][SPKeys.VOLUMES] = merged_volumes
 
             merged_data = self._merge_san_storage_paths(merged_data, resource)
@@ -1205,7 +1251,8 @@ class ServerProfileMerger(object):
 
     def _merge_san_storage_paths(self, merged_data, resource):
 
-        existing_volumes_map = OrderedDict([(i[SPKeys.ID], i) for i in resource[SPKeys.SAN][SPKeys.VOLUMES]])
+        existing_volumes_map = OrderedDict(
+            [(i[SPKeys.ID], i) for i in resource[SPKeys.SAN][SPKeys.VOLUMES]])
         merged_volumes = merged_data[SPKeys.SAN][SPKeys.VOLUMES]
         for merged_volume in merged_volumes:
             volume_id = merged_volume[SPKeys.ID]
@@ -1215,14 +1262,16 @@ class ServerProfileMerger(object):
 
                     paths_from_merged_volume = merged_volume[SPKeys.PATHS]
 
-                    merged_paths = merge_list_by_key(existent_paths, paths_from_merged_volume, key=SPKeys.CONN_ID)
+                    merged_paths = merge_list_by_key(
+                        existent_paths, paths_from_merged_volume, key=SPKeys.CONN_ID)
 
                     merged_volume[SPKeys.PATHS] = merged_paths
         return merged_data
 
     def _merge_os_deployment_settings(self, merged_data, resource, data):
         if self._should_merge(data, resource, key=SPKeys.OS_DEPLOYMENT):
-            merged_data = self._merge_os_deployment_custom_attr(merged_data, resource, data)
+            merged_data = self._merge_os_deployment_custom_attr(
+                merged_data, resource, data)
         return merged_data
 
     def _merge_os_deployment_custom_attr(self, merged_data, resource, data):
@@ -1250,9 +1299,11 @@ class ServerProfileMerger(object):
 
     def _merge_local_storage(self, merged_data, resource, data):
         if self._removed_data(data, resource, key=SPKeys.LOCAL_STORAGE):
-            merged_data[SPKeys.LOCAL_STORAGE] = dict(sasLogicalJBODs=[], controllers=[])
+            merged_data[SPKeys.LOCAL_STORAGE] = dict(
+                sasLogicalJBODs=[], controllers=[])
         elif self._should_merge(data, resource, key=SPKeys.LOCAL_STORAGE):
-            merged_data = self._merge_sas_logical_jbods(merged_data, resource, data)
+            merged_data = self._merge_sas_logical_jbods(
+                merged_data, resource, data)
             merged_data = self._merge_controllers(merged_data, resource, data)
         return merged_data
 
@@ -1260,7 +1311,8 @@ class ServerProfileMerger(object):
         if data.get(SPKeys.LOCAL_STORAGE) and SPKeys.SAS_LOGICAL_JBODS in data.get(SPKeys.LOCAL_STORAGE):
             existing_items = resource[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
             provided_items = data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
-            merged_jbods = merge_list_by_key(existing_items, provided_items, key=SPKeys.ID, ignore_when_null=[SPKeys.SAS_LOGICAL_JBOD_URI])
+            merged_jbods = merge_list_by_key(
+                existing_items, provided_items, key=SPKeys.ID, ignore_when_null=[SPKeys.SAS_LOGICAL_JBOD_URI])
             merged_data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS] = merged_jbods
         return merged_data
 
@@ -1268,7 +1320,8 @@ class ServerProfileMerger(object):
         if self._should_merge(data[SPKeys.LOCAL_STORAGE], resource[SPKeys.LOCAL_STORAGE], key=SPKeys.CONTROLLERS):
             existing_items = resource[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS]
             provided_items = merged_data[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS]
-            merged_controllers = merge_list_by_key(existing_items, provided_items, key=SPKeys.DEVICE_SLOT)
+            merged_controllers = merge_list_by_key(
+                existing_items, provided_items, key=SPKeys.DEVICE_SLOT)
             merged_data[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS] = merged_controllers
 
             merged_data = self._merge_controller_drives(merged_data, resource)
@@ -1277,11 +1330,14 @@ class ServerProfileMerger(object):
     def _merge_controller_drives(self, merged_data, resource):
         for current_controller in merged_data[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][:]:
             for existing_controller in resource[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][:]:
-                same_slot = current_controller.get(SPKeys.DEVICE_SLOT) == existing_controller.get(SPKeys.DEVICE_SLOT)
-                same_mode = existing_controller.get(SPKeys.MODE) == existing_controller.get(SPKeys.MODE)
+                same_slot = current_controller.get(
+                    SPKeys.DEVICE_SLOT) == existing_controller.get(SPKeys.DEVICE_SLOT)
+                same_mode = existing_controller.get(
+                    SPKeys.MODE) == existing_controller.get(SPKeys.MODE)
                 if same_slot and same_mode and current_controller[SPKeys.LOGICAL_DRIVES]:
 
-                    key_merge = self._define_key_to_merge_drives(current_controller)
+                    key_merge = self._define_key_to_merge_drives(
+                        current_controller)
 
                     if key_merge:
                         merged_drives = merge_list_by_key(existing_controller[SPKeys.LOGICAL_DRIVES],
@@ -1361,7 +1417,8 @@ class ServerProfileReplaceNamesByUris(object):
         attr_uri = attr_name.replace("Name", replace_name_with)
         if attr_name in data:
             name = data.pop(attr_name)
-            uri = self._get_resource_uri_from_name(name, message, resource_client)
+            uri = self._get_resource_uri_from_name(
+                name, message, resource_client)
             data[attr_uri] = uri
 
     def _replace_initial_scope_name_by_uri(self, data):
@@ -1371,7 +1428,8 @@ class ServerProfileReplaceNamesByUris(object):
             for name in data.pop("initialScopeNames", []):
                 scope = resource_client.get_by_name(name)
                 if not scope:
-                    raise OneViewModuleResourceNotFound(self.SCOPE_NOT_FOUND + name)
+                    raise OneViewModuleResourceNotFound(
+                        self.SCOPE_NOT_FOUND + name)
                 scope_uris.append(scope["uri"])
             data["initialScopeUris"] = scope_uris
 
@@ -1397,19 +1455,22 @@ class ServerProfileReplaceNamesByUris(object):
             if 'networkName' in connection:
                 name = connection.pop('networkName')
                 if name is not None:
-                    connection['networkUri'] = self._get_network_by_name(name)['uri']
+                    connection['networkUri'] = self._get_network_by_name(name)[
+                        'uri']
 
     def _replace_server_hardware_type_name_by_uri(self, data):
         self._replace_name_by_uri(data, 'serverHardwareTypeName', self.SERVER_HARDWARE_TYPE_NOT_FOUND,
                                   self.oneview_client.server_hardware_types)
 
     def _replace_volume_attachment_names_by_uri(self, data):
-        volume_attachments = (data.get('sanStorage') or {}).get('volumeAttachments') or []
+        volume_attachments = (data.get('sanStorage') or {}).get(
+            'volumeAttachments') or []
 
         if len(volume_attachments) > 0:
             for volume in volume_attachments:
                 if not volume.get('volumeUri') and volume.get('volumeName'):
-                    resource_by_name = self.oneview_client.volumes.get_by('name', volume['volumeName'])
+                    resource_by_name = self.oneview_client.volumes.get_by(
+                        'name', volume['volumeName'])
                     if resource_by_name:
                         volume['volumeUri'] = resource_by_name[0]['uri']
                         del volume['volumeName']
@@ -1438,7 +1499,8 @@ class ServerProfileReplaceNamesByUris(object):
                                                   replace_name_with='')
 
     def _replace_enclosure_name_by_uri(self, data):
-        self._replace_name_by_uri(data, 'enclosureName', self.ENCLOSURE_NOT_FOUND, self.oneview_client.enclosures)
+        self._replace_name_by_uri(
+            data, 'enclosureName', self.ENCLOSURE_NOT_FOUND, self.oneview_client.enclosures)
 
     def _replace_interconnect_name_by_uri(self, data):
         connections = data.get('connections') or []
@@ -1453,7 +1515,8 @@ class ServerProfileReplaceNamesByUris(object):
                                   self.oneview_client.firmware_drivers)
 
     def _replace_sas_logical_jbod_name_by_uri(self, data):
-        sas_logical_jbods = (data.get('localStorage') or {}).get('sasLogicalJBODs') or []
+        sas_logical_jbods = (data.get('localStorage') or {}
+                             ).get('sasLogicalJBODs') or []
         if len(sas_logical_jbods) > 0:
             for jbod in sas_logical_jbods:
                 self._replace_name_by_uri(jbod, 'sasLogicalJBODName', self.SAS_LOGICAL_JBOD_NOT_FOUND,
@@ -1472,7 +1535,9 @@ class ServerProfileReplaceNamesByUris(object):
         if network_sets:
             return network_sets[0]
 
-        ethernet_networks = self.oneview_client.ethernet_networks.get_by('name', name)
+        ethernet_networks = self.oneview_client.ethernet_networks.get_by(
+            'name', name)
         if not ethernet_networks:
-            raise OneViewModuleResourceNotFound(self.SERVER_PROFILE_NETWORK_NOT_FOUND + name)
+            raise OneViewModuleResourceNotFound(
+                self.SERVER_PROFILE_NETWORK_NOT_FOUND + name)
         return ethernet_networks[0]

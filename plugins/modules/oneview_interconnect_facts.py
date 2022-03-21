@@ -15,10 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
-
 from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
-
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['stableinterface'],
                     'supported_by': 'community'}
@@ -233,8 +230,8 @@ interconnect_pluggable_module_information:
     returned: When requested, but can be null.
     type: list
 '''
-
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+__metaclass__ = type
 
 
 class InterconnectFactsModule(OneViewModule):
@@ -258,7 +255,8 @@ class InterconnectFactsModule(OneViewModule):
             if self.module.params.get('options'):
                 self.__get_options(facts)
         else:
-            facts['interconnects'] = self.resource_client.get_all(**self.facts_params)
+            facts['interconnects'] = self.resource_client.get_all(
+                **self.facts_params)
 
         return dict(
             changed=False,
@@ -306,7 +304,8 @@ class InterconnectFactsModule(OneViewModule):
 
         if self.options.get('port'):
             port_name = self.options.get('port')
-            port_id = "{}:{}".format(self.extract_id_from_uri(self.current_resource.data['uri']), port_name)
+            port_id = "{0}:{1}".format(self.extract_id_from_uri(
+                self.current_resource.data['uri']), port_name)
             port = self.current_resource.get_port(port_id)
             facts['interconnect_port'] = port
 
