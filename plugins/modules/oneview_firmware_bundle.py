@@ -16,6 +16,8 @@
 
 ###
 from __future__ import (absolute_import, division, print_function)
+from os.path import basename
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 __metaclass__ = type
 
 ANSIBLE_METADATA = {'metadata_version': '1.1',
@@ -86,9 +88,6 @@ compsig:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-from os.path import basename
-
 
 class FirmwareBundleModule(OneViewModule):
     MSG_ADDED = 'Firmware Bundle or Hotfix added successfully.'
@@ -133,17 +132,17 @@ class FirmwareBundleModule(OneViewModule):
             return dict(changed=True, msg=self.MSG_ADD_SIG, ansible_facts=dict(compsig=self.current_resource))
 
         elif file_name in self.current_resource.data.get('signatureFileName'):
-            #"file already present so no point checking other status"
+            # file already present so no point checking other status
             return dict(changed=False, msg=self.MSG_SIG_ALREADY_PRESENT)
 
         elif self.current_resource.data.get('resourceState') != 'Created' and\
                 file_name not in self.current_resource.data.get('signatureFileName'):
-            #"resourceState not Created and file also not exist in signatureFileName"
+            # resourceState not Created and file also not exist in signatureFileName
             self.current_resource = self.resource_client.upload_compsig(
                 file_path)
             return dict(changed=True, msg=self.MSG_ADD_SIG, ansible_facts=dict(compsig=self.current_resource))
         else:
-            #"Corner case"
+            # Corner case when already all the sig files are uploaded"
             return dict(failed=True, msg=self. MSG_ALL_SIG_ALREADY_PRESENT)
 
 
