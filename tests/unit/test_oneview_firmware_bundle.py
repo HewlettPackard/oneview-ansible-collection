@@ -81,10 +81,28 @@ class TestFirmwareBundleModule(OneViewBaseTest):
             ansible_facts=dict(firmware_bundle=DEFAULT_FIRMWARE_TEMPLATE)
         )
 
-    def test_should_add_compsig(self):
+    def test_should_add_compsig1(self):
+        SPP_TEMPLATE = deepcopy(DEFAULT_FIRMWARE_TEMPLATE)
+        SPP_TEMPLATE['signatureFileName'] = None
+        self.resource.data = SPP_TEMPLATE
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.upload_compsig.return_value = DEFAULT_FIRMWARE_TEMPLATE
+
+        self.mock_ansible_module.params = PARAMS_FOR_ADD_SIGNATURE
+
+        FirmwareBundleModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=FirmwareBundleModule.MSG_ADD_SIG,
+            ansible_facts=dict(compsig=DEFAULT_FIRMWARE_TEMPLATE)
+        )
+
+    def test_should_add_compsig2(self):
         SPP_TEMPLATE = deepcopy(DEFAULT_FIRMWARE_TEMPLATE)
         SPP_TEMPLATE['signatureFileRequired'] = False
         SPP_TEMPLATE['resourceState'] = 'AddFailed'
+        SPP_TEMPLATE['signatureFileName'] = ['file1.rpm']
 
         self.resource.data = SPP_TEMPLATE
         self.resource.get_by_name.return_value = self.resource
@@ -102,8 +120,7 @@ class TestFirmwareBundleModule(OneViewBaseTest):
 
     def test_should_not_add_compsig_when_already_present(self):
         SPP_TEMPLATE = deepcopy(DEFAULT_FIRMWARE_TEMPLATE)
-        SPP_TEMPLATE['signatureFileRequired'] = True
-        SPP_TEMPLATE['resourceState'] = 'Created'
+        SPP_TEMPLATE['signatureFileName'] = ['file.rpm']
         self.resource.data = SPP_TEMPLATE
         self.resource.get_by_name.return_value = self.resource
 
