@@ -35,7 +35,8 @@ DEFAULT_PARAMS = dict(
 DEFAULT_PARAMS_WITH_USERNAME = dict(
     userName='testUser1',
     port=162,
-    destinationAddress='172.0.0.1'
+    destinationAddress='172.0.0.1',
+    data=dict(id='1234')
 )
 
 PARAMS_FOR_PRESENT = dict(
