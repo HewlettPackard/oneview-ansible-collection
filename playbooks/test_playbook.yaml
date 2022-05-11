@@ -1,7 +1,0 @@
----
-- hosts: all
-  collections:
-    - hpe.oneview
-  roles:
-    # - hpe.oneview.oneview_ethernet_network
-    - hpe.oneview.oneview_appliance_network_interfaces
