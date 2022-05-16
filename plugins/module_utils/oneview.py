@@ -259,7 +259,7 @@ def compare_lig(first_resource, second_resource):
     return True
 
 
-def compare(first_resource, second_resource):
+def compare(first_resource, second_resource, parameter_to_ignore=None):
     """
     Recursively compares dictionary contents equivalence, ignoring types and elements order.
     Particularities of the comparison:
@@ -269,6 +269,7 @@ def compare(first_resource, second_resource):
         - Each element is converted to str before the comparison.
     :arg dict first_resource: first dictionary
     :arg dict second_resource: second dictionary
+    :arg string parameter_to_ignore: third string
     :return: bool: True when equal, False when different.
     """
     resource1 = first_resource
@@ -307,6 +308,9 @@ def compare(first_resource, second_resource):
         elif _standardize_value(resource1[key]) != _standardize_value(resource2[key]):
             logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                 key), debug_resources)
+            if parameter_to_ignore is not None:
+                if key == parameter_to_ignore:
+                    continue
             return False
 
     # Checks all keys in the second dict, looking for missing elements
@@ -711,7 +715,7 @@ class OneViewModule(object):
         result = self.resource_client.get_by('name', name)
         return result[0] if result else None
 
-    def resource_present(self, fact_name, create_method='create'):
+    def resource_present(self, fact_name, create_method='create', parameter_to_ignore=None):
         """
         Generic implementation of the present state for the OneView resources.
 
@@ -733,7 +737,7 @@ class OneViewModule(object):
             msg = self.MSG_CREATED
             changed = True
         else:
-            changed, msg = self._update_resource()
+            changed, msg = self._update_resource(parameter_to_ignore)
 
         data = self.current_resource.data
         return dict(
@@ -742,12 +746,12 @@ class OneViewModule(object):
             ansible_facts={fact_name: data}
         )
 
-    def _update_resource(self):
+    def _update_resource(self, parameter_to_ignore=None):
         updated_data = self.current_resource.data.copy()
         updated_data = dict_merge(updated_data, self.data)
         changed = False
 
-        if compare(self.current_resource.data, updated_data):
+        if compare(self.current_resource.data, updated_data, parameter_to_ignore):
             msg = self.MSG_ALREADY_PRESENT
         else:
             self.current_resource.update(updated_data)
