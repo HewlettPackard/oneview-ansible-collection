@@ -267,7 +267,8 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
         - These values are considered equal: None, empty, False
         - Lists are compared value by value after a sort, if they have same size.
         - Each element is converted to str before the comparison.
-    Parameter_to_ignore can be any parameter which needs to be ignored from the comparison. Some parameter like 'authenticationPassphrase' may cause idempotency issues if not ignored from comparison.
+    Parameter_to_ignore can be any parameter which needs to be ignored from the comparison. 
+    Some parameter like 'authenticationPassphrase' may cause idempotency issues if not ignored from comparison.
     :arg dict first_resource: first dictionary
     :arg dict second_resource: second dictionary
     :arg string parameter_to_ignore: third string
