@@ -4,6 +4,7 @@ This release extends the planned support of the collections to OneView REST API 
 
 #### Bug fixes & Enhancements
 - [#180] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/180) SNMPv3 traps - creation fails
+- [#179] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/179) SNMPV3 users-idempotency issue
 
 ## v6.6.0
 This release extends the planned support of the collections to OneView REST API version 3800 (OneView v6.6.
