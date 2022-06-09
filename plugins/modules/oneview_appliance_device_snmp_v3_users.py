@@ -138,7 +138,7 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v3_users)
 
     def execute_module(self):
-        parameter_to_ignore = "authenticationPassphrase"
+        parameter_to_ignore = ["authenticationPassphrase", "privacyPassphrase"]
         if self.oneview_client.api_version < 600:
             raise OneViewModuleValueError(self.MSG_API_VERSION_ERROR)
         if self.state == 'present':
