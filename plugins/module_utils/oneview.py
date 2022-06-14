@@ -105,7 +105,7 @@ def dict_merge(original_resource_dict, data_dict):
         elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
-            if len(resource_dict[key])==1 and len(data_dict[key])==1:
+            if len(resource_dict[key]) == 1 and len(data_dict[key]) == 1:
                 if isinstance(resource_dict[key][0], dict) and isinstance(data_dict[key][0], dict):
                     resource_dict[key][0] = dict_merge(resource_dict[key][0], data_dict[key][0])
                 else:
