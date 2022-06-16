@@ -105,8 +105,9 @@ def dict_merge(original_resource_dict, data_dict):
         elif isinstance(resource_dict[key], dict) and isinstance(data_dict[key], Mapping):
             resource_dict[key] = dict_merge(resource_dict[key], data_dict[key])
         elif isinstance(resource_dict[key], list) and isinstance(data_dict[key], list):
+            #To handle merging when there is only one element in list and there by avoiding idempotency
             if len(resource_dict[key]) == 1 and len(data_dict[key]) == 1:
-                if isinstance(resource_dict[key][0], dict) and isinstance(data_dict[key][0], dict):
+                if isinstance(resource_dict[key][0], dict) and isinstance(data_dict[key][0], Mapping):
                     resource_dict[key][0] = dict_merge(resource_dict[key][0], data_dict[key][0])
                 else:
                     resource_dict[key] = data_dict[key]
@@ -317,7 +318,8 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
             logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                 key), debug_resources)
             if parameter_to_ignore is not None:
-                if key.lower() == parameter_to_ignore.lower():
+                parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
+                if key.lower() in parameter_to_ignore_lower:
                     continue
             return False
 
@@ -758,11 +760,13 @@ class OneViewModule(object):
         updated_data = self.current_resource.data.copy()
         updated_data = dict_merge(updated_data, self.data)
         changed = False
-
+        open('/home/alisha/loguplink.txt', 'w').write("CurrentResourceData:"+str(self.current_resource.data))
+        open('/home/alisha/loguplink.txt', 'a').write("\nUpdated Data:"+str(updated_data))
         if compare(self.current_resource.data, updated_data, parameter_to_ignore):
             msg = self.MSG_ALREADY_PRESENT
         else:
             self.current_resource.update(updated_data)
+            open('/home/alisha/loguplink.txt', 'a').write("\nCurrentResourceData:"+str(self.current_resource.data))
             changed = True
             msg = self.MSG_UPDATED
 
