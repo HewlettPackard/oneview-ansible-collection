@@ -2045,15 +2045,15 @@ class TestOneViewModuleBase():
         assert merged_dict == expected_dict
 
     def test_merge_dict_with_multiple_element_list_inside_dict(self):
-        original_dict = dict(test1=[dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
+        original_dict = dict(test11=[dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
                                      dict(id=1, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000)])
 
-        dict_with_changes = dict(test1=[dict(id=2, requestedMbps=2700, allocatedVFs=3500),
+        dict_with_changes = dict(test11=[dict(id=2, requestedMbps=2700, allocatedVFs=3500),
                                          dict(id=3, allocatedMbps=600, mac="E8:4B:0Y:30:08:0B", requestedMbps=900)])
 
         merged_dict = dict_merge(original_dict, dict_with_changes)
 
-        expected_dict = dict(test1=[dict(id=2, requestedMbps=2700, allocatedVFs=3500),
+        expected_dict = dict(test11=[dict(id=2, requestedMbps=2700, allocatedVFs=3500),
                                      dict(id=3, allocatedMbps=600, mac="E8:4B:0Y:30:08:0B", requestedMbps=900)])
 
         assert merged_dict == expected_dict
