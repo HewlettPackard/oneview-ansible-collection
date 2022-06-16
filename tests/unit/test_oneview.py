@@ -2033,7 +2033,6 @@ class TestOneViewModuleBase():
                          dict(networkType="Ethernet", name="name-2")]
         assert result1 == expected_list
 
-
     def test_merge_dict_with_single_element_list_inside_dict(self):
         original_dict = dict(test1=[dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000)])
 
