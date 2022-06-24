@@ -293,6 +293,10 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
 
     # Checks all keys in first dict against the second dict
     for key in resource1:
+        if parameter_to_ignore is not None:
+            parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
+            if key.lower() in parameter_to_ignore_lower:
+                continue
         if key not in resource2:
             if resource1[key] is not None:
                 # Inexistent key is equivalent to exist with value None
@@ -317,23 +321,19 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
         elif _standardize_value(resource1[key]) != _standardize_value(resource2[key]):
             logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                 key), debug_resources)
-            if parameter_to_ignore is not None:
-                parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
-                if key.lower() in parameter_to_ignore_lower:
-                    continue
             return False
 
     # Checks all keys in the second dict, looking for missing elements
     for key in resource2.keys():
+        if parameter_to_ignore is not None:
+            parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
+            if key.lower() in parameter_to_ignore_lower:
+                continue
         if key not in resource1:
             if resource2[key] is not None:
                 # Inexistent key is equivalent to exist with value None
                 logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                     key), debug_resources)
-                if parameter_to_ignore is not None:
-                    parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
-                    if key.lower() in parameter_to_ignore_lower:
-                        continue
                 return False
 
     return True
