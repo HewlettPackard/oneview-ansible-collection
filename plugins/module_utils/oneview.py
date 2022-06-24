@@ -330,6 +330,10 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
                 # Inexistent key is equivalent to exist with value None
                 logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                     key), debug_resources)
+                if parameter_to_ignore is not None:
+                    parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
+                    if key.lower() in parameter_to_ignore_lower:
+                        continue
                 return False
 
     return True

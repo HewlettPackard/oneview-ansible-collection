@@ -5,7 +5,7 @@
     state: present
     validate_etag: False
     data:
-      repositoryName: "{{ repository_name }}"
+      name: "{{ repository_name }}"
       userName: "{{ repository_username }}"
       password: "{{ repository_password }}"
       repositoryURI: "{{ repository_uri }}"
@@ -18,7 +18,7 @@
     config: "{{ config }}"
     state: present
     data:
-      repositoryName: "{{ repository_name }}"
+      name: "{{ repository_name }}"
       userName: "{{ repository_username }}"
       password: "{{ repository_password }}"
       repositoryURI: "{{ repository_uri }}"
