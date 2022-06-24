@@ -188,7 +188,7 @@ class RepositoriesModule(OneViewModule):
         existing_data = self.current_resource.data.copy()
         updated_data = dict_merge(existing_data, self.data)
 
-        if compare(self.current_resource.data, updated_data , parameter_to_ignore=parameter_to_ignore):
+        if compare(self.current_resource.data, updated_data, parameter_to_ignore=parameter_to_ignore):
             msg = self.MSG_ALREADY_PRESENT
         else:
             response_patch = self.__patch()
