@@ -128,6 +128,7 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             data=dict(required=False, type='dict'),
             name=dict(required=False, type='str'),
             state=dict(

@@ -1,0 +1,34 @@
+---
+# tasks file for session_management
+- name: Fetch Session Id
+  oneview_sessions:
+    config: "{{ config }}"
+    state: present
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+
+- name: Creating the SNMPv3 user
+  oneview_appliance_device_snmp_v3_users:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    name: "user123456"
+    data:
+        type: "Users"
+        userName: "user123456"
+  delegate_to: localhost
+
+- name: Creating the SNMPv3 user 2
+  oneview_appliance_device_snmp_v3_users:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    name: "user123456"
+    data:
+        type: "Users"
+        userName: "user123456"
+  delegate_to: localhost
