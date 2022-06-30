@@ -84,8 +84,14 @@ class TestRepositoriesModule(OneViewBaseTest):
         )
 
     def test_should_not_update_when_data_is_equals(self):
+        PARAMS_FOR_NO_UPDATE = dict(
+            config='config.json',
+            state='present',
+            data=dict(name=DEFAULT_REPOSITORY_TEMPLATE['name'])
+        )
+        params_to_repository = PARAMS_FOR_NO_UPDATE.copy()
+        self.mock_ansible_module.params = params_to_repository
         self.resource.data = DEFAULT_REPOSITORY_TEMPLATE
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT.copy()
 
         RepositoriesModule().run()
 

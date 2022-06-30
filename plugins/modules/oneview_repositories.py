@@ -176,16 +176,19 @@ class RepositoriesModule(OneViewModule):
         return response
 
     def __create(self, data):
+        if "name" in self.data:
+            self.data["repositoryName"] = self.data.pop("name")
         self.current_resource = self.resource_client.create(data)
         changed = True
         return dict(changed=changed, msg=self.MSG_CREATED, ansible_facts=dict(repository=self.current_resource.data))
 
     def __update(self):
         changed = False
+        parameter_to_ignore = ["userName", "password", "repositoryURI"]
         existing_data = self.current_resource.data.copy()
         updated_data = dict_merge(existing_data, self.data)
 
-        if compare(self.current_resource.data, updated_data):
+        if compare(self.current_resource.data, updated_data, parameter_to_ignore=parameter_to_ignore):
             msg = self.MSG_ALREADY_PRESENT
         else:
             response_patch = self.__patch()
