@@ -27,7 +27,7 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ONEVIEW_MODULE_UTILS_PATH
 from hpeOneView.oneview_client import OneViewClient
 
-login_session = dict(session = "testauth")
+a_fact = {"session" : "testauth"}
 
 MSG_CREATED = 'Session created successfully.'
 MSG_NOT_CREATED = 'Session creation failed.'
@@ -56,6 +56,7 @@ class TestLoginSessionModule:
     """
     TestCases for LoginSessionModule
     """
+
     patcher_ansible = patch(ONEVIEW_MODULE_UTILS_PATH + '.AnsibleModule')
     patcher_ansible = patcher_ansible.start()
     ansible_module = Mock()
@@ -77,8 +78,12 @@ class TestLoginSessionModule:
         self.mock_ansible_module.exit_json.assert_called_with(
             changed=True,
             msg=LoginSessionModule.MSG_CREATED,
-            ansible_facts=login_session
+            ansible_facts=a_fact
         )
+
+        self.patcher_conn_obj.stop()
+        self.patcher_oneview_config.stop()
+
 
 if __name__ == '__main__':
     pytest.main([__file__])

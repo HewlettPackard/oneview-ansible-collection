@@ -1,7 +1,18 @@
 ---
+# task for session_management
+- name: Fetch Session Id
+  login_session:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Ensure that the SNMPv3 user is present using the default configuration
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ user_name }}"
     data:
@@ -18,6 +29,7 @@
 - name: Set the password of specified SNMPv3 user
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ user_name }}"
     data:
@@ -31,6 +43,7 @@
 - name: Ensure that the SNMPv3 user is absent
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     name: "{{ user_name }}"
     data:
@@ -50,9 +63,11 @@
 - name: Creating another SNMPv3 user for automation 
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "test2"
     data:
         type: "Users"
         userName: "test2"
   delegate_to: localhost
+
