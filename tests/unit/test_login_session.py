@@ -20,50 +20,38 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 from mock import Mock, patch
-from hpeOneView.connection import connection
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import LoginSessionModule
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ONEVIEW_MODULE_UTILS_PATH
 from hpeOneView.oneview_client import OneViewClient
+from hpeOneView.connection import connection
 
-a_fact = {"session" : "testauth"}
+
+ansible_fact = {"session":"testauth"}
 
 MSG_CREATED = 'Session created successfully.'
 MSG_NOT_CREATED = 'Session creation failed.'
 
-MODULE_EXECUTE_RETURN_VALUE = dict(
-    changed=True,
-    msg=MSG_CREATED,
-    ansible_facts={'ansible_facts': None}
-)
-
-EXPECTED_ARG_SPEC = {'api_version': {'type': u'int'},
-                        'config': {'type': 'path'},
-                        'hostname': {'type': 'str'},
-                        'image_streamer_hostname': {'type': 'str'},
-                        'password': {'type': 'str', 'no_log': True},
-                        'username': {'type': 'str'},
-                        'auth_login_domain': {'type': 'str'},
-                        'validate_etag': {'type': 'bool', 'default': True}}
 
 PARAMS_FOR_PRESENT = dict(
-    config = 'config.json',
-    name = 'TestSession'
+    config='config.json',
+    name='TestSession'
 )
+
 
 class TestLoginSessionModule:
     """
     TestCases for LoginSessionModule
     """
 
-    patcher_ansible = patch(ONEVIEW_MODULE_UTILS_PATH + '.AnsibleModule')
-    patcher_ansible = patcher_ansible.start()
-    ansible_module = Mock()
-    patcher_ansible.return_value = ansible_module
-    mock_ansible_module = ansible_module
-
     def test_login_session(self):
+
+        self.patcher_ansible = patch(ONEVIEW_MODULE_UTILS_PATH + '.AnsibleModule')
+        self.patcher_ansible = self.patcher_ansible.start()
+        ansible_module = Mock()
+        self.patcher_ansible.return_value = ansible_module
+        self.mock_ansible_module = ansible_module
 
         patcher_json_file = patch.object(OneViewClient, 'from_json_file')
         client = patcher_json_file.start()
@@ -78,12 +66,9 @@ class TestLoginSessionModule:
         self.mock_ansible_module.exit_json.assert_called_with(
             changed=True,
             msg=LoginSessionModule.MSG_CREATED,
-            ansible_facts=a_fact
+            ansible_facts=ansible_fact
         )
 
-        self.patcher_conn_obj.stop()
-        self.patcher_oneview_config.stop()
 
-
-if __name__ == '__main__':
+if __name__ =='__main__':
     pytest.main([__file__])

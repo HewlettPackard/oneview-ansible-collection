@@ -76,6 +76,7 @@ oneview_session:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 from hpeOneView.connection import connection
 
+
 class LoginSessionModule(OneViewModule):
     MSG_CREATED = 'Session created successfully.'
     MSG_NOT_CREATED = 'Session creation failed.'
@@ -90,8 +91,8 @@ class LoginSessionModule(OneViewModule):
 
         oneview_config = self.get_config()
         if oneview_config:
-            conn = connection(oneview_config.get('ip'), oneview_config.get('api_version'), oneview_config.get('ssl_certificate', False),
-                                            oneview_config.get('timeout'))
+            conn = connection(oneview_config.get('ip'), oneview_config.get('api_version'),
+                     oneview_config.get('ssl_certificate', False), oneview_config.get('timeout'))
             task, body = conn.post('/rest/login-sessions', oneview_config.get('credentials'))
             auth = body['sessionID']
             return dict(changed=True, msg=self.MSG_CREATED, ansible_facts={"session":auth})

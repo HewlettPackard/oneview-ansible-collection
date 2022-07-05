@@ -633,7 +633,10 @@ class OneViewModule(object):
             else:
                 self.oneview_client = OneViewClient(config)
         elif not self.module.params['config']:
-            self.oneview_client = OneViewClient.from_environment_variables()
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient.from_environment_variables(sessionID=self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient.from_environment_variables()
         else:
             if self.module.params.get('sessionID'):
                 self.oneview_client = OneViewClient.from_json_file(

@@ -1,7 +1,7 @@
 ---
 # task for session_management
 - name: Fetch Session Id
-  login_session:
+  oneview_login_session:
     config: "{{ config }}"
     name: "Test_Session"
   delegate_to: localhost
