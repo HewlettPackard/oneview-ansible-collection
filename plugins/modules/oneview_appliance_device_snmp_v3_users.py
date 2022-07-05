@@ -46,6 +46,11 @@ options:
       description:
         - SNMP user name.
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     data:
         description:
             - List with the SNMPv3 Users properties
