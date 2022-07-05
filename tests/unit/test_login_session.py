@@ -28,7 +28,7 @@ from hpeOneView.oneview_client import OneViewClient
 from hpeOneView.connection import connection
 
 
-ansible_fact = {"session":"testauth"}
+ansible_fact = {"session": "testauth"}
 
 MSG_CREATED = 'Session created successfully.'
 MSG_NOT_CREATED = 'Session creation failed.'
@@ -59,7 +59,7 @@ class TestLoginSessionModule:
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
         self.patcher_oneview_config = patch.object(LoginSessionModule, 'get_config').start()
         self.patcher_conn_obj = patch.object(connection, 'post').start()
-        self.patcher_conn_obj.return_value = None, {'sessionID':'testauth'}
+        self.patcher_conn_obj.return_value = None, {'sessionID': 'testauth'}
 
         LoginSessionModule().run()
 
@@ -70,5 +70,5 @@ class TestLoginSessionModule:
         )
 
 
-if __name__ =='__main__':
+if __name__  == '__main__':
     pytest.main([__file__])

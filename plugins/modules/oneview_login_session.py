@@ -17,8 +17,6 @@
 ###
 
 from __future__ import (absolute_import, division, print_function)
-import json
-
 __metaclass__ = type
 ANSIBLE_METADATA = {'metadata_version': '1.1',
                     'status': ['preview'],
@@ -27,7 +25,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 
 ---
-module: login_session
+module: oneview_login_session
 short_description: Manages OneView login sessions
 description:
     - Provides Session Id for login to the appliance.
@@ -35,7 +33,7 @@ version_added: "2.4.0"
 requirements:
     - "python >= 3.4.2"
     - "hpeOneView >= 5.4.0"
-author: "Alisha K (@alisha-k.kalladassery)"
+author: "Alisha K (@alisha-k)"
 options:
     name:
         description:
@@ -50,7 +48,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Fetch Session Id
-  login_session:
+  oneview_login_session:
     hostname: 172.16.101.48
     username: administrator
     password: my_password
@@ -60,7 +58,7 @@ EXAMPLES = '''
   register: session
 
 - name: Fetch Session Id with config json
-  login_session:
+  oneview_login_session:
     config: "{{ config }}"
     name: "Test_Session"
   delegate_to: localhost
@@ -70,11 +68,17 @@ EXAMPLES = '''
 RETURN = '''
 oneview_session:
     description: Has the facts about the oneview session created
+    returned: Always.
     type: dict
 '''
 
+import json
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
-from hpeOneView.connection import connection
+try:
+    from hpeOneView.connection import connection
+    HAS_HPE_ONEVIEW = True
+except ImportError:
+    HAS_HPE_ONEVIEW = False
 
 
 class LoginSessionModule(OneViewModule):
@@ -89,16 +93,17 @@ class LoginSessionModule(OneViewModule):
 
     def execute_module(self):
 
+        if not HAS_HPE_ONEVIEW:
+            self.module.fail_json(msg=self.HPE_ONEVIEW_SDK_REQUIRED)
         oneview_config = self.get_config()
         if oneview_config:
             conn = connection(oneview_config.get('ip'), oneview_config.get('api_version'),
-                     oneview_config.get('ssl_certificate', False), oneview_config.get('timeout'))
+                              oneview_config.get('ssl_certificate', False), oneview_config.get('timeout'))
             task, body = conn.post('/rest/login-sessions', oneview_config.get('credentials'))
             auth = body['sessionID']
-            return dict(changed=True, msg=self.MSG_CREATED, ansible_facts={"session":auth})
+            return dict(changed=True, msg=self.MSG_CREATED, ansible_facts={"session": auth})
         else:
             return dict(changed=False, msg=self.MSG_NOT_CREATED, ansible_facts=None)
-
 
     def get_config(self):
         if self.module.params.get('config'):
@@ -106,10 +111,10 @@ class LoginSessionModule(OneViewModule):
                 oneview_config = json.load(json_data)
         elif self.module.params.get('hostname'):
             oneview_config = dict(ip=self.module.params['hostname'],
-                          credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
-                                           authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                          api_version=self.module.params['api_version'],
-                          image_streamer_ip=self.module.params['image_streamer_hostname'])
+                                  credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
+                                                   authLoginDomain=self.module.params.get('auth_login_domain', '')),
+                                  api_version=self.module.params['api_version'],
+                                  image_streamer_ip=self.module.params['image_streamer_hostname'])
         return oneview_config
 
 

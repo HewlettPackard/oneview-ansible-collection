@@ -70,4 +70,3 @@
         type: "Users"
         userName: "test2"
   delegate_to: localhost
-
