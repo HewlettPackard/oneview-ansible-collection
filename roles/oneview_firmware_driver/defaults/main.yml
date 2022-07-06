@@ -1,6 +1,4 @@
 ---
 # defaults file for oneview_firmware_driver
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_firmware_driver/files/oneview_config.json"
-firmware_name: "custom_ansible_firmware" # provide your firwmare name here
-baseline_firmware_name: "Service Pack for Synergy" # provide the name of the SPP to be used as base for the custom SPP creation
-hotfix_firmware_list: ["hotfix1", "hotfix2"] # provide array containing list of hotfixes to be included in the custom SPP
+contents: "{{lookup('file','../config/config.json') | from_json}}"

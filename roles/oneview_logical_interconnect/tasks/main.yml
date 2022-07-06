@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 # Below task is supported only with C7000 Hardware
 - name: Update the Ethernet interconnect settings for the logical interconnect
@@ -22,11 +22,11 @@
     config: "{{ config }}"
     state: ethernet_settings_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         macRefreshInterval: 11
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.logical_interconnect.variant == 'C7000'
 
 # Below task is supported only with Synergy Hardware
 - name: Update the Ethernet interconnect settings for the logical interconnect
@@ -34,20 +34,20 @@
     config: "{{ config }}"
     state: ethernet_settings_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         stormControlThreshold: 15
   delegate_to: localhost
-  when: variant == 'Synergy'
+  when: contents.logical_interconnect.variant == 'Synergy'
 
 - name: Update the Internal Networks on the logical interconnect
   oneview_logical_interconnect:
     config: "{{ config }}"
     state: internal_networks_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       internalNetworks:
-        - name: "{{ network_name }}"  # could also be a URI. e.g.: - uri: '/rest/ethernet-network/<id>'
+        - name: "{{ contents.logical_interconnect.network_name }}"  # could also be a URI. e.g.: - uri: '/rest/ethernet-network/<id>'
   when: network_name is defined
   delegate_to: localhost
 
@@ -57,7 +57,7 @@
     config: "{{ config }}"
     state: settings_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         macRefreshInterval: 12
   delegate_to: localhost
@@ -68,7 +68,7 @@
     config: "{{ config }}"
     state: forwarding_information_base_generated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
   register: result
 
@@ -79,7 +79,7 @@
     config: "{{ config }}"
     state: qos_aggregated_configuration_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       qosConfiguration:
         activeQosConfig:
           category: 'qos-aggregated-configuration'
@@ -96,7 +96,7 @@
     config: "{{ config }}"
     state: snmp_configuration_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       snmpConfiguration:
         enabled: True
         readCommunity: "public"    
@@ -107,7 +107,7 @@
     config: "{{ config }}"
     state: igmp_settings_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       igmpSettings:
         igmpIdleTimeoutInterval: 200
   delegate_to: localhost
@@ -120,7 +120,7 @@
     config: "{{ config }}"
     state: port_monitor_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       portMonitor:
         enablePortMonitor: False
   delegate_to: localhost
@@ -130,7 +130,7 @@
     config: "{{ config }}"
     state: port_flap_settings_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       portFlapProtection:
         portFlapThresholdPerInterval: 10
   delegate_to: localhost
@@ -141,7 +141,7 @@
 - name: Gather facts about a Logical Interconnect by name to get uri
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ logical_interconnect_name }}"
+    name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
 - set_fact: li_uri={{ logical_interconnects['uri'] }}
@@ -151,7 +151,7 @@
     config: "{{ config }}"
     state: bulk_inconsistency_validated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       bulk_update:
         logicalInterconnectUris:
           - "{{ li_uri }}"
@@ -165,7 +165,7 @@
     config: "{{ config }}"
     state: configuration_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
 - name: Updates the telemetry configuration of a logical interconnect.
@@ -173,7 +173,7 @@
     config: "{{ config }}"
     state: telemetry_configuration_updated
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       telemetryConfiguration:
         sampleCount: 12
         enableTelemetry: True
@@ -209,5 +209,5 @@
     config: "{{ config }}"
     state: compliant
     data:
-      name: "{{ logical_interconnect_name }}"
+      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost

@@ -3,10 +3,10 @@
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
       communityString: "public"
-      destination: "{{ destination_address }}"
+      destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost
 
@@ -17,10 +17,10 @@
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
       communityString: "public"
-      destination: "{{ destination_address }}"
+      destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost
 
@@ -28,10 +28,10 @@
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
       communityString: "public"
-      destination: "{{ destination_address }}"
+      destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 165
   delegate_to: localhost
 
@@ -39,23 +39,23 @@
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: absent
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
   delegate_to: localhost
 
 - name: Delete an Appliance Device SNMPv1 Trap Destination when already absent
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: absent
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
   delegate_to: localhost
 
 - name: Create an Appliance Device SNMPv1 Trap Destination by Destination Address for automation
   oneview_appliance_device_snmp_v1_trap_destinations:
     config: "{{ config }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
       communityString: "public"
-      destination: "{{ destination_address }}"
+      destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost

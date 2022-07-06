@@ -1,54 +1,48 @@
 ---
-- name: Gather facts about all Storage Pools
-  oneview_storage_pool_facts:
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}" 
+  delegate_to: localhost
+  when: config_file.api_version == ""
+  register: version
+
+- name: Print currentVersion if an apiVersion is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
+  when: config_file.api_version == ""
+
+- name: Print currentVersion if an apiVersion is specified in config file
+  set_fact: 
+    currentVersion: contents.api_version | string
+  when: config_file.api_version != ""
+
+- name: Gather facts about a Storage System by name
+  oneview_storage_system_facts:
     config: "{{ config }}"
+    name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
-- debug: var=storage_pools
+- debug: var=storage_systems
 
-- name: Gather paginated, filtered and sorted facts about Storage Pools
-  oneview_storage_pool_facts:
+# To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
+- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is not managed
+  oneview_storage_pool:
     config: "{{ config }}"
-    params:
-      start: 0
-      count: 3
-      sort: 'name:descending'
-      filter: status='OK'
-
-- debug: var=storage_pools
-
-- name: Gather facts about a Storage Pool by name
-  oneview_storage_pool_facts:
-    config: "{{ config }}"
-    name: "{{ storage_pool_name }}"
+    state: present
+    data:
+        storageSystemUri: "{{ storage_systems[0]['uri'] }}"
+        name: '{{ contents.storage_pool.storage_pool_name }}'
+        isManaged: False
   delegate_to: localhost
+  when: (storage_systems is not none or storage_systems is not undefined)
 
-- name: Gather facts about all Fibre Channel Networks
-  oneview_fc_network_facts:
+- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is managed
+  oneview_storage_pool:
     config: "{{ config }}"
+    state: present
+    data:
+        storageSystemUri: "{{ storage_systems[0]['uri'] }}"
+        name: '{{ contents.storage_pool.storage_pool_name }}'
+        isManaged: True
   delegate_to: localhost
-
-- debug: var=fc_networks
-
-- name: Gather facts about all Scopes
-  oneview_scope_facts:
-    config: "{{ config }}"
-  delegate_to: localhost
-
-- debug: var=scopes
-
-- name: Gather facts about reachable storage pools
-  oneview_storage_pool_facts:
-    config: "{{ config }}"
-    options:
-      - reachableStoragePools:
-          networks: 
-            - "{{ fc_networks[0]['uri'] }}"
-          scope_uris: "{{ scopes[0]['uri'] }}"
-          scope_exclusions: 
-            - "{{ storage_pools[0]['uri'] }}"
-    params:
-      filter: status='OK'
-  delegate_to: localhost
-
-- debug: var=storage_pools_reachable_storage_pools
+  when: (storage_systems is not none and storage_systems is not undefined)

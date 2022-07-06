@@ -20,7 +20,7 @@
  - name: Gather facts about a FCoE Network by name
    oneview_fcoe_network_facts:
      config: "{{ config }}"
-     name: "{{ fcoe_networks[0]['name'] }}"
+     name: "{{ contents.fcoe_network.network_name }}"
    delegate_to: localhost
    when: fcoe_networks | default('', True)
 

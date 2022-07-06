@@ -21,7 +21,7 @@
 - name: Gather facts about a Scope by name
   oneview_scope_facts:
     config: "{{ config }}"
-    name: "{{ scope_name }}"
+    name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost
 
 - debug: var=scopes

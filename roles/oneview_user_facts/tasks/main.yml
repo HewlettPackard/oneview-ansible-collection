@@ -28,7 +28,7 @@
 - name: Gather facts about the users who have permissions that use a specified role
   oneview_user_facts:
     config: "{{ config }}"
-    role: "{{ role }}"
+    role: "{{ contents.users.role }}"
   delegate_to: localhost
 
 - debug: var=role

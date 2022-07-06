@@ -37,14 +37,14 @@
   oneview_interconnect:
     config: "{{ config }}"
     state: 'powered_off'
-    ip: '{{ interconnect_ip }}'
+    ip: '{{ contents.interconnect.interconnect_ip }}'
   delegate_to: localhost
 
 - name: Updates the interconnect ports
   oneview_interconnect:
     config: "{{ config }}"
     state: 'update_ports'
-    ip: '{{ interconnect_ip_for_update }}'
+    ip: '{{ contents.interconnect.interconnect_ip_for_update }}'
     ports: [
       {
           "type": "portV6",
@@ -52,7 +52,7 @@
           "portName": "d1",
           "bayNumber": 1,
           "enabled": False,
-          "portId": '{{ port_id }}'
+          "portId": '{{ contents.interconnect.port_id }}'
       }
     ]
   delegate_to: localhost

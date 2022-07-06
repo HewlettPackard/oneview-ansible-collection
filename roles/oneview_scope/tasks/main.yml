@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
@@ -28,7 +28,7 @@
     config: '{{ config }}'
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -41,7 +41,7 @@
     config: '{{ config }}'
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -54,8 +54,8 @@
     config: '{{ config }}'
     state: present
     data:
-      name: "{{ scope_name }}"
-      newName: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}"
+      newName: "{{ contents.scope.scope_name }}_Renamed"
       addedResourceUris:
         - "{{ ethernet_networks[2]['uri'] }}"
       removedResourceUris:
@@ -68,7 +68,7 @@
     config: '{{ config }}'
     state: resource_assignments_updated
     data:
-      name: "{{ cscope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         addedResourceUris: "{{ ethernet_networks[0]['uri'] }}"
   delegate_to: localhost
@@ -80,7 +80,7 @@
     config: '{{ config }}'
     state: resource_assignments_updated
     data:
-      name: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         removedResourceUris:
           - "{{ ethernet_networks[0]['uri'] }}"
@@ -93,7 +93,7 @@
     config: '{{ config }}'
     state: absent
     data:
-      name: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
   delegate_to: localhost
 
 - name: Create a scope to ensure continuity for an automation script
@@ -101,5 +101,5 @@
     config: '{{ config }}'
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost

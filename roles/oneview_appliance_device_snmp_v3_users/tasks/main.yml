@@ -3,13 +3,13 @@
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
     state: present
-    name: "{{ user_name }}"
+    name: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
     data:
-        type: "{{ type }}"
-        userName: "{{ user_name }}"
-        securityLevel: "{{ security_level }}"
-        authenticationProtocol: "{{ authentication_protocol }}"    
-        authenticationPassphrase: "{{ authentication_passphrase }}"            
+        type: "{{ contents.appliance_device_snmp_v3_users.type }}"
+        userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
+        securityLevel: "{{ contents.appliance_device_snmp_v3_users.security_level }}"
+        authenticationProtocol: "{{ contents.appliance_device_snmp_v3_users.authentication_protocol }}"    
+        authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"            
   delegate_to: localhost
 
 - debug:
@@ -19,10 +19,10 @@
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
     state: present
-    name: "{{ user_name }}"
+    name: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
     data:
-      userName: "{{ user_name }}"
-      authenticationPassphrase: "{{ authentication_passphrase }}"
+      userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
+      authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"
   delegate_to: localhost
 
 - debug:
@@ -32,9 +32,9 @@
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
     state: absent
-    name: "{{ user_name }}"
+    name: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
     data:
-        userName: "{{ user_name }}"
+        userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
   delegate_to: localhost
 
 - name: Creating the SNMPv3 user for automation

@@ -1,8 +1,4 @@
 ---
 # defaults file for oneview_enclosure_group
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_enclosure_group/files/oneview_config.json"
-enclosure_group_name: "Test_EG"  # Set the name of a Enclosure Group
-enclosure_group_new_name: "Test_EG_updated"
-variant: "Synergy"
-ip_range: False
-lig_name: LIG
+contents: "{{lookup('file','../config/config.json') | from_json}}"

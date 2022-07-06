@@ -8,9 +8,9 @@
   oneview_server_profile:
     config: "{{ config }}"
     data:
-      serverProfileTemplateName: "{{ ov_template }}"
-      name: "{{ inventory_hostname }}"
-      description: "{{ server_profile_description }}"
+      serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
+      description: "{{ contents.server_profile.server_profile_description }}"
       # User should set initialScopeUris in case of scoped user
       # Otherwise collects scopeUris from OV when its not given
       # explicitly
@@ -33,26 +33,26 @@
   oneview_server_profile:
     config: "{{ config }}"
     data:
-      name: "{{ inventory_hostname }}-with-connections"
-      serverHardwareTypeName: "{{ server_hardware_type_name }}"
+      name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
+      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
       connectionSettings:  # Supported only in API version >= 600.
         connections:
           - id: 1
             name: connection1
             functionType: Ethernet
             portId: Auto
-            requestedMbps: 2500
-            networkName: "{{ network_name }}"
+            requestedMbps: 2000
+            networkName: "{{ contents.server_profile.network_name }}"
   delegate_to: localhost
 
-- debug: msg = "{{ server_profile }}"
+- debug: msg=server_profile
 
 - name: Update Server Profile
   oneview_server_profile:
     config: "{{ config }}"
     state: "present"
     data:
-      name: "{{ inventory_hostname }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
       affinity: "BayAndServer"
       bootMode:
         manageMode: True
@@ -66,12 +66,12 @@
     config: "{{ config }}"
     state: "present"
     data:
-      newName: "{{ inventory_hostname }}-updated"
-      name: "{{ inventory_hostname }}"
+      newName: "{{ contents.server_profile.inventory_hostname }}-updated"
+      name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
   register: result
 
-- debug: msg = "{{result.msg}}"
+- debug: msg=result.msg
 
 - debug: var=server_profile
 
@@ -80,41 +80,41 @@
     config: "{{ config }}"
     state: "compliant"
     data:
-      name: "{{ inventory_hostname }}"
+      name: "{{ contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
   register: result
 
-- debug: msg = "{{ result.msg }}"
+- debug: msg=result.msg
 
 - name: Delete the Server Profile created from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
     state: "absent"
     data:
-      name: "{{ inventory_hostname }}"
+      name: "{{ contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
   register: result
 
-- debug: msg = "{{ result.msg }}"
+- debug: msg=result.msg
 
 - name: Delete the Server Profile created with connections
   oneview_server_profile:
     config: "{{ config }}"
     state: "absent"
     data:
-      name: "{{ inventory_hostname }}-with-connections"
+      name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
   delegate_to: localhost
 
-- debug: msg = "{{ result.msg }}"
+- debug: msg=result.msg
 
 - name: Create Server Profile without specifying a template
   oneview_server_profile:
     config: "{{ config }}"
     data:
-      name: "{{ inventory_hostname }}"
-      serverHardwareTypeName: "{{ server_hardware_type_name }}"
-      enclosureGroupName: "{{ enclosure_group_name }}"
-      description: "{{ server_profile_description }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
+      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+      description: "{{ contents.server_profile.server_profile_description }}"
   delegate_to: localhost
 
 - debug: var=server_profile
@@ -125,7 +125,7 @@
     # This is required for unassigning a SH, or creating a SP and not auto-assigning a SH
     auto_assign_server_hardware: False
     data:
-      name: "{{ inventory_hostname }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
       # Specify a blank serverHardwareName or serverHardwareUri when auto_assign_server_hardware is False to unassign a SH
       serverHardwareName:
   delegate_to: localhost
@@ -135,5 +135,22 @@
     config: "{{ config }}"
     state: "absent"
     data:
-      name: "{{ inventory_hostname }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
+- debug: var=inventory_hostname
+- name: Create a Server Profile from a Server Profile Template
+  oneview_server_profile:
+    config: "{{ config }}"
+    data:
+      serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
+      name: "{{ contents.server_profile.inventory_hostname }}"
+      description: "{{ contents.server_profile.server_profile_description }}"
+      # User should set initialScopeUris in case of scoped user
+      # Otherwise collects scopeUris from OV when its not given
+      # explicitly
+      initialScopeUris:
+        - "{{ scopes[0].uri }}"
+    params: # Supported only in API version >= 600
+      force: True
+  delegate_to: localhost
+  register: result

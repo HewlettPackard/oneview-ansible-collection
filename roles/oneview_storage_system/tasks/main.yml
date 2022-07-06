@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 # This is POST operation which adds a storage system for management by appliance. 
 # An asynchronous task will be created as a result of this API call.
@@ -24,9 +24,9 @@
     state: present
     data:
       credentials:
-        username: '{{ storage_system_username }}'
-        password: '{{ storage_system_password }}'
-      hostname: '{{ storage_system_ip }}'
+        username: '{{ contents.storage_system.storage_system_username }}'
+        password: '{{ contents.storage_system.storage_system_password }}'
+      hostname: '{{ contents.storage_system.storage_system_ip }}'
       family: StoreServ
   delegate_to: localhost
 
@@ -38,13 +38,13 @@
     state: present
     data:
       credentials:
-        username: '{{ storage_system_username }}'
-        password: '{{ storage_system_password }}'
-      name: '{{ storage_system_name }}'
+        username: '{{ contents.storage_system.storage_system_username }}'
+        password: '{{ contents.storage_system.storage_system_password }}'
+      name: '{{ contents.storage_system.storage_system_name }}'
       family: StoreServ
-      hostname: '{{ storage_system_ip }}'
+      hostname: '{{ contents.storage_system.storage_system_ip }}'
       deviceSpecificAttributes:
-          managedDomain: '{{ storage_domain }}'
+          managedDomain: '{{ contents.storage_system.storage_domain }}'
           managedPools:
             - name: CPG-SSD
               deviceType: SSD
@@ -83,7 +83,7 @@
     validate_etag: False
     data:
       credentials:
-          hostname: '{{ storage_system_ip }}'
+          hostname: '{{ contents.storage_system.storage_system_ip }}'
   delegate_to: localhost
   when: currentVersion < '500'
 

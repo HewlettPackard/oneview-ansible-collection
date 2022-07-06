@@ -5,14 +5,14 @@
     config: "{{ config }}"
     state: present
     data:
-        hostname: '{{ contents.server_hardware_hostname }}'
-        username: '{{ contents.server_hardware_username }}'
-        password: '{{ contents.server_hardware_password }}'
+        hostname: '{{ server_hardware_hostname }}'
+        username: '{{ server_hardware_username }}'
+        password: '{{ server_hardware_password }}'
         force: false
         licensingIntent: "OneView"
         configurationState: "Managed"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware_type.variant == 'C7000'
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
@@ -34,7 +34,7 @@
     state: present
     data:
         name: "{{ server_hardware_types[0]['name'] }}"
-        newName: '{{ server_hardware_type_name_renamed }}'
+        newName: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type to original
@@ -42,7 +42,7 @@
     config: "{{ config }}"
     state: present
     data:
-        name: '{{ server_hardware_type_name_renamed }}'
+        name: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
         newName: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
 
@@ -52,9 +52,9 @@
     config: "{{ config }}"
     state: absent
     data:
-        name: '{{ contents.server_hardware_hostname }}'
+        name: '{{ contents.server_hardware_type.server_hardware_hostname }}'
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware_type.variant == 'C7000'
 
 # This is only supported on appliances which support rack mounted servers.
 - name: Delete the Server Hardware Type
@@ -64,4 +64,4 @@
     data:
         name: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware_type.variant == 'C7000'

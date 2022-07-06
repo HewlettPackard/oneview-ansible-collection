@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Create a FCoE Network
   oneview_fcoe_network:
@@ -26,8 +26,8 @@
   delegate_to: localhost
   register: fcoe_network1
   with_items:
-    - { name: '{{ network_name }}', vlanId: '201' }
-    - { name: '{{ network_name }} (1)', vlanId: '202'}
+    - { name: '{{ contents.fcoe_network.network_name }}', vlanId: '201' }
+    - { name: '{{ contents.fcoe_network.network_name }} (1)', vlanId: '202'}
 
 - debug: var=fcoe_network1
 
@@ -45,7 +45,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: 'Test FCoE Network'
+      name: '{{ contents.fcoe_network.network_name }}'
       newName: 'Test FCoE Network - Changed'
       vlanId: 201
   delegate_to: localhost
@@ -57,7 +57,7 @@
     state: present
     data:
       name: 'Test FCoE Network - Changed'
-      scopeUris: "{{ network_scope_uris }}"
+      scopeUris: "{{ contents.fcoe_network.network_scope_uris }}"
   when: currentVersion >= '300' and currentVersion <= '500'
   delegate_to: localhost
 

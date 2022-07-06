@@ -17,4 +17,4 @@
       name: "{{ tasks[0]['name'] }}"
       uri: "{{ tasks[0]['uri'] }}"
   delegate_to: localhost
-  when: contents.api_version >= 1200 and ( tasks | length > 0 )
+  when: config_file.api_version >= 1200 and ( tasks | length > 0 )

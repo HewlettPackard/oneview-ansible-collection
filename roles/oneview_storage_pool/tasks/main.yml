@@ -3,46 +3,46 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+  when: config_file.api_version != ""
 
 - name: Gather facts about a Storage System by name
   oneview_storage_system_facts:
     config: "{{ config }}"
-    name: "{{ storage_system_name }}"
+    name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
 - debug: var=storage_systems
 
 # To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
-- name: Ensure the Storage Pool '{{ storage_pool_name }}' is not managed
+- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is not managed
   oneview_storage_pool:
     config: "{{ config }}"
     state: present
     data:
         storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-        name: '{{ storage_pool_name }}'
+        name: '{{ contents.storage_pool.storage_pool_name }}'
         isManaged: False
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
 
-- name: Ensure the Storage Pool '{{ storage_pool_name }}' is managed
+- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is managed
   oneview_storage_pool:
     config: "{{ config }}"
     state: present
     data:
         storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-        name: '{{ storage_pool_name }}'
+        name: '{{ contents.storage_pool.storage_pool_name }}'
         isManaged: True
   delegate_to: localhost
   when: (storage_systems is not none and storage_systems is not undefined)

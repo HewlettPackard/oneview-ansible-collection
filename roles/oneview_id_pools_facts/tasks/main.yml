@@ -12,7 +12,7 @@
     config: "{{ config }}"
     state: generate
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
 
 - name: Get the ID Pools type
@@ -20,7 +20,7 @@
     config: "{{ config }}"
     state: get_pool_type
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
 - debug: var=id_pool
 
@@ -29,7 +29,7 @@
     config: "{{ config }}"
     state: check_range_availability
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       idList: ["42:CE:78:00:00:00", "42:CE:78:8F:FF:FF"]
   delegate_to: localhost
 

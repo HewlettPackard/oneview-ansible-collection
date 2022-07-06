@@ -4,13 +4,13 @@
     config: "{{ config }}"
     state: present
     data:
-      name: '{{ subnet_name }}'
-      type: '{{ type }}'
-      networkId: '{{ network_id }}'
-      subnetmask: '{{ subnetmask }}'
-      gateway: '{{ gateway }}'
-      domain: '{{ domain }}'
-      dnsServers: '{{ dnsServers }}'
+      name: '{{ contents.id_pools_ipv4_subnet.subnet_name }}'
+      type: '{{ contents.id_pools_ipv4_subnet.type }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
+      subnetmask: '{{ contents.id_pools_ipv4_subnet.subnetmask }}'
+      gateway: '{{ contents.id_pools_ipv4_subnet.gateway }}'
+      domain: '{{ contents.id_pools_ipv4_subnet.domain }}'
+      dnsServers: '{{ contents.id_pools_ipv4_subnet.dnsServers }}'
   delegate_to: localhost
 
 - name: Do nothing with the ID Pools IPV4 Subnet when no changes are provided
@@ -18,8 +18,8 @@
     config: "{{ config }}"
     state: present
     data:
-      networkId: '{{ network_id }}'
-      type: '{{ type }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
+      type: '{{ contents.id_pools_ipv4_subnet.type }}'
   delegate_to: localhost
 
 - name: Update the ID Pools IPV4 Subnet with awesome.com domain
@@ -27,8 +27,8 @@
     config: "{{ config }}"
     state: present
     data:
-      networkId: '{{ network_id }}'
-      domain: '{{ newDomain }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
+      domain: '{{ contents.id_pools_ipv4_subnet.newDomain }}'
   delegate_to: localhost
 
 - debug: var=id_pools_ipv4_subnet
@@ -59,16 +59,16 @@
       subnetUri: '{{ id_pools_ipv4_subnet["uri"] }}'
       rangeCategory: Custom
       startStopFragments:
-        - startAddress: "{{ start_address }}"
-          endAddress: "{{ end_address }}"
+        - startAddress: "{{ contents.id_pools_ipv4_subnet.start_address }}"
+          endAddress: "{{ contents.id_pools_ipv4_subnet.end_address }}"
 
 - name: Allocate the no of IPv4 ID's
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
     state: allocate
     data:
-      networkId: '{{ network_id }}'
-      count: '{{ count }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
+      count: '{{ contents.id_pools_ipv4_subnet.count }}'
   delegate_to: localhost
 
 - name: Get the allocated ID's List
@@ -76,7 +76,7 @@
     config: "{{ config }}"
     state: collect
     data:
-      networkId: '{{ network_id }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
       idList: '{{ id_pools_ipv4_subnet["idList"] }}'
   delegate_to: localhost
 
@@ -92,7 +92,7 @@
     config: "{{ config }}"
     state: absent
     data:
-      networkId: '{{ network_id }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
   delegate_to: localhost
 
 - name: Do nothing when ID Pools IPV4 Subnet is absent
@@ -100,7 +100,7 @@
     config: "{{ config }}"
     state: absent
     data:
-      networkId: '{{ network_id }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
   delegate_to: localhost
 
 - name: Create the ID Pools IPV4 Subnet for automation
@@ -108,11 +108,11 @@
     config: "{{ config }}"
     state: present
     data:
-      name: '{{ subnet_name }}'
-      type: '{{ type }}'
-      networkId: '{{ network_id }}'
-      subnetmask: '{{ subnetmask }}'
-      gateway: '{{ gateway }}'
-      domain: '{{ domain }}'
-      dnsServers: '{{ dnsServers }}'
+      name: '{{ contents.id_pools_ipv4_subnet.subnet_name }}'
+      type: '{{ contents.id_pools_ipv4_subnet.type }}'
+      networkId: '{{ contents.id_pools_ipv4_subnet.network_id }}'
+      subnetmask: '{{ contents.id_pools_ipv4_subnet.subnetmask }}'
+      gateway: '{{ contents.id_pools_ipv4_subnet.gateway }}'
+      domain: '{{ contents.id_pools_ipv4_subnet.domain }}'
+      dnsServers: '{{ contents.id_pools_ipv4_subnet.dnsServers }}'
   delegate_to: localhost

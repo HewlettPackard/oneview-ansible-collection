@@ -1,6 +1,5 @@
 ---
 # defaults file for oneview_scope
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_scope/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-scope_name: 'SampleScope'
-scope_new_name: 'SampleScopeRenamed'
+config_file: "{{lookup('file', config)}}"
+contents: "{{lookup('file', '../config/config.json') | from_json}}"

@@ -1,10 +1,24 @@
 ---
-- name: Gather facts about all Ethernet Networks
-  oneview_ethernet_network_facts:
+- name: Create an Ethernet Network
+  oneview_ethernet_network:
     config: "{{ config }}"
+    state: present
+    data:
+      name: 'OneViewSDK Test Ethernet Network on Logical Interconnect'
+      vlanId: 200
+      ethernetNetworkType: Tagged
+      purpose: General
+      smartLink: false
+      privateNetwork: false
+  delegate_to: localhost
+- debug: var=ethernet_network['uri']
+- name: Gather facts about a Logical Interconnect by name
+  oneview_logical_interconnect_facts:
+    config: "{{ config }}"
+    name: "LE-LIG"
   delegate_to: localhost
 
-- debug: var=ethernet_networks
+- debug: var=logical_interconnects['uri']
 
 - name: Ensure that the Uplink Set is present
   oneview_uplink_set:
@@ -14,11 +28,10 @@
       name: 'Test Uplink Set'
       status: "OK"
       # You can choose set the Logical Interconnect by logicalInterconnectUri or logicalInterconnectName
-      logicalInterconnectName: "{{ logical_interconnect_name }}"                                    # option 1
+      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"                                   # option 1
       # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
       networkUris: 
-        - "{{ ethernet_networks[0]['uri'] }}"
-        - "{{ ethernet_networks[1]['name'] }}"
+        - "{{ ethernet_network['uri'] }}"
       fcNetworkUris: []
       fcoeNetworkUris: []
       portConfigInfos: []
@@ -34,7 +47,7 @@
     state: present
     data:
       name: 'Test Uplink Set'
-      logicalInterconnectName: "{{ logical_interconnect_name }}"
+      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
       description: 'New Description'
   delegate_to: localhost
 
@@ -44,7 +57,7 @@
     state: present
     data:
       name: 'Test Uplink Set'
-      logicalInterconnectName: "{{ logical_interconnect_name }}"
+      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
       newName: 'Updated Uplink Set'
   delegate_to: localhost
 
@@ -54,6 +67,6 @@
     state: absent
     data:
       name: 'Updated Uplink Set'
-      logicalInterconnectName: "{{ logical_interconnect_name }}"
+      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
   delegate_to: localhost
   register: deleted

@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Server Profiles
   oneview_server_profile_facts:
@@ -41,7 +41,7 @@
 - name: Gather facts about a Server Profile by name
   oneview_server_profile_facts:
     config: "{{ config }}"
-    name: "{{server_profile_name}}"
+    name: "{{contents.server_profile.server_profile_name}}"
   delegate_to: localhost
 
 - debug: var=server_profiles
@@ -79,7 +79,7 @@
 - name: Gather all facts about a Server Profile works below API Version 1200
   oneview_server_profile_facts:
     config: "{{ config }}"
-    name: "{{server_profile_name}}"
+    name: "{{contents.server_profile.server_profile_name}}"
     options:
         - schema  # Supported only for API version <= 1200
         - newProfileTemplate # Supported only for API version <= 1200
@@ -90,7 +90,7 @@
 - name: Gather all facts about a Server Profile
   oneview_server_profile_facts:
     config: "{{ config }}"
-    name: "{{server_profile_name}}"
+    name: "{{contents.server_profile.server_profile_name}}"
     options:
         - compliancePreview
         - profilePorts:

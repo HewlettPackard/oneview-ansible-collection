@@ -1,9 +1,4 @@
 ---
 # defaults file for oneview_server_profile
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_profile/files/oneview_config.json"
-ov_template:  Test_spt-1
-enclosure_group_name: EG
-server_hardware_type_name: SY 480 Gen9 2
-network_name: mgmt_nw
-server_profile_description: test
-inventory_hostname: sp1
+contents: "{{lookup('file','../config/config.json') | from_json}}"

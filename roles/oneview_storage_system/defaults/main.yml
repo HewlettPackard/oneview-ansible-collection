@@ -1,9 +1,5 @@
 ---
 # defaults file for oneview_storage_system
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_system/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-storage_domain: 'TestDomain'
-storage_system_name: 'ThreePAR-2'
-storage_system_ip: '<storage_system_ip>'
-storage_system_username: '<storage_system_username>'
-storage_system_password: '<storage_system_password>'
+config_file: "{{lookup('file', config)}}"
+contents: "{{ lookup('file','../config/config.json') | from_json}}"

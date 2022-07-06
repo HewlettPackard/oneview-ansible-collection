@@ -20,7 +20,7 @@
 - name: Gather facts about a Firmware Driver by name
   oneview_firmware_driver_facts:
     config: "{{ config }}"
-    name: "{{ fw_name }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
   delegate_to: localhost
 
 - debug: var=firmware_drivers
@@ -28,8 +28,52 @@
 - name: Gather facts about a Firmware Driver by name and version
   oneview_firmware_driver_facts:
     config: "{{ config }}"
-    name: "{{ fw_name }}"
-    version: "{{ version }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
+    version: "{{ contents.firmware_driver.version }}"
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
+- name: Gather facts about Firmware Driver with options
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    options:
+      - schema
+  delegate_to: localhost
+
+- debug: var=schema
+---
+- name: Gather facts about all Firmware Drivers
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
+- name: Gather paginated, filtered and sorted facts about Firmware Drivers
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
+- name: Gather facts about a Firmware Driver by name
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
+- name: Gather facts about a Firmware Driver by name and version
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
+    version: "{{ contents.firmware_driver.version }}"
   delegate_to: localhost
 
 - debug: var=firmware_drivers
