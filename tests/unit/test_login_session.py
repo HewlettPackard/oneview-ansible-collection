@@ -50,7 +50,7 @@ class TestLoginSessionModule:
     @patch.object(OneViewClient, 'from_json_file')
     @patch.object(LoginSessionModule, 'get_config')
     @patch.object(connection, 'post')
-    def test_login_session(self, mock_post , mock_get_config, mock_from_json_file):
+    def test_login_session(self, mock_post, mock_get_config, mock_from_json_file):
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
         mock_post.return_value = None, {'sessionID': 'testauth'}
 
@@ -65,7 +65,7 @@ class TestLoginSessionModule:
     @patch.object(OneViewClient, 'from_json_file')
     @patch.object(LoginSessionModule, 'get_config')
     @patch.object(connection, 'post')
-    def test_login_session_without_config(self, mock_post , mock_get_config, mock_from_json_file):
+    def test_login_session_without_config(self, mock_post, mock_get_config, mock_from_json_file):
         mock_get_config.return_value = None
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
         mock_post.return_value = None, {'sessionID': 'testauth'}
