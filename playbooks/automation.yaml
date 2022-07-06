@@ -210,28 +210,19 @@
           - name: Display
             debug:
               msg: "{{ msg.include_args.name }}"
-      # - block:
-      #     - name: enclosure
-      #       include_role:
-      #         name: hpe.oneview.oneview_enclosure
-      #       register: msg
-      #   rescue:
-      #     - name: Display
-      #       debug:
-      #         msg: "{{ msg.include_args.name }}"
       - block:
-          - name: enclosure_facts
+          - name: enclosure
             include_role:
-              name: hpe.oneview.oneview_enclosure_facts
+              name: hpe.oneview.oneview_enclosure
             register: msg
         rescue:
           - name: Display
             debug:
               msg: "{{ msg.include_args.name }}"
       - block:
-          - name: logical_interconnect_group
+          - name: enclosure_facts
             include_role:
-              name: hpe.oneview.oneview_logical_interconnect_group
+              name: hpe.oneview.oneview_enclosure_facts
             register: msg
         rescue:
           - name: Display
@@ -499,6 +490,15 @@
             debug:
               msg: "{{ msg.include_args.name }}"      
       - block:
+          - name: appliance_proxy_configuration_facts
+            include_role:
+              name: hpe.oneview.oneview_appliance_proxy_configuration_facts
+            register: msg
+        rescue:
+          - name: Display
+            debug:
+              msg: "{{ msg.include_args.name }}"      
+      - block:
           - name: appliance_network_interface_facts
             include_role:
               name: hpe.oneview.oneview_appliance_network_interface_facts
@@ -507,15 +507,15 @@
           - name: Display
             debug:
               msg: "{{ msg.include_args.name }}"
-      # - block:
-      #     - name: appliance_network_interfaces
-      #       include_role:
-      #         name: hpe.oneview.oneview_appliance_network_interfaces
-      #       register: msg
-      #   rescue:
-      #     - name: Display
-      #       debug:
-      #         msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: appliance_network_interfaces
+            include_role:
+              name: hpe.oneview.oneview_appliance_network_interfaces
+            register: msg
+        rescue:
+          - name: Display
+            debug:
+              msg: "{{ msg.include_args.name }}"
       - block:
           - name: appliance_device_snmp_v1_trap_destination
             include_role:
@@ -722,7 +722,7 @@
         rescue:
           - name: Display
             debug:
-              msg: "{{ msg.include_args.name }}"  
+              msg: "{{ msg.include_args.name }}"    
 #   # roles:   
 #     # - hpe.oneview.image_streamer_plan_script
 #     # - hpe.oneview.image_streamer_plan_script_facts
