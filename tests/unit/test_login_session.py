@@ -30,10 +30,6 @@ from hpeOneView.connection import connection
 
 ansible_fact = {"session": "testauth"}
 
-MSG_CREATED = 'Session created successfully.'
-MSG_NOT_CREATED = 'Session creation failed.'
-
-
 PARAMS_FOR_PRESENT = dict(
     config='config.json',
     name='TestSession'
@@ -44,22 +40,19 @@ class TestLoginSessionModule:
     """
     TestCases for LoginSessionModule
     """
-
-    def test_login_session(self):
-
+    def setup_method(self):
         self.patcher_ansible = patch(ONEVIEW_MODULE_UTILS_PATH + '.AnsibleModule')
         self.patcher_ansible = self.patcher_ansible.start()
         ansible_module = Mock()
         self.patcher_ansible.return_value = ansible_module
         self.mock_ansible_module = ansible_module
 
-        patcher_json_file = patch.object(OneViewClient, 'from_json_file')
-        client = patcher_json_file.start()
-        self.mock_ov_client = client.return_value
+    @patch.object(OneViewClient, 'from_json_file')
+    @patch.object(LoginSessionModule, 'get_config')
+    @patch.object(connection, 'post')
+    def test_login_session(self, mock_post , mock_get_config, mock_from_json_file):
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
-        self.patcher_oneview_config = patch.object(LoginSessionModule, 'get_config').start()
-        self.patcher_conn_obj = patch.object(connection, 'post').start()
-        self.patcher_conn_obj.return_value = None, {'sessionID': 'testauth'}
+        mock_post.return_value = None, {'sessionID': 'testauth'}
 
         LoginSessionModule().run()
 
@@ -67,6 +60,22 @@ class TestLoginSessionModule:
             changed=True,
             msg=LoginSessionModule.MSG_CREATED,
             ansible_facts=ansible_fact
+        )
+
+    @patch.object(OneViewClient, 'from_json_file')
+    @patch.object(LoginSessionModule, 'get_config')
+    @patch.object(connection, 'post')
+    def test_login_session_without_config(self, mock_post , mock_get_config, mock_from_json_file):
+        mock_get_config.return_value = None
+        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        mock_post.return_value = None, {'sessionID': 'testauth'}
+
+        LoginSessionModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_with(
+            changed=False,
+            msg=LoginSessionModule.MSG_NOT_CREATED,
+            ansible_facts=None
         )
 
 

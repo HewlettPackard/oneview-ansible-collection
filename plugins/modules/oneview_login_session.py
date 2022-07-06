@@ -106,6 +106,7 @@ class LoginSessionModule(OneViewModule):
             return dict(changed=False, msg=self.MSG_NOT_CREATED, ansible_facts=None)
 
     def get_config(self):
+        oneview_config = None
         if self.module.params.get('config'):
             with open(self.module.params['config']) as json_data:
                 oneview_config = json.load(json_data)
