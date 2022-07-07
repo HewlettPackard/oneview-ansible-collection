@@ -43,6 +43,11 @@ options:
         choices: ['present', 'absent', 'refresh_state']
         required: true
         type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     data:
         description:
             - Dict with Server Profile Template properties.
@@ -143,6 +148,7 @@ class ServerProfileTemplateModule(OneViewModule):
     MSG_ENCLOSURE_GROUP_NOT_FOUND = 'Enclosure Group not found: '
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent', 'refresh_state']
