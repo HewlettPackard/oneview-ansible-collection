@@ -104,6 +104,39 @@ The configuration file path must be provided for all of the roles `config` argum
 
 Once you have defined the config variables, you can run the roles.
 
+#### Pass Login SessionID as param
+
+A login SessionID is required for all tasks which require appliance login. To reuse a single sessionID accross all tasks, it has to be passed as param `sessionID` inside your task.
+Here's an example:
+
+```yaml
+- name: Fetch Session Id
+  oneview_login_session:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    username: <username>
+    password: <password>
+    auth_login_domain: <domain_directory>
+    api_version: 4000
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+```
+
+A SessionID remains valid for 24 hours. Using 'sessionID` is recommended as it avoids session limit exceeding issue.
+
 #### Parameters in roles
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
