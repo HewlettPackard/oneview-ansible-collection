@@ -107,7 +107,8 @@ Once you have defined the config variables, you can run the roles.
 #### Pass Login SessionID as param
 
 A login SessionID is required for all tasks which require appliance login. To reuse a single sessionID accross all tasks, it has to be passed as param `sessionID` inside your task.
-Here's an example:
+Here's an 
+example:
 
 ```yaml
 - name: Fetch Session Id
@@ -135,7 +136,7 @@ Here's an example:
   delegate_to: localhost
 ```
 
-A SessionID remains valid for 24 hours. Using 'sessionID` is recommended as it avoids session limit exceeding issue.
+A SessionID remains valid for 24 hours. Using `sessionID` is recommended as it avoids session limit exceeding issue.
 
 #### Parameters in roles
 
