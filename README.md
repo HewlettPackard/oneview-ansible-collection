@@ -111,7 +111,7 @@ Here's an example:
 
 ```yaml
 - name: Fetch Session Id
-  oneview_login_session:
+  oneview_get_session_id:
     config: "{{ config }}"
     name: "Test_Session"
   delegate_to: localhost

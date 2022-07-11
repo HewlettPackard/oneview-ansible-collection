@@ -25,8 +25,8 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 
 ---
-module: oneview_login_session
-short_description: Manages OneView login sessions
+module: oneview_get_session_id
+short_description: Fetches OneView login session id
 description:
     - Provides Session Id for login to the appliance.
 version_added: "2.4.0"
@@ -48,7 +48,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Fetch Session Id
-  oneview_login_session:
+  oneview_get_session_id:
     hostname: 172.16.101.48
     username: administrator
     password: my_password
@@ -58,7 +58,7 @@ EXAMPLES = '''
   register: session
 
 - name: Fetch Session Id with config json
-  oneview_login_session:
+  oneview_get_session_id:
     config: "{{ config }}"
     name: "Test_Session"
   delegate_to: localhost
@@ -66,7 +66,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-oneview_session:
+oneview_get_session_id:
     description: Has the facts about the oneview session created
     returned: Always.
     type: dict
@@ -81,7 +81,7 @@ except ImportError:
     HAS_HPE_ONEVIEW = False
 
 
-class LoginSessionModule(OneViewModule):
+class GetSessionIDModule(OneViewModule):
     MSG_CREATED = 'Session created successfully.'
     MSG_NOT_CREATED = 'Session creation failed.'
 
@@ -120,7 +120,7 @@ class LoginSessionModule(OneViewModule):
 
 
 def main():
-    LoginSessionModule().run()
+    GetSessionIDModule().run()
 
 
 if __name__ == '__main__':
