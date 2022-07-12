@@ -36,7 +36,7 @@
       name: '{{ item.name }}'
       enclosureType: 'SY12000'
       internalNetworkNames:
-        - 'TestNetwork_5'
+        - 'TestNetwork_3'
       uplinkSets:
         - name: 'e23 uplink set'
           mode: 'Auto'
@@ -163,7 +163,7 @@
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
-    - { name: 'LIG7' }
+    - { name: 'LIG' }
     - { name: 'Test Logical Interconnect Group' }
 
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
@@ -189,7 +189,7 @@
           mode: 'Auto'
           networkType: 'Ethernet'
           networkNames:
-            - 'TestNetwork_7'
+            - 'TestNetwork_3'
               #                - '/rest/ethernet-networks/5cca6ddc-49b1-4c7c-9022-eadb2630d42b'
           logicalPortConfigInfos:
             - desiredSpeed: 'Auto'
