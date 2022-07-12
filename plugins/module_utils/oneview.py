@@ -632,12 +632,22 @@ class OneViewModule(object):
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
                           api_version=self.module.params['api_version'],
                           image_streamer_ip=self.module.params['image_streamer_hostname'])
-            self.oneview_client = OneViewClient(config)
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient(config, sessionID=self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient(config)
         elif not self.module.params['config']:
-            self.oneview_client = OneViewClient.from_environment_variables()
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient.from_environment_variables(sessionID=self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(
-                self.module.params['config'])
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient.from_json_file(
+                    self.module.params['config'], sessionID=self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient.from_json_file(
+                    self.module.params['config'])
 
     def set_resource_object(self, resource_client, name=None):
         self.resource_client = resource_client
@@ -957,12 +967,18 @@ class OneViewModuleBase(object):
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
                           api_version=self.module.params['api_version'],
                           image_streamer_ip=self.module.params['image_streamer_hostname'])
-            self.oneview_client = OneViewClient(config)
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient(config, self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient(config)
         elif not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
-            self.oneview_client = OneViewClient.from_json_file(
-                self.module.params['config'])
+            if self.module.params.get('sessionID'):
+                self.oneview_client = OneViewClient.from_json_file(self.module.params['config'], self.module.params['sessionID'])
+            else:
+                self.oneview_client = OneViewClient.from_json_file(
+                    self.module.params['config'])
 
     @abc.abstractmethod
     def execute_module(self):

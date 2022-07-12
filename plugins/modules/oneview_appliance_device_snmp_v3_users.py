@@ -46,6 +46,11 @@ options:
       description:
         - SNMP user name.
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     data:
         description:
             - List with the SNMPv3 Users properties
@@ -128,6 +133,7 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             data=dict(required=False, type='dict'),
             name=dict(required=False, type='str'),
             state=dict(

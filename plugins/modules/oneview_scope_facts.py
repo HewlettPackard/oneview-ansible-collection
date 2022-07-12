@@ -47,6 +47,11 @@ options:
         - Name of the scope.
       required: false
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     params:
       description:
         - List of params to delimit, filter and sort the list of resources.
@@ -106,6 +111,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class ScopeFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
+        sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
     )
 

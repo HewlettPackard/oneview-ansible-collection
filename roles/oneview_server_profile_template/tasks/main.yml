@@ -1,8 +1,16 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
 - name: Create a server profile template
   oneview_server_profile_template:
     config: "{{ config }}"
     state: present
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ item.name }}"
       serverHardwareTypeName: "{{ server_hardware_type_name }}"
@@ -28,6 +36,7 @@
   oneview_server_profile_template:
     config: "{{ config }}"
     state: present
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ server_profile_template_name }}"
       serverHardwareTypeName: "{{ server_hardware_type_name }}"
@@ -44,6 +53,7 @@
   oneview_server_profile_template:
     config: "{{ config }}"
     state: absent
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ server_profile_template_name }}"
     params:
@@ -54,6 +64,7 @@
   oneview_server_profile_template:
     config: "{{ config }}"
     state: absent
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ server_profile_template_name }}"
   delegate_to: localhost
