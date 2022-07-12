@@ -49,6 +49,11 @@ options:
         - Appliance Device snmpv3 trap destination address.
       required: True
       type: str
+    sessionID:
+      description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     data:
       description:
             - List with the SNMPv3 Trap Destinations properties
@@ -124,6 +129,7 @@ class ApplianceDeviceSnmpV3TrapDestinationsModule(OneViewModule):
     argument_spec = dict(
         data=dict(required=False, type='dict'),
         name=dict(required=True, type='str'),
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent'])

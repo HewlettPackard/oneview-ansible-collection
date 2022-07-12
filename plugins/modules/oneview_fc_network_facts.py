@@ -37,6 +37,11 @@ options:
       description:
         - Fibre Channel Network name.
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
@@ -95,6 +100,7 @@ class FcNetworkFactsModule(OneViewModule):
     def __init__(self):
 
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )

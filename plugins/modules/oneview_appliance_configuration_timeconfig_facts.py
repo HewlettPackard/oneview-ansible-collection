@@ -32,7 +32,13 @@ description:
 version_added: "2.9.0"
 requirements:
     - "python >= 3.4.2"
-    - "hpeOneView >= 6.0.0"
+    - "hpeOneView >= 6.0.0"y
+options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
 author:
     "Shanmugam M (@SHANDCRUZ)"
 extends_documentation_fragment:
@@ -62,7 +68,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceConfigurationTimeconfigFactsModule(OneViewModule):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict())
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
         self.set_resource_object(self.oneview_client.appliance_configuration_timeconfig)
 
     def execute_module(self):

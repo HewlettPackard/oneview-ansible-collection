@@ -47,6 +47,11 @@ options:
         - snmpv1 trap uri.
       required: false
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     params:
       description:
         - List of params to delimit, filter and sort the list of resources.
@@ -119,6 +124,7 @@ class ApplianceDeviceSnmpV1TrapDestinationsFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         uri=dict(required=False, type='str'),
+        sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
     )
 

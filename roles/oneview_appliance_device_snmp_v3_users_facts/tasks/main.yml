@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about the appliance SNMPv3 users.
   oneview_appliance_device_snmp_v3_users_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
 
 - debug:
     var: appliance_device_snmp_v3_users
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about SNMPv3 users
   oneview_appliance_device_snmp_v3_users_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 4
@@ -22,6 +33,7 @@
 - name: Gather facts about a snmp users by Username
   oneview_appliance_device_snmp_v3_users_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "user123456"
   delegate_to: localhost
 
@@ -30,7 +42,8 @@
 
 - name: Gather facts about a SNMPv3 user by Uri
   oneview_appliance_device_snmp_v3_users_facts:
-    config: "{{ config }}"        
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"        
     uri: "{{ appliance_device_snmp_v3_users['uri'] }}"        
   delegate_to: localhost
   when: appliance_device_snmp_v3_users is True

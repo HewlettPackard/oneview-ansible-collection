@@ -119,6 +119,7 @@ class ApplianceDeviceSnmpV3TrapDestinationsFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         uri=dict(required=False, type='str'),
+        sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
     )
 
