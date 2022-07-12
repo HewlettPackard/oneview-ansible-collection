@@ -46,6 +46,11 @@ options:
         - ID Pools IPV4 Subnet ID or URI.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     name:
       description:
         - ID Pools IPV4 Subnet name.
@@ -105,6 +110,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class IdPoolsIpv4SubnetFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             networkId=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),

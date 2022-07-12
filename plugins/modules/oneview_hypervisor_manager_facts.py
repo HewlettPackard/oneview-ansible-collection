@@ -34,6 +34,11 @@ requirements:
     - hpeOneView >= 5.4.0
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     name:
       description:
         - Hypervisor Manager name.
@@ -90,6 +95,7 @@ class HypervisorManagerFactsModule(OneViewModule):
     def __init__(self):
 
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )
