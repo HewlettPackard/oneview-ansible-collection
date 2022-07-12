@@ -32,7 +32,7 @@ description:
 version_added: "2.9.0"
 requirements:
     - "python >= 3.4.2"
-    - "hpeOneView >= 6.0.0"y
+    - "hpeOneView >= 6.0.0"
 options:
     sessionID:
         description:
