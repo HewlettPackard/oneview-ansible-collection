@@ -106,7 +106,12 @@ Once you have defined the config variables, you can run the roles.
 
 #### Pass Login SessionID as param
 
-A login SessionID is required for all tasks which require appliance login. To reuse a single sessionID accross all tasks, it has to be passed as param `sessionID` inside your task.
+To run any task, we first need to login to HPE OneView appliance by passing the credentials in form of configuration. As part of the login process, Ansible Collection SDK gets the session id from OneView and individual sessionID is generated for each task. This could cause a session limit exceeded issue if there are more number of tasks.
+
+So it is recommended to use a single sessionID for all tasks. But it is optional. If sessionID is not passed explicitly, it will work as earlier.
+
+To reuse a single sessionID, it has to be passed as param `sessionID` inside your task.
+
 Here's an 
 example:
 
@@ -136,7 +141,7 @@ example:
   delegate_to: localhost
 ```
 
-A SessionID remains valid for 24 hours. Using `sessionID` is recommended as it avoids session limit exceeding issue.
+A SessionID remains valid for 24 hours.
 
 #### Parameters in roles
 
