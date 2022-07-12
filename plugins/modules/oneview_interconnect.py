@@ -36,6 +36,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Bruno Souza (@bsouza)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Interconnect resource.
@@ -169,6 +174,7 @@ class InterconnectModule(OneViewModule):
                     'reconfigured'
                 ]
             ),
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             ip=dict(required=False, type='str'),
             ports=dict(required=False, type='list')

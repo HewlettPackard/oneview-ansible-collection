@@ -38,6 +38,11 @@ author:
     - "Gustavo Hennig (@GustavoHennig)"
     - "Mariana Kreisig (@marikrg)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Logical Enclosure resource.
@@ -229,6 +234,7 @@ class LogicalEnclosureModule(OneViewModule):
     MSG_CREATED = 'Logical Enclosure created'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'firmware_updated', 'script_updated',

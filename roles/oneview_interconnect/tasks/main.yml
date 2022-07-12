@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather paginated, filtered and sorted facts about Interconnects
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 5
@@ -15,6 +25,7 @@
 - name: Turn the power on for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'powered_on'
     name: "{{ interconnect_name }}"
   delegate_to: localhost
@@ -22,6 +33,7 @@
 - name: Turn the UID light to 'On' for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'uid_on'
     name: "{{ interconnect_name }}"
   delegate_to: localhost
@@ -29,6 +41,7 @@
 - name: Perform a device reset for interconnect that matches the specified name
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'device_reset'
     name: "{{ interconnect_name }}"
   delegate_to: localhost
@@ -36,6 +49,7 @@
 - name: Turn the power off for interconnect that matches the specified ip
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'powered_off'
     ip: '{{ interconnect_ip }}'
   delegate_to: localhost
@@ -43,6 +57,7 @@
 - name: Updates the interconnect ports
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'update_ports'
     ip: '{{ interconnect_ip_for_update }}'
     ports: [
@@ -61,6 +76,7 @@
 - name: Triggers a reset of port protection
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: 'reset_port_protection'
     name: "{{ interconnect_name }}"
   delegate_to: localhost
@@ -68,6 +84,7 @@
 - name: Reapplies the interconnect configuration
   oneview_interconnect:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
     name: "{{ interconnect_name }}"
   delegate_to: localhost

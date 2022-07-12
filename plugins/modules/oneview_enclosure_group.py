@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Gustavo Hennig (@GustavoHennig)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Enclosure Group resource.
@@ -118,6 +123,7 @@ class EnclosureGroupModule(OneViewModule):
     MSG_ALREADY_ABSENT = 'Enclosure Group is already absent.'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent']

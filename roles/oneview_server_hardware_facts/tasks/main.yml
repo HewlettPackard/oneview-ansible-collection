@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=server_hardwares
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about Server Hardware
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -23,12 +34,14 @@
 - name: Gather facts about a Server Hardware by name
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Gather facts about a Server Hardware by uri
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     uri: "{{ server_hardwares[0]['uri'] }}"
   delegate_to: localhost
   when: (server_hardwares is none and server_hardwares is not undefined)
@@ -36,6 +49,7 @@
 - name: Gather BIOS facts about a Server Hardware
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: server_hardware_name
     options:
       - bios
@@ -48,6 +62,7 @@
 - name: Gather all facts about a Server Hardware
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: server_hardware_name
     options:
         - bios                   # optional
@@ -75,6 +90,7 @@
 - name: Gather facts about the Server Hardware firmware
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: server_hardware_name
     options:
         - firmware
@@ -86,6 +102,7 @@
 - name: Gather facts about all the firmwares inventory across all servers
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: server_hardware_name
     options:
     - firmwares
@@ -96,6 +113,7 @@
 - name: List the firmware inventory of the servers which have HPE Synergy 3530C version matches '1.2'
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
     - firmwares:
         filter: [
