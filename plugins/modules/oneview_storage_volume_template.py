@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.0.0"
 author: "Gustavo Hennig (@GustavoHennig)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Storage Volume Template resource.
@@ -116,6 +121,7 @@ class StorageVolumeTemplateModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             state=dict(
                 required=True,
                 choices=['present', 'absent']

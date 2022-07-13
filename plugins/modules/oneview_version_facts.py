@@ -32,7 +32,12 @@ version_added: "2.5.0"
 requirements:
     - "hpeOneView >= 4.3.0"
 author: "Priyanka Sood (@soodpr)"
-
+options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.params
@@ -58,7 +63,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class VersionFactsModule(OneViewModuleBase):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict())
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
 
     def execute_module(self):
         version = self.oneview_client.versions.get_version()

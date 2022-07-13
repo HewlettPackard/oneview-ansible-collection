@@ -40,6 +40,11 @@ options:
         - Storage Pool name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - List with options to gather additional facts about Storage Pools.
@@ -120,6 +125,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class StoragePoolFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             options=dict(required=False, type='list')

@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Storage Systems
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about Storage Systems
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -19,6 +30,7 @@
 - name: Gather facts about a Storage System by IP (storage_hostname)
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     storage_hostname: "{{ storage_system_ip }}"
   delegate_to: localhost
 
@@ -27,6 +39,7 @@
 - name: Gather facts about a Storage System by IP (hostname)
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     storage_hostname: "{{ storage_system_ip }}"
   delegate_to: localhost
 
@@ -35,6 +48,7 @@
 - name: Gather facts about a Storage System by name
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ storage_system_name }}"
   delegate_to: localhost
 
@@ -43,6 +57,7 @@
 - name: Gather facts about Storage System - Host Types
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
         - hostTypes
   delegate_to: localhost
@@ -52,6 +67,7 @@
 - name: Gather facts about Storage Pools of a Storage System by name
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ storage_system_name }}"
     options:
          storagePools
@@ -62,6 +78,7 @@
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=fc_networks    
@@ -69,6 +86,7 @@
 - name: Gather queried facts about Storage System reachable ports
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     storage_hostname: "{{ storage_system_ip }}"
     options:
       - reachablePorts:
@@ -82,6 +100,7 @@
 - name: Gather facts about the Storage System storage templates
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     storage_hostname: "{{ storage_system_ip }}"
     options:
       - templates

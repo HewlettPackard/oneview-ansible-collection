@@ -1,4 +1,13 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Users
   oneview_user_facts:
     config: "{{ config }}"
@@ -9,6 +18,7 @@
 - name: Gather paginated, filtered and sorted facts about Users
   oneview_user_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -20,6 +30,7 @@
 - name: Gather facts about a User by name
   oneview_user_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     userName: "testUser"
   delegate_to: localhost
 
@@ -28,6 +39,7 @@
 - name: Gather facts about the users who have permissions that use a specified role
   oneview_user_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     role: "{{ role }}"
   delegate_to: localhost
 
@@ -36,6 +48,7 @@
 - name: Gather facts about lists of user's roles
   oneview_user_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     userName: "testUser"
     options: 
         - getUserRoles

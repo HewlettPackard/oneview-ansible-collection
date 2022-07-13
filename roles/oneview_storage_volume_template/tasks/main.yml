@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Retrieve the Root Storage Volume Template
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 1
@@ -10,10 +20,12 @@
   delegate_to: localhost
 
 - set_fact: svt_root_uri="{{ storage_volume_templates[0]['uri'] }}"
+- debug: var=svt_root_uri
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -23,6 +35,7 @@
 - name: Create a Storage Volume Template
   oneview_storage_volume_template:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ volume_template_name }}"
@@ -102,6 +115,7 @@
 - name: Update a Storage Volume Template provisioning type
   oneview_storage_volume_template:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ volume_template_name }}"
@@ -114,6 +128,7 @@
 - name: Does not update when Storage Volume Template already as expected
   oneview_storage_volume_template:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ volume_template_name }}"

@@ -46,6 +46,11 @@ options:
             Options available: C(connectableVolumeTemplates), C(reachableVolumeTemplates), C(compatibleSystems)"
       required: false
       type: list
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -153,6 +158,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class StorageVolumeTemplateFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
