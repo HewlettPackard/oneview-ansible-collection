@@ -49,6 +49,11 @@ options:
     default: present
     choices: ['present', 'absent', 'compliant']
     type: str
+  sessionID:
+    description:
+      - Session ID to use for login to the appliance
+    type: str
+    required: false
   data:
     description:
       - List with Server Profile properties.
@@ -263,6 +268,7 @@ class ServerProfileModule(OneViewModule):
 
     argument_spec = dict(
         state=dict(choices=['present', 'absent', 'compliant'], default='present'),
+        sessionID=dict(type='str', required=False),
         data=dict(type='dict', required=True),
         params=dict(type='dict', required=False),
         auto_assign_server_hardware=dict(choices=[True, False], type='bool', default=True)

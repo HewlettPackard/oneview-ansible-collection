@@ -177,7 +177,7 @@
         "firmware_driver":{
             "firmware_name": "<firmware_name>",
              "baseline_firmware_name": "<baseline_firmware_name>",
-              "hotfix_firmware_list": ["HPE ProLiant Gen10 and Gen10 Plus Smart Array Controller Driver for VMware vSphere 6.5 (Driver Component)."],
+              "hotfix_firmware_list": [],
               "version": "<version>"
              },
              "id_pools":{

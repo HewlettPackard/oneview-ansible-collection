@@ -126,3 +126,4 @@ plugins/modules/oneview_user_facts.py validate-modules:parameter-list-no-element
 tests/unit/utils/hpe_test_utils.py pylint!skip
 plugins/modules/oneview_repositories_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_repositories.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_get_session_id.py validate-modules:missing-gplv3-license

@@ -1,12 +1,21 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
       name: "{{ contents.server_profile.inventory_hostname }}"
@@ -32,6 +41,7 @@
 - name: Create a Server Profile with connections
   oneview_server_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
       serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
@@ -51,6 +61,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "present"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
       affinity: "BayAndServer"
@@ -65,6 +76,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "present"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       newName: "{{ contents.server_profile.inventory_hostname }}-updated"
       name: "{{ contents.server_profile.inventory_hostname }}"
@@ -79,6 +91,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "compliant"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
@@ -90,6 +103,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "absent"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
@@ -101,6 +115,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "absent"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
   delegate_to: localhost
@@ -110,6 +125,7 @@
 - name: Create Server Profile without specifying a template
   oneview_server_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
       serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
@@ -122,6 +138,7 @@
 - name: Unassign Server Hardware from Server Profile
   oneview_server_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     # This is required for unassigning a SH, or creating a SP and not auto-assigning a SH
     auto_assign_server_hardware: False
     data:
@@ -134,6 +151,7 @@
   oneview_server_profile:
     config: "{{ config }}"
     state: "absent"
+    sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
