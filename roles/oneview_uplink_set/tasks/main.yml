@@ -56,7 +56,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Uplink Set_test'
+      name: 'Test Uplink Set'
       logicalInterconnectName: "{{ logical_interconnect_name }}"
       newName: 'Updated Uplink Set'
       connectionMode: "Auto"
