@@ -32,6 +32,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ storage_volume_name }}"
   delegate_to: localhost
+
 - set_fact: volume="{{storage_volumes[0]}}"
 
 - name: Gather facts about all Storage Volume Attachments

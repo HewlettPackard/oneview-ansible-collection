@@ -113,7 +113,7 @@ class StorageVolumeAttachmentModule(OneViewModule):
             "type": "ExtraUnmanagedStorageVolumes",
             "resourceUri": self.__get_server_profile_uri(self.module.params['server_profile'])
         }
-        
+
         attachment = self.resource_client.remove_extra_presentations(data)
         return dict(changed=True, msg=self.PRESENTATIONS_REMOVED,
                     ansible_facts=dict(server_profile=attachment))
