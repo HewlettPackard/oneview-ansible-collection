@@ -25,8 +25,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "Basic Deployment Plan"
   delegate_to: localhost
-# - set_fact:
-#     dp_uri: "{{ os_deployment_plans[0]['uri'] }}"
+- set_fact:
+    dp_uri: "{{ os_deployment_plans[0]['uri'] }}"
 
 - name: Gather facts about hypervisor managers
   oneview_hypervisor_manager_facts:
