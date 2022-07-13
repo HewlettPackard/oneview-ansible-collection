@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Create a Repository
   oneview_repositories:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     validate_etag: False
     data:
@@ -16,6 +26,7 @@
 - name: Do nothing with the Repository when no changes are provided
   oneview_repositories:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ repository_name }}"
@@ -28,6 +39,7 @@
 - name: Update the attributes of repository resource
   oneview_repositories:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: patch
     data:
       name: "{{ repository_name }}"
@@ -37,6 +49,7 @@
 - name: Delete the Repository
   oneview_repositories:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ repository_name }}"
@@ -48,6 +61,7 @@
 - name: Do nothing when Repository is absent
   oneview_repositories:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ repository_name }}"
