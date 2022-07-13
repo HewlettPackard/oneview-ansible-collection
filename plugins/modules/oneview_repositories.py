@@ -36,6 +36,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Chebrolu Harika (@ChebroluHarika)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the repository resource.
@@ -142,6 +147,7 @@ class RepositoriesModule(OneViewModule):
     MSG_CANT_UPDATE = 'Operation is not supported on Repository resource'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent', 'patch']

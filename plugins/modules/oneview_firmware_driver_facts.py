@@ -34,6 +34,11 @@ requirements:
     - "hpeOneView >= 6.0.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     name:
       description:
         - Firmware driver name.
@@ -134,6 +139,7 @@ class FirmwareDriverFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             version=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
+            sessionID=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
         )
