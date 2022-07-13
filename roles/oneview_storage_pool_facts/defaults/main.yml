@@ -2,3 +2,4 @@
 # defaults file for oneview_storage_pool_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_pool_facts/files/oneview_config.json"
 contents: "{{lookup('file','../config/config.json') | from_json}}"
+config_file: "{{lookup('file', config)}}"
