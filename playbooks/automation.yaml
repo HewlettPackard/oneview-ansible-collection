@@ -210,15 +210,15 @@
           - name: (Display)
             debug:
               msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (enclosure)
-            include_role:
-              name: hpe.oneview.oneview_enclosure
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (enclosure)
+      #       include_role:
+      #         name: hpe.oneview.oneview_enclosure
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
       - block:
           - name: (enclosure_facts)
             include_role:
