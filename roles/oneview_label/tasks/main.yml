@@ -1,17 +1,7 @@
 ---
-- name: Fetch Session Id
-  oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
-  delegate_to: localhost
-  register: session
-
-- debug: var=session
-
 - name: Create Labels for enclosure resource
   oneview_label:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       resourceUri: "{{ resource_uri}}" 
@@ -23,7 +13,6 @@
 - name: Update label of given resource for enclosure resource
   oneview_label:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       resourceUri: "{{ resource_uri }}"
@@ -39,7 +28,6 @@
 - name: Delete Labels for enclosure resource
   oneview_label:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       resourceUri: "{{ resource_uri }}"

@@ -35,11 +35,6 @@ requirements:
     - "ansible >= 2.9"
 author: "Asis Bagga (@asisbagga)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     state:
         description:
             - Indicates the desired state for the label resource.
@@ -121,8 +116,7 @@ class LabelModule(OneViewModule):
     RESOURCE_FACT_NAME = 'labels'
 
     def __init__(self):
-        additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
-                                   data=dict(required=True, type='dict'),
+        additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    state=dict(required=True, choices=['present', 'absent']))
         super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True)
         self.resource_client = self.oneview_client.labels

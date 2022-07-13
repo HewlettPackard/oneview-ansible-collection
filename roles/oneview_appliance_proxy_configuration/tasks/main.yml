@@ -1,17 +1,7 @@
 ---
-- name: Fetch Session Id
-  oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
-  delegate_to: localhost
-  register: session
-
-- debug: var=session
-
 - name: Creates Proxy with HTTP protocol 
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       server: "{{ server_ip }}"
@@ -25,7 +15,6 @@
 - name: Do nothing when proxy already exists
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       server: "{{ server_ip }}"
@@ -39,7 +28,6 @@
 - name: Creates proxy with updated username
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       server: "{{ server_ip }}"
@@ -53,7 +41,6 @@
 - name: Deletes the configured proxy
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       server: "{{ server_ip }}"
@@ -62,7 +49,6 @@
 - name: Do nothing when proxy already absent
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       server: "{{ server_ip }}"
@@ -71,7 +57,6 @@
 - name: Re-creates Proxy for automation
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       server: "{{ server_ip }}"

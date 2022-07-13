@@ -35,12 +35,6 @@ requirements:
     - "hpeOneView >= 6.3.0"
 author:
     "Yuvarani Chidambaram (@yuvirani)"
-options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -65,7 +59,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceProxyConfigurationFactsModule(OneViewModule):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
+        super().__init__(additional_arg_spec=dict())
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):

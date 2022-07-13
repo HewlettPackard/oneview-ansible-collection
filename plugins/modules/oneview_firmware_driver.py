@@ -34,11 +34,6 @@ requirements:
     - "hpeOneView >= 6.0.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
-    sessionID:
-      description:
-        - Session ID to use for login to the appliance
-      type: str
-      required: false
     state:
       description:
         - Indicates the desired state for the Firmware Driver.
@@ -119,8 +114,7 @@ class FirmwareDriverModule(OneViewModule):
     RESOURCE_FACT_NAME = 'firmware_drivers'
 
     def __init__(self):
-        argument_spec = dict(sessionID=dict(required=False, type='str'),
-                             state=dict(required=True, choices=['absent', 'present']),
+        argument_spec = dict(state=dict(required=True, choices=['absent', 'present']),
                              name=dict(required=False, type='str'),
                              data=dict(required=False, type='dict'))
 

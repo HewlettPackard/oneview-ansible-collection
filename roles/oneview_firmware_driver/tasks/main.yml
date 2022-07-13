@@ -1,17 +1,7 @@
 ---
-- name: Fetch Session Id
-  oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
-  delegate_to: localhost
-  register: session
-
-- debug: var=session
-
 - name: Create the Firmware Driver
   oneview_firmware_driver:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       customBaselineName: "{{ firmware_name }}"
@@ -22,7 +12,6 @@
 - name: Create the Firmware Driver if already present
   oneview_firmware_driver:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       customBaselineName: "{{ firmware_name }}"
@@ -33,7 +22,6 @@
 - name: Delete the Firmware Driver
   oneview_firmware_driver:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     name: "{{ firmware_name }}"
   delegate_to: localhost
@@ -41,7 +29,6 @@
 - name: Do nothing when Firmware Driver is absent
   oneview_firmware_driver:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     name: "{{ firmware_name }}"
   delegate_to: localhost

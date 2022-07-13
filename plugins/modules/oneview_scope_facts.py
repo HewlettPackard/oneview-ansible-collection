@@ -48,10 +48,10 @@ options:
       required: false
       type: str
     sessionID:
-      description:
-        - Session ID to use for login to the appliance
-      type: str
-      required: false
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     params:
       description:
         - List of params to delimit, filter and sort the list of resources.

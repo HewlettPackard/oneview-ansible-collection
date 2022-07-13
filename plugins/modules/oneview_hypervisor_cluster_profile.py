@@ -34,11 +34,6 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     state:
         description:
             - Indicates the desired state for the Hypervisor Cluster Profiles resource.
@@ -141,7 +136,6 @@ class HypervisorClusterProfileModule(OneViewModule):
     def __init__(self):
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    params=dict(type='dict', required=False),
-                                   sessionID=dict(required=False, type='str'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))

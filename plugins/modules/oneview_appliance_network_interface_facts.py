@@ -36,11 +36,6 @@ requirements:
 author:
     "Yuvarani Chidambaram (@yuvirani)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     params:
         description:
           - mac_address of the Appliance Network Interface.
@@ -93,7 +88,6 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceNetworkInterfaceFactsModule(OneViewModule):
     argument_spec = dict(
-        sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict'),
         options=dict(required=False, type='list')
     )

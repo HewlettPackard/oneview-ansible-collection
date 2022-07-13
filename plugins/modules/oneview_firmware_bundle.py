@@ -34,11 +34,6 @@ requirements:
     - "hpeOneView >= 6.3.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     state:
         description:
             - Indicates the desired state for the Firmware Driver resource.
@@ -104,8 +99,7 @@ class FirmwareBundleModule(OneViewModule):
     RESOURCE_FACT_NAME = 'firmware_bundle'
 
     def __init__(self):
-        argument_spec = dict(sessionID=dict(required=False, type='str'),
-                             state=dict(required=True, choices=['present', 'add_signature']),
+        argument_spec = dict(state=dict(required=True, choices=['present', 'add_signature']),
                              file_path=dict(required=True, type='str'))
 
         super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)

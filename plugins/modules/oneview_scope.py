@@ -36,11 +36,6 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     state:
         description:
             - Indicates the desired state for the Scope resource.
@@ -134,7 +129,6 @@ class ScopeModule(OneViewModule):
     MSG_RESOURCE_NOT_FOUND = 'Scope not found.'
 
     argument_spec = dict(
-        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent', 'resource_assignments_updated']

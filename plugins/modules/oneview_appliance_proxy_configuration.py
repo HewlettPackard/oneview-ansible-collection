@@ -34,11 +34,6 @@ requirements:
 author:
     "Yuvarani Chidambaram (@yuvirani)"
 options:
-    sessionID:
-        description:
-            - Session ID to use for login to the appliance
-        type: str
-        required: false
     state:
         description:
           - Indicates the desired state for the Appliance Proxy Config.
@@ -96,7 +91,6 @@ class ApplianceProxyConfigurationModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
-            sessionID=dict(required=False, type='str'),
             data=dict(required=False, type='dict'),
             state=dict(
                 required=True,

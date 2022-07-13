@@ -1,17 +1,7 @@
 ---
-- name: Fetch Session Id
-  oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
-  delegate_to: localhost
-  register: session
-
-- debug: var=session
-
 - name: Gather facts about all Repositories
   oneview_repositories_facts:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=repositories
@@ -19,7 +9,6 @@
 - name: Gather paginated, filtered and sorted facts about Repositories
   oneview_repositories_facts:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -30,7 +19,6 @@
 - name: Gather facts about a Repository by Id
   oneview_repositories_facts:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ repositories[0]['uuid'] }}"
   delegate_to: localhost
   when: repositories | default('', True)
@@ -40,7 +28,6 @@
 - name: Gather facts about a Repository by name
   oneview_repositories_facts:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ repositories[0]['name'] }}"
   delegate_to: localhost
   when: repositories | default('', True)
