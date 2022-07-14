@@ -34,6 +34,11 @@ requirements:
     - hpeOneView >= 5.4.0
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     aliasName:
       description:
         - Server Certificate aliasname.
@@ -81,6 +86,7 @@ class CertificatesServerFactsModule(OneViewModule):
     def __init__(self):
 
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             remote=dict(required=False, type='str'),
             aliasName=dict(required=False, type='str'),
         )

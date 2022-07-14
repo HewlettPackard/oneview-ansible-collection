@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Add the Appliance time and locale configuration locale is ja_JP.UTF-8
   oneview_appliance_time_and_locale_configuration:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       locale: ja_JP.UTF-8
@@ -14,6 +24,7 @@
 - name: Ensures the Appliance time and locale configuration locale is ja_JP.UTF-8 is already present
   oneview_appliance_time_and_locale_configuration:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       locale: ja_JP.UTF-8
@@ -26,6 +37,7 @@
 - name: Change the Appliance time and locale configuration locale to en_US.UTF-8
   oneview_appliance_time_and_locale_configuration:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       locale: en_US.UTF-8

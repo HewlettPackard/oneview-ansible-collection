@@ -34,6 +34,11 @@ requirements:
 author:
     "Venkatesh Ravula (@VenkateshRavula)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
           - Indicates the desired state for the Appliance Device SNMPv1 Trap Destinations.
@@ -128,6 +133,7 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
     argument_spec = dict(
         data=dict(required=False, type='dict'),
         name=dict(required=True, type='str'),
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['present', 'absent'])

@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Ensure that the SNMPv3 Trap Destination is present
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ destination_address }}"
     data:
@@ -16,6 +26,7 @@
 - name: Ensure that the SNMPv3 Trap Destination is already present
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ destination_address }}"
     data:
@@ -27,6 +38,7 @@
 - name: Update the userId of specified SNMPv3 Trap Destination
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ destination_address }}"
     data:
@@ -40,6 +52,7 @@
 - name: Ensure that the SNMPv3 Trap Destination is absent
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     name: "{{ destination_address }}"
   delegate_to: localhost
@@ -47,6 +60,7 @@
 - name: Ensure that the SNMPv3 Trap Destination is already absent
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     name: "{{ destination_address }}"
   delegate_to: localhost
@@ -54,6 +68,7 @@
 - name: Creating the SNMPv3 Trap Destination for automation
   oneview_appliance_device_snmp_v3_trap_destinations:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "{{ destination_address }}"
     data:

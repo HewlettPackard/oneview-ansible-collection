@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all appliance SNMPv1 trap forwarding destinations.
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug:
@@ -10,6 +20,7 @@
 - name: Gather paginated, filtered and sorted facts about SNMPv1 trap forwarding destinations
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -22,6 +33,7 @@
 - name: Gather facts about a Trap Destination by name
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "2.2.2.2"
   delegate_to: localhost
 
@@ -31,6 +43,7 @@
 - name: Gather facts about a Trap Destination by Uri
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     uri: "{{ appliance_device_snmp_v1_trap_destinations['uri'] }}"
   delegate_to: localhost
 

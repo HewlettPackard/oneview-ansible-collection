@@ -36,6 +36,11 @@ requirements:
 author:
     "Shanmugam M (@SHANDCRUZ)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Appliance Locale and Time Configuration.
@@ -82,7 +87,8 @@ class ApplianceTimeAndLocaleConfigurationModule(OneViewModule):
     RESOURCE_FACT_NAME = 'appliance_time_and_locale_configuration'
 
     def __init__(self):
-        additional_arg_spec = dict(data=dict(required=True, type='dict'),
+        additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   data=dict(required=True, type='dict'),
                                    state=dict(
                                        required=True,
                                        choices=['present']))
