@@ -34,6 +34,11 @@ requirements:
     - "hpeOneView >= 6.0.0"
 author: "Yuvarani Chidambaram(@yuvirani)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the ID Pools resource.
@@ -114,6 +119,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class IdPoolsFactsModule(OneViewModule):
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['generate', 'validate_id_pool', 'check_range_availability', 'get_pool_type', 'schema']

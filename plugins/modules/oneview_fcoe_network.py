@@ -43,6 +43,11 @@ options:
         default: present
         choices: ['present', 'absent']
         type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     data:
         description:
             - List with FCoE Network properties.
@@ -128,6 +133,7 @@ class FcoeNetworkModule(OneViewModule):
     def __init__(self):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
+                                   sessionID=dict(required=False, type='str'),
                                    state=dict(default='present',
                                               choices=['present', 'absent']))
 

@@ -33,6 +33,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Venkatesh Ravula (@VenkateshRavula)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Hypervisor Managers resource.
@@ -123,7 +128,8 @@ class HypervisorManagerModule(OneViewModule):
     RESOURCE_FACT_NAME = 'hypervisor_manager'
 
     def __init__(self):
-        additional_arg_spec = dict(data=dict(required=True, type='dict'),
+        additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   data=dict(required=True, type='dict'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))

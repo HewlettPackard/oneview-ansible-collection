@@ -36,6 +36,11 @@ requirements:
 author:
     "Shanmugam M (@SHANDCRUZ)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Appliance SSH Access.
@@ -96,7 +101,8 @@ class ApplianceSshAccessModule(OneViewModule):
     RESOURCE_FACT_NAME = 'appliance_ssh_access'
 
     def __init__(self):
-        additional_arg_spec = dict(data=dict(required=True, type='dict'),
+        additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   data=dict(required=True, type='dict'),
                                    state=dict(required=True, choices=['present']))
         super().__init__(additional_arg_spec=additional_arg_spec)
         self.set_resource_object(self.oneview_client.appliance_ssh_access)

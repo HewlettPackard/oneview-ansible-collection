@@ -52,6 +52,11 @@ options:
         - ID Pools IPV4 Range ID or URI.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about an IPv4 Range and related resources.
@@ -145,7 +150,8 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
             uri=dict(required=False, type='str'),
             subnetUri=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
-            params=dict(required=False, type='dict')
+            params=dict(required=False, type='dict'),
+            sessionID=dict(required=False, type='str')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.resource_client = self.oneview_client.id_pools_ipv4_ranges
