@@ -84,7 +84,7 @@
     data:
       userName: "{{ contents.users.user_name }}"
       oldPassword: "myPass1234"
-      newPassword: "{{ contents.users.newPassword }}"
+      newPassword: "{{ contents.users.newpassword }}"
   delegate_to: localhost
 
 - name: Adds multiple new local users to the appliance
