@@ -50,7 +50,7 @@
   oneview_enclosure_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure.name }}"
+    name: "{{ contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 - debug: var=enclosures
@@ -60,7 +60,7 @@
   oneview_enclosure_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure.name }}"
+    name: "{{ contents.enclosure.enclosure_name }}"
     options:
       - script
   when: contents.variant == 'C7000' or currentVersion == '300'
@@ -69,7 +69,7 @@
 - name: Gather facts about an Enclosure by name with options
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: "{{ contents.enclosure.name }}"
+    name: "{{ contents.enclosure.enclosure_name }}"
     sessionID: "{{ session.ansible_facts.session }}"
     options:
       - environmentalConfiguration   # optional
