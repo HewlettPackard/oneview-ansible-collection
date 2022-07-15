@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get facts about the IPv4 Subnet
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     networkId: '{{ subnet_name }}'
   delegate_to: localhost
 
@@ -13,6 +23,7 @@
 - name: Get ID Pools IPv4 Range Schema 
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - schema
   delegate_to: localhost
@@ -27,6 +38,7 @@
 - name: Get facts about all the ranges in in the '{{ subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 
@@ -35,6 +47,7 @@
 - name: Get facts about the range '{{ range_name }}' in the '{{ subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: '{{ range_name }}'
     subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
@@ -46,6 +59,7 @@
 - name: Get facts about the range '{{ range_uri }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     uri: '{{ range_uri }}'
   delegate_to: localhost
   when: range_uri is defined
@@ -55,6 +69,7 @@
 - name: Get facts about the range '{{ range_uri }}' free and allocated fragments
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - freeFragments
       - allocatedFragments

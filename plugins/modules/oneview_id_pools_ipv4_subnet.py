@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 6.0.0"
 author: "Yuvarani Chidambaram(@yuvirani)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the ID pools IPV4 Subnet resource.
@@ -93,7 +98,8 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
     MSG_COLLECT = 'Collected the ids allocated'
     RESOURCE_FACT_NAME = 'id_pools_ipv4_subnet'
 
-    additional_arg_spec = dict(data=dict(required=True, type='dict'),
+    additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                               data=dict(required=True, type='dict'),
                                state=dict(required=True,
                                choices=['present', 'absent', 'allocate', 'collect']))
 

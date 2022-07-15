@@ -1,7 +1,17 @@
----  
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Ensure the ID Pools IPV4 Subnet exists
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: '{{ subnet_name }}'
@@ -16,6 +26,7 @@
 - name: Do nothing with the ID Pools IPV4 Subnet when no changes are provided
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       networkId: '{{ network_id }}'
@@ -25,6 +36,7 @@
 - name: Update the ID Pools IPV4 Subnet with awesome.com domain
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       networkId: '{{ network_id }}'
@@ -36,6 +48,7 @@
 - name: Create an Ethernet Network
   oneview_ethernet_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "SubnetNet"
@@ -53,6 +66,7 @@
 - name: Create IPV4 Range 
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "SubnetRange"
@@ -65,6 +79,7 @@
 - name: Allocate the no of IPv4 ID's
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: allocate
     data:
       networkId: '{{ network_id }}'
@@ -74,6 +89,7 @@
 - name: Get the allocated ID's List
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: collect
     data:
       networkId: '{{ network_id }}'
@@ -90,6 +106,7 @@
 - name: Delete the ID Pools IPV4 Subnet
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       networkId: '{{ network_id }}'
@@ -98,6 +115,7 @@
 - name: Do nothing when ID Pools IPV4 Subnet is absent
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       networkId: '{{ network_id }}'
@@ -106,6 +124,7 @@
 - name: Create the ID Pools IPV4 Subnet for automation
   oneview_id_pools_ipv4_subnet:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: '{{ subnet_name }}'

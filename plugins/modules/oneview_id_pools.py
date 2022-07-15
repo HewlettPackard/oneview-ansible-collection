@@ -34,6 +34,11 @@ requirements:
     - "hpeOneView >= 6.0.0"
 author: "Yuvarani Chidambaram(@yuvirani)"
 options:
+    sessionID:
+        description:
+           - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the ID Pools resource.
@@ -115,6 +120,7 @@ class IdPoolsModule(OneViewModule):
     RESOURCE_FACT_NAME = 'id_pools'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['allocate', 'collect', 'validate', 'update_pool_type']
