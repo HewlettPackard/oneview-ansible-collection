@@ -52,6 +52,11 @@ options:
         - server Hardware Uri
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
 notes:
     - The options C(firmware) and C(firmwares) are only available for API version 300 or later.
     - The option C(physicalServerHardware) is only available for API version 500 or later on SDX enclosures.
@@ -232,7 +237,8 @@ class ServerHardwareFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
-            params=dict(required=False, type='dict')
+            params=dict(required=False, type='dict'),
+            sessionID=dict(required=False, type='str'),
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.server_hardware)

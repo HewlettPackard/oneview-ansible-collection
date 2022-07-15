@@ -32,6 +32,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Bruno Souza (@bsouza)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     name:
       description:
         - Interconnect name.
@@ -240,6 +245,7 @@ class InterconnectFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             name=dict(required=False, type='str'),
+            sessionID=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
         )

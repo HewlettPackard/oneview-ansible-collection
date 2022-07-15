@@ -40,6 +40,11 @@ options:
         - Interconnect Type name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -93,6 +98,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class InterconnectTypeFactsModule(OneViewModule):
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         name=dict(required=False, type='str'),
         params=dict(required=False, type='dict'),
     )

@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Gustavo Hennig (@GustavoHennig)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Server Hardware resource.
@@ -300,6 +305,7 @@ class ServerHardwareModule(OneViewModule):
                 'one_time_boot_network'
             ]
         ),
+        sessionID=dict(required=False, type='str'),
         data=dict(required=True, type='dict')
     )
 

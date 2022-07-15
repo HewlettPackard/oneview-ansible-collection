@@ -42,6 +42,11 @@ options:
         - Enclosure Group name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Enclosure Group.
@@ -116,7 +121,8 @@ class EnclosureGroupFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
-        params=dict(required=False, type='dict')
+        params=dict(required=False, type='dict'),
+        sessionID=dict(required=False, type='str')
     )
 
     def __init__(self):

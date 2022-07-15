@@ -1,8 +1,18 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 # This is only supported on appliances which support rack mounted servers.
 - name: Add a Server Hardware to create a Server Hardware Type (Prerequisite)
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         hostname: '{{ contents.server_hardware_hostname }}'
@@ -17,11 +27,13 @@
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
       config: "{{ config }}"
+      sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Update the Server Hardware Type description
   oneview_server_hardware_type:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ server_hardware_types[0]['name'] }}"
@@ -31,6 +43,7 @@
 - name: Rename the Server Hardware Type
   oneview_server_hardware_type:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ server_hardware_types[0]['name'] }}"
@@ -40,6 +53,7 @@
 - name: Rename the Server Hardware Type to original
   oneview_server_hardware_type:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: '{{ server_hardware_type_name_renamed }}'
@@ -50,6 +64,7 @@
 - name: Remove the Server Hardware to be able to delete the Server Hardware Type (Prerequisite)
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
         name: '{{ contents.server_hardware_hostname }}'
@@ -60,6 +75,7 @@
 - name: Delete the Server Hardware Type
   oneview_server_hardware_type:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
         name: "{{ server_hardware_types[0]['name'] }}"

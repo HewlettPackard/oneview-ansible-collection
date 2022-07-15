@@ -37,7 +37,7 @@ author: "Camila Balestrin (@balestrinc)"
 options:
     sessionID:
         description:
-           - Session ID to use for login to the appliance
+            - Session ID to use for login to the appliance
         type: str
         required: false
     state:
