@@ -76,17 +76,6 @@
       newPassword: "{{ contents.users.newpassword }}"
   delegate_to: localhost
 
-- name: Change the User's password during first-time setup
-  oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: set_password
-    data:
-      userName: "{{ contents.users.user_name }}"
-      oldPassword: "myPass1234"
-      newPassword: "{{ contents.users.newpassword }}"
-  delegate_to: localhost
-
 - name: Adds multiple new local users to the appliance
   oneview_user:
     config: "{{ config }}"
