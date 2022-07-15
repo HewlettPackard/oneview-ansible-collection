@@ -42,6 +42,11 @@ options:
       description:
         - Hypervisor Cluster Profile uri.
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Hypervisor Cluster Profile related resources.
@@ -128,6 +133,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class HypervisorClusterProfileFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(type='str'),
             uri=dict(type='str'),
             options=dict(type='list'),
