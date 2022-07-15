@@ -63,7 +63,7 @@
     name: "{{ contents.enclosure.enclosure_name }}"
     options:
       - script
-  when: contents.variant == 'C7000' or currentVersion == '300'
+  when: contents.enclosure.variant == 'C7000' or currentVersion == '300'
   delegate_to: localhost 
 
 - name: Gather facts about an Enclosure by name with options
