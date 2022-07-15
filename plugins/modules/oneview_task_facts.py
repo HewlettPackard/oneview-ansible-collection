@@ -35,6 +35,11 @@ requirements:
     - "ansible >= 2.9.0"
 author: "Yuvarani Chidambaram (@yuvirani)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     params:
       description:
         - "List with parameters to help filter the tasks.
@@ -110,6 +115,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class TaskFactsModule(OneViewModule):
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict')
     )
 

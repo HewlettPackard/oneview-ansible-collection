@@ -36,6 +36,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Gustavo Hennig (@GustavoHennig)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Server Hardware Type resource.
@@ -110,6 +115,7 @@ class ServerHardwareTypeModule(OneViewModule):
     MSG_RESOURCE_NOT_FOUND = 'Server Hardware Type was not found for this operation.'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(required=True, choices=['present', 'absent']),
         data=dict(required=True, type='dict'))
 

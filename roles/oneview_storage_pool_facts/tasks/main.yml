@@ -15,10 +15,45 @@
   set_fact: 
     currentVersion: contents.api_version | string
   when: config_file.api_version != ""
+  
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all Storage Pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+- debug: var=storage_pools
+
+- name: Gather paginated, filtered and sorted facts about Storage Pools
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: status='OK'
+
+- debug: var=storage_pools
+
+- name: Gather facts about a Storage Pool by name
+  oneview_storage_pool_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ contents.storage_pool.storage_pool_name }}"
+  delegate_to: localhost
 
 - name: Gather facts about a Storage System by name
   oneview_storage_system_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
@@ -28,6 +63,7 @@
 - name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is not managed
   oneview_storage_pool:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         storageSystemUri: "{{ storage_systems[0]['uri'] }}"
@@ -39,6 +75,7 @@
 - name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is managed
   oneview_storage_pool:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         storageSystemUri: "{{ storage_systems[0]['uri'] }}"

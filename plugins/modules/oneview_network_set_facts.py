@@ -37,6 +37,11 @@ author:
     - Thiago Miotto (@tmiotto)
     - Adriane Cardozo (@adriane-cardozo)
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     name:
       description:
         - Network Set name.
@@ -137,6 +142,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class NetworkSetFactsModule(OneViewModule):
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         name=dict(type='str'),
         options=dict(type='list'),
         params=dict(type='dict'),

@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -28,6 +39,7 @@
 - name: Gather facts about all Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_volume_templates
@@ -35,6 +47,7 @@
 - name: Create a Volume with a volume template name
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       properties:
@@ -46,6 +59,7 @@
 - name: Create a Volume with a specified Storage Pool
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       properties:
@@ -61,6 +75,7 @@
 - name: Extend the Volume size
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Volume with Storage Pool'
@@ -70,11 +85,13 @@
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Create a volume with a specified Snapshot Pool
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       properties:
@@ -94,6 +111,7 @@
 - name: Update the name of the volume to 'Volume with Storage Pool - Renamed' and shareable to false
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Volume with Storage Pool'
@@ -104,6 +122,7 @@
 - name: Remove extra presentations from the specified volume on the storage system
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: repaired
     data:
       name: 'Volume with Storage Pool - Renamed'
@@ -112,6 +131,7 @@
 - name: Create a new snapshot for the specified volume
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: snapshot_created
     data:
       name: 'Volume with Snapshot Pool'
@@ -123,6 +143,7 @@
 - name: Delete the snapshot
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: snapshot_deleted
     data:
       name: 'Volume with Snapshot Pool'
@@ -133,6 +154,7 @@
 - name: Delete the volume previously created with a Storage Pool
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Volume with Storage Pool - Renamed'
@@ -141,6 +163,7 @@
 - name: Delete the volume previously created with a Snapshot Pool
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Volume with Snapshot Pool'
@@ -150,6 +173,7 @@
 - name: Create a Volume with a specified Storage Pool
   oneview_volume:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       properties:

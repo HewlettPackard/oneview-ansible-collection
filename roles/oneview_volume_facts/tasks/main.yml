@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Volumes
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_volumes
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about Volumes
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 2
@@ -21,6 +32,7 @@
           storage volume paths"
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
         - attachableVolumes:        # optional
             connections:
@@ -37,6 +49,7 @@
 - name: Gather facts about a Volume by name with a list of all snapshots taken
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.volume.storage_volume_name }}"
     options:
         - snapshots  # optional
@@ -48,6 +61,7 @@
 - name: "Gather facts about a Volume with one specific snapshot taken"
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.volume.storage_volume_name }}"
     options:
         - snapshots:  # optional

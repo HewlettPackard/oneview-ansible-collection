@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.6.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Logical Interconnect resource.
@@ -355,6 +360,7 @@ class LogicalInterconnectModule(OneViewModule):
     MSG_NO_OPTIONS_PROVIDED = 'No options provided.'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         state=dict(
             required=True,
             choices=['compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',

@@ -43,6 +43,11 @@ options:
         - Logical Interconnect name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Logical Interconnect.
@@ -211,6 +216,7 @@ class LogicalInterconnectFactsModule(OneViewModule):
     MSG_NOT_FOUND = 'Logical Interconnect not found.'
 
     argument_spec = dict(
+        sessionID=dict(required=False, type='str'),
         name=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict'),

@@ -1,12 +1,23 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_enclosure.eg_name }}"
   delegate_to: localhost
 
@@ -20,6 +31,7 @@
 - name: Create a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         enclosureUris:
@@ -75,6 +87,7 @@
 - name: Update the Logical Enclosure configuration script(available only on C7000)
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: script_updated
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
@@ -86,6 +99,7 @@
 - name: Generates a support dump for the Logical Enclosure
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: dumped
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
@@ -99,6 +113,7 @@
 - name: Reconfigure all enclosures associated with logical enclosure
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
@@ -107,6 +122,7 @@
 - name: Makes the logical enclosure consistent with the enclosure group
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: updated_from_group
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
@@ -115,6 +131,7 @@
 - name: Update the Logical Enclosure changing the name attribute
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
@@ -124,6 +141,7 @@
 - name: Rename the Logical Enclosure to its initial name
   oneview_logical_enclosure:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"

@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,11 +29,13 @@
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Create a Network Set
   oneview_network_set:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'OneViewSDK Test Network Set'
@@ -38,12 +50,14 @@
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 # Scope update is only supported V300 and V500
 - name: Update the Network set with two scopes
   oneview_network_set:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: OneViewSDK Test Network Set
@@ -56,6 +70,7 @@
 - name: Update the Network Set name to 'OneViewSDK Test Network Set - Renamed' and change the associated networks
   oneview_network_set:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'OneViewSDK Test Network Set'
@@ -67,6 +82,7 @@
 - name: Delete the Network Set
   oneview_network_set:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'OneViewSDK Test Network Set - Renamed'
@@ -75,6 +91,7 @@
 - name: Create a Network Set to ensure continuity for automation script
   oneview_network_set:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'OneViewSDK Test Network Set'

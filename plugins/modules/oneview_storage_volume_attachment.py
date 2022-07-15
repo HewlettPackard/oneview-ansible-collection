@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.0.0"
 author: "Camila Balestrin (@balestrinc)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     state:
       description:
         - Indicates the desired state for the Storage Volume Attachment
@@ -94,6 +99,7 @@ class StorageVolumeAttachmentModule(OneViewModule):
 
     def __init__(self):
         argument_spec = {
+            "sessionID": {"required": False, "type": 'str'},
             "state": {"required": True, "type": 'str'},
             "server_profile": {"required": True, "type": 'str'},
         }

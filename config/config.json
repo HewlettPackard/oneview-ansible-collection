@@ -193,7 +193,8 @@
              "users":{
                 "user_name": "<user_name>",
                 "email": "<email>",
-                "role": "<role>"
+                "role": "<role>",
+                "newpassword": "<newpassword>"
              },
              "dynamic_role":
              {

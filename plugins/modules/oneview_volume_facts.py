@@ -40,6 +40,11 @@ options:
         - Volume name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Volume and related resources.
@@ -141,7 +146,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class VolumeFactsModule(OneViewModule):
     def __init__(self):
-        argument_spec = dict(name=dict(type='str'), options=dict(type='list'), params=dict(type='dict'))
+        argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.volumes)
 

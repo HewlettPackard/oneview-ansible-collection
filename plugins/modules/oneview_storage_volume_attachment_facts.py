@@ -58,6 +58,11 @@ options:
         - Server Profile name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "Retrieve additional facts. Options available:
@@ -195,6 +200,7 @@ class StorageVolumeAttachmentFactsModule(OneViewModule):
             storageVolumeUri=dict(required=False, type='str'),
             storageVolumeName=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
+            sessionID=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
         )
         super().__init__(additional_arg_spec=argument_spec)

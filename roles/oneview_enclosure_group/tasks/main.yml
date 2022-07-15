@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about logical interconnect group
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.enclosure_group.lig_name }}"
   delegate_to: localhost
 - set_fact:
@@ -10,6 +20,7 @@
 - name: Create an Enclosure Group
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ item.name }}"
@@ -30,6 +41,7 @@
 - name: Create an Enclosure Group with ip rangeUris
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "EG_with_ip_range"
@@ -53,6 +65,7 @@
 - name: Do nothing with the Enclosure Group when no changes are provided
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ contents.enclosure_group.enclosure_group_name }}"
@@ -69,6 +82,7 @@
 - name: Update the Enclosure Group changing the name attribute
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ contents.enclosure_group.enclosure_group_name }}"
@@ -79,6 +93,7 @@
 - name: Update the Enclosure Group configuration script
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
         name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
@@ -89,6 +104,7 @@
 - name: Delete the Enclosure Group
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
@@ -97,6 +113,7 @@
 - name: Do nothing when Enclosure Group is absent
   oneview_enclosure_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ contents.enclosure_group.enclosure_group_new_name }}"

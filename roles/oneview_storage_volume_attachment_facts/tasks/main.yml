@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
     config: "{{ config }}" 
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Gather facts about the storage volume associated with the storage volume attachment
   oneview_volume_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.storage_volume_attachment.storage_volume_name }}"
   delegate_to: localhost
 
@@ -27,6 +38,7 @@
 - name: Gather facts about all Storage Volume Attachments
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_volume_attachments
@@ -34,6 +46,7 @@
 - name: Gather paginated, filtered and sorted facts about Storage Volume Attachments
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 2
@@ -45,6 +58,7 @@
 - name: Gather facts about a Storage Volume Attachment by Server Profile Name and Volume Uri
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     serverProfileName: "{{ contents.storage_volume_attachment.server_profile_name }}"
     storageVolumeUri: "{{ volume['uri'] }}"
   delegate_to: localhost
@@ -55,6 +69,7 @@
 - name: Gather facts about extra unmanaged storage volumes
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - extraUnmanagedStorageVolumes:
             start: 0
@@ -69,6 +84,7 @@
 - name: Gather facts about volume attachment paths
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     serverProfileName: "{{ contents.storage_volume_attachment.server_profile_name }}"
     storageVolumeName: "{{ contents.storage_volume_attachment.storage_volume_name }}"
     options:

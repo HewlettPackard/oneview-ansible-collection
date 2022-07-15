@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all interconnects
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: msg="{{interconnects | map(attribute='name') | list }}"
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about Interconnects
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 5
@@ -22,6 +33,7 @@
 - name: Gather facts about the interconnect that matches the specified name
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
@@ -30,6 +42,7 @@
 - name: Gather facts about the interconnect that matches the specified name and its name servers
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - nameServers
@@ -41,6 +54,7 @@
 - name: Gather facts about statistics for the Interconnect that matches the specified name
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - statistics
@@ -51,6 +65,7 @@
 - name: Get the port statistics for the specified interconnect name and port name
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - portStatistics: "{{ port_name }}"
@@ -62,6 +77,7 @@
 - name: Get the subport statistics
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - subPortStatistics:
@@ -74,6 +90,7 @@
 - name: Gather facts about all the Interconnect ports
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - ports
@@ -84,6 +101,7 @@
 - name: Gather facts about an Interconnect port
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - port: "{{ contents.interconnect.port_name }}"
@@ -94,6 +112,7 @@
 - name: Gather facts about the small-form pluggable modules
   oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - pluggableModuleInformation

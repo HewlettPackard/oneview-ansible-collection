@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.0.0"
 author: "Shanmugam M (@SHANDCRUZ)"
 options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the User.
@@ -256,6 +261,7 @@ class UserModule(OneViewModule):
     def __init__(self):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
+                                   sessionID=dict(required=False, type='str'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent', 'add_multiple_users', 'add_role_to_username', 'update_role_to_username',

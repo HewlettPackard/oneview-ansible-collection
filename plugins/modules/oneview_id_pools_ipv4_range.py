@@ -36,6 +36,11 @@ requirements:
     - "ansible >= 2.9"
 author: "Thiago Miotto (@tmiotto)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the ID pools IPV4 Range resource.
@@ -92,7 +97,8 @@ class IdPoolsIpv4RangeModule(OneViewModule):
 
     def __init__(self):
 
-        additional_arg_spec = dict(data=dict(required=True, type='dict'),
+        additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   data=dict(required=True, type='dict'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))

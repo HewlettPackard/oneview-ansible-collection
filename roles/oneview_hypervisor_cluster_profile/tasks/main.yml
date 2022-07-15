@@ -1,15 +1,28 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about server profile templates
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ spt_name }}"
   delegate_to: localhost
+
+- debug: var=server_profile_templates
 - set_fact:
     spt_uri: "{{ server_profile_templates[0]['uri'] }}"
 
 - name: Gather facts about OS deployment plans
   oneview_os_deployment_plan_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "Basic Deployment Plan"
   delegate_to: localhost
 - set_fact:
@@ -18,6 +31,7 @@
 - name: Gather facts about hypervisor managers
   oneview_hypervisor_manager_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ hyp_mgr_name }}"
   delegate_to: localhost
 - set_fact:
@@ -26,6 +40,7 @@
 - name: Create a basic Hypervisor Cluster Profile
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ cluster_profile_name }}"
@@ -45,6 +60,7 @@
 - name: Create a Hypervisor Cluster Profile with vswitch
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     params:
       create_vswitch_layout: True                          # If this is true, virtual switch layout will be created
@@ -82,6 +98,7 @@
 - name: Do nothing with the Hypervisor Cluster Profile when no changes are provided
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ cluster_profile_name }}"
@@ -93,6 +110,7 @@
 - name: Update the Hypervisor Cluster Profile changing the attribute name
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ cluster_profile_name }}"
@@ -106,6 +124,7 @@
 - name: Delete the Hypervisor Cluster Profile
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     params:
       force: True
@@ -128,6 +147,7 @@
 - name: Do nothing when Hypervisor Cluster Profile is absent
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "HCP-renamed"

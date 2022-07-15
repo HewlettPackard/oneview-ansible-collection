@@ -1,31 +1,90 @@
 ---
-- name: Gather facts about all ID Pools IPV4 Subnets
-  oneview_id_pools_ipv4_subnet_facts:
+- name: Fetch Session Id
+  oneview_get_session_id:
     config: "{{ config }}"
+    name: "Test_Session"
   delegate_to: localhost
+  register: session
 
-- debug: var=id_pools_ipv4_subnets
+- debug: var=session
 
-- name: Gather paginated, and sorted facts about ID Pools IPV4 Subnets
-  oneview_id_pools_ipv4_subnet_facts:
+- name: Gather paginated, filtered and sorted facts about Interconnects
+  oneview_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
-      count: 3
+      count: 5
       sort: 'name:descending'
+      filter: "enclosureName='0000A66101'"
 
-- debug: var=id_pools_ipv4_subnets
+- debug: var=interconnects
 
-- name: Gather facts about ID Pools IPV4 Subnets by networkId
-  oneview_id_pools_ipv4_subnet_facts:
+- set_fact: interconnect_name="{{ interconnects[0]['name'] }}"
+
+- name: Turn the power on for interconnect that matches the specified name
+  oneview_interconnect:
     config: "{{ config }}"
-    networkId: "{{ id_pools_ipv4_subnets[0]['networkId'] }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'powered_on'
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
-- name: Gather facts about a ID Pools IPV4 Subnet by name
-  oneview_id_pools_ipv4_subnet_facts:
+- name: Turn the UID light to 'On' for interconnect that matches the specified name
+  oneview_interconnect:
     config: "{{ config }}"
-    name: "{{ id_pools_ipv4_subnets[0]['name'] }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'uid_on'
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_subnets
+- name: Perform a device reset for interconnect that matches the specified name
+  oneview_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'device_reset'
+    name: "{{ contents.interconnect.interconnect_name }}"
+  delegate_to: localhost
+
+- name: Turn the power off for interconnect that matches the specified ip
+  oneview_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'powered_off'
+    ip: "{{ contents.interconnect.interconnect_ip }}"
+  delegate_to: localhost
+
+- name: Updates the interconnect ports
+  oneview_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'update_ports'
+    ip: "{{ contents.interconnect.interconnect_ip_for_update }}"
+    ports: [
+      {
+          "type": "portV6",
+          "portType": "Uplink",
+          "portName": "d1",
+          "bayNumber": 1,
+          "enabled": False,
+          "portId": "{{ contents.interconnect.port_id }}"
+      }
+    ]
+  delegate_to: localhost
+  ignore_errors: true
+
+- name: Triggers a reset of port protection
+  oneview_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: 'reset_port_protection'
+    name: "{{ contents.interconnect.interconnect_name }}"
+  delegate_to: localhost
+
+- name: Reapplies the interconnect configuration
+  oneview_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: reconfigured
+    name: "{{ contents.interconnect.interconnect_name }}"
+  delegate_to: localhost

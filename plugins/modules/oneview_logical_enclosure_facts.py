@@ -48,6 +48,11 @@ options:
           Options allowed: script."
       required: false
       type: list
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -127,6 +132,7 @@ class LogicalEnclosureFactsModule(OneViewModule):
         name=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict'),
+        sessionID=dict(required=False, type='str'),
     )
 
     def __init__(self):

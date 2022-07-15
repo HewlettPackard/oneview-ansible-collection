@@ -1,12 +1,23 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Add a Server Hardware
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
           hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
@@ -23,6 +34,7 @@
 - name: Do nothing when the server hardware is already present
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
           hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
@@ -38,6 +50,7 @@
 - name: Add multiple rack-mount servers
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: multiple_servers_added
     data:
           mpHostsAndRanges: "{{ contents.server_hardware.multiple_hosts }}"
@@ -53,6 +66,7 @@
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=server_hardwares
@@ -60,6 +74,7 @@
 - name: Power Off the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -71,6 +86,7 @@
 - name: Power On the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -82,6 +98,7 @@
 - name: Refresh the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -92,6 +109,7 @@
 - name: Update the Server Hardware iLO firmware version
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_firmware_version_updated
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -100,6 +118,7 @@
 - name: Reset the Server Hardware iLO State
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_state_reset
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -108,6 +127,7 @@
 - name: Set the server UID state off
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: uid_state_off
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -116,6 +136,7 @@
 - name: Enable Server Maintenance Mode
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: enable_maintenance_mode
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -124,6 +145,7 @@
 - name: Disable Server Maintenance Mode
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: disable_maintenance_mode
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -132,6 +154,7 @@
 - name: Set the server one-time boot device to Network
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_network
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -140,6 +163,7 @@
 - name: Set the server one-time boot device to No one-time boot
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_normal
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -148,6 +172,7 @@
 - name: Set the calibrated max power of a server hardware
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: environmental_configuration_set
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -159,6 +184,7 @@
 - name: Remove the server hardware by its IP
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
@@ -168,6 +194,7 @@
 - name: Do nothing when the server hardware is already removed
   oneview_server_hardware:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"

@@ -43,6 +43,11 @@ options:
         - Logical Interconnect Group name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -117,6 +122,7 @@ class LogicalInterconnectGroupFactsModule(OneViewModule):
     def __init__(self):
 
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             name=dict(type='str'),
             params=dict(type='dict'),
         )

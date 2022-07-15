@@ -1,7 +1,17 @@
----  
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get schema of the id pools
   oneview_id_pools_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: schema
     data:
       description: 'ID pool schema'
@@ -10,6 +20,7 @@
 - name: Generates a random range
   oneview_id_pools_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: generate
     data:
       poolType: '{{ contents.id_pools.poolType }}'
@@ -18,6 +29,7 @@
 - name: Get the ID Pools type
   oneview_id_pools_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: get_pool_type
     data:
       poolType: '{{ contents.id_pools.poolType }}'
@@ -27,6 +39,7 @@
 - name: Checks the range availability in the ID pool
   oneview_id_pools_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: check_range_availability
     data:
       poolType: '{{ contents.id_pools.poolType }}'
@@ -36,6 +49,7 @@
 - name: Validates the list of ID's from IPv4 Subnet
   oneview_id_pools_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: validate_id_pool
     data:
       poolType: 'ipv4'

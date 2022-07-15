@@ -35,6 +35,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Mariana Kreisig (@marikrg)"
 options:
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     state:
       description:
         - Indicates the desired state for the Enclosure resource.
@@ -464,6 +469,7 @@ class EnclosureModule(OneViewModule):
                 'import_certificate_request'
             ]
         ),
+        sessionID=dict(required=False, type='str'),
         data=dict(required=True, type='dict')
     )
 

@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Logical Interconnects
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=logical_interconnects
@@ -9,6 +19,7 @@
 - name: Gather paginated and sorted facts about Logical Interconnects
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -19,6 +30,7 @@
 - name: Gather facts about a Logical Interconnect by name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
@@ -27,6 +39,7 @@
 - name: Gather facts about a Logical Interconnect by name with QOS Configuration
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - qos_aggregated_configuration
@@ -37,6 +50,7 @@
 - name: Gather facts about the SNMP configuration on the logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - snmp_configuration
@@ -47,6 +61,7 @@
 - name: Gather facts about the IGMP settings on the logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - igmp_settings
@@ -57,6 +72,7 @@
 - name: "Gather facts about the port monitor configuration on the logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - port_monitor
@@ -67,6 +83,7 @@
 - name: "Gather facts about an internal VLAN IDs for the provisioned networks on a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - internal_vlans
@@ -77,6 +94,7 @@
 - name: "Gather facts about a forwarding information base data for a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - forwarding_information_base
@@ -87,6 +105,7 @@
 - name: "Gather facts about an installed firmware for a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - firmware
@@ -98,6 +117,7 @@
           assignment to an analyzer port on the logical interconnect"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - unassigned_uplink_ports
@@ -109,6 +129,7 @@
           assignment to an analyzer port on the logical interconnect"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - unassigned_ports
@@ -119,6 +140,7 @@
 - name: "Gather facts about the telemetry configuration of the logical interconnect"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - telemetry_configuration
@@ -129,6 +151,7 @@
 - name: "Gather the Ethernet interconnect settings for the logical interconnect"
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - ethernet_settings

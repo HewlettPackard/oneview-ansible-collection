@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Creates Network Interface if doesn't exist
   oneview_appliance_network_interfaces:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       macAddress: "{{mac_address}}"
@@ -22,6 +32,7 @@
 - name: Do nothing when network interface exists
   oneview_appliance_network_interfaces:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       macAddress: "{{mac_address}}"
@@ -42,6 +53,7 @@
 - name: Updates dns servers of the network interface
   oneview_appliance_network_interfaces:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       macAddress: "{{mac_address}}"

@@ -41,6 +41,11 @@ options:
       description:
         - Enclosure name.
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about an Enclosure and related resources.
@@ -157,7 +162,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class EnclosureFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), options=dict(type='list'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)

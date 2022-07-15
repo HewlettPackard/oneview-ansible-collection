@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=ethernet_networks
@@ -26,6 +37,7 @@
 - name: Create a scope
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ contents.scope.scope_name }}"
@@ -39,6 +51,7 @@
 - name: Create a scope when exists
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ contents.scope.scope_name }}"
@@ -52,6 +65,7 @@
 - name: Update the scope name
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ contents.scope.scope_name }}"
@@ -66,6 +80,7 @@
 - name: Update the scope resource assignments, adding a resource
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
       name: "{{ contents.scope.scope_name }}_Renamed"
@@ -78,6 +93,7 @@
 - name: Update the scope resource assignments, removing two resources
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
       name: "{{ contents.scope.scope_name }}_Renamed"
@@ -91,6 +107,7 @@
 - name: Delete the Scope
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ contents.scope.scope_name }}_Renamed"
@@ -99,6 +116,7 @@
 - name: Create a scope to ensure continuity for an automation script
   oneview_scope:
     config: '{{ config }}'
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ contents.scope.scope_name }}"

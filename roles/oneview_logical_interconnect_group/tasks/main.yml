@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -20,6 +30,7 @@
 - name: Create a Logical Interconnect Group
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: '{{ item.name }}'
@@ -158,6 +169,7 @@
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Test Logical Interconnect Group'
@@ -167,6 +179,7 @@
 - name: Update the Logical Interconnect Group by adding an uplink set "e23 uplink set2" with an Ethernet network
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Test Logical Interconnect Group'
@@ -190,19 +203,21 @@
   delegate_to: localhost
 
 # Below task is supported only with OneView 3.10
-# - name: Update the Logical Interconnect Group with two scopes
-#   oneview_logical_interconnect_group:
-#     config: "{{ config }}"
-#     state: present
-#     data:
-#       name: 'Test Logical Interconnect Group'
-#       scopeUris: "{{ scope_uris }}"
-#   delegate_to: localhost
-#   when: currentVersion >= '300' and currentVersion <= '500'
+- name: Update the Logical Interconnect Group with two scopes
+  oneview_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: 'Test Logical Interconnect Group'
+      scopeUris: "{{ scope_uris }}"
+  delegate_to: localhost
+  when: currentVersion >= '300' and currentVersion <= '500'
 
 - name: Rename the Logical Interconnect Group to 'Updated Logical Interconnect Group'
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Test Logical Interconnect Group'
@@ -212,6 +227,7 @@
 - name: Delete the Logical Interconnect Group
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Updated Logical Interconnect Group'
@@ -221,6 +237,7 @@
 - name: Do nothing when the Logical Interconnect Group is absent
   oneview_logical_interconnect_group:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Updated Logical Interconnect Group'

@@ -35,6 +35,11 @@ requirements:
     - "ansible >= 2.9.0"
 author: "Yuvarani Chidambaram (@yuvirani)"
 options:
+    sessionID:
+       description:
+         - Session ID to use for login to the appliance
+       type: str
+       required: false
     data:
        description: Get the tasks with state Running
        required: True
@@ -84,6 +89,7 @@ class TaskModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             data=dict(required=True, type='dict')
         )
 

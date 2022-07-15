@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=logical_interconnect_groups
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered, and sorted facts about Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -28,6 +39,7 @@
 - name: Gather facts about Logical Interconnect Group by scope_uris
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       scope_uris: "{{ scopes[0]['uri'] }}"
 
@@ -36,6 +48,7 @@
 - name: Gather facts about a Logical Interconnect Group by name
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "LIG"
   delegate_to: localhost
 

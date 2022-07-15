@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=enclosures
@@ -26,6 +37,7 @@
 - name: Gather paginated, filtered and sorted facts about Enclosures
   oneview_enclosure_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -37,7 +49,8 @@
 - name: Gather facts about an Enclosure by name
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: "{{ contents.name }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ contents.enclosure.name }}"
   delegate_to: localhost
 
 - debug: var=enclosures
@@ -46,7 +59,8 @@
 - name: Gather facts about an Enclosure by name with script
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: '{{ contents.name }}'
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ contents.enclosure.name }}"
     options:
       - script
   when: contents.variant == 'C7000' or currentVersion == '300'
@@ -55,7 +69,8 @@
 - name: Gather facts about an Enclosure by name with options
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: '{{ contents.name }}'
+    name: "{{ contents.enclosure.name }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - environmentalConfiguration   # optional
       - utilization:                 # optional
