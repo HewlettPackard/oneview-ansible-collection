@@ -7,7 +7,7 @@
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
     config: "{{ config }}"
-    name: "{{ eg_name }}"
+    name: "{{ contents.logical_enclosure.eg_name }}"
   delegate_to: localhost
 
 #- name: Gather facts about all Firmware Drivers
@@ -23,14 +23,14 @@
     state: present
     data:
         enclosureUris:
-          - "{{ enclosures[0]['uri'] }}"
           - "{{ enclosures[1]['uri'] }}"
           - "{{ enclosures[2]['uri'] }}"
+          - "{{ enclosures[0]['uri'] }}"
         enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
-        name: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   ignore_errors: true
   delegate_to: localhost
-  when: (variant == "Synergy" and enclosures is not none and enclosures is not undefined and 
+  when: (contents.logical_enclosure.variant == "Synergy" and enclosures is not none and enclosures is not undefined and 
         enclosure_groups is not none and enclosure_groups is not undefined)
 
 #- name: Update the firmware for the Logical Enclosure
@@ -77,18 +77,18 @@
     config: "{{ config }}"
     state: script_updated
     data:
-        name: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
         configurationScript: "# script (updated)"
   ignore_errors: true
   delegate_to: localhost
-  when: variant == "C7000"
+  when: contents.logical_enclosure.variant == "C7000"
 
 - name: Generates a support dump for the Logical Enclosure
   oneview_logical_enclosure:
     config: "{{ config }}"
     state: dumped
     data:
-        name: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
         dump:
           errorCode: "MyDump16"
           encrypt: "true"
@@ -101,7 +101,7 @@
     config: "{{ config }}"
     state: reconfigured
     data:
-        name: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Makes the logical enclosure consistent with the enclosure group
@@ -109,7 +109,7 @@
     config: "{{ config }}"
     state: updated_from_group
     data:
-        name: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Update the Logical Enclosure changing the name attribute
@@ -117,8 +117,8 @@
     config: "{{ config }}"
     state: present
     data:
-        name: "{{ logical_enclosure_name }}"
-        newName: "{{ logical_enclosure_name }} (renamed)"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+        newName: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
   delegate_to: localhost
 
 - name: Rename the Logical Enclosure to its initial name
@@ -126,8 +126,8 @@
     config: "{{ config }}"
     state: present
     data:
-        name: "{{ logical_enclosure_name }} (renamed)"
-        newName: "{{ logical_enclosure_name }}"
+        name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
+        newName: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 # This state is only available on HPE Synergy

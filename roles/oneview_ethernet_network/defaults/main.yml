@@ -1,8 +1,5 @@
 ---
 # defaults file for oneview_ethernet_network
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_ethernet_network/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-network_name: 'OneViewSDK Test Ethernet Network'
-network_scope_uris:
-  - '/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f'
-  - '/rest/scopes/96661df3-fb4f-4617-a1fb-d6f11adf18d3'
+config_file: "{{lookup('file', config)}}"
+contents: "{{lookup('file', '../config/config.json') | from_json}}"

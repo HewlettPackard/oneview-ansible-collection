@@ -9,9 +9,9 @@
     config: "{{ config }}"
     state: present
     data:
-      userName: "{{ user_name }}"
+      userName: "{{ contents.users.user_name }}"
       password: "myPass1234"
-      emailAddress: "{{ email }}"
+      emailAddress: "{{ contents.users.email }}"
       enabled: true
       fullName: "testUser101"
       mobilePhone: '555-2121'
@@ -29,8 +29,8 @@
     config: "{{ config }}"
     state: present
     data:
-      userName: "{{ user_name }}"
-      emailAddress: "{{ email }}"
+      userName: "{{ contents.users.user_name }}"
+      emailAddress: "{{ contents.users.email }}"
       enabled: true
       fullName: "testUser101"
       mobilePhone: '555-2121'
@@ -48,7 +48,7 @@
     config: "{{ config }}"
     state: present
     data:
-      userName: "{{ user_name }}"
+      userName: "{{ contents.users.user_name }}"
       enabled: false
   delegate_to: localhost
 
@@ -57,19 +57,9 @@
     config: "{{ config }}"
     state: present
     data:
-      userName: "{{ user_name }}"
-      currentPassword: "{{ currentPassword }}"
-      newPassword: "{{ password }}"
-  delegate_to: localhost
-
-- name: Change the User's password during first-time setup
-  oneview_user:
-    config: "{{ config }}"
-    state: set_password
-    data:
-      userName: "{{ user_name }}"
-      oldPassword: "{{ oldPassword }}"
-      newPassword: "{{ newPassword }}"
+      userName: "{{ contents.users.user_name }}"
+      currentPassword: "myPass1234"
+      newPassword: "mynewPass12345"
   delegate_to: localhost
 
 - name: Adds multiple new local users to the appliance
@@ -78,9 +68,9 @@
     state: add_multiple_users
     data:
       users_list:
-        - userName: "{{ user_name }}1"
+        - userName: "{{ contents.users.user_name }}1"
           password: "myPass1234"
-          emailAddress: "{{ email }}"
+          emailAddress: "{{ contents.users.email }}"
           enabled: true
           fullName: "testUser101"
           mobilePhone: '555-2121'
@@ -88,9 +78,9 @@
           permissions:
             - roleName: "Read only"
             - roleName: "Infrastructure administrator"
-        - userName: "{{ user_name }}2"
+        - userName: "{{ contents.users.user_name }}2"
           password: "myPass1234"
-          emailAddress: "{{ email }}"
+          emailAddress: "{{ contents.users.email }}"
           enabled: true
           fullName: "testUser101"
           mobilePhone: '555-2121'
@@ -191,9 +181,9 @@
     config: "{{ config }}"
     state: present
     data:
-      userName: "{{ user_name }}"
+      userName: "{{ contents.users.user_name }}"
       password: "myPass1234"
-      emailAddress: "{{ email }}"
+      emailAddress: "{{ contents.users.email }}"
       enabled: true
       fullName: "testUser101"
       mobilePhone: '555-2121'

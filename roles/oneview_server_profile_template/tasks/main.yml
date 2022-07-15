@@ -13,8 +13,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ item.name }}"
-      serverHardwareTypeName: "{{ server_hardware_type_name }}"
-      enclosureGroupName: "{{ enclosure_group_name }}"
+      serverHardwareTypeName: "{{ contents.server_profile_template.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile_template.enclosure_group_name }}"
       connectionSettings:
         manageConnections: true
         complianceControl: Checked
@@ -23,14 +23,14 @@
             name: mgmt
             functionType: Ethernet
             portId: Auto
-            requestedMbps: 2500
-            networkName: "{{ connection_network_name }}"
+            requestedMbps: 2000
+            networkName: "{{ contents.server_profile_template.connection_network_name }}"
     params:
       force: "True" # Supported only for API version >= 600
   delegate_to: localhost
   with_items:
-    - { name: '{{ server_profile_template_name }}' }
-    - { name: '{{ server_profile_template_name }}-1' }
+    - { name: '{{ contents.server_profile_template.server_profile_template_name }}' }
+    - { name: '{{ contents.server_profile_template.server_profile_template_name }}-1' }
 
 - name: Update bootMode from recently created template
   oneview_server_profile_template:
@@ -38,9 +38,9 @@
     state: present
     sessionID: "{{ session.ansible_facts.session }}"
     data:
-      name: "{{ server_profile_template_name }}"
-      serverHardwareTypeName: "{{ server_hardware_type_name }}"
-      enclosureGroupName: "{{ enclosure_group_name }}"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}"
+      serverHardwareTypeName: "{{ contents.server_profile_template.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile_template.enclosure_group_name }}"
       bootMode:
         manageMode: true
         mode: UEFI
@@ -55,7 +55,7 @@
     state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
-      name: "{{ server_profile_template_name }}"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}"
     params:
       force: True # Supported only for API version >= 600
   delegate_to: localhost
@@ -66,5 +66,5 @@
     state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
-      name: "{{ server_profile_template_name }}"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}"
   delegate_to: localhost

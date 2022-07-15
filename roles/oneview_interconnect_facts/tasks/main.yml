@@ -22,7 +22,7 @@
 - name: Gather facts about the interconnect that matches the specified name
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - debug: var=interconnects
@@ -30,7 +30,7 @@
 - name: Gather facts about the interconnect that matches the specified name and its name servers
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - nameServers
   delegate_to: localhost
@@ -41,7 +41,7 @@
 - name: Gather facts about statistics for the Interconnect that matches the specified name
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - statistics
 
@@ -51,9 +51,10 @@
 - name: Get the port statistics for the specified interconnect name and port name
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - portStatistics: "{{ port_name }}"
+  when: interconnects[0]['state'] != "Monitored"
 
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_port_statistics
@@ -61,19 +62,19 @@
 - name: Get the subport statistics
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - subPortStatistics:
-            portName: "{{ port_name }}"
-            subportNumber: "{{ subport_number }}"
-
+            portName: "{{ contents.interconnect.port_name }}"
+            subportNumber: "{{ contents.interconnect.subport_number }}"
+  when: interconnects[0]['state'] != "Monitored"
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_subport_statistics
 
 - name: Gather facts about all the Interconnect ports
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - ports
 
@@ -83,9 +84,9 @@
 - name: Gather facts about an Interconnect port
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
-        - port: "{{ port_name }}"
+        - port: "{{ contents.interconnect.port_name }}"
 
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_port
@@ -93,7 +94,7 @@
 - name: Gather facts about the small-form pluggable modules
   oneview_interconnect_facts:
     config: "{{ config }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - pluggableModuleInformation
 

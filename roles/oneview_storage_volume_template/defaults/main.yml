@@ -1,6 +1,4 @@
 ---
 # defaults file for oneview_storage_volume_template
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_volume_template/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-storage_pool_uri: "/rest/storage-pools/6BC7B518-BFB8-41A0-B173-A7C801352530"
-volume_template_name: "svt1"
+contents: "{{lookup('file','../config/config.json') | from_json}}"

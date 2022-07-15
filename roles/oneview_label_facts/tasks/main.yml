@@ -1,4 +1,11 @@
 ---
+- name: Gather facts about all Enclosures
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=enclosures[0]['uri']
+
 - name: Gather facts about all Labels
   oneview_label_facts:
     config: "{{ config }}"
@@ -36,7 +43,7 @@
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
     config: "{{ config }}"
-    resourceUri: "{{ resource_uri }}" 
+    resourceUri: "{{ enclosures[0]['uri'] }}" 
   delegate_to: localhost
 
 - debug: var=labels

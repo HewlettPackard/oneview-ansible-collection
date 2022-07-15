@@ -11,7 +11,7 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: var=logical_interconnects
+- debug: var=logical_interconnects[0]['uri']
 
 - name: Gather paginated, filtered and sorted facts about Uplink Sets
   oneview_uplink_set_facts:
@@ -20,7 +20,7 @@
       start: 0
       count: 2
       sort: 'name:descending'
-      filter: "logicalInterconnectUri= '{{ logical_interconnects[0]['uri'] }}'"
+      filter: "logicalInterconnectUri='{{ logical_interconnects[0]['uri'] }}'"
   when: (logical_interconnects is not none and logical_interconnects is not undefined)
 
 - debug: var=uplink_sets

@@ -4,12 +4,11 @@
     config: "{{ config }}"
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
-
 - name: Gather facts about the Network Interfaces by Mac Address
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
     params:
-       mac_address: "{{ mac_address }}"
+       mac_address: "{{ contents.appliance_network_interface.mac_address }}"
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
 

@@ -26,7 +26,7 @@
 - name: Gather facts about a Logical Enclosure by name
   oneview_logical_enclosure_facts:
     config: "{{ config }}"
-    name: "{{ logical_enclosure_name }}"
+    name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - debug: var=logical_enclosures
@@ -35,11 +35,11 @@
 - name: Gather facts about a Logical Enclosure by name with options
   oneview_logical_enclosure_facts:
     config: "{{ config }}"
-    name: "{{ logical_enclosure_name }}"
+    name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
     options:
       - script
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.logical_enclosure.variant == 'C7000'
 
 - debug: var=logical_enclosures
 - debug: var=logical_enclosure_script

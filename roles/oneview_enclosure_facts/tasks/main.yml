@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
@@ -37,7 +37,7 @@
 - name: Gather facts about an Enclosure by name
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: "{{ name }}"
+    name: "{{ contents.name }}"
   delegate_to: localhost
 
 - debug: var=enclosures
@@ -46,16 +46,16 @@
 - name: Gather facts about an Enclosure by name with script
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: '{{ name }}'
+    name: '{{ contents.name }}'
     options:
       - script
-  when: variant == 'C7000' or currentVersion == '300'
+  when: contents.variant == 'C7000' or currentVersion == '300'
   delegate_to: localhost 
 
 - name: Gather facts about an Enclosure by name with options
   oneview_enclosure_facts:
     config: "{{ config }}"
-    name: '{{ name }}'
+    name: '{{ contents.name }}'
     options:
       - environmentalConfiguration   # optional
       - utilization:                 # optional

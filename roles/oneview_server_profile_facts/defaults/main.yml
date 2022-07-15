@@ -1,8 +1,5 @@
 ---
 # defaults file for oneview_server_profile_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_profile_facts/files/oneview_config.json"
-# set the config file as variable
-contents: "{{lookup('file', config)}}"
-# set the ID of an existent storage system to run this example
-storage_system_id: "MXN6122CVA"
-server_profile_name: "sp1"
+config_file: "{{lookup('file', config)}}"
+contents: "{{ lookup('file','../config/config.json')| from_json }}"

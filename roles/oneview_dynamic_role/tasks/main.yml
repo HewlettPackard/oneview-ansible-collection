@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if api version is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+  when: config_file.api_version != ""
 
 - name: Create an Ethernet Network
   oneview_ethernet_network:
@@ -33,8 +33,8 @@
   delegate_to: localhost
   register: eth_network_out
   with_items:
-   - { name: '{{ eth_network_1 }}', vlanId: '201' }
-   - { name: '{{ eth_network_2 }}', vlanId: '202'}
+   - { name: '{{ contents.dynamic_role.eth_network_1 }}', vlanId: '201' }
+   - { name: '{{ contents.dynamic_role.eth_network_2 }}', vlanId: '202'}
 
 - name: Create a Fibre Channel Network
   oneview_fc_network:
@@ -50,8 +50,8 @@
   delegate_to: localhost
   register: fc_network_out
   with_items:
-      - "{{ fc_network_1 }}"
-      - "{{ fc_network_2 }}"
+      - "{{ contents.dynamic_role.fc_network_1 }}"
+      - "{{ contents.dynamic_role.fc_network_2 }}"
 
 # Below task creates a Logical Interconnect Group with Interconnects, upLinkPorts, uplinkSets containing EthernetNetworks
 - name: Create a Logical Interconnect Group
@@ -118,7 +118,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 2
             logicalLocation:
                 locationEntries:
@@ -126,7 +126,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_1 }}"
           - enclosureIndex: 2
             logicalLocation:
                 locationEntries:
@@ -134,7 +134,7 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 3
             logicalLocation:
                 locationEntries:
@@ -142,7 +142,7 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
                 locationEntries:
@@ -150,7 +150,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
                 locationEntries:
@@ -158,6 +158,6 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ contents.dynamic_role.permitted_interconnect_type_name_1 }}"
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost

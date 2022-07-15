@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_logical_interconnect_group_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_interconnect_group_facts/files/oneview_config.json"
-scope_uris: "/rest/scopes/5049d3e3-0367-451d-a555-b2603f09a5d5"
+contents: "{{lookup('file','../config/config.json') | from_json}}"

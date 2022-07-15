@@ -1,8 +1,5 @@
 ---
 # defaults file for oneview_interconnect
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_interconnect/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-interconnect_name: "Enc-Updated, interconnect 2" # change for your interconnect name
-interconnect_ip: "fe80::2:0:c:1" # change for your interconnect ip address
-interconnect_ip_for_update: "fe80::2:0:c:1" # change for your interconnect ip address with ports to update
-port_id: "748d4699-62ff-454e-8ec8-773815c4aa2f:d1" # change for your port id
+config_file: "{{lookup('file', config)}}"
+contents: "{{lookup('file','../config/config.json') | from_json}}"

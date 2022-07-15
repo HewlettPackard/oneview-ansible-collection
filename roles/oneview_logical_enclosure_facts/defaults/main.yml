@@ -1,6 +1,4 @@
 ---
 # defaults file for oneview_logical_enclosure_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_enclosure_facts/files/oneview_config.json"
-logical_enclosure_name: "LE"  # The name of an existent Logical Enclosure must be set to run this example
-scope_uris: "/rest/scopes/5049d3e3-0367-451d-a555-b2603f09a5d5"
-variant: Synergy
+contents: "{{ lookup('file','../config/config.json') | from_json}}"

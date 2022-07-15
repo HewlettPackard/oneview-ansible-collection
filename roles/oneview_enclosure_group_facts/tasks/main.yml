@@ -21,14 +21,14 @@
       filter: 'status=OK'
       scope_uris: "{{ scopes[0]['uri'] }}"
   delegate_to: localhost
-  when: scopes is True
+  when: scopes is defined
 
 - debug: var=enclosure_groups
 
 - name: Gather facts about an Enclosure Group by name
   oneview_enclosure_group_facts:
     config: "{{ config }}"
-    name: "{{ name }}"
+    name: "{{ contents.enclosure_group.eg_name}}"
   delegate_to: localhost
 
 - debug: var=enclosure_groups
@@ -36,7 +36,7 @@
 - name: Gather facts about an Enclosure Group by name with configuration script
   oneview_enclosure_group_facts:
     config: "{{ config }}"
-    name: "{{ name }}"
+    name: "{{ contents.enclosure_group.eg_name }}"
     options:
       - configuration_script
   delegate_to: localhost
