@@ -1,5 +1,3 @@
 ---
 # defaults file for oneview_server_hardware_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_hardware_facts/files/oneview_config.json"
-server_hardware_name: "0000A66102, bay 5"
-server_hardware_uri: "/rest/server-hardware/33343538-3136-4332-3230-313531304752"

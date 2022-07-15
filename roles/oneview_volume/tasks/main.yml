@@ -13,18 +13,18 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
@@ -53,8 +53,7 @@
       properties:
         name: 'Volume with template name'
         description: 'Test volume with template name'
-      templateName: "{{ volume_template_name }}"
-      isPermanent: false
+      templateName: "{{ contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
 - name: Create a Volume with a specified Storage Pool
@@ -69,7 +68,6 @@
         size: 2147483648  # 2GB
         storagePool: "{{ storage_pools[0]['uri'] }}"
       templateUri: "{{ storage_volume_templates[0]['uri'] }}"
-      isPermanent: false
   delegate_to: localhost
   when: (storage_pools is not none and storage_pools is not undefined and 
           storage_volume_templates is not none and storage_volume_templates is not undefined)
@@ -103,7 +101,6 @@
         storagePool: "{{ storage_pools[0]['uri'] }}"
         snapshotPool: "{{ storage_pools[0]['uri'] }}"
       templateUri: "{{ storage_volume_templates[0]['uri'] }}"
-      isPermanent: false
       initialScopeUris:  # This option available only with API version 600 and above
         - "{{ scopes[0]['uri'] }}"
   delegate_to: localhost
@@ -185,7 +182,6 @@
         size: 2147483648  # 2GB
         storagePool: "{{ storage_pools[0]['uri'] }}"
       templateUri: "{{ storage_volume_templates[0]['uri'] }}"
-      isPermanent: false
   delegate_to: localhost
   when: (storage_pools is not none and storage_pools is not undefined and 
           storage_volume_templates is not none and storage_volume_templates is not undefined)

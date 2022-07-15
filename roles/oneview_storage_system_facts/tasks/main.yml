@@ -31,7 +31,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ storage_system_ip }}"
+    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -40,7 +40,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ storage_system_ip }}"
+    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -49,7 +49,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ storage_system_name }}"
+    name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -68,7 +68,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ storage_system_name }}"
+    name: "{{ contents.storage_system.storage_system_name }}"
     options:
          storagePools
   delegate_to: localhost
@@ -87,7 +87,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ storage_system_ip }}"
+    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
     options:
       - reachablePorts:
           networks:
@@ -101,7 +101,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ storage_system_ip }}"
+    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
     options:
       - templates
     params:

@@ -50,7 +50,7 @@
   oneview_volume_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ storage_volume_name }}"
+    name: "{{ contents.volume.storage_volume_name }}"
     options:
         - snapshots  # optional
   delegate_to: localhost
@@ -62,7 +62,7 @@
   oneview_volume_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ storage_volume_name }}"
+    name: "{{ contents.volume.storage_volume_name }}"
     options:
         - snapshots:  # optional
                 name: "{{ snapshots[0]['name'] }}"

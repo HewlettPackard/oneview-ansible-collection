@@ -1,7 +1,4 @@
 ---
 # defaults file for oneview_logical_enclosure
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_enclosure/files/oneview_config.json"
-logical_enclosure_name: "LE"  # Set the name of a Logical Enclosure
-firmware_name: "SPP_2018_11_20190205_for_HPE_Synergy_Z7550-96592"  # Set the name of a Firmware Driver
-variant: "Synergy"
-eg_name: EG
+contents: "{{ lookup('file','../config/config.json') | from_json }}"

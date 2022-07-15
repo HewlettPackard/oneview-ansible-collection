@@ -13,18 +13,18 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
@@ -40,7 +40,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -54,7 +54,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -68,8 +68,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ scope_name }}"
-      newName: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}"
+      newName: "{{ contents.scope.scope_name }}_Renamed"
       addedResourceUris:
         - "{{ ethernet_networks[2]['uri'] }}"
       removedResourceUris:
@@ -83,7 +83,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
-      name: "{{ cscope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         addedResourceUris: "{{ ethernet_networks[0]['uri'] }}"
   delegate_to: localhost
@@ -96,7 +96,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
-      name: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         removedResourceUris:
           - "{{ ethernet_networks[0]['uri'] }}"
@@ -110,7 +110,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ scope_name }}_Renamed"
+      name: "{{ contents.scope.scope_name }}_Renamed"
   delegate_to: localhost
 
 - name: Create a scope to ensure continuity for an automation script
@@ -119,5 +119,5 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ scope_name }}"
+      name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost

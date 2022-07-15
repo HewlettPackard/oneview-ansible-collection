@@ -1,6 +1,5 @@
 ---
 # defaults file for oneview_enclosure_facts
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_enclosure_facts/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-name: "0000A66102"  # Set the name of an existent Enclosure to run this example
-variant: "Synergy"
+config_file: "{{lookup('file', config)}}"
+contents: "{{lookup('file','../config/config.json') | from_json}}"

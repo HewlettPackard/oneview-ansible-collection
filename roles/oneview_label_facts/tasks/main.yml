@@ -8,6 +8,13 @@
 
 - debug: var=session
 
+- name: Gather facts about all Enclosures
+  oneview_enclosure_facts:
+    config: "{{ config }}"
+  delegate_to: localhost
+
+- debug: var=enclosures[0]['uri']
+
 - name: Gather facts about all Labels
   oneview_label_facts:
     config: "{{ config }}"
@@ -50,7 +57,7 @@
   oneview_label_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    resourceUri: "{{ resource_uri }}" 
+    resourceUri: "{{ enclosures[0]['uri'] }}" 
   delegate_to: localhost
 
 - debug: var=labels

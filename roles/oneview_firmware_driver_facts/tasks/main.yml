@@ -32,7 +32,7 @@
   oneview_firmware_driver_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ fw_name }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
   delegate_to: localhost
 
 - debug: var=firmware_drivers
@@ -41,8 +41,8 @@
   oneview_firmware_driver_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ fw_name }}"
-    version: "{{ version }}"
+    name: "{{ contents.firmware_driver.baseline_firmware_name }}"
+    version: "{{ contents.firmware_driver.version }}"
   delegate_to: localhost
 
 - debug: var=firmware_drivers

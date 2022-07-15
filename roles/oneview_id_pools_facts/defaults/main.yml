@@ -1,4 +1,4 @@
 ---
-# defaults file for oneview_id_pools_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_facts/files/oneview_config.json"
-poolType: vmac
+# defaults file for oneview_id_pools
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools/files/oneview_config.json"
+contents: "{{lookup('file','../config/config.json')|from_json}}"

@@ -3,18 +3,18 @@
   oneview_version_facts:
     config: "{{ config }}" 
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Server Profile Templates
   oneview_server_profile_template_facts:
@@ -44,7 +44,7 @@
 - name: Gather facts about a Server Profile Template by name
   oneview_server_profile_template_facts:
     config: "{{ config }}"
-    name: "{{ server_profile_template_name }}"
+    name: "{{ contents.server_profile_template.server_profile_template_name }}"
   delegate_to: localhost
 
 - debug: var=server_profile_templates
@@ -59,7 +59,7 @@
 - name: Gather facts about a template and a profile with the configuration based on this template
   oneview_server_profile_template_facts:
     config: "{{ config }}"
-    name: "{{ server_profile_template_name }}"
+    name: "{{ contents.server_profile_template.server_profile_template_name }}"
     options:
       - new_profile
   delegate_to: localhost
@@ -81,7 +81,7 @@
 - name: Transform an existing profile template by supplying a new server hardware type and/or enclosure group.
   oneview_server_profile_template_facts:
     config: "{{ config }}"
-    name: "{{ server_profile_template_name }}"
+    name: "{{ contents.server_profile_template.server_profile_template_name }}"
     options:
       - transformation:
           enclosure_group_uri: "{{ enclosure_groups[0]['uri'] }}"

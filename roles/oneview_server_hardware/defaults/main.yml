@@ -2,9 +2,3 @@
 # defaults file for oneview_server_hardware
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_hardware/files/oneview_config.json"
 contents: "{{lookup('file', config)}}"
-server_hardware_hostname: "0000A66102, bay 5"
-server_hardware_username: "<server-hardware-username>"
-server_hardware_password: "<server-hardware-password>"
-multiple_hosts:
-  - "{{ server_hardware_hostname }}"
-variant: 'Synergy'

@@ -13,18 +13,18 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
     currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
@@ -40,7 +40,7 @@
     data:
       name: 'OneViewSDK Test Network Set'
       networkUris:
-        - "{{ ethernet_network_1_name }}"  # can be a name
+        - "{{ contents.network_set.ethernet_network_1_name }}"  # can be a name
         - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
       bandwidth:
         maximumBandwidth: 15000
@@ -76,7 +76,7 @@
       name: 'OneViewSDK Test Network Set'
       newName: 'OneViewSDK Test Network Set - Renamed'
       networkUris:
-        - '{{ ethernet_network_1_name }}'
+        - '{{ contents.network_set.ethernet_network_1_name }}'
   delegate_to: localhost
 
 - name: Delete the Network Set
@@ -96,7 +96,7 @@
     data:
       name: 'OneViewSDK Test Network Set'
       networkUris:
-        - "{{ ethernet_network_1_name }}"  # can be a name
+        - "{{ contents.network_set.ethernet_network_1_name }}"  # can be a name
         - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
       bandwidth:
         maximumBandwidth: 15000

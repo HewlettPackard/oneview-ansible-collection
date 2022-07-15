@@ -33,7 +33,7 @@
   oneview_scope_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ scope_name }}"
+    name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost
 
 - debug: var=scopes

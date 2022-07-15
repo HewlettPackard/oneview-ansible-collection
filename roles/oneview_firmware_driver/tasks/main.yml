@@ -14,9 +14,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      customBaselineName: "{{ firmware_name }}"
-      baselineName: "{{ baseline_firmware_name }}"
-      hotfixNames: "{{ hotfix_firmware_list }}"
+      customBaselineName: "{{ contents.firmware_driver.firmware_name }}"
+      baselineName: "{{ contents.firmware_driver.baseline_firmware_name }}"
+      hotfixNames: "{{ contents.firmware_driver.hotfix_firmware_list }}"
   delegate_to: localhost
 
 - name: Create the Firmware Driver if already present
@@ -25,9 +25,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      customBaselineName: "{{ firmware_name }}"
-      baselineName: "{{ baseline_firmware_name }}"
-      hotfixNames: "{{ hotfix_firmware_list }}"
+      customBaselineName: "{{ contents.firmware_driver.firmware_name }}"
+      baselineName: "{{ contents.firmware_driver.baseline_firmware_name }}"
+      hotfixNames: "{{ contents.firmware_driver.hotfix_firmware_list }}"
   delegate_to: localhost
 
 - name: Delete the Firmware Driver
@@ -35,7 +35,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ firmware_name }}"
+    name: "{{ contents.firmware_driver.firmware_name }}"
   delegate_to: localhost
 
 - name: Do nothing when Firmware Driver is absent
@@ -43,5 +43,5 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ firmware_name }}"
+    name: "{{ contents.firmware_driver.firmware_name }}"
   delegate_to: localhost

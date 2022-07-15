@@ -13,7 +13,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    file_path: "{{ spp_bundle_path }}"
+    file_path: "{{ contents.firmware_bundle.spp_bundle_path }}"
   delegate_to: localhost
 
 - name: Ensure the firmware bundle is present
@@ -21,7 +21,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    file_path: "{{ spp_bundle_path }}"
+    file_path: "{{ contents.firmware_bundle.spp_bundle_path }}"
   delegate_to: localhost
 
 - name: Upload the hotfix
@@ -29,7 +29,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    file_path: "{{ hotfix_path }}"
+    file_path: "{{ contents.firmware_bundle.hotfix_path }}"
   delegate_to: localhost
 
 - name: Ensure the hotfix is present
@@ -37,7 +37,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    file_path: "{{ hotfix_path }}"
+    file_path: "{{ contents.firmware_bundle.hotfix_path }}"
   delegate_to: localhost
 
 - name: Upload the compsig file
@@ -45,7 +45,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: add_signature
-    file_path: "{{ compsig_file }}"
+    file_path: "{{ contents.firmware_bundle.compsig_file }}"
   delegate_to: localhost
 
 - name: Ensure the compsig file is already present
@@ -53,5 +53,5 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: add_signature
-    file_path: "{{ compsig_file }}"
+    file_path: "{{ contents.firmware_bundle.compsig_file }}"
   delegate_to: localhost

@@ -1,5 +1,4 @@
 ---
 # defaults file for oneview_appliance_device_snmp_v1_trap_destination
-
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_device_snmp_v1_trap_destination/files/oneview_config.json"
-destination_address: "2.2.2.2"
+contents: "{{lookup('file','../config/config.json')| from_json}}"

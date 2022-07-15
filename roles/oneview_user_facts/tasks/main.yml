@@ -40,7 +40,8 @@
   oneview_user_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    role: "{{ role }}"
+    role: "{{ contents.users.role }}"
+
   delegate_to: localhost
 
 - debug: var=role

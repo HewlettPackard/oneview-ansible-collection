@@ -1,0 +1,208 @@
+{
+    "id_pools_ipv4_range":
+    {
+        "type": "<type>",
+        "subnetmask": "<subnetmask>",
+        "gateway": "<gateway>",
+        "domain": "<domain>",
+        "dnsServers": [],
+        "subnet_name": "<subnet_name>",
+        "range_name": "<range_name>",
+        "disabled_range_name": "<disabled_range_name>",
+        "networkId": "<networkId>",
+        "start_address": "<start_address>",
+        "end_address1": "<end_address1>",
+        "end_address2": "<end_address2>",
+        "idList": []
+    },
+    "id_pools_ipv4_subnet":{
+        "subnet_name": "<subnet_name>",
+        "network_id": "<network_id>",
+         "type": "<type>",
+        "subnetmask": "<subnetmask>",
+         "gateway": "<gateway>",
+        "domain": "<domain>",
+        "dnsServers": [],
+        "count": "<count>",
+        "newDomain": "<newDomain>",
+        "start_address": "<start_address>",
+        "end_address": "<end_address>"
+
+    },
+    "ethernet_network":{
+    "network_name": "<network_name>"},
+    "scope":{
+        "scope_name": "<scope_name>"
+    },
+    "fc_network":{
+        "network_scope_uris":[],
+        "network_name": "<network_name>"
+
+    },
+    "fcoe_network":{
+        "network_scope_uris":[],
+        "network_name": "<network_name>"
+    },
+    "connection_template":{
+        "template_name": "<template_name>"
+    },
+    "network_set":{
+    "network_name": "<network_name>",
+    "ethernet_network_1_name": "<ethernet_network_1_name>"},
+    "hypervisor_manager":{
+    "hypervisor_managers_name":"<hypervisor_managers_name>"},
+    "logical_interconnect_group":
+    {
+        "permitted_interconnect_type_name_1": "<permitted_interconnect_type_name_1>",
+        "permitted_interconnect_type_name_2": "<permitted_interconnect_type_name_2>"
+    },
+    "enclosure_group":{
+        "enclosure_group_name": "<enclosure_group_name>",
+        "enclosure_group_new_name": "<enclosure_group_new_name>",
+        "variant": "<variant>",
+        "ip_range": "<ip_range_boolean_value>",
+        "lig_name": "<lig_name>",
+        "eg_name": "<eg_name>"
+    },
+    "enclosure":{
+        "enclosure_name": "<enclosure_name>",
+         "variant": "<variant>"
+    },
+    "interconnect":
+    {
+        "interconnect_name": "<interconnect_name>",
+        "interconnect_ip": "<interconnect_ip>",
+        "interconnect_ip_for_update": "<interconnect_ip_for_update>",
+        "port_id": "<port_id>",
+        "port_name": "<port_name>",
+        "subport_number": "<subport_number>"
+        },
+        "logical_enclosure":{
+            "logical_enclosure_name": "<logical_enclosure_name>",
+            "variant": "<variant>",
+            "eg_name": "<eg_name>"
+        },
+        "logical_interconnect":{
+        "logical_interconnect_name": "<logical_interconnect_name>",
+        "network_name": "<network_name>",
+        "variant": "<variant>"},
+        "server_hardware_type":
+        {
+            "server_hardware_type_name_renamed": "<server_hardware_type_name_renamed>",
+            "variant": "<variant>"
+        },
+        "server_hardware":
+        {
+            "server_hardware_hostname": "<server_hardware_hostname>",
+            "server_hardware_username": "<server_hardware_username>",
+            "server_hardware_password": "<server_hardware_password>",
+            "multiple_hosts":[],
+            "variant": "<variant>"
+        },
+        "storage_system":
+        {
+            "storage_domain": "<storage_domain>",
+            "storage_system_name": "<storage_system_name>",
+            "storage_system_ip": "<storage_system_ip>",
+            "storage_system_username": "<storage_system_username>",
+            "storage_system_password": "<storage_system_password>"
+        },
+        "storage_pool":
+        {
+            "storage_pool_name": "<storage_pool_name>"
+        },
+        "storage_volume":
+        {
+            "volume_template_name": "<volume_template_name>"
+        },
+        "volume":{
+            "storage_volume_name": "<storage_volume_name>"
+        },
+        "server_profile_template":{
+        "server_profile_template_name": "<server_profile_template_name>",
+        "server_hardware_type_name": "<server_hardware_type_name>",
+        "enclosure_group_name": "<enclosure_group_name>",
+        "connection_network_name": "<connection_network_name>"},
+        "server_profile":
+        {
+            "ov_template":  "<ov_template>",
+            "enclosure_group_name": "<enclosure_group_name>",
+            "server_hardware_type_name": "<server_hardware_type_name>",
+            "network_name": "<network_name>",
+            "server_profile_description": "<server_profile_description>",
+            "inventory_hostname": "<inventory_hostname>",
+            "server_profile_name": "<server_profile_name>"
+        },
+        "storage_volume_attachment":
+        {
+            "storage_volume_name": "<storage_volume_name>",
+             "server_profile_name": "<server_profile_name>"
+        },
+        "appliance_proxy":{
+            "server_ip": "<server_ip>",
+            "username": "<username>",
+            "password": "<password>"
+        },
+        "appliance_network_interface":
+        {
+            "mac_address": "<mac_address>"
+
+        },
+        "appliance_device_snmp_v1_trap_destinations":{
+            "destination_address": "<destination_address>"
+        },
+        "appliance_device_snmp_v3_users":{
+            "type": "<type>",
+            "user_name": "<user_name>",
+            "security_level": "<security_level>",
+            "authentication_protocol": "<authentication_protocol>",    
+            "authentication_passphrase": "<authentication_passphrase>"
+        },
+        "appliance_device_snmp_v3_trap_destination":{
+            "destination_address": "<destination_address>",
+            "username1": "<username1>",
+            "username2": "<username2>"
+        },
+        "appliance_time_and_locale_configuration":{
+            "ntp_server": "<ntp_server>"
+        },
+        "certificates_server":{
+            "remote_server": "<remote_server>"
+        },
+        "firmware_bundle":{
+            "spp_bundle_path": "<spp_bundle_path>",
+            "hotfix_path": "<hotfix_path>",
+            "compsig_file": "<compsig_file>"
+        },
+        "firmware_driver":{
+            "firmware_name": "<firmware_name>",
+             "baseline_firmware_name": "<baseline_firmware_name>",
+              "hotfix_firmware_list": [],
+              "version": "<version>"
+             },
+             "id_pools":{
+                "poolType": "<poolType>"
+             },
+             "labels":{
+                "label_name_1": "<label_name_1>",
+                "label_name_2": "<label_name_2>",
+                "label_name_3": "<label_name_3>",
+                "label_rename_1": "<label_rename_1>",
+                "label_rename_2": "<label_rename_2>"
+             },
+             "users":{
+                "user_name": "<user_name>",
+                "email": "<email>",
+                "role": "<role>",
+                "newpassword": "<newpassword>"
+             },
+             "dynamic_role":
+             {
+                "permitted_interconnect_type_name_1": "<permitted_interconnect_type_name_1>",
+                "permitted_interconnect_type_name_2": "<permitted_interconnect_type_name_2>",
+                "eth_network_1": "<eth_network_1>",
+                "eth_network_2": "<eth_network_2>",
+                "fc_network_1": "<fc_network_1>",
+                "fc_network_2": "<fc_network_2>"
+             }
+}

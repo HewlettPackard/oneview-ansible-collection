@@ -34,7 +34,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - debug: var=interconnects
@@ -43,7 +43,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - nameServers
   delegate_to: localhost
@@ -55,7 +55,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - statistics
 
@@ -66,9 +66,10 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - portStatistics: "{{ port_name }}"
+  when: interconnects[0]['state'] != "Monitored"
 
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_port_statistics
@@ -77,12 +78,12 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - subPortStatistics:
-            portName: "{{ port_name }}"
-            subportNumber: "{{ subport_number }}"
-
+            portName: "{{ contents.interconnect.port_name }}"
+            subportNumber: "{{ contents.interconnect.subport_number }}"
+  when: interconnects[0]['state'] != "Monitored"
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_subport_statistics
 
@@ -90,7 +91,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - ports
 
@@ -101,9 +102,9 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
-        - port: "{{ port_name }}"
+        - port: "{{ contents.interconnect.port_name }}"
 
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_port
@@ -112,7 +113,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - pluggableModuleInformation
 

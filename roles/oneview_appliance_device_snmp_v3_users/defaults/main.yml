@@ -1,9 +1,4 @@
 ---
 # defaults file for oneview_appliance_device_snmp_v3_users
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_device_snmp_v3_users/files/oneview_config.json"
-network_name: 'Ansible Test FC Network'
-type: 'Users'
-user_name: 'TestUser'
-security_level: 'Authentication'
-authentication_protocol: 'SHA512'
-authentication_passphrase: 'authPass'
+contents: "{{ lookup('file','../config/config.json') | from_json}}"

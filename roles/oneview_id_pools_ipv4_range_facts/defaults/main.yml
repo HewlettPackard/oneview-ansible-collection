@@ -1,5 +1,4 @@
 ---
 # defaults file for oneview_id_pools_ipv4_ranges
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_id_pools_ipv4_range_facts/files/oneview_config.json"
-subnet_name: "192.168.20.0"
-range_name: Experts Range
+contents: "{{lookup('file', '../config/config.json') | from_json}}"

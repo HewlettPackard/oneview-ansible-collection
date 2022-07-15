@@ -13,14 +13,14 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    remote: "{{ remote_server }}"
+    remote: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
 - set_fact:
@@ -31,10 +31,10 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ remote_server }}"
+        - aliasName: "{{ contents.certificates_server.remote_server }}"
           base64Data: "{{ certificate }}"
   delegate_to: localhost
   register: svr_cert
@@ -44,7 +44,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data:
       category: certificates
   delegate_to: localhost
@@ -54,11 +54,11 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data:
       name: "test"
       certificateDetails:
-        - aliasName: "{{ remote_server }}"
+        - aliasName: "{{ contents.certificates_server.remote_server }}"
           base64Data: "{{ certificate }}"
   delegate_to: localhost
 
@@ -67,7 +67,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data: "{{ svr_cert.ansible_facts.certificate_server }}"
   delegate_to: localhost
   register: deleted
@@ -77,7 +77,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data: "{{ svr_cert.ansible_facts.certificate_server }}"
   delegate_to: localhost
   register: deleted
@@ -87,10 +87,10 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ remote_server }}"
+    name: "{{ contents.certificates_server.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ remote_server }}"
+        - aliasName: "{{ contents.certificates_server.remote_server }}"
           base64Data: "{{ certificate }}"
   delegate_to: localhost
   register: svr_cert

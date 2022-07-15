@@ -1,4 +1,18 @@
 ---
+- name: Ensure the ID Pools IPV4 Subnet exists
+  oneview_id_pools_ipv4_subnet:
+    config: "{{ config }}"
+    state: present
+    data:
+      name: '{{ contents.id_pools_ipv4_range.subnet_name }}'
+      type: '{{ contents.id_pools_ipv4_range.type }}'
+      networkId: '{{ contents.id_pools_ipv4_range.networkId }}'
+      subnetmask: '{{ contents.id_pools_ipv4_range.subnetmask }}'
+      gateway: '{{ contents.id_pools_ipv4_range.gateway }}'
+      domain: '{{ contents.id_pools_ipv4_range.domain }}'
+      dnsServers: '{{ contents.id_pools_ipv4_range.dnsServers }}'
+  delegate_to: localhost
+
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
@@ -12,23 +26,25 @@
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    networkId: '{{ networkId }}'
+    networkId: "{{ contents.id_pools_ipv4_range.networkId }}"
   delegate_to: localhost
+
+- debug: var=id_pools_ipv4_subnets
 
 - set_fact: subnet_uri="{{ id_pools_ipv4_subnets[0]['uri'] }}"
 
-- name: Ensure the IPV4 Range '{{ range_name }}' exists
+- name: Ensure the IPV4 Range '{{ contents.id_pools_ipv4_range.range_name }}' exists
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.range_name }}'
       subnetUri: '{{ subnet_uri }}'
       rangeCategory: Custom
       startStopFragments:
-        - startAddress: "{{ start_address }}"
-          endAddress: "{{ end_address1 }}"
+        - startAddress: "{{ contents.id_pools_ipv4_range.start_address }}"
+          endAddress: "{{ contents.id_pools_ipv4_range.end_address1 }}"
   delegate_to: localhost
 
 - set_fact: uri="{{ id_pools_ipv4_range['uri'] }}"
@@ -39,11 +55,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.range_name }}'
       uri: '{{ uri }}'
       startStopFragments:
-        - startAddress: "{{ start_address }}"
-          endAddress: "{{ end_address2 }}"
+        - startAddress: "{{ contents.id_pools_ipv4_range.start_address }}"
+          endAddress: "{{ contents.id_pools_ipv4_range.end_address2 }}"
   delegate_to: localhost
 
 - name: Ensure the IPV4 Range is enabled
@@ -52,7 +68,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.range_name }}'
       subnetUri: '{{ subnet_uri }}'
       enabled: True
   delegate_to: localhost
@@ -79,7 +95,7 @@
       uri: "{{ uri }}"
       count: 2
       update_allocator: True
-      idList: '{{ idList }}'
+      idList: '{{ contents.id_pools_ipv4_range.idList }}'
   delegate_to: localhost
 
 - name: Collects set of ID from an IPV4 Range
@@ -108,8 +124,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ range_name }}'
-      newName: '{{ disabled_range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.range_name }}'
+      newName: '{{ contents.id_pools_ipv4_range.disabled_range_name }}'
       subnetUri: '{{ subnet_uri }}'
       enabled: True
   delegate_to: localhost
@@ -120,7 +136,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: '{{ disabled_range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.disabled_range_name }}'
       subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 
@@ -130,20 +146,20 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: '{{ disabled_range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.disabled_range_name }}'
       subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 
-- name: Create the IPV4 Range '{{ range_name }}' for automation
+- name: Create the IPV4 Range '{{ contents.id_pools_ipv4_range.range_name }}' for automation
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ range_name }}'
+      name: '{{ contents.id_pools_ipv4_range.range_name }}'
       subnetUri: '{{ subnet_uri }}'
       rangeCategory: Custom
       startStopFragments:
-        - startAddress: "{{ start_address }}"
-          endAddress: "{{ end_address1 }}"
+        - startAddress: "{{ contents.id_pools_ipv4_range.start_address }}"
+          endAddress: "{{ contents.id_pools_ipv4_range.end_address2 }}"
   delegate_to: localhost 

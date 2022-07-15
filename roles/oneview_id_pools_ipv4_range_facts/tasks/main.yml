@@ -12,7 +12,7 @@
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    networkId: '{{ subnet_name }}'
+    networkId: '{{ contents.id_pools_ipv4_range.networkId }}'
   delegate_to: localhost
 
 - debug: var=id_pools_ipv4_subnets
@@ -35,7 +35,7 @@
 
 - debug: var=id_pools_ipv4_ranges
 
-- name: Get facts about all the ranges in in the '{{ subnet_name }}'
+- name: Get facts about all the ranges in in the '{{ contents.id_pools_ipv4_range.subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -44,11 +44,11 @@
 
 - debug: var=id_pools_ipv4_ranges
 
-- name: Get facts about the range '{{ range_name }}' in the '{{ subnet_name }}'
+- name: Get facts about the range '{{ contents.id_pools_ipv4_range.range_name }}' in the '{{ contents.id_pools_ipv4_range.subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ range_name }}'
+    name: '{{ contents.id_pools_ipv4_range.range_name }}'
     subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 

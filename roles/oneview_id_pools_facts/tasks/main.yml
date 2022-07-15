@@ -23,7 +23,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: generate
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
 
 - name: Get the ID Pools type
@@ -32,7 +32,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: get_pool_type
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
 - debug: var=id_pool
 
@@ -42,7 +42,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: check_range_availability
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       idList: ["42:CE:78:00:00:00", "42:CE:78:8F:FF:FF"]
   delegate_to: localhost
 

@@ -27,7 +27,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'powered_on'
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the UID light to 'On' for interconnect that matches the specified name
@@ -35,7 +35,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'uid_on'
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Perform a device reset for interconnect that matches the specified name
@@ -43,7 +43,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'device_reset'
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the power off for interconnect that matches the specified ip
@@ -51,7 +51,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'powered_off'
-    ip: '{{ interconnect_ip }}'
+    ip: "{{ contents.interconnect.interconnect_ip }}"
   delegate_to: localhost
 
 - name: Updates the interconnect ports
@@ -59,7 +59,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'update_ports'
-    ip: '{{ interconnect_ip_for_update }}'
+    ip: "{{ contents.interconnect.interconnect_ip_for_update }}"
     ports: [
       {
           "type": "portV6",
@@ -67,7 +67,7 @@
           "portName": "d1",
           "bayNumber": 1,
           "enabled": False,
-          "portId": '{{ port_id }}'
+          "portId": "{{ contents.interconnect.port_id }}"
       }
     ]
   delegate_to: localhost
@@ -78,7 +78,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: 'reset_port_protection'
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Reapplies the interconnect configuration
@@ -86,5 +86,5 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
-    name: "{{ interconnect_name }}"
+    name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost

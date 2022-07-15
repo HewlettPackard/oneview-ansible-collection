@@ -38,7 +38,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ volume_template_name }}"
+      name: "{{ contents.storage_volume.volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         name:
@@ -118,7 +118,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ volume_template_name }}"
+      name: "{{ contents.storage_volume.volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         provisioningType:
@@ -131,7 +131,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ volume_template_name }}"
+      name: "{{ contents.storage_volume.volume_template_name }}"
       rootTemplateUri: "{{ svt_root_uri }}"
       properties:
         provisioningType:
@@ -144,5 +144,5 @@
 #     config: "{{ config }}"
 #     state: absent
 #     data:
-#         name: '{{volume_template_name}}'
+#         name: '{{contents.storage_volume.volume_template_name}}'
 #   delegate_to: localhost

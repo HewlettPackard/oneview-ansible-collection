@@ -13,11 +13,11 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ destination_address }}"
+        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
         port: 162
-        userName: "{{ username1 }}"
+        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - debug:
@@ -28,11 +28,11 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ destination_address }}"
+        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
         port: 162
-        userName: "{{ username1 }}"
+        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - name: Update the userId of specified SNMPv3 Trap Destination
@@ -40,10 +40,10 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-      destinationAddress: "{{ destination_address }}"
-      userName: "{{ username2 }}"
+      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username2 }}"
   delegate_to: localhost
 
 - debug:
@@ -54,7 +54,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
   delegate_to: localhost
 
 - name: Ensure that the SNMPv3 Trap Destination is already absent
@@ -62,7 +62,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
   delegate_to: localhost
 
 - name: Creating the SNMPv3 Trap Destination for automation
@@ -70,9 +70,9 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ destination_address }}"
+    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ destination_address }}"
+        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
         port: 162
-        userName: "{{ username1 }}"
+        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost

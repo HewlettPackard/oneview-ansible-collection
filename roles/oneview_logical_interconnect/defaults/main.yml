@@ -1,7 +1,5 @@
 ---
 # defaults file for oneview_logical_interconnect
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_logical_interconnect/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-logical_interconnect_name: "LE-LIG" # Set the name of a Logical interconnect to run the playbook
-network_name: "TestNetwork_5" # Set the name of an existent Ethernet Network to update the internal networks
-variant: "Synergy"
+config_file: "{{lookup('file', config)}}"
+contents: "{{ lookup('file','../config/config.json') | from_json}}"

@@ -20,9 +20,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-          hostname: '{{ server_hardware_hostname }}'
-          username: '{{ server_hardware_username }}'
-          password: '{{ server_hardware_password }}'
+          hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
+          username: '{{ contents.server_hardware.server_hardware_username }}'
+          password: '{{ contents.server_hardware.server_hardware_password }}'
           force: false
           licensingIntent: "OneView"
           configurationState: "Managed"
@@ -37,9 +37,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-          hostname: '{{ server_hardware_hostname }}'
-          username: '{{ server_hardware_username }}'
-          password: '{{ server_hardware_password }}'
+          hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
+          username: '{{ contents.server_hardware.server_hardware_username }}'
+          password: '{{ contents.server_hardware.server_hardware_password }}'
           force: false
           licensingIntent: "OneView"
           configurationState: "Managed"
@@ -53,9 +53,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: multiple_servers_added
     data:
-          mpHostsAndRanges: "{{ multiple_hosts }}"
-          username: "{{ server_hardware_username }}"
-          password: "{{ server_hardware_password }}"
+          mpHostsAndRanges: "{{ contents.server_hardware.multiple_hosts }}"
+          username: "{{ contents.server_hardware.server_hardware_username }}"
+          password: "{{ contents.server_hardware.server_hardware_password }}"
           initialScopeUris: 
           - "{{ scopes[0]['uri'] }}"
           licensingIntent: "OneView"
@@ -77,7 +77,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
         powerStateData:
             powerState: "Off"
             powerControl: "MomentaryPress"
@@ -89,7 +89,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
         powerStateData:
             powerState: "On"
             powerControl: "MomentaryPress"
@@ -101,7 +101,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
         refreshStateData:
             refreshState: "RefreshPending"
   delegate_to: localhost
@@ -112,7 +112,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_firmware_version_updated
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Reset the Server Hardware iLO State
@@ -121,7 +121,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_state_reset
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Set the server UID state off
@@ -130,7 +130,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_state_off
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Enable Server Maintenance Mode
@@ -139,7 +139,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: enable_maintenance_mode
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Disable Server Maintenance Mode
@@ -148,7 +148,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: disable_maintenance_mode
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to Network
@@ -157,7 +157,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_network
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to No one-time boot
@@ -166,7 +166,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_normal
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
 
 - name: Set the calibrated max power of a server hardware
@@ -175,7 +175,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: environmental_configuration_set
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
         environmentalConfigurationData:
             calibratedMaxPower: 500
   delegate_to: localhost
@@ -187,7 +187,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
   when: variant == 'C7000'
 
@@ -197,6 +197,6 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ server_hardware_hostname }}"
+        name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
   when: variant == 'C7000'

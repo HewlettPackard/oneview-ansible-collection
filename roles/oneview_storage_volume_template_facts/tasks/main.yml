@@ -13,18 +13,18 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 - name: Gather facts about all Storage Volume Templates
   oneview_storage_volume_template_facts:
@@ -50,7 +50,7 @@
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ volume_template_name }}"
+    name: "{{ contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
 - debug: var=storage_volume_templates
@@ -73,13 +73,13 @@
     params:
       networks: "{{ fc_networks[0]['uri'] }}"
   delegate_to: localhost
-  when: currentVersion >= '500'
+  when: currentVersion >= '500' and fc_networks[0]['uri'] is defined
 
 - name: Gather facts about Storage Systems compatible to the SVT
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ volume_template_name }}"
+    name: "{{ contents.storage_volume.volume_template_name }}"
     options:
       - compatibleSystems
   delegate_to: localhost
@@ -91,7 +91,7 @@
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ volume_template_name }}"
+    name: "{{ contents.storage_volume.volume_template_name }}"
     options:
       - connectableVolumeTemplates
   delegate_to: localhost

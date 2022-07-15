@@ -32,7 +32,7 @@
   oneview_connection_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ template_name }}"
+    name: "{{ contents.connection_template.template_name }}"
   delegate_to: localhost
 
 - debug: var=connection_templates

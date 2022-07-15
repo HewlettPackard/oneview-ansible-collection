@@ -1,6 +1,5 @@
 ---
 # defaults file for oneview_storage_pool
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_storage_pool/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-storage_pool_name: "cpg-growth-limit-1TiB"
-storage_system_name: "ThreePAR-1"
+config_file: "{{lookup('file', config)}}"
+contents: "{{lookup('file','../config/config.json')| from_json}}"

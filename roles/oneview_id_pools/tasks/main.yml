@@ -14,7 +14,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: update_pool_type
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       enabled: True
   delegate_to: localhost
 
@@ -24,7 +24,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: allocate
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       count: 2
   delegate_to: localhost
 - debug: var=id_pool
@@ -35,7 +35,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: collect
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       idList: '{{ id_pool["idList"] }}'
   delegate_to: localhost
 
@@ -45,7 +45,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: generate
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
 - debug: var=id_pool
 
@@ -55,7 +55,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: validate
     data:
-      poolType: '{{ poolType }}'
+      poolType: '{{ contents.id_pools.poolType }}'
       idList: ['{{ id_pool["startAddress"] }}', 
                '{{ id_pool["endAddress"] }}']
   delegate_to: localhost

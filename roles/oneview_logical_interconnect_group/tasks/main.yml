@@ -13,18 +13,18 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
 
 # Below task creates a Logical Interconnect Group with Interconnects, InternalNetworks, upLinkPorts, uplinkSets containing EthernetNetworks
 - name: Create a Logical Interconnect Group
@@ -85,9 +85,9 @@
         - name: 'e23 uplink set1'
           mode: 'Auto'
           networkType: 'Ethernet'
-          ethernetNetworkType: 'Untagged'
+          ethernetNetworkType: 'Tagged'
           networkNames:
-            - 'mgmt_nw'
+            - 'ovsdk_mgmt_nw'
           logicalPortConfigInfos:
             - desiredSpeed: 'Auto'
               logicalLocation:
@@ -119,7 +119,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 2
             logicalLocation:
                 locationEntries:
@@ -127,7 +127,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
           - enclosureIndex: 2
             logicalLocation:
                 locationEntries:
@@ -135,7 +135,7 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 3
             logicalLocation:
                 locationEntries:
@@ -143,7 +143,7 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
                 locationEntries:
@@ -151,7 +151,7 @@
                       type: "Enclosure"
                     - relativeValue: 6
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
                 locationEntries:
@@ -159,7 +159,7 @@
                       type: "Enclosure"
                     - relativeValue: 3
                       type: "Bay"
-            permittedInterconnectTypeName: "{{ permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
@@ -189,8 +189,7 @@
           mode: 'Auto'
           networkType: 'Ethernet'
           networkNames:
-            - 'TestNetwork_3'
-              #                - '/rest/ethernet-networks/5cca6ddc-49b1-4c7c-9022-eadb2630d42b'
+            - 'TestNetwork_7'
           logicalPortConfigInfos:
             - desiredSpeed: 'Auto'
               logicalLocation:

@@ -12,7 +12,7 @@
   oneview_logical_interconnect_group_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ lig_name }}"
+    name: "{{ contents.enclosure_group.lig_name }}"
   delegate_to: localhost
 - set_fact:
     lig_uri: "{{ logical_interconnect_groups[0]['uri'] }}"
@@ -27,10 +27,6 @@
         ipAddressingMode: "External"
         ipv6AddressingMode: "External"
         enclosureCount: 3
-        osDeploymentSettings:
-          manageOSDeployment: true
-          deploymentModeSettings:
-            deploymentMode: "Internal"
         interconnectBayMappings:
           - interconnectBay: 3
             logicalInterconnectGroupUri: "{{ lig_uri }}"
@@ -39,7 +35,7 @@
   delegate_to: localhost
   with_items:
     - { name: 'EG' }
-    - { name: "{{ enclosure_group_name }}" }
+    - { name: "{{ contents.enclosure_group.enclosure_group_name }}" }
 
 # Run this exampleto create enclosure group with interconnects having ip rangeUris
 - name: Create an Enclosure Group with ip rangeUris
@@ -64,7 +60,7 @@
           - interconnectBay: 6
             logicalInterconnectGroupUri: "{{ lig_uri }}"
   delegate_to: localhost
-  when: ip_range == 'True'
+  when: contents.enclosure_group.ip_range == 'True'
 
 - name: Do nothing with the Enclosure Group when no changes are provided
   oneview_enclosure_group:
@@ -72,14 +68,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ enclosure_group_name }}"
+        name: "{{ contents.enclosure_group.enclosure_group_name }}"
         ipAddressingMode: "External"
         ipv6AddressingMode: "External"
         enclosureCount: 3
-        osDeploymentSettings:
-          manageOSDeployment: true
-          deploymentModeSettings:
-            deploymentMode: "Internal"
         interconnectBayMappings:
           - interconnectBay: 3
             logicalInterconnectGroupUri: "{{ lig_uri }}"
@@ -93,8 +85,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ enclosure_group_name }}"
-        newName: "{{ enclosure_group_new_name }}"
+        name: "{{ contents.enclosure_group.enclosure_group_name }}"
+        newName: "{{ contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 # This play is compatible with C7000 Enclosures
@@ -104,10 +96,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ enclosure_group_new_name }}"
+        name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
         configurationScript: "# script (updated)"
   delegate_to: localhost
-  when: variant == "C7000"
+  when: contents.enclosure_group.variant == "C7000"
 
 - name: Delete the Enclosure Group
   oneview_enclosure_group:
@@ -115,7 +107,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ enclosure_group_new_name }}"
+      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 - name: Do nothing when Enclosure Group is absent
@@ -124,5 +116,5 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ enclosure_group_new_name }}"
+      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost

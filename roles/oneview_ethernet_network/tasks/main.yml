@@ -13,18 +13,18 @@
     config: "{{ config }}" 
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   set_fact: 
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   set_fact: 
-    currentVersion: contents.api_version | string
-  when: contents.api_version != ""
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
     
 - name: Create an Ethernet Network
   oneview_ethernet_network:
@@ -43,7 +43,7 @@
           typicalBandwidth: 1000
   delegate_to: localhost
   with_items:
-    - { name: '{{ network_name }}', vlanId: '201' }
+    - { name: '{{ contents.ethernet_network.network_name }}', vlanId: '201' }
     - { name: 'ovsdk_mgmt_nw', vlanId: '202'}
 
 - name: Update the Ethernet Network changing bandwidth and purpose
@@ -52,7 +52,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ network_name }}'
+      name: '{{ contents.ethernet_network.network_name }}'
       purpose: Management
       bandwidth:
           maximumBandwidth: 3000
@@ -65,7 +65,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: default_bandwidth_reset
     data:
-      name: '{{ network_name }}'
+      name: '{{ contents.ethernet_network.network_name }}'
   delegate_to: localhost
 
 - name: Ensure ethernet network has no scopes
@@ -74,19 +74,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ network_name }}"
+      name: "{{ contents.ethernet_network.network_name }}"
       scopeUris: []
-  when: currentVersion >= '300' and currentVersion <= '500'
-  delegate_to: localhost
-
-- name: Ensure Ethernet Network has two scopes
-  oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: present
-    data:
-      name: "{{ network_name }}"
-      scopeUris: "{{ network_scope_uris }}"
   when: currentVersion >= '300' and currentVersion <= '500'
   delegate_to: localhost
 
@@ -96,7 +85,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ network_name }}'
+      name: '{{ contents.ethernet_network.network_name }}'
       newName: 'Updated Ethernet Network'
   delegate_to: localhost
 

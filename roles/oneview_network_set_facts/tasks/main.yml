@@ -43,7 +43,7 @@
   oneview_network_set_facts:
     config: '{{ config }}'
     sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ network_set_name }}'
+    name: '{{ contents.network_set.network_name }}'
   delegate_to: localhost
 
 - debug: var=network_sets
@@ -53,7 +53,7 @@
   oneview_network_set_facts:
     config: '{{ config }}'
     sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ network_set_name }}'
+    name: '{{ contents.network_set.network_name }}'
     options:
         - withoutEthernet
   delegate_to: localhost

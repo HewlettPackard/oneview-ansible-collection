@@ -15,7 +15,7 @@
     state: present
     data:
       locale: ja_JP.UTF-8
-      ntpServers: ["{{ ntp_server }}"]
+      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
       timezone: UTC
       type: TimeAndLocale
   delegate_to: localhost
@@ -28,7 +28,7 @@
     state: present
     data:
       locale: ja_JP.UTF-8
-      ntpServers: ["{{ ntp_server }}"]
+      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
       timezone: UTC
       type: TimeAndLocale
   delegate_to: localhost
@@ -41,7 +41,7 @@
     state: present
     data:
       locale: en_US.UTF-8
-      ntpServers: ["{{ ntp_server }}"]
+      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
       timezone: UTC
       type: TimeAndLocale
   delegate_to: localhost
