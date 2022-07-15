@@ -42,6 +42,11 @@ options:
       description:
         - Storage System name.
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "List with options to gather additional facts about a Storage System and related resources.
@@ -200,6 +205,7 @@ class StorageSystemFactsModule(OneViewModule):
             name=dict(type='str'),
             options=dict(type='list'),
             params=dict(type='dict'),
+            sessionID=dict(required=False, type='str'),
             storage_hostname=dict(type='str')
         )
 

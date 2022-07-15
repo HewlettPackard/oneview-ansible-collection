@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Uplink Sets
   oneview_uplink_set_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: msg="{{uplink_sets | map(attribute='name') | list }}"
@@ -9,6 +19,7 @@
 - name: Gather facts about all Logical Interconnects
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=logical_interconnects
@@ -16,6 +27,7 @@
 - name: Gather paginated, filtered and sorted facts about Uplink Sets
   oneview_uplink_set_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 2
@@ -28,6 +40,7 @@
 - name: Gather facts about a Uplink Set by name
   oneview_uplink_set_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "ULS-2"
   delegate_to: localhost
 

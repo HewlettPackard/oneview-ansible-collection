@@ -46,6 +46,11 @@ options:
         - Role name.
       required: false
       type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
     options:
       description:
         - "To gather the additonal facts about the roles associated with username.
@@ -127,6 +132,7 @@ class UserFactsModule(OneViewModule):
     def __init__(self):
 
         argument_spec = dict(
+            sessionID=dict(required=False, type='str'),
             userName=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             role=dict(required=False, type='str'),

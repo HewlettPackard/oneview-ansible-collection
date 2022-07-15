@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about all Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_pools
@@ -9,6 +19,7 @@
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -20,12 +31,14 @@
 - name: Gather facts about a Storage Pool by name
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ storage_pool_name }}"
   delegate_to: localhost
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=fc_networks
@@ -33,6 +46,7 @@
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=scopes
@@ -40,6 +54,7 @@
 - name: Gather facts about reachable storage pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - reachableStoragePools:
           networks: 

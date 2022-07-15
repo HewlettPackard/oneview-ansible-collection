@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: contents.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Gather facts about all Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=storage_volume_templates
@@ -26,6 +37,7 @@
 - name: Gather paginated, filtered and sorted facts about Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -37,6 +49,7 @@
 - name: Gather facts about a Storage Volume Template by name
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ volume_template_name }}"
   delegate_to: localhost
 
@@ -45,6 +58,7 @@
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=fc_networks
@@ -53,6 +67,7 @@
 - name: Gather facts about the reachable Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - reachableVolumeTemplates
     params:
@@ -63,6 +78,7 @@
 - name: Gather facts about Storage Systems compatible to the SVT
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ volume_template_name }}"
     options:
       - compatibleSystems
@@ -74,6 +90,7 @@
 - name: Gather facts about the connectable Storage Volume Templates
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ volume_template_name }}"
     options:
       - connectableVolumeTemplates
