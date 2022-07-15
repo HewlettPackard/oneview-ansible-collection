@@ -33,6 +33,11 @@ requirements:
     - "hpeOneView >= 5.4.0"
 author: "Felipe Bulsoni (@fgbulsoni)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     state:
         description:
             - Indicates the desired state for the Fibre Channel Network resource.
@@ -122,6 +127,7 @@ class FcNetworkModule(OneViewModule):
     def __init__(self):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
+                                   sessionID=dict(required=False, type='str'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))

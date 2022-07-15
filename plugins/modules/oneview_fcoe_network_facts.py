@@ -41,6 +41,11 @@ options:
       description:
         - FCoE Network name.
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -100,6 +105,7 @@ class FcoeNetworkFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             name=dict(type='str'),
+            sessionID=dict(required=False, type='str'),
             params=dict(type='dict'),
         )
 

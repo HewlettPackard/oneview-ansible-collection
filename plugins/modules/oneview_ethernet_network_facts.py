@@ -37,6 +37,11 @@ author:
     - "Camila Balestrin (@balestrinc)"
     - "Mariana Kreisig (@marikrg)"
 options:
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
     name:
       description:
         - Ethernet Network name.
@@ -127,6 +132,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class EthernetNetworkFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
+        sessionID=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict')
     )

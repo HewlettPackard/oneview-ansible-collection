@@ -44,6 +44,11 @@ options:
       description:
         - SNMP user resource uri.
       type: str
+    sessionID:
+        description:
+          - Session ID to use for login to the appliance
+        type: str
+        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.factsparams
@@ -105,6 +110,7 @@ class ApplianceDeviceSnmpV3UsersFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
+            sessionID=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )
         super().__init__(additional_arg_spec=argument_spec)

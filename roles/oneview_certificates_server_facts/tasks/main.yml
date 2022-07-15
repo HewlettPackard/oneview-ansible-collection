@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     remote: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
@@ -10,6 +20,7 @@
 - name: Gather facts about a Server Certificate by alias_name
   oneview_certificates_server_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     aliasName: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 

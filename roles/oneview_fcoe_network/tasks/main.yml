@@ -1,7 +1,17 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +29,7 @@
 - name: Create a FCoE Network
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: '{{ item.name }}'
@@ -34,6 +45,7 @@
 - name: Do nothing with the FCoE Network when no changes are provided
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Test FCoE Network'
@@ -43,6 +55,7 @@
 - name: Update the FCoE Network changing the name attribute
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: '{{ contents.fcoe_network.network_name }}'
@@ -54,6 +67,7 @@
 - name: Update the FCoE Network with two scopes
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
       name: 'Test FCoE Network - Changed'
@@ -64,6 +78,7 @@
 - name: Delete the FCoE Network
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Test FCoE Network - Changed'
@@ -72,6 +87,7 @@
 - name: Do nothing when FCoE Network is absent
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       name: 'Test FCoE Network - Changed'
@@ -81,6 +97,7 @@
 - name: Delete FCoE Networks in bulk
   oneview_fcoe_network:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
       networkUris: 
