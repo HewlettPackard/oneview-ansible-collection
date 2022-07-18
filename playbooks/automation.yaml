@@ -731,7 +731,16 @@
         rescue:
           - name: (Display)
             debug:
-              msg: "{{ msg.include_args.name }}"    
+              msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (repositories)
+            include_role:
+              name: hpe.oneview.oneview_repositories
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
 #   # roles:   
 #     # - hpe.oneview.image_streamer_plan_script
 #     # - hpe.oneview.image_streamer_plan_script_facts

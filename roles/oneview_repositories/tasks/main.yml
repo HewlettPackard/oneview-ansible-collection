@@ -8,6 +8,19 @@
 
 - debug: var=session
 
+#Server Certificate need to be added to appliance for using an Https web server
+- name: Create a Server Certificate
+  oneview_certificates_server:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    name: "{{ remote_server }}"
+    data:
+      certificateDetails:
+        - aliasName: "{{ remote_server }}"
+          base64Data: "{{ certificate }}"
+  delegate_to: localhost
+
 - name: Create a Repository
   oneview_repositories:
     config: "{{ config }}"
