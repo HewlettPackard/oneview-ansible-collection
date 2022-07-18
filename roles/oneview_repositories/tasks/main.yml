@@ -8,16 +8,26 @@
 
 - debug: var=session
 
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    remote: "{{ contents.repositories.remote_server }}"
+  delegate_to: localhost
+
+- set_fact:
+    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+
 #Server Certificate need to be added to appliance for using an Https web server
 - name: Create a Server Certificate
   oneview_certificates_server:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ remote_server }}"
+    name: "{{ contents.repositories.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ remote_server }}"
+        - aliasName: "{{ contents.repositories.remote_server }}"
           base64Data: "{{ certificate }}"
   delegate_to: localhost
 
@@ -28,10 +38,10 @@
     state: present
     validate_etag: False
     data:
-      name: "{{ repository_name }}"
-      userName: "{{ repository_username }}"
-      password: "{{ repository_password }}"
-      repositoryURI: "{{ repository_uri }}"
+      name: "{{ contents.repositories.repository_name }}"
+      userName: "{{ contents.repositories.repository_username }}"
+      password: "{{ contents.repositories.repository_password }}"
+      repositoryURI: "{{ contents.repositories.repository_uri }}"
       repositoryType: "FirmwareExternalRepo"
   delegate_to: localhost
   register: repository
@@ -42,10 +52,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ repository_name }}"
-      userName: "{{ repository_username }}"
-      password: "{{ repository_password }}"
-      repositoryURI: "{{ repository_uri }}"
+      name: "{{ contents.repositories.repository_name }}"
+      userName: "{{ contents.repositories.repository_username }}"
+      password: "{{ contents.repositories.repository_password }}"
+      repositoryURI: "{{ contents.repositories.repository_uri }}"
       repositoryType: "FirmwareExternalRepo"
   delegate_to: localhost
 
@@ -55,8 +65,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: patch
     data:
-      name: "{{ repository_name }}"
-      newName: "{{ repository_name }}-updated"
+      name: "{{ contents.repositories.repository_name }}"
+      newName: "{{ contents.repositories.repository_name }}-updated"
   delegate_to: localhost
 
 - name: Delete the Repository
@@ -65,7 +75,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ repository_name }}"
+      name: "{{ contents.repositories.repository_name }}"
     params:
       force: True
   delegate_to: localhost
@@ -77,6 +87,6 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ repository_name }}"
+      name: "{{ contents.repositories.repository_name }}"
   delegate_to: localhost
   register: deleted
