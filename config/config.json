@@ -204,5 +204,14 @@
                 "eth_network_2": "<eth_network_2>",
                 "fc_network_1": "<fc_network_1>",
                 "fc_network_2": "<fc_network_2>"
+             },
+             "repositories":
+             {
+                "repository_name": "<repository_name>",
+                "repository_username": "<repository_username>",
+                "repository_password": "<repository_password>",
+                "repository_uri": "<repository_uri>",
+                "remote_server": "<remote_server>",
+                "certificate": "<certificate>"
              }
 }
