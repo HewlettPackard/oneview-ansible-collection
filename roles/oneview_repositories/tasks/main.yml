@@ -8,8 +8,6 @@
 
 - debug: var=session
 
-- debug: var="{{ contents.repositories.remote_server }}"
-
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
     config: "{{ config }}"
