@@ -47,7 +47,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     uri: "{{ appliance_device_snmp_v3_trap_destinations['uri'] }}"
   delegate_to: localhost
-  when: appliance_device_snmp_v3_trap_destinations is True
+  when: appliance_device_snmp_v3_trap_destinations is defined
 
 - debug:
     var: appliance_device_snmp_v3_trap_destinations

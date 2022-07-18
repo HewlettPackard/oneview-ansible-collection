@@ -29,7 +29,7 @@
           initialScopeUris: 
           - "{{ scopes[0]['uri'] }}" #Supported only with OneView API version >= 600.
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware.variant == 'C7000'
 
 - name: Do nothing when the server hardware is already present
   oneview_server_hardware:
@@ -44,7 +44,7 @@
           licensingIntent: "OneView"
           configurationState: "Managed"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware.variant == 'C7000'
 
 #This task available only with OneView API version >= 600.
 - name: Add multiple rack-mount servers
@@ -61,7 +61,7 @@
           licensingIntent: "OneView"
           configurationState: "Managed"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware.variant == 'C7000'
 
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
@@ -189,7 +189,7 @@
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware.variant == 'C7000'
 
 - name: Do nothing when the server hardware is already removed
   oneview_server_hardware:
@@ -199,4 +199,4 @@
     data:
         name: "{{ contents.server_hardware.server_hardware_hostname }}"
   delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.server_hardware.variant == 'C7000'
