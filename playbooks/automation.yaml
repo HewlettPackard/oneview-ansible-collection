@@ -3,735 +3,735 @@
     collections:
       - hpe.oneview
     tasks:
-      - block:
-          - name: (id_pools_ipv4_range)
-            include_role:
-              name: hpe.oneview.oneview_id_pools_ipv4_range
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (id_pools_ipv4_range_facts)
-            include_role:
-              name: hpe.oneview.oneview_id_pools_ipv4_range_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (id_pools_ipv4_subnet)
-            include_role:
-              name: hpe.oneview.oneview_id_pools_ipv4_subnet
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (id_pools_ipv4_subnet_facts)
-            include_role:
-              name: hpe.oneview.oneview_id_pools_ipv4_subnet_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (ethernet_network)
-            include_role:
-              name: hpe.oneview.oneview_ethernet_network
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (ethernet_network_facts)
-            include_role:
-              name: hpe.oneview.oneview_ethernet_network_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (scope)
-            include_role:
-              name: hpe.oneview.oneview_scope
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (scope_facts)
-            include_role:
-              name: hpe.oneview.oneview_scope_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (fc_network)
-            include_role:
-              name: hpe.oneview.oneview_fc_network
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (fc_network_facts)
-            include_role:
-              name: hpe.oneview.oneview_fc_network_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (fcoe_network)
-            include_role:
-              name: hpe.oneview.oneview_fcoe_network
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (fcoe_network_facts)
-            include_role:
-              name: hpe.oneview.oneview_fcoe_network_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (connection_template)
-            include_role:
-              name: hpe.oneview.oneview_connection_template
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (connection_template_facts)
-            include_role:
-              name: hpe.oneview.oneview_connection_template_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (network_set)
-            include_role:
-              name: hpe.oneview.oneview_network_set
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (network_set_facts)
-            include_role:
-              name: hpe.oneview.oneview_network_set_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (hypervisor_manager_facts)
-            include_role:
-              name: hpe.oneview.oneview_hypervisor_manager_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (task)
-            include_role:
-              name: hpe.oneview.oneview_task
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (task_facts)
-            include_role:
-              name: hpe.oneview.oneview_task_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_interconnect_group)
-            include_role:
-              name: hpe.oneview.oneview_logical_interconnect_group
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_interconnect_group_facts)
-            include_role:
-              name: hpe.oneview.oneview_logical_interconnect_group_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (enclosure_group)
-            include_role:
-              name: hpe.oneview.oneview_enclosure_group
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (enclosure_group_facts)
-            include_role:
-              name: hpe.oneview.oneview_enclosure_group_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
       # - block:
-      #     - name: (enclosure)
+      #     - name: (id_pools_ipv4_range)
       #       include_role:
-      #         name: hpe.oneview.oneview_enclosure
+      #         name: hpe.oneview.oneview_id_pools_ipv4_range
       #       register: msg
       #   rescue:
       #     - name: (Display)
       #       debug:
       #         msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (enclosure_facts)
-            include_role:
-              name: hpe.oneview.oneview_enclosure_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (interconnect_type_facts)
-            include_role:
-              name: hpe.oneview.oneview_interconnect_type_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (interconnect)
-            include_role:
-              name: hpe.oneview.oneview_interconnect
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (interconnect_facts)
-            include_role:
-              name: hpe.oneview.oneview_interconnect_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_enclosure) 
-            include_role:
-              name: hpe.oneview.oneview_logical_enclosure
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_enclosure_facts)
-            include_role:
-              name: hpe.oneview.oneview_logical_enclosure_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_interconnect)
-            include_role:
-              name: hpe.oneview.oneview_logical_interconnect
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (logical_interconnect_facts)
-            include_role:
-              name: hpe.oneview.oneview_logical_interconnect_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (uplink_set)
-            include_role:
-              name: hpe.oneview.oneview_uplink_set
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (uplink_set_facts)
-            include_role:
-              name: hpe.oneview.oneview_uplink_set_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_hardware_type)
-            include_role:
-              name: hpe.oneview.oneview_server_hardware_type
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_hardware_type_facts)
-            include_role:
-              name: hpe.oneview.oneview_server_hardware_type_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_hardware)
-            include_role:
-              name: hpe.oneview.oneview_server_hardware
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_hardware_facts)
-            include_role:
-              name: hpe.oneview.oneview_server_hardware_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_system)
-            include_role:
-              name: hpe.oneview.oneview_storage_system
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_system_facts)
-            include_role:
-              name: hpe.oneview.oneview_storage_system_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_pool)
-            include_role:
-              name: hpe.oneview.oneview_storage_pool
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_pool_facts)
-            include_role:
-              name: hpe.oneview.oneview_storage_pool_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_volume_template)
-            include_role:
-              name: hpe.oneview.oneview_storage_volume_template
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_volume_template_facts)
-            include_role:
-              name: hpe.oneview.oneview_storage_volume_template_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (volume)
-            include_role:
-              name: hpe.oneview.oneview_volume
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (volume_facts)
-            include_role:
-              name: hpe.oneview.oneview_volume_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_profile_template)
-            include_role:
-              name: hpe.oneview.oneview_server_profile_template
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_profile_template_facts)
-            include_role:
-              name: hpe.oneview.oneview_server_profile_template_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_profile)
-            include_role:
-              name: hpe.oneview.oneview_server_profile
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (server_profile_facts)
-            include_role:
-              name: hpe.oneview.oneview_server_profile_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
       # - block:
-      #     - name: (storage_volume_attachment)
+      #     - name: (id_pools_ipv4_range_facts)
       #       include_role:
-      #         name: hpe.oneview.oneview_storage_volume_attachment
+      #         name: hpe.oneview.oneview_id_pools_ipv4_range_facts
       #       register: msg
       #   rescue:
       #     - name: (Display)
       #       debug:
       #         msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (storage_volume_attachment_facts)
-            include_role:
-              name: hpe.oneview.oneview_storage_volume_attachment_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}" 
-      - block:
-          - name: (appliance_configuration_timeconfig_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_configuration_timeconfig_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_proxy_configuration)
-            include_role:
-              name: hpe.oneview.oneview_appliance_proxy_configuration
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"      
-      - block:
-          - name: (appliance_proxy_configuration_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_proxy_configuration_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"      
-      - block:
-          - name: (appliance_network_interface_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_network_interface_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_network_interface_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_network_interface_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
       # - block:
-      #     - name: (appliance_network_interfaces)
+      #     - name: (id_pools_ipv4_subnet)
       #       include_role:
-      #         name: hpe.oneview.oneview_appliance_network_interfaces
+      #         name: hpe.oneview.oneview_id_pools_ipv4_subnet
       #       register: msg
       #   rescue:
       #     - name: (Display)
       #       debug:
       #         msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v1_trap_destination)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v1_trap_destination_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v3_users)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v3_users
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v3_users_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v3_trap_destination)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_device_snmp_v3_trap_destination_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_ssh_access_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_ssh_access_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_ssh_access)
-            include_role:
-              name: hpe.oneview.oneview_appliance_ssh_access
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_time_and_locale_configuration)
-            include_role:
-              name: hpe.oneview.oneview_appliance_time_and_locale_configuration
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (appliance_time_and_locale_configuration_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (certificates_server)
-            include_role:
-              name: hpe.oneview.oneview_certificates_server
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (certificates_server_facts)
-            include_role:
-              name: hpe.oneview.oneview_certificates_server_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (firmware_bundle)
-            include_role:
-              name: hpe.oneview.oneview_firmware_bundle
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"     
-      - block:
-          - name: (firmware_driver)
-            include_role:
-              name: hpe.oneview.oneview_firmware_driver
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (firmware_driver_facts)
-            include_role:
-              name: hpe.oneview.oneview_firmware_driver_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (id_pools)
-            include_role:
-              name: hpe.oneview.oneview_id_pools
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (id_pools_facts)
-            include_role:
-              name: hpe.oneview.oneview_id_pools_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (label)
-            include_role:
-              name: hpe.oneview.oneview_label
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (label_facts)
-            include_role:
-              name: hpe.oneview.oneview_label_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (user)
-            include_role:
-              name: hpe.oneview.oneview_user
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (user_facts)
-            include_role:
-              name: hpe.oneview.oneview_user_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}" 
-      - block:
-          - name: (version_facts)
-            include_role:
-              name: hpe.oneview.oneview_version_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
-      - block:
-          - name: (dynamic_role)
-            include_role:
-              name: hpe.oneview.oneview_dynamic_role
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
-              msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (id_pools_ipv4_subnet_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_id_pools_ipv4_subnet_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (ethernet_network)
+      #       include_role:
+      #         name: hpe.oneview.oneview_ethernet_network
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (ethernet_network_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_ethernet_network_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (scope)
+      #       include_role:
+      #         name: hpe.oneview.oneview_scope
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (scope_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_scope_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (fc_network)
+      #       include_role:
+      #         name: hpe.oneview.oneview_fc_network
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (fc_network_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_fc_network_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (fcoe_network)
+      #       include_role:
+      #         name: hpe.oneview.oneview_fcoe_network
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (fcoe_network_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_fcoe_network_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (connection_template)
+      #       include_role:
+      #         name: hpe.oneview.oneview_connection_template
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (connection_template_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_connection_template_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (network_set)
+      #       include_role:
+      #         name: hpe.oneview.oneview_network_set
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (network_set_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_network_set_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (hypervisor_manager_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_hypervisor_manager_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (task)
+      #       include_role:
+      #         name: hpe.oneview.oneview_task
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (task_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_task_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_interconnect_group)
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_interconnect_group
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_interconnect_group_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_interconnect_group_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (enclosure_group)
+      #       include_role:
+      #         name: hpe.oneview.oneview_enclosure_group
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (enclosure_group_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_enclosure_group_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # # - block:
+      # #     - name: (enclosure)
+      # #       include_role:
+      # #         name: hpe.oneview.oneview_enclosure
+      # #       register: msg
+      # #   rescue:
+      # #     - name: (Display)
+      # #       debug:
+      # #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (enclosure_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_enclosure_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (interconnect_type_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_interconnect_type_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (interconnect)
+      #       include_role:
+      #         name: hpe.oneview.oneview_interconnect
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (interconnect_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_interconnect_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_enclosure) 
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_enclosure
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_enclosure_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_enclosure_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_interconnect)
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_interconnect
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (logical_interconnect_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_logical_interconnect_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (uplink_set)
+      #       include_role:
+      #         name: hpe.oneview.oneview_uplink_set
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (uplink_set_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_uplink_set_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_hardware_type)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_hardware_type
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_hardware_type_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_hardware_type_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_hardware)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_hardware
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_hardware_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_hardware_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_system)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_system
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_system_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_system_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_pool)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_pool
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_pool_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_pool_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_volume_template)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_volume_template
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_volume_template_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_volume_template_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (volume)
+      #       include_role:
+      #         name: hpe.oneview.oneview_volume
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (volume_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_volume_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_profile_template)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_profile_template
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_profile_template_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_profile_template_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_profile)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_profile
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (server_profile_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_server_profile_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # # - block:
+      # #     - name: (storage_volume_attachment)
+      # #       include_role:
+      # #         name: hpe.oneview.oneview_storage_volume_attachment
+      # #       register: msg
+      # #   rescue:
+      # #     - name: (Display)
+      # #       debug:
+      # #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (storage_volume_attachment_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_storage_volume_attachment_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}" 
+      # - block:
+      #     - name: (appliance_configuration_timeconfig_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_configuration_timeconfig_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_proxy_configuration)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_proxy_configuration
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"      
+      # - block:
+      #     - name: (appliance_proxy_configuration_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_proxy_configuration_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"      
+      # - block:
+      #     - name: (appliance_network_interface_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_network_interface_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_network_interface_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_network_interface_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # # - block:
+      # #     - name: (appliance_network_interfaces)
+      # #       include_role:
+      # #         name: hpe.oneview.oneview_appliance_network_interfaces
+      # #       register: msg
+      # #   rescue:
+      # #     - name: (Display)
+      # #       debug:
+      # #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v1_trap_destination)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v1_trap_destination_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v3_users)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v3_users
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v3_users_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v3_trap_destination)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_device_snmp_v3_trap_destination_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_ssh_access_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_ssh_access_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_ssh_access)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_ssh_access
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_time_and_locale_configuration)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_time_and_locale_configuration
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (appliance_time_and_locale_configuration_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (certificates_server)
+      #       include_role:
+      #         name: hpe.oneview.oneview_certificates_server
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (certificates_server_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_certificates_server_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (firmware_bundle)
+      #       include_role:
+      #         name: hpe.oneview.oneview_firmware_bundle
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"     
+      # - block:
+      #     - name: (firmware_driver)
+      #       include_role:
+      #         name: hpe.oneview.oneview_firmware_driver
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (firmware_driver_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_firmware_driver_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (id_pools)
+      #       include_role:
+      #         name: hpe.oneview.oneview_id_pools
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (id_pools_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_id_pools_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (label)
+      #       include_role:
+      #         name: hpe.oneview.oneview_label
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (label_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_label_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (user)
+      #       include_role:
+      #         name: hpe.oneview.oneview_user
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (user_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_user_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}" 
+      # - block:
+      #     - name: (version_facts)
+      #       include_role:
+      #         name: hpe.oneview.oneview_version_facts
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
+      # - block:
+      #     - name: (dynamic_role)
+      #       include_role:
+      #         name: hpe.oneview.oneview_dynamic_role
+      #       register: msg
+      #   rescue:
+      #     - name: (Display)
+      #       debug:
+      #         msg: "{{ msg.include_args.name }}"
       - block:
           - name: (repositories)
             include_role:

@@ -212,5 +212,13 @@
                 "repository_password": "<repository_password>",
                 "repository_uri": "<repository_uri>",
                 "remote_server": "<remote_server>"
-             }
+             },
+             "repositories_check":
+            {
+                "repository_name": "RepoName",
+                "repository_username": "ovsdk",
+                "repository_password": "ovsdk123",
+                "repository_uri": "https://172.27.2.242/webdav",
+                "remote_server": "172.27.2.242"
+            }
 }
