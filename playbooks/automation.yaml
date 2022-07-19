@@ -723,15 +723,15 @@
       #     - name: (Display)
       #       debug:
       #         msg: "{{ msg.include_args.name }}"
-      # - block:
-      #     - name: (dynamic_role)
-      #       include_role:
-      #         name: hpe.oneview.oneview_dynamic_role
-      #       register: msg
-      #   rescue:
-      #     - name: (Display)
-      #       debug:
-      #         msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (dynamic_role)
+            include_role:
+              name: hpe.oneview.oneview_dynamic_role
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
       - block:
           - name: (repositories)
             include_role:
