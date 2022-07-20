@@ -1,12 +1,12 @@
 {
-    "ip": "<oneview_ip>",
-    "credentials": {
-      "userName": "<user_name>",
-      "password": "<password>",
-      "authLoginDomain": "<domain_directory>"
+  "ip": "<oneview_ip>",
+  "credentials": {
+    "userName": "<user_name>",
+    "password": "<password>",
+    "authLoginDomain": "<domain_directory>"
 },
-    "image_streamer_ip": "",
-    "api_version": 4000,
-    "variant": "Synergy"
-  }
+  "image_streamer_ip": "",
+  "api_version": 4200,
+  "variant": "Synergy"
+}
   
