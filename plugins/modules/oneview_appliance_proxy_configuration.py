@@ -118,9 +118,11 @@ class ApplianceProxyConfigurationModule(OneViewModule):
         # ignored for comparison
         if self.current_resource:
             user_data = self.data.copy()
-            user_data.pop('password')
+            if user_data.get('password'):
+                user_data.pop('password')
             existing_data = self.current_resource.data.copy()
-            existing_data.pop('password')
+            if existing_data.get('password'):
+                existing_data.pop('password')
             updated_data = dict_merge(existing_data, user_data)
             if not compare(existing_data, updated_data):
                 field_changed = True
