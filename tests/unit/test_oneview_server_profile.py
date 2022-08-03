@@ -27,9 +27,8 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
                                                                                     OneViewModuleTaskError,
                                                                                     SPKeys,
                                                                                     ServerProfileMerger,
-                                                                                    ServerProfileReplaceNamesByUris,
-                                                                                    HPEOneViewTaskError)
-
+                                                                                    ServerProfileReplaceNamesByUris)
+from hpeOneView.exceptions import HPEOneViewTaskError
 
 SERVER_PROFILE_NAME = "Profile101"
 DESCRIPTION = "test description"

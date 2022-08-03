@@ -239,10 +239,13 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           SPKeys,
                                                                           OneViewModuleException,
                                                                           compare,
-                                                                          OneViewModuleResourceNotFound,
-                                                                          HPEOneViewTaskError
+                                                                          OneViewModuleResourceNotFound
                                                                           )
 
+try:
+    from hpeOneView.exceptions import HPEOneViewTaskError
+except ImportError:
+    pass
 
 class ServerProfileModule(OneViewModule):
     ASSIGN_HARDWARE_ERROR_CODES = ['AssignProfileToDeviceBayError',
