@@ -247,6 +247,7 @@ try:
 except ImportError:
     pass
 
+
 class ServerProfileModule(OneViewModule):
     ASSIGN_HARDWARE_ERROR_CODES = ['AssignProfileToDeviceBayError',
                                    'EnclosureBayUnavailableForProfile',
