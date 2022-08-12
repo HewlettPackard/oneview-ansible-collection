@@ -699,6 +699,7 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
+
     def test_should_try_with_next_available_hardware_25_times_on_server_profile_exist_error(self):
 
         profile_from_template = deepcopy(BASIC_PROFILE)
