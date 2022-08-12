@@ -503,20 +503,6 @@ class OneViewModuleException(Exception):
             Exception.__init__(self, self.msg)
 
 
-class HPEOneViewTaskError(OneViewModuleException):
-    """
-    OneView Task Error Exception.
-
-    Attributes:
-       msg (str): Exception message.
-       error_code (str): A code which uniquely identifies the specific error.
-    """
-
-    def __init__(self, msg, error_code=None):
-        super(HPEOneViewTaskError, self).__init__(msg)
-        self.error_code = error_code
-
-
 class OneViewModuleTaskError(OneViewModuleException):
     """
     OneView Task Error Exception.

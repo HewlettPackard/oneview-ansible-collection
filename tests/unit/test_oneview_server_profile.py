@@ -27,9 +27,8 @@ from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader impo
                                                                                     OneViewModuleTaskError,
                                                                                     SPKeys,
                                                                                     ServerProfileMerger,
-                                                                                    ServerProfileReplaceNamesByUris,
-                                                                                    HPEOneViewTaskError)
-
+                                                                                    ServerProfileReplaceNamesByUris)
+from hpeOneView.exceptions import HPEOneViewTaskError
 
 SERVER_PROFILE_NAME = "Profile101"
 DESCRIPTION = "test description"
@@ -42,8 +41,10 @@ FAKE_SERVER_HARDWARE = {'uri': '/rest/server-hardware/31393736-3831-4753-567h-30
 
 MESSAGE_COMPLIANT_ERROR = ServerProfileModule.MSG_MAKE_COMPLIANT_NOT_SUPPORTED.format(SERVER_PROFILE_NAME)
 FAKE_MSG_ERROR = 'Fake message error'
+PROFILE_EXISTS_ERROR = 'A profile is already assigned to the server hardware'
 
 TASK_ERROR = HPEOneViewTaskError(msg=FAKE_MSG_ERROR, error_code='AssignProfileToDeviceBayError')
+TASK_ERROR_PROFILE_EXISTS = HPEOneViewTaskError(msg=PROFILE_EXISTS_ERROR, error_code='ProfileAlreadyExistsInServer')
 
 BASIC_PROFILE = dict(
     name=SERVER_PROFILE_NAME,
@@ -698,6 +699,41 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
+
+    def test_should_try_with_next_available_hardware_25_times_on_server_profile_exist_error(self):
+
+        profile_from_template = deepcopy(BASIC_PROFILE)
+
+        param_for_present = deepcopy(PARAMS_FOR_PRESENT)
+        param_for_present['data']['serverProfileTemplateName'] = 'Server-Template-7000'
+
+        self.resource.get_by_name.return_value = None
+        self.resource.data = CREATED_BASIC_PROFILE
+        self.resource.create.return_value = self.resource
+        self.resource.create.side_effect = TASK_ERROR_PROFILE_EXISTS
+        self.resource.get_available_servers.return_value = AVAILABLE_SERVERS
+        self.mock_ov_client.api_version = 1600
+        self.mock_ov_client.server_profile_templates.data = profile_from_template
+        self.mock_ov_client.server_profile_templates.get_by_name.return_value = self.mock_ov_client.server_profile_templates
+        self.mock_ov_client.server_profile_templates.get_new_profile.return_value = profile_from_template
+        self.resource.server_hardware.update_power_state.return_value = {}
+        self.mock_ov_client.server_hardware.data = {}
+        self.mock_ov_client.server_hardware.get_by_uri.return_value = self.mock_ov_client.server_hardware
+        self.mock_ansible_module.params = param_for_present
+
+        ServerProfileModule().run()
+
+        times_get_targets_called = self.resource.get_available_targets.call_count
+        assert(25 == times_get_targets_called)
+
+        times_create_called = self.resource.create.call_count
+        assert(25 == times_create_called)
+
+        expected_profile_data = deepcopy(BASIC_PROFILE)
+        expected_profile_data.update(PARAMS_FOR_PRESENT['data'])
+        expected_profile_data['serverProfileTemplateUri'] = '/rest/server-profiles/94B55683-173F-4B36-8FA6-EC250BA2328B'
+        self.resource.create.assert_called_with(expected_profile_data)
+        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerProfileModule.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
 
     def test_should_try_create_with_automatically_selected_hardware_25_times_when_not_exists(self):
         self.resource.get_by_name.return_value = None
