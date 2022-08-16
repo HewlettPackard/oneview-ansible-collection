@@ -166,6 +166,8 @@ class LogicalInterconnectGroupModule(OneViewModule):
     MSG_INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
     MSG_NETWORK_NOT_FOUND = 'Given Network was not found.'
     MSG_NETWORK_SET_NOT_FOUND = 'Network Set was not found.'
+    PORT_NAME_INVALID = 'Given Portname is invalid.'
+    CONFIGURATION_NOT_VALID = 'Enclosure/Bay/Port configuration provided are not valid.'
 
     RESOURCE_FACT_NAME = 'logical_interconnect_group'
 
@@ -194,6 +196,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
 
         if 'uplinkSets' in self.data:
             self.__replace_uplinkset_network_uris()
+            self.__replace_uplinkset_port_values()
 
         if self.current_resource:
             changed, msg = self.__update()
@@ -288,6 +291,60 @@ class LogicalInterconnectGroupModule(OneViewModule):
             if networkSetNames:
                 networkSetUris = [self.__get_network_set(x) for x in networkSetNames]
                 uplinkSet['networkSetUris'].extend(networkSetUris)
+
+    # retrieves and replaces port number with its relative value
+    def __replace_uplinkset_port_values(self):
+        interconnect_types_client = self.oneview_client.interconnect_types
+        interconnect_map_entry_template = {}
+        map_template = self.data.get('interconnectMapTemplate')
+        if map_template:
+            map_entry_templates = map_template.get('interconnectMapEntryTemplates')
+            if map_entry_templates:
+                for value in map_entry_templates:
+                    logicalLocation = value.get('logicalLocation')
+                    locationEntries = logicalLocation.get('locationEntries')
+                    key = ''
+                    for en in locationEntries:
+                        if en.get('type')=='Enclosure':
+                            key = 'E'+str(en.get('relativeValue'))+key
+                        if en.get('type')=='Bay':
+                            key = key+'B'+str(en.get('relativeValue'))
+                    interconnect_map_entry_template[key] = value.get('permittedInterconnectTypeUri')
+
+        for uplinkSet in self.data['uplinkSets']:
+            existingLogicalPortConfigInfos = uplinkSet.get('logicalPortConfigInfos')
+            for item in existingLogicalPortConfigInfos:
+                logicalLocation = item.get('logicalLocation')
+                newLogicalLocation = {'locationEntries':[]}
+                key = ''
+                port_name = ''
+                port_check = False
+                locationEntries = logicalLocation.get('locationEntries')
+                for entry in locationEntries:
+                    if entry.get('type')=='Enclosure':
+                        key = 'E'+str(entry.get('relativeValue'))+key
+                        newLogicalLocation.get('locationEntries').append(entry)
+                    if entry.get('type')=='Bay':
+                        key = key+'B'+str(entry.get('relativeValue'))
+                        newLogicalLocation.get('locationEntries').append(entry)
+                    if entry.get('type')=='Port':
+                        port_name = entry.get('relativeValue')
+                if interconnect_map_entry_template.get(key):
+                    interconnectType = interconnect_map_entry_template[key]
+                    interconnect_type_info = interconnect_types_client.get_by_uri(interconnectType)
+                    if interconnect_type_info:
+                        portInfos = interconnect_type_info.data['portInfos']
+                        for it in portInfos:
+                            if it.get('portName')==port_name:
+                                port_check = True
+                                newLogicalLocation.get('locationEntries').append({'type':'Port','relativeValue':it.get('portNumber')})
+                        if port_check:
+                            item.pop('logicalLocation')
+                            item['logicalLocation'] = newLogicalLocation
+                        else:
+                            raise OneViewModuleResourceNotFound(self.PORT_NAME_INVALID)
+                else:
+                    raise OneViewModuleResourceNotFound(self.CONFIGURATION_NOT_VALID)
 
     def __get_network_uri(self, name, network_type):
         if network_type == 'Ethernet':
