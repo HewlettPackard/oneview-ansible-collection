@@ -316,7 +316,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
                             if en.get('type') == 'Enclosure':
                                 key = 'E' + str(en.get('relativeValue')) + key
                             if en.get('type') == 'Bay':
-                                key = key + 'B'+str(en.get('relativeValue'))
+                                key = key + 'B' + str(en.get('relativeValue'))
                         interconnect_map_entry_template[key] = value.get('permittedInterconnectTypeUri')
                 for uplinkSet in self.data['uplinkSets']:
                     existingLogicalPortConfigInfos = uplinkSet.get('logicalPortConfigInfos')
@@ -331,10 +331,10 @@ class LogicalInterconnectGroupModule(OneViewModule):
                             if entry.get('type') == 'Enclosure':
                                 key = 'E' + str(entry.get('relativeValue')) + key
                                 newLogicalLocation.get('locationEntries').append(entry)
-                            if entry.get('type')=='Bay':
+                            if entry.get('type') == 'Bay':
                                 key = key + 'B' + str(entry.get('relativeValue'))
                                 newLogicalLocation.get('locationEntries').append(entry)
-                            if entry.get('type')=='Port':
+                            if entry.get('type') == 'Port':
                                 port_name = entry.get('relativeValue')
                         if interconnect_map_entry_template.get(key):
                             interconnectType = interconnect_map_entry_template[key]
