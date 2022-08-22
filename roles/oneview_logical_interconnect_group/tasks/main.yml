@@ -51,7 +51,7 @@
                   locationEntries:
                     - relativeValue: 1
                       type: 'Enclosure'
-                    - relativeValue: 82
+                    - relativeValue: 'Q5:1'
                       type: 'Port'
                     - relativeValue: 3
                       type: 'Bay'
@@ -60,7 +60,7 @@
                   locationEntries:
                     - relativeValue: 2
                       type: 'Enclosure'
-                    - relativeValue: 82
+                    - relativeValue: 'Q5:1'
                       type: 'Port'
                     - relativeValue: 6
                       type: 'Bay'
@@ -69,7 +69,7 @@
                   locationEntries:
                     - relativeValue: 1
                       type: 'Enclosure'
-                    - relativeValue: 87
+                    - relativeValue: 'Q6:1'
                       type: 'Port'
                     - relativeValue: 3
                       type: 'Bay'
@@ -78,7 +78,7 @@
                   locationEntries:
                     - relativeValue: 2
                       type: 'Enclosure'
-                    - relativeValue: 87
+                    - relativeValue: 'Q6:1'
                       type: 'Port'
                     - relativeValue: 6
                       type: 'Bay'
@@ -94,7 +94,7 @@
                   locationEntries:
                     - relativeValue: 1
                       type: 'Enclosure'
-                    - relativeValue: 62
+                    - relativeValue: 'Q1:1'
                       type: 'Port'
                     - relativeValue: 3
                       type: 'Bay'
@@ -103,7 +103,7 @@
                   locationEntries:
                     - relativeValue: 2
                       type: 'Enclosure'
-                    - relativeValue: 62
+                    - relativeValue: 'Q1:1'
                       type: 'Port'
                     - relativeValue: 6
                       type: 'Bay'
@@ -196,7 +196,7 @@
                   locationEntries:
                     - relativeValue: 3
                       type: "Bay"
-                    - relativeValue: 67
+                    - relativeValue: 'Q2:1'
                       type: "Port"
                     - relativeValue: 1
                       type: "Enclosure"
