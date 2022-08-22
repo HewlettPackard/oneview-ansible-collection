@@ -42,6 +42,7 @@ DEFAULT_LIG_TEMPLATE = dict(
         )]
     )
 )
+
 DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS = dict(
     config='config.json',
     state='present',
@@ -56,7 +57,7 @@ DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS = dict(
                         relativeValue=1,
                         type="Bay"
                     ), dict(
-                        relativeValue=21,
+                        relativeValue='Q1',
                         type="Port"
                     ), dict(
                         relativeValue=1,
@@ -74,11 +75,78 @@ DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS = dict(
         enclosureType='C7000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
-                logicalDownlinkUri=None
+                enclosureIndex=1,
+                logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=1,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
             )]
         )
     )
 )
+DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS_INTERCONNECT_DETAILS =dict(
+            config='config.json',
+            state='present',
+            data=dict(
+                name=DEFAULT_LIG_NAME,
+                internalNetworkNames=["test1"],
+                uplinkSets=[dict(
+                    logicalPortConfigInfos=[dict(
+                        desiredSpeed="Auto",
+                        logicalLocation=dict(
+                            locationEntries=[dict(
+                                relativeValue=2,
+                                type="Bay"
+                            ), dict(
+                                relativeValue='Q1',
+                                type="Port"
+                            ), dict(
+                                relativeValue=1,
+                                type="Enclosure"
+                            )
+                            ]
+                        )
+                    )
+                    ],
+                    name="NewUplinkSet",
+                    networkType="Ethernet",
+                    networkNames=["TestNetwork_1"],
+                    networkSetNames=["test_1"]
+                )],
+                enclosureType='C7000',
+                interconnectMapTemplate=dict(
+                    interconnectMapEntryTemplates=[dict(
+                        enclosureIndex=1,
+                        logicalLocation=dict(locationEntries=[dict(
+                                relativeValue=2,
+                                type="Bay"
+                            ), dict(
+                                relativeValue=1,
+                                type="Enclosure"
+                            )
+                            ]),
+                        permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
+                    ),
+                    dict(
+                            enclosureIndex=1,
+                            logicalLocation=dict(locationEntries=[dict(
+                                relativeValue=1,
+                                type="Bay"
+                            ), dict(
+                                relativeValue=1,
+                                type="Enclosure"
+                            )
+                            ]),
+                        permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
+                    )]
+                )
+            )
+        )
 
 DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS = dict(
     config='config.json',
@@ -94,7 +162,7 @@ DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS = dict(
                         relativeValue=1,
                         type="Bay"
                     ), dict(
-                        relativeValue=21,
+                        relativeValue='Q1',
                         type="Port"
                     ), dict(
                         relativeValue=1,
@@ -112,7 +180,17 @@ DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS = dict(
         enclosureType='C7000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
-                logicalDownlinkUri=None
+                logicalDownlinkUri=None,
+                enclosureIndex=1,
+                logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=1,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
             )]
         )
     )
@@ -128,10 +206,10 @@ DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS = dict(
                 desiredSpeed="Auto",
                 logicalLocation=dict(
                     locationEntries=[dict(
-                        relativeValue=1,
+                        relativeValue=2,
                         type="Bay"
                     ), dict(
-                        relativeValue=21,
+                        relativeValue='Q1',
                         type="Port"
                     ), dict(
                         relativeValue=1,
@@ -149,10 +227,45 @@ DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS = dict(
         enclosureType='C7000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
-                logicalDownlinkUri=None
+                enclosureIndex=1,
+                logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=2,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
+            ),
+            dict(
+                    enclosureIndex=1,
+                    logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=1,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
             )]
         )
     )
+)
+PARAMS_WITH_GENERAL_CHANGES = dict(
+    config='config.json',
+    state='present',
+    data=dict(name=DEFAULT_LIG_NAME,
+    uplinkSets=[],
+    internalNetworkNames=["test2"],
+    enclosureType='C7000',
+    interconnectMapTemplate=dict(
+        interconnectMapEntryTemplates=[dict(
+            logicalDownlinkUri=None
+        )]
+    )
+)
 )
 
 PARAMS_LIG_TEMPLATE_WITH_MAP = dict(
@@ -169,7 +282,7 @@ PARAMS_LIG_TEMPLATE_WITH_MAP = dict(
                         relativeValue=1,
                         type="Bay"
                     ), dict(
-                        relativeValue=21,
+                        relativeValue='Q1',
                         type="Port"
                     ), dict(
                         relativeValue=1,
@@ -241,7 +354,7 @@ PARAMS_WITH_CHANGES = dict(
                               "relativeValue": 1,
                               "type": "Bay"
                           }, {
-                              "relativeValue": 21,
+                              "relativeValue": 'Q1',
                               "type": "Port"
                           }, {
                               "relativeValue": 1,
@@ -254,8 +367,34 @@ PARAMS_WITH_CHANGES = dict(
                   "networkUris": ["/rest/ethernet-networks/5c3aefcb-0dd5-4fcc-b652-c9e734797fbd",
                                   "/rest/ethernet-networks/5c3aefcb-0dd5-4fcc-b652-c9e734869edg"],
                   "networkNames": ["TestNetwork_1"]
-              }]
-              )
+              }],
+                enclosureType='C7000',
+                interconnectMapTemplate=dict(
+                interconnectMapEntryTemplates=[dict(
+                    enclosureIndex=1,
+                    logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=1,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d28"
+            ),dict(
+                    enclosureIndex=1,
+                    logicalLocation=dict(locationEntries=[dict(
+                        relativeValue=2,
+                        type="Bay"
+                    ), dict(
+                        relativeValue=1,
+                        type="Enclosure"
+                    )
+                    ]),
+                permittedInterconnectTypeUri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d28"
+            )]
+        )
+        )
 )
 
 PARAMS_FOR_ABSENT = dict(
@@ -273,7 +412,7 @@ UPLINK_SETS = [dict(
                     "relativeValue": 1,
                     "type": "Bay"
                 }, {
-                    "relativeValue": 21,
+                    "relativeValue": 'Q1',
                     "type": "Port"
                 }, {
                     "relativeValue": 1,
@@ -293,6 +432,7 @@ UPLINK_SETS = [dict(
 
 @pytest.mark.resource(TestLogicalInterconnectGroupModule='logical_interconnect_groups')
 class TestLogicalInterconnectGroupModule(OneViewBaseTest):
+
     def test_should_create_new_lig(self):
         self.resource.get_by_name.return_value = None
         self.resource.create.return_value = self.resource
@@ -315,6 +455,8 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
 
         self.mock_ov_client.ethernet_networks.get_by.return_value = [dict(uri='/rest/ethernet-networks/7568956')]
         self.mock_ov_client.network_sets.get_by.return_value = [dict(uri='/rest/network-sets/8985690')]
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
 
         self.mock_ansible_module.params = PARAMS_FOR_CREATE
 
@@ -333,7 +475,8 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
 
         self.mock_ov_client.fc_networks.get_by.return_value = [dict(uri='/rest/fc-networks/7568956')]
         self.mock_ov_client.network_sets.get_by.return_value = [dict(uri='/rest/network-sets/8985690')]
-
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
         self.mock_ansible_module.params = PARAMS_FOR_CREATE_FC
 
         LogicalInterconnectGroupModule().run()
@@ -350,6 +493,8 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         self.resource.data = PARAMS_FOR_PRESENT
         self.mock_ov_client.ethernet_networks.get_by.return_value = [dict(uri='/rest/ethernet-networks/18')]
         self.mock_ov_client.logical_interconnect_groups.get_by.return_value = UPLINK_SETS
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
         self.mock_ansible_module.params = deepcopy(PARAMS_LIG_TEMPLATE_WITH_MAP)
 
         LogicalInterconnectGroupModule().run()
@@ -376,7 +521,7 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
     def test_update_when_data_has_modified_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
 
-        self.mock_ansible_module.params = PARAMS_WITH_CHANGES
+        self.mock_ansible_module.params = PARAMS_WITH_GENERAL_CHANGES
 
         LogicalInterconnectGroupModule().run()
 
@@ -401,7 +546,8 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE
         self.mock_ansible_module.params = PARAMS_WITH_CHANGES
-
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
         LogicalInterconnectGroupModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
@@ -413,20 +559,9 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
     def test_should_not_update_when_data_has_same_uplinkset_attributes(self):
         self.resource.data = deepcopy(PARAMS_LIG_TEMPLATE_WITH_MAP)
         self.resource.get_by_name.return_value = self.resource
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
         self.mock_ansible_module.params = deepcopy(PARAMS_LIG_TEMPLATE_WITH_MAP)
-
-        LogicalInterconnectGroupModule().run()
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True,
-            msg=LogicalInterconnectGroupModule.MSG_UPDATED,
-            ansible_facts=dict(logical_interconnect_group=self.resource.data)
-        )
-
-    def test_update_when_data_has_new_uplinkset(self):
-        self.resource.data = DEFAULT_LIG_TEMPLATE
-        self.mock_ov_client.logical_interconnect_groups.get_by.return_value = UPLINK_SETS
-        self.mock_ansible_module.params = DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS
 
         LogicalInterconnectGroupModule().run()
 
@@ -569,6 +704,20 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
             msg=LogicalInterconnectGroupModule.MSG_ALREADY_PRESENT
         )
 
+    def test_update_when_data_has_new_uplinkset(self):
+        self.resource.data = DEFAULT_LIG_TEMPLATE
+        self.mock_ov_client.ethernet_networks.get_by.return_value = [dict(uri='/rest/ethernet-networks/18')]
+        self.mock_ov_client.logical_interconnect_groups.get_by.return_value = UPLINK_SETS
+        self.mock_ansible_module.params = DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS_INTERCONNECT_DETAILS
+        self.mock_ov_client.interconnect_types.get_by_uri.return_value.data = dict(uri="/rest/interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                                                            portInfos=[dict(portNumber=21,portName='Q1',uplinkCapable=True)])
+        LogicalInterconnectGroupModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=LogicalInterconnectGroupModule.MSG_UPDATED,
+            ansible_facts=dict(logical_interconnect_group=self.resource.data)
+        )
 
 if __name__ == '__main__':
     pytest.main([__file__])
