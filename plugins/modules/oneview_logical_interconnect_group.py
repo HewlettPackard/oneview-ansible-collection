@@ -120,7 +120,7 @@ EXAMPLES = '''
                   locationEntries:
                     - relativeValue: 1
                       type: "Bay"
-                    - relativeValue: 23
+                    - relativeValue: 'Q1'
                       type: "Port"
                     - relativeValue: 1
                       type: "Enclosure"
@@ -313,26 +313,26 @@ class LogicalInterconnectGroupModule(OneViewModule):
                         locationEntries = logicalLocation.get('locationEntries')
                         key = ''
                         for en in locationEntries:
-                            if en.get('type')=='Enclosure':
-                                key = 'E'+str(en.get('relativeValue'))+key
-                            if en.get('type')=='Bay':
-                                key = key+'B'+str(en.get('relativeValue'))
+                            if en.get('type') == 'Enclosure':
+                                key = 'E' + str(en.get('relativeValue')) + key
+                            if en.get('type') == 'Bay':
+                                key = key + 'B'+str(en.get('relativeValue'))
                         interconnect_map_entry_template[key] = value.get('permittedInterconnectTypeUri')
                 for uplinkSet in self.data['uplinkSets']:
                     existingLogicalPortConfigInfos = uplinkSet.get('logicalPortConfigInfos')
                     for item in existingLogicalPortConfigInfos:
                         logicalLocation = item.get('logicalLocation')
-                        newLogicalLocation = {'locationEntries':[]}
+                        newLogicalLocation = {'locationEntries': []}
                         key = ''
                         port_name = ''
                         port_check = False
                         locationEntries = logicalLocation.get('locationEntries')
                         for entry in locationEntries:
-                            if entry.get('type')=='Enclosure':
-                                key = 'E'+str(entry.get('relativeValue'))+key
+                            if entry.get('type') == 'Enclosure':
+                                key = 'E' + str(entry.get('relativeValue')) + key
                                 newLogicalLocation.get('locationEntries').append(entry)
                             if entry.get('type')=='Bay':
-                                key = key+'B'+str(entry.get('relativeValue'))
+                                key = key + 'B' + str(entry.get('relativeValue'))
                                 newLogicalLocation.get('locationEntries').append(entry)
                             if entry.get('type')=='Port':
                                 port_name = entry.get('relativeValue')
@@ -344,7 +344,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
                             port_info = interconnect_type_dict[interconnectType]
                             if port_info.get(port_name):
                                 port_check = True
-                                newLogicalLocation.get('locationEntries').append({'type':'Port','relativeValue':port_info.get(port_name)})
+                                newLogicalLocation.get('locationEntries').append({'type': 'Port', 'relativeValue': port_info.get(port_name)})
                             if port_check:
                                 item.pop('logicalLocation')
                                 item['logicalLocation'] = newLogicalLocation
