@@ -166,7 +166,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
     MSG_INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
     MSG_NETWORK_NOT_FOUND = 'Given Network was not found.'
     MSG_NETWORK_SET_NOT_FOUND = 'Network Set was not found.'
-    PORT_NAME_INVALID = 'Given Portname is invalid.'
+    PORT_NAME_INVALID = 'Given Port Value is invalid.'
     CONFIGURATION_NOT_VALID = 'Enclosure/Bay/Port configuration provided are not valid.'
 
     RESOURCE_FACT_NAME = 'logical_interconnect_group'
@@ -324,7 +324,7 @@ class LogicalInterconnectGroupModule(OneViewModule):
                         logicalLocation = item.get('logicalLocation')
                         newLogicalLocation = {'locationEntries': []}
                         key = ''
-                        port_name = ''
+                        port_value = ''
                         port_check = False
                         locationEntries = logicalLocation.get('locationEntries')
                         for entry in locationEntries:
@@ -335,23 +335,24 @@ class LogicalInterconnectGroupModule(OneViewModule):
                                 key = key + 'B' + str(entry.get('relativeValue'))
                                 newLogicalLocation.get('locationEntries').append(entry)
                             if entry.get('type') == 'Port':
-                                port_name = entry.get('relativeValue')
-                        if interconnect_map_entry_template.get(key):
-                            interconnectType = interconnect_map_entry_template[key]
-                            if not interconnect_type_dict.get(interconnectType):
-                                interconnect_type_info = interconnect_types_client.get_by_uri(interconnectType)
-                                interconnect_type_dict[interconnectType] = self.__filter_uplink_ports(interconnect_type_info)
-                            port_info = interconnect_type_dict[interconnectType]
-                            if port_info.get(port_name):
-                                port_check = True
-                                newLogicalLocation.get('locationEntries').append({'type': 'Port', 'relativeValue': port_info.get(port_name)})
-                            if port_check:
-                                item.pop('logicalLocation')
-                                item['logicalLocation'] = newLogicalLocation
+                                port_value = entry.get('relativeValue')
+                        if not isinstance(port_value, int):
+                            if interconnect_map_entry_template.get(key):
+                                interconnectType = interconnect_map_entry_template[key]
+                                if not interconnect_type_dict.get(interconnectType):
+                                    interconnect_type_info = interconnect_types_client.get_by_uri(interconnectType)
+                                    interconnect_type_dict[interconnectType] = self.__filter_uplink_ports(interconnect_type_info)
+                                port_info = interconnect_type_dict[interconnectType]
+                                if port_info.get(port_value):
+                                    port_check = True
+                                    newLogicalLocation.get('locationEntries').append({'type': 'Port', 'relativeValue': port_info.get(port_value)})
+                                if port_check:
+                                    item.pop('logicalLocation')
+                                    item['logicalLocation'] = newLogicalLocation
+                                else:
+                                    raise OneViewModuleResourceNotFound(self.PORT_NAME_INVALID)
                             else:
-                                raise OneViewModuleResourceNotFound(self.PORT_NAME_INVALID)
-                        else:
-                            raise OneViewModuleResourceNotFound(self.CONFIGURATION_NOT_VALID)
+                                raise OneViewModuleResourceNotFound(self.CONFIGURATION_NOT_VALID)
 
     def __filter_uplink_ports(self, interconnect_info):
         portsInfo = interconnect_info.data['portInfos']

@@ -51,7 +51,7 @@
                   locationEntries:
                     - relativeValue: 1
                       type: 'Enclosure'
-                    - relativeValue: 'Q5:1'
+                    - relativeValue: 82 #This value can be relative value of port(port number) or port name
                       type: 'Port'
                     - relativeValue: 3
                       type: 'Bay'
@@ -62,8 +62,10 @@
                       type: 'Enclosure'
                     - relativeValue: 'Q5:1'
                       type: 'Port'
+
                     - relativeValue: 6
                       type: 'Bay'
+                  
             - desiredSpeed: 'Auto'
               logicalLocation:
                   locationEntries:
