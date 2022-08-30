@@ -35,7 +35,7 @@ DEFAULT_LIG_TEMPLATE = dict(
     name=DEFAULT_LIG_NAME,
     internalNetworkNames=["test1"],
     uplinkSets=[],
-    enclosureType='C7000',
+    enclosureType='SY12000',
     interconnectMapTemplate=dict(
         interconnectMapEntryTemplates=[dict(
             logicalDownlinkUri=None
@@ -72,7 +72,7 @@ DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS = dict(
             networkNames=["Ethernet1"],
             networkSetNames=["NetworkSet1"]
         )],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 enclosureIndex=1,
@@ -119,7 +119,7 @@ DEFAULT_LIG_TEMPLATE_WITH_UPLINKSETS_PORT_RELATIVE_VALUE = dict(
             networkNames=["Ethernet1"],
             networkSetNames=["NetworkSet1"]
         )],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 enclosureIndex=1,
@@ -166,7 +166,7 @@ DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS_INTERCONNECT_DETAILS = dict(
             networkNames=["Ethernet1"],
             networkSetNames=["NetworkSet1"]
         )],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 enclosureIndex=1,
@@ -213,7 +213,7 @@ DEFAULT_LIG_TEMPLATE_WITH_FC_NETWORK_UPLINKSETS = dict(
             networkNames=["FC1"],
             networkSetNames=["NetworkSet1"]
         )],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 logicalDownlinkUri=None,
@@ -260,7 +260,7 @@ DEFAULT_LIG_TEMPLATE_WITH_NEW_UPLINKSETS = dict(
             networkNames=["TestNetwork_1"],
             networkSetNames=["test_1"]
         )],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 enclosureIndex=1,
@@ -295,7 +295,7 @@ PARAMS_WITH_GENERAL_CHANGES = dict(
         name=DEFAULT_LIG_NAME,
         uplinkSets=[],
         internalNetworkNames=["test2"],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 logicalDownlinkUri=None
@@ -334,7 +334,7 @@ PARAMS_LIG_TEMPLATE_WITH_MAP = dict(
             networkSetNames=["NetworkSet1"]
         )
         ],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[
                 {
@@ -406,7 +406,7 @@ PARAMS_WITH_CHANGES = dict(
                             "/rest/ethernet-networks/5c3aefcb-0dd5-4fcc-b652-c9e734869edg"],
             "networkNames": ["TestNetwork_1"]
         }],
-        enclosureType='C7000',
+        enclosureType='SY12000',
         interconnectMapTemplate=dict(
             interconnectMapEntryTemplates=[dict(
                 enclosureIndex=1,

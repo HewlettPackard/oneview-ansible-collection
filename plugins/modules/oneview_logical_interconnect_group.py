@@ -70,7 +70,7 @@ EXAMPLES = '''
     data:
       name: 'Test Logical Interconnect Group'
       uplinkSets: []
-      enclosureType: 'C7000'
+      enclosureType: 'SY12000'
       interconnectMapTemplate:
         interconnectMapEntryTemplates:
           - logicalDownlinkUri: ~
