@@ -120,7 +120,7 @@ EXAMPLES = '''
                   locationEntries:
                     - relativeValue: 1
                       type: "Bay"
-                    - relativeValue: 'Q1'
+                    - relativeValue: 'Q1' #This port value can be either Port Number or Port Name
                       type: "Port"
                     - relativeValue: 1
                       type: "Enclosure"
