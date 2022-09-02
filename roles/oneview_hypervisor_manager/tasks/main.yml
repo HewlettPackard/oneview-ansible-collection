@@ -13,8 +13,31 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-  when: contents.api_version == ""
+  when: config_file.api_version == ""
   register: version
+
+- name: Gather facts about a Server Certificate by remote address
+  oneview_certificates_server_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    remote: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
+  delegate_to: localhost
+
+- set_fact:
+    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+
+#Server Certificate need to be added to appliance for creating a hypervisor manager
+- name: Create a Server Certificate
+  oneview_certificates_server:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
+    data:
+      certificateDetails:
+        - aliasName: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
+          base64Data: "{{ certificate }}"
+  delegate_to: localhost
   
 - name: Create a Hypervisor Manager
   oneview_hypervisor_manager:
@@ -22,11 +45,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ hypervisor_manager_name }}"
+      name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
       displayName: 'vcenter'
       hypervisorType: 'Vmware'
-      username: '{{ hypervisor_manager_username }}'
-      password: '{{ hypervisor_manager_password }}'
+      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
+      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
   delegate_to: localhost
   register: hyp_mgr_1
 
@@ -36,7 +59,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ hypervisor_manager_name }}"
+      name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
       displayName: 'vcenter'
       hypervisorType: 'Vmware'
   delegate_to: localhost
@@ -47,11 +70,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ hypervisor_manager_name }}"
+      name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
       displayName: 'vcenter renamed'
       hypervisorType: 'Vmware'
-      username: '{{ hypervisor_manager_username }}'
-      password: '{{ hypervisor_manager_password }}'
+      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
+      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
   delegate_to: localhost
 
 - name: Delete the Hypervisor Manager
@@ -76,7 +99,7 @@
   oneview_certificates_server_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    remote: "{{ hypervisor_manager_name }}"
+    remote: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
   delegate_to: localhost
 
 - set_fact:
@@ -87,10 +110,10 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    name: "{{ hypervisor_manager_name }}"
+    name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
     data:
       certificateDetails:
-        - aliasName: "{{ hypervisor_manager_name }}"
+        - aliasName: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
           base64Data: "{{ certificate }}"
   delegate_to: localhost
 
@@ -100,9 +123,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ hypervisor_manager_name }}"
+      name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
       displayName: 'vcenter'
       hypervisorType: 'Vmware'
-      username: '{{ hypervisor_manager_username }}'
-      password: '{{ hypervisor_manager_password }}'
+      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
+      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
   delegate_to: localhost

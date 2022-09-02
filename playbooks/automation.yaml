@@ -148,6 +148,15 @@
             debug:
               msg: "{{ msg.include_args.name }}"
       - block:
+          - name: (hypervisor_manager)
+            include_role:
+              name: hpe.oneview.oneview_hypervisor_manager
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
           - name: (hypervisor_manager_facts)
             include_role:
               name: hpe.oneview.oneview_hypervisor_manager_facts
@@ -210,15 +219,15 @@
           - name: (Display)
             debug:
               msg: "{{ msg.include_args.name }}"
-      # - block:
-      #     - name: (enclosure)
-      #       include_role:
-      #         name: hpe.oneview.oneview_enclosure
-      #       register: msg
-      #   rescue:
-      #     - name: (Display)
-      #       debug:
-      #         msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (enclosure)
+            include_role:
+              name: hpe.oneview.oneview_enclosure
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
       - block:
           - name: (enclosure_facts)
             include_role:
@@ -497,15 +506,6 @@
         rescue:
           - name: (Display)
             debug:
-              msg: "{{ msg.include_args.name }}"      
-      - block:
-          - name: (appliance_network_interface_facts)
-            include_role:
-              name: hpe.oneview.oneview_appliance_network_interface_facts
-            register: msg
-        rescue:
-          - name: (Display)
-            debug:
               msg: "{{ msg.include_args.name }}"
       - block:
           - name: (appliance_network_interface_facts)
@@ -741,16 +741,16 @@
           - name: (Display)
             debug:
               msg: "{{ msg.include_args.name }}"
-#   # roles:   
-#     # - hpe.oneview.image_streamer_plan_script
-#     # - hpe.oneview.image_streamer_plan_script_facts
-#     # - hpe.oneview.image_streamer_build_plan
-#     # - hpe.oneview.image_streamer_build_plan_facts
-#     # - hpe.oneview.image_streamer_deployment_group_facts
-#     # - hpe.oneview.image_streamer_os_volume_facts
-#     # - hpe.oneview.image_streamer_deployment_plan
-#     # - hpe.oneview.image_streamer_deployment_plan_facts
-#     # - hpe.oneview.image_streamer_golden_image
-#     # - hpe.oneview.image_streamer_golden_image_facts
-#     # - hpe.oneview.image_streamer_artifact_bundle
-#     # - hpe.oneview.image_streamer_artifact_bundle_facts
+  # roles:   
+    # - hpe.oneview.image_streamer_plan_script
+    # - hpe.oneview.image_streamer_plan_script_facts
+    # - hpe.oneview.image_streamer_build_plan
+    # - hpe.oneview.image_streamer_build_plan_facts
+    # - hpe.oneview.image_streamer_deployment_group_facts
+    # - hpe.oneview.image_streamer_os_volume_facts
+    # - hpe.oneview.image_streamer_deployment_plan
+    # - hpe.oneview.image_streamer_deployment_plan_facts
+    # - hpe.oneview.image_streamer_golden_image
+    # - hpe.oneview.image_streamer_golden_image_facts
+    # - hpe.oneview.image_streamer_artifact_bundle
+    # - hpe.oneview.image_streamer_artifact_bundle_facts
