@@ -1,4 +1,101 @@
 # Ansible Collections for HPE OneView Change Log
+## v7.2.0
+This release extends the planned support of the collections to OneView REST API version 4400(OneView v7.2).
+
+#### Bug fixes & Enhancements
+- [#194] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/194) Logical Interconnect group with uplinksets- Maps Port Name to relative value
+- [#169] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/169) Atomic assign server hardware
+- [#181] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/181) oneview_server_profile cannot create more than one server profile in parallel
+- [#176] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/176) Proxy role - proxy setting with no authentication requires password
+
+### Modules supported in this release
+- oneview_appliance_configuration_timeconfig_facts
+- oneview_appliance_device_snmp_v1_trap_destination
+- oneview_appliance_device_snmp_v1_trap_destination_facts
+- oneview_appliance_device_snmp_v3_trap_destination
+- oneview_appliance_device_snmp_v3_trap_destination_facts
+- oneview_appliance_device_snmp_v3_users
+- oneview_appliance_device_snmp_v3_users_facts
+- oneview_appliance_network_interfaces
+- oneview_appliance_network_interface_facts
+- oneview_appliance_proxy_configuration
+- oneview_appliance_proxy_configuration_facts
+- oneview_appliance_ssh_access
+- oneview_appliance_ssh_access_facts
+- oneview_appliance_time_and_locale_configuration
+- oneview_appliance_time_and_locale_configuration_facts
+- oneview_certificates_server
+- oneview_certificates_server_facts
+- oneview_connection_template
+- oneview_connection_template_facts
+- oneview_enclosure
+- oneview_enclosure_facts
+- oneview_enclosure_group
+- oneview_enclosure_group_facts
+- oneview_ethernet_network
+- oneview_ethernet_network_facts
+- oneview_fc_network
+- oneview_fc_network_facts
+- oneview_fcoe_network
+- oneview_fcoe_network_facts
+- oneview_firmware_bundle
+- oneview_firmware_driver
+- oneview_firmware_driver_facts
+- oneview_get_session_id
+- oneview_hypervisor_cluster_profile
+- oneview_hypervisor_cluster_profile_facts
+- oneview_hypervisor_manager
+- oneview_hypervisor_manager_facts
+- oneview_id_pools
+- oneview_id_pools_facts
+- oneview_id_pools_ipv4_range
+- oneview_id_pools_ipv4_range_facts
+- oneview_id_pools_ipv4_subnet
+- oneview_id_pools_ipv4_subnet_facts
+- oneview_interconnect
+- oneview_interconnect_facts
+- oneview_interconnect_type_facts
+- oneview_label
+- oneview_label_facts
+- oneview_logical_enclosures
+- oneview_logical_enclosures_facts
+- oneview_logical_interconnect
+- oneview_logical_interconnect_facts
+- oneview_logical_interconnect_group
+- oneview_logical_interconnect_group_facts
+- oneview_network_set
+- oneview_network_set_facts
+- oneview_os_deployment_plan_facts
+- oneview_repositories
+- oneview_repositories_facts
+- oneview_scope
+- oneview_scope_facts
+- oneview_server_hardware
+- oneview_server_hardware_facts
+- oneview_server_hardware_type
+- oneview_server_hardware_type_facts
+- oneview_server_profile
+- oneview_server_profile_facts
+- oneview_server_profile_template
+- oneview_server_profile_template_facts
+- oneview_storage_pool
+- oneview_storage_pool_facts
+- oneview_storage_system
+- oneview_storage_system_facts
+- oneview_storage_volume
+- oneview_storage_volume_facts
+- oneview_storage_volume_attachment
+- oneview_storage_volume_attachment_facts
+- oneview_storage_volume_template
+- oneview_storage_volume_template_facts
+- oneview_task
+- oneview_task_facts
+- oneview_uplink_set
+- oneview_uplink_set_facts
+- oneview_user
+- oneview_user_facts
+- oneview_version_facts
+
 ## v7.1.0
 This release extends the planned support of the collections to OneView REST API version 4200(OneView v7.1).
 
