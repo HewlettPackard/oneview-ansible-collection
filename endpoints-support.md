@@ -382,8 +382,8 @@
 | <sub>/rest/users/{userName}/roles</sub>                                                         | PUT                       |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |
 | **Version**                                                                                     |
 | <sub>/rest/version</sub>                                                                        | GET                       |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |    :white_check_mark:    |   :white_check_mark:  |
-    :white_check_mark:    |
-    :white_check_mark:    |
+|    :white_check_mark:    |
+|    :white_check_mark:    |
 ## HPE Synergy Image Streamer
 
 | Endpoints                                                    | Verb             |       V1600        |       V2000        |       V2010        |       V2020        |
