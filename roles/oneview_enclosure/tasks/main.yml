@@ -8,54 +8,19 @@
 
 - debug: var=session
 
-# This play is compatible with C7000 Enclosures
-- name: Ensure the Enclosure with hostname '{{ enclosure_hostname }}' is present with name 'Test-Enclosure'
+- name: Ensure the Enclosure framelink with ipv6 '{{ contents.enclosure.enclosure_framelink_ipv6 }}' is present
   oneview_enclosure:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      enclosureGroupUri: '{{ enclosure_group_uri }}'
-      hostname: '{{ enclosure_hostname }}'
-      username: '{{ enclosure_username }}'
-      password: '{{ enclosure_password }}'
-      name: '{{ enclosure_name }}'
-      licensingIntent: 'OneView'
-      rackName: 'Rack-Name'
-      scopeUris: '{{ scope_uris }}'
-  when: variant == 'C7000'
-  delegate_to: localhost
-
-- name: Ensure the Enclosure framelink with ipv6 '{{ enclosure_framelink_ipv6 }}' is present
-  oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: present
-    data:
-      hostname: '{{ enclosure_framelink_ipv6 }}'
-  when: variant == 'Synergy' and enclosure_framelink_ipv6 is defined
+      hostname: "{{ contents.enclosure.enclosure_framelink_ipv6 }}"
+  when: contents.enclosure.variant == 'Synergy' and contents.enclosure.enclosure_framelink_ipv6 is defined
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
 - wait_for: port=22 host="{{ ansible_host }}" delay=10
-  connection: local
-
-# This play is compatible with C7000 Enclosures
-- name: Do nothing with the Enclosure when no changes are provided
-  oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: present
-    data:
-      enclosureGroupUri: '{{ enclosure_group_uri }}'
-      hostname: '{{ enclosure_hostname }}'
-      username: '{{ enclosure_username }}'
-      password: '{{ enclosure_password }}'
-      name: '{{ enclosure_name }}'
-      licensingIntent: 'OneView'
-      rackName: 'Rack-Name'
-  when: variant == 'C7000'
-  delegate_to: localhost
+  # connection: local
 
 # Waiting for 10 seconds before attempting operations on enclosure
 - wait_for: port=22 host="{{ ansible_host }}" delay=10
@@ -68,7 +33,7 @@
     state: present
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       newName: 'Test-Enclosure-Renamed'
   delegate_to: localhost
 
@@ -84,7 +49,7 @@
     validate_etag: False
     data:
       name: 'Test-Enclosure-Renamed'
-      newName: '{{ enclosure_name }}'
+      newName: '{{ contents.enclosure.enclosure_name }}'
       rackName: 'Rack-Renamed'
   delegate_to: localhost
 
@@ -94,7 +59,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
   delegate_to: localhost
 
 - name: Refresh the enclosure along with all of its components
@@ -103,7 +68,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       refreshState: 'RefreshPending'
   delegate_to: localhost
 
@@ -117,34 +82,16 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: create_certificate_request
     data:
-      name: '{{ enclosure_name }}'
-      type: '{{ csr_data.type }}'
-      organization: '{{ csr_data.organization }}'
-      organizationalUnit: '{{ csr_data.organizationalUnit }}'
-      locality: '{{ csr_data.locality }}'
-      state: '{{ csr_data.state }}'
-      country: '{{ csr_data.country }}'
-      commonName: '{{ csr_data.commonName }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
+      type: '{{ contents.enclosure.csr_data_type }}'
+      organization: '{{ contents.enclosure.organization }}'
+      organizationalUnit: '{{ contents.enclosure.organizationalUnit }}'
+      locality: '{{ contents.enclosure.locality }}'
+      state: '{{ contents.enclosure.state }}'
+      country: '{{ contents.enclosure.country }}'
+      commonName: '{{ contents.enclosure.commonName }}'
   delegate_to: localhost
-  when: variant == 'Synergy'
-
-- name: Create certificate signing request for C7000
-  oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: create_certificate_request
-    data:
-      name: '{{ enclosure_name }}'
-      type: '{{ csr_data.type }}'
-      organization: '{{ csr_data.organization }}'
-      organizationalUnit: '{{ csr_data.organizationalUnit }}'
-      locality: '{{ csr_data.locality }}'
-      state: '{{ csr_data.state }}'
-      country: '{{ csr_data.country }}'
-      commonName: '{{ csr_data.commonName }}'
-      bay_number: '{{ bay_number }}' #Required for C7000
-  delegate_to: localhost
-  when: variant == 'C7000'
+  when: contents.enclosure.variant == 'Synergy'
 
 - name: Get certificate signing request for Synergy
   oneview_enclosure:
@@ -152,19 +99,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: get_certificate_request
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
   delegate_to: localhost
-
-- name: Get certificate signing request for C7000
-  oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: get_certificate_request
-    data:
-      name: '{{ enclosure_name }}'
-      bay_number: '{{ bay_number }}' #Required for C7000
-  delegate_to: localhost
-  when: variant == 'C7000'
 
 # Waiting for 10 seconds before attempting operations on enclosure
 - wait_for: port=22 host="{{ ansible_host }}" delay=10
@@ -176,27 +112,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: import_certificate_request
     data:
-      name: '{{ enclosure_name }}'
-      type: '{{ certificate_data.type }}'
-      base64Data: '{{ certificate_data.base64Data }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
+      type: '{{ contents.enclosure.cert_data_type }}'
+      base64Data: '{{ contents.enclosure.base64Data }}'
   delegate_to: localhost
   ignore_errors: true
-
-# This state is only available for C7000 enclosures
-- name: Set the supportDataCollectionState equals to 'PendingCollection' for the enclosure
-  oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: support_data_collection_set
-    data:
-      name: '{{ enclosure_name }}'
-      supportDataCollectionState: 'PendingCollection'
-  when: variant == 'C7000'
-  delegate_to: localhost
-  ignore_errors: yes
-  register: result
-- debug: var=result.msg
-  when: variant == 'C7000'
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance bay power state on
@@ -206,13 +126,13 @@
     state: appliance_bays_powered_on
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance UID state off
@@ -222,12 +142,12 @@
     state: uid_off
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
-  when: variant == 'Synergy'
+      name: '{{ contents.enclosure.enclosure_name }}'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance UID state on
@@ -237,12 +157,12 @@
     state: uid_on
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
-  when: variant == 'Synergy'
+      name: '{{ contents.enclosure.enclosure_name }}'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the UID for the Synergy Frame Link Module state on
@@ -252,13 +172,13 @@
     state: manager_bays_uid_on
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the UID for the Synergy Frame Link Module state off
@@ -268,13 +188,13 @@
     state: manager_bays_uid_off
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the Synergy Frame Link Module bay 1
@@ -284,14 +204,14 @@
     state: manager_bays_power_state_e_fuse
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Reset the Synergy Frame Link Module bay 2
@@ -301,14 +221,14 @@
     state: manager_bays_power_state_reset
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 2
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the appliance bay 1
@@ -318,14 +238,14 @@
     state: appliance_bays_power_state_e_fuse
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the device bay 10
@@ -335,14 +255,14 @@
     state: device_bays_power_state_e_fuse
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 10
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Reset the device bay 11
@@ -352,14 +272,14 @@
     state: device_bays_power_state_reset
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 11
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the IC bay 3
@@ -369,14 +289,14 @@
     state: interconnect_bays_power_state_e_fuse
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 3
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the active Synergy Frame Link Module on bay 2
@@ -386,14 +306,14 @@
     state: manager_bays_role_active
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 2
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Release IPv4 address in the device bay 3
@@ -405,12 +325,12 @@
     data:
       name: '{{ enclosure_name }}'
       bayNumber: 3
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy
 - name: Release IPv4 address in the interconnect bay 6
@@ -420,14 +340,14 @@
     state: interconnect_bays_ipv4_removed
     validate_etag: False
     data:
-      name: '{{ enclosure_name }}'
+      name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 6
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: true
   register: result
 - debug: var=result.msg
-  when: variant == 'Synergy'
+  when: contents.enclosure.variant == 'Synergy'
 
 # - name: Remove the Enclosure
 #   oneview_enclosure:

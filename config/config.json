@@ -50,7 +50,10 @@
     "network_name": "<network_name>",
     "ethernet_network_1_name": "<ethernet_network_1_name>"},
     "hypervisor_manager":{
-    "hypervisor_managers_name":"<hypervisor_managers_name>"},
+        "hypervisor_manager_name": "<hypervisor_manager_name>",
+        "hypervisor_manager_username": "<hypervisor_manager_username>",
+        "hypervisor_manager_password": "<hypervisor_manager_password>"
+    },
     "logical_interconnect_group":
     {
         "permitted_interconnect_type_name_1": "<permitted_interconnect_type_name_1>",
@@ -66,7 +69,18 @@
     },
     "enclosure":{
         "enclosure_name": "<enclosure_name>",
-         "variant": "<variant>"
+         "variant": "<variant>",
+         "enclosure_framelink_ipv6": "<enclosure_framelink_ipv6>",
+         "csr_data_type": "<csr_data_type>",
+         "organization": "<organization>",
+         "organizationalUnit": "<organizationalUnit>",
+         "locality": "<locality>",
+         "state": "<state>",
+         "country": "<country>",
+         "commonName": "<commonName>",
+         "cert_data_type": "<cert_data_type>",
+         "base64Data": "<base64Data>",
+         "bayNumber": "<bayNumber>"
     },
     "interconnect":
     {

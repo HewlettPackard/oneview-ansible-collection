@@ -1,7 +1,15 @@
 ---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
 - name: Get currentVersion from URL
   oneview_version_facts:
     config: "{{ config }}" 
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
@@ -19,6 +27,7 @@
 - name: Gather facts about all Server Profile Templates
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - debug: var=server_profile_templates
@@ -26,11 +35,13 @@
 - name: Gather facts about all Scopes
   oneview_scope_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Gather paginated, filtered and sorted facts about Server Profile Templates
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -44,6 +55,7 @@
 - name: Gather facts about a Server Profile Template by name
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.server_profile_template.server_profile_template_name }}"
   delegate_to: localhost
 
@@ -52,6 +64,7 @@
 - name: Gather facts about a Server Profile Template by URI
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     uri: "{{server_profile_templates[0]['uri']}}"
   delegate_to: localhost
   when: server_profile_templates|length != 0
@@ -59,6 +72,7 @@
 - name: Gather facts about a template and a profile with the configuration based on this template
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.server_profile_template.server_profile_template_name }}"
     options:
       - new_profile
@@ -70,17 +84,20 @@
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 # This option is available for API version 300 or later.
 - name: Transform an existing profile template by supplying a new server hardware type and/or enclosure group.
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.server_profile_template.server_profile_template_name }}"
     options:
       - transformation:
@@ -95,6 +112,7 @@
 - name: Gather facts about available networks
   oneview_server_profile_template_facts:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
     options:
       - available_networks:
           serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
