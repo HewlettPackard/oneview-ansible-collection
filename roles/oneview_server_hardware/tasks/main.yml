@@ -31,13 +31,21 @@
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
+- name: Gather facts about all Server Hardwares
+  oneview_server_hardware_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=server_hardwares[0]['name']
+
 - name: Do nothing when the server hardware is already present
   oneview_server_hardware:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-          hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
+          hostname: "{{ server_hardwares[0]['name'] }}"
           username: '{{ contents.server_hardware.server_hardware_username }}'
           password: '{{ contents.server_hardware.server_hardware_password }}'
           force: false
@@ -63,21 +71,13 @@
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
-- name: Gather facts about all Server Hardwares
-  oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-  delegate_to: localhost
-
-- debug: var=server_hardwares
-
 - name: Power Off the server hardware
   oneview_server_hardware:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         powerStateData:
             powerState: "Off"
             powerControl: "MomentaryPress"
@@ -89,7 +89,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         powerStateData:
             powerState: "On"
             powerControl: "MomentaryPress"
@@ -101,7 +101,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         refreshStateData:
             refreshState: "RefreshPending"
   delegate_to: localhost
@@ -112,7 +112,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_firmware_version_updated
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Reset the Server Hardware iLO State
@@ -121,7 +121,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_state_reset
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server UID state off
@@ -130,7 +130,16 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_state_off
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
+  delegate_to: localhost
+
+- name: Set the server UID state on
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: uid_state_on
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Enable Server Maintenance Mode
@@ -139,7 +148,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: enable_maintenance_mode
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Disable Server Maintenance Mode
@@ -148,7 +157,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: disable_maintenance_mode
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to Network
@@ -157,7 +166,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_network
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to No one-time boot
@@ -166,7 +175,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_normal
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the calibrated max power of a server hardware
@@ -175,7 +184,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: environmental_configuration_set
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
         environmentalConfigurationData:
             calibratedMaxPower: 500
   delegate_to: localhost
@@ -187,7 +196,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -197,6 +206,6 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ contents.server_hardware.server_hardware_hostname }}"
+        name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'

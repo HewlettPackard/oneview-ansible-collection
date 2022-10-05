@@ -17,14 +17,15 @@
       enclosureGroupName: "{{ contents.server_profile_template.enclosure_group_name }}"
       connectionSettings:
         manageConnections: true
-        complianceControl: Checked
+        complianceControl: "Checked"
         connections:
           - id: 1
-            name: mgmt
-            functionType: Ethernet
-            portId: Auto
+            name: "mgmt"
+            functionType: "Ethernet"
+            portId: "Auto"
             requestedMbps: 2000
             networkName: "{{ contents.server_profile_template.connection_network_name }}"
+            # networkUri: '/rest/ethernet-networks/f5d68cb6-7766-4662-9774-af461436005d'
     params:
       force: "True" # Supported only for API version >= 600
   delegate_to: localhost
