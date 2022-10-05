@@ -44,7 +44,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "0000A66101, bay 5" #"{{ server_hardwares[0]['name'] }}"
+        name: "{{ contents.server_profile.server_hardware_name }}"
         powerStateData:
             powerState: "Off"
             powerControl: "MomentaryPress"
