@@ -552,8 +552,9 @@ class ServerProfileModule(OneViewModule):
             scope_user = self.oneview_client.users.get_by_userName(user_name)
             if (scope_user and user_name.lower() != 'administrator'):
                 permissions = scope_user.data["permissions"]
-                scope_uris = set([each_role.get("scopeUri") for each_role in permissions])
-                scope_uri = '%20OR%20'.join(list(scope_uris))
+                scope_uris = set([each_role.get("scopeUri") for each_role in permissions if each_role.get("scopeUri") is not None])
+                if bool(scope_uris):
+                    scope_uri = '%20OR%20'.join(list(scope_uris))
                 self.data['initialScopeUris'] = list(scope_uris)
         if self.server_template:
             enclosure_group = self.server_template.data.get('enclosureGroupUri', '')
