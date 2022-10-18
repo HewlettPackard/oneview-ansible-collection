@@ -38,6 +38,75 @@
 - debug: var=compliance_preview
 - debug: var=created
 
+- name: Power Off the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: power_state_set
+    data:
+        name: "{{ contents.server_profile.server_hardware_name }}"
+        powerStateData:
+            powerState: "Off"
+            powerControl: "MomentaryPress"
+  delegate_to: localhost
+
+- name: Create a server profile with iLO/Bios configuration
+  oneview_server_profile:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    data:
+      name: "{{ contents.server_profile.inventory_hostname }}-2"
+      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+      description: "{{ contents.server_profile.server_profile_description }}"
+      bios:
+        manageBios: true
+        overriddenSettings: []
+      managementProcessor:
+        manageMp: true
+        mpSettings:
+          - settingType: "LocalAccounts"
+            args:
+              localAccounts:
+                - userName: "user1"
+                  displayName: "One"
+                  password: "asdfghjkl"
+                  iLOConfigPriv: false
+                  userConfigPriv: false
+                  remoteConsolePriv: false
+                  virtualMediaPriv: true
+                  virtualPowerAndResetPriv: false
+  delegate_to: localhost
+
+- name: Update server profile with local storage configuration
+  oneview_server_profile:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    data:
+      name: "{{ contents.server_profile.inventory_hostname }}-2"
+      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+      description: "{{ contents.server_profile.server_profile_description }}"
+      localStorage:
+        controllers:
+          - deviceSlot: "Embedded"
+            driveWriteCache: "Unmanaged"
+            importConfiguration: false
+            mode: "RAID"
+            initialize: true
+            logicalDrives:
+              - accelerator: "Unmanaged"
+                bootable: false
+                driveTechnology: null
+                name: "logicaldrive1"
+                numPhysicalDrives: 2
+                raidLevel: "RAID1"
+                readCachePolicy: "Unmanaged"
+                sasLogicalJBODId: null
+                writeCachePolicy: "Unmanaged"
+        sasLogicalJBODs: []
+  delegate_to: localhost
+
 - name: Create a Server Profile with connections
   oneview_server_profile:
     config: "{{ config }}"
@@ -45,6 +114,7 @@
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
       serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
       connectionSettings:  # Supported only in API version >= 600.
         connections:
           - id: 1
@@ -57,18 +127,21 @@
 
 - debug: msg=server_profile
 
-- name: Update Server Profile
+- name: Update Server Profile with boot configuration
   oneview_server_profile:
     config: "{{ config }}"
     state: "present"
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
-      affinity: "BayAndServer"
+      # affinity: "BayAndServer"
       bootMode:
         manageMode: True
         mode: "UEFI"
         pxeBootPolicy: "Auto"
+      boot: 
+        manageBoot: true
+        order: ["HardDisk"]
   delegate_to: localhost
   register: result
 
@@ -156,6 +229,7 @@
       name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
 - debug: var=inventory_hostname
+
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
@@ -163,6 +237,7 @@
       serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
       name: "{{ contents.server_profile.inventory_hostname }}"
       description: "{{ contents.server_profile.server_profile_description }}"
+      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
       # User should set initialScopeUris in case of scoped user
       # Otherwise collects scopeUris from OV when its not given
       # explicitly
