@@ -24,6 +24,128 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'metadata_version': '1.1'}
 
 DOCUMENTATION = '''
+---
+module: oneview_rack_manager
+short_description: Manage OneView Rack Manager resources.
+description:
+    - "Provides an interface to manage Server Hardware resources."
+version_added: "2.3.0"
+requirements:
+    - "python >= 2.7.9"
+    - "hpeOneView >= 5.4.0"
+author: "Alisha Kalladassery (@alisha-k-kalladassery)"
+options:
+    sessionID:
+        description:
+            - Session ID to use for login to the appliance
+        type: str
+        required: false
+    state:
+        description:
+            - Indicates the desired state for the Rack manager resource.
+              C(present) will ensure data properties are compliant with OneView.
+              C(absent) will remove the resource from OneView, if it exists.
+              C(refresh_state_set) will refresh the Rack manager.
+        choices: ['present', 'absent', 'refresh_state_set']
+        required: true
+        type: str
+    data:
+        description:
+            - List with Server Hardware properties and its associated states.
+        required: true
+        type: dict
+
+extends_documentation_fragment:
+    - hpe.oneview.oneview
+    - hpe.oneview.oneview.params
+    - hpe.oneview.oneview.validateetag
+'''
+
+EXAMPLES = '''
+- name: Add a Rack Manager
+  oneview_rack_manager:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: present
+    data:
+        hostname : "172.18.6.15"
+        username : "username"
+        password : "password"
+        force: false
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+  delegate_to: localhost
+
+- debug: var=rack_managers
+- set_fact:
+    rack_manager_name: "{{ rack_managers[0]['name'] }}"
+
+- name: Do nothing when the rack manager is already present
+  oneview_rack_manager:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: present
+    data:
+          hostname: "{{ rack_manager_name }}"
+          username: 'username'
+          password: 'password'
+          force: false
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Refresh the rack manager
+  oneview_rack_manager:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: refresh_state_set
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+
+- name: Remove the rack manager by its name
+  oneview_rack_manager:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: absent
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Do nothing when the rack manager is already removed
+  oneview_rack_manager:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: absent
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+'''
+
+RETURN = '''
+rack_manager:
+    description: Has the OneView facts about the Rack Manager.
+    returned: On states 'present', 'power_state_set', 'refresh_state_set'.
+              Can be null.
+    type: dict
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound,

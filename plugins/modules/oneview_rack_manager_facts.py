@@ -25,13 +25,191 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
 
 DOCUMENTATION = '''
 ---
-
+module: oneview_rack_manager_facts
+short_description: Retrieve facts about the OneView Rack Manager.
+description:
+    - Retrieve facts about the Rack Manager from OneView.
+version_added: "2.3.0"
+requirements:
+    - "python >= 2.7.9"
+    - "hpeOneView >= 5.4.0"
+author: "Alisha Kalladassery (@alisha-k-kalladassery)"
+options:
+    name:
+      description:
+        - Rack Manager name.
+      required: false
+      type: str
+    options:
+      description:
+        - "List with options to gather additional facts about Rack Manager related resources.
+          Options allowed: C(chassis), C(managers), C(partitions), C(environmental_configuration), 
+          C(remote_support_settings)."
+      required: false
+      type: list
+    uri:
+      description:
+        - Rack Manager Uri
+      required: false
+      type: str
+    sessionID:
+      description:
+        - Session ID to use for login to the appliance
+      type: str
+      required: false
+extends_documentation_fragment:
+    - hpe.oneview.oneview
+    - hpe.oneview.oneview.params
+    - hpe.oneview.oneview.factsparams
 '''
 
 EXAMPLES = '''
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+  delegate_to: localhost
+
+- debug: var=rack_managers
+
+- set_fact:
+    rack_manager_name : "{{ rack_managers[0]['name'] }}"
+
+- set_fact:
+    rack_manager_uri : "{{ rack_managers[0]['uri'] }}"
+
+- debug: var=rack_manager_name
+
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    options:
+      - chassis
+      - partitions
+      - managers
+  delegate_to: localhost
+
+- debug: var=all_chassis
+- debug: var=all_partitions
+- debug: var=all_managers
+
+- name: Gather paginated, filtered and sorted facts about Rack Manager
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    params:
+      start: 0
+      count: 2
+      sort: name:ascending
+      filter: state='Monitored'
+  delegate_to: localhost
+
+- debug: msg="{{rack_managers | map(attribute='name') | list }}"
+
+- name: Gather facts about a Rack Manager by name
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+
+- name: Gather facts about a rack manager by uri
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    uri: "{{ rack_manager_uri }}"
+  delegate_to: localhost
+
+- name: Gather chassis facts about a rack manager
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    name: "{{ rack_manager_name }}"
+    options:
+      - chassis
+  delegate_to: localhost
+
+- name: Gather all facts about a Rack Manager
+  oneview_rack_manager_facts:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 4400
+    name: "{{ rack_manager_name }}"
+    options:
+      - chassis                       # optional
+      - partitions                    # optional
+      - managers                      # optional
+      - environmental_configuration   # optional
+      - remote_support_settings       # optional
+  delegate_to: localhost
+
+- debug: var=rack_manager_chassis
+- debug: var=rack_manager_partitions
+- debug: var=rack_manager_managers
+- debug: var=rack_manager_env_conf
+- debug: var=rack_manager_remote_support
+
 '''
 
 RETURN = '''
+rack_managers:
+    description: Has all the OneView facts about all the Rack Managers.
+    returned: Always, but can be null.
+    type: dict
+
+all_chassis:
+    description: Has all the OneView facts about Chassis in all Rack Managers.
+    returned: Always, but can be null.
+    type: dict
+
+all_partitions:
+    description: Has all the OneView facts about Partitions in all Rack Managers.
+    returned: Always, but can be null.
+    type: dict
+
+all_managers:
+    description: Has all the OneView facts about Managers in all Rack Managers.
+    returned: Always, but can be null.
+    type: dict
+
+rack_manager_chassis:
+    description: Has all the OneView facts about Chassis in a Rack Manager.
+    returned: Always, but can be null.
+    type: dict
+
+rack_manager_partitions:
+    description: Has all the OneView facts about Partitions in a Rack Manager.
+    returned: Always, but can be null.
+    type: dict
+
+rack_manager_managers:
+    description: Has all the OneView facts about Managers in a Rack Manager.
+    returned: Always, but can be null.
+    type: dict
+
+rack_manager_env_conf:
+    description: Has all the OneView facts about Environmental Configuration in a Rack Manager.
+    returned: Always, but can be null.
+    type: dict
+
+rack_manager_remote_support:
+    description: Has all the OneView facts about Remote Support Settings in a Rack Manager.
+    returned: Always, but can be null.
+    type: dict
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
