@@ -71,7 +71,7 @@ class RackManagerModule(OneViewModule):
                     raise OneViewModuleResourceNotFound(self.MSG_RACK_MANAGER_NOT_FOUND)
                 else:
                     if self.state == 'refresh_state_set':
-                        self.current_resource.patch('RefreshRackManagerOp','','')
+                        self.current_resource.patch('RefreshRackManagerOp', '', '')
                         return dict(changed=True,
                                     msg=self.MSG_RACK_MANAGER_REFRESHED,
                                     ansible_facts=dict(rack_manager=self.current_resource.data))

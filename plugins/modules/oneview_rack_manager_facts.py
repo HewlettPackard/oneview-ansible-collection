@@ -88,9 +88,10 @@ class RackManagerFactsModule(OneViewModule):
             ansible_facts['rack_manager_env_conf'] = self.current_resource.get_environmental_configuration()
 
         if self.options.get('remote_support_settings'):
-            ansible_facts['rack_manager_remote_support'] = self.current_resource.get_remote_support_settings() 
+            ansible_facts['rack_manager_remote_support'] = self.current_resource.get_remote_support_settings()
 
         return ansible_facts
+
 
 def main():
     RackManagerFactsModule().run()
