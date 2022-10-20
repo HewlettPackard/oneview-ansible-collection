@@ -43,7 +43,7 @@ options:
     options:
       description:
         - "List with options to gather additional facts about Rack Manager related resources.
-          Options allowed: C(chassis), C(managers), C(partitions), C(environmental_configuration), 
+          Options allowed: C(chassis), C(managers), C(partitions), C(environmental_configuration),
           C(remote_support_settings)."
       required: false
       type: list

@@ -93,4 +93,3 @@
 - debug: var=rack_manager_env_conf
 - debug: var=rack_manager_remote_support
 
-
