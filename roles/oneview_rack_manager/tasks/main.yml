@@ -1,0 +1,74 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Add a Rack Manager
+  oneview_rack_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+          hostname: "{{ contents.rack_manager.rack_manager_hostname }}"
+          username: "{{ contents.rack_manager.rack_manager_username }}"
+          password:  "{{ contents.rack_manager.rack_manager_password }}"
+          force: false
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=rack_managers
+- set_fact:
+    rack_manager_name: "{{ rack_managers[0]['name'] }}"
+
+- name: Do nothing when the rack manager is already present
+  oneview_rack_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+          hostname: "{{ rack_manager_name }}"
+          username: '{{ contents.rack_manager.rack_manager_username }}'
+          password: '{{ contents.rack_manager.rack_manager_password }}'
+          force: false
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Refresh the rack manager
+  oneview_rack_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: refresh_state_set
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+
+- name: Remove the rack manager by its name
+  oneview_rack_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'
+
+- name: Do nothing when the rack manager is already removed
+  oneview_rack_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+        name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+  when: contents.rack_manager.variant == 'DL'

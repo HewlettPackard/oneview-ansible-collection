@@ -1,0 +1,96 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=rack_managers
+
+- set_fact:
+    rack_manager_name : "{{ rack_managers[0]['name'] }}"
+
+- set_fact:
+    rack_manager_uri : "{{ rack_managers[0]['uri'] }}"
+
+- debug: var=rack_manager_name
+
+- name: Gather facts about all Rack Managers
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    options:
+      - chassis
+      - partitions
+      - managers
+  delegate_to: localhost
+
+- debug: var=all_chassis
+- debug: var=all_partitions
+- debug: var=all_managers
+
+- name: Gather paginated, filtered and sorted facts about Rack Manager
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    params:
+      start: 0
+      count: 2
+      sort: name:ascending
+      filter: state='Monitored'
+  delegate_to: localhost
+
+- debug: msg="{{rack_managers | map(attribute='name') | list }}"
+
+- name: Gather facts about a Rack Manager by name
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ rack_manager_name }}"
+  delegate_to: localhost
+
+- name: Gather facts about a rack manager by uri
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    uri: "{{ rack_manager_uri }}"
+  delegate_to: localhost
+
+- name: Gather chassis facts about a rack manager
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ rack_manager_name }}"
+    options:
+      - chassis
+  delegate_to: localhost
+
+- name: Gather all facts about a Rack Manager
+  oneview_rack_manager_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ rack_manager_name }}"
+    options:
+      - chassis                       # optional
+      - partitions                    # optional
+      - managers                      # optional
+      - environmental_configuration   # optional
+      - remote_support_settings       # optional
+  delegate_to: localhost
+
+- debug: var=rack_manager_chassis
+- debug: var=rack_manager_partitions
+- debug: var=rack_manager_managers
+- debug: var=rack_manager_env_conf
+- debug: var=rack_manager_remote_support
+
+
