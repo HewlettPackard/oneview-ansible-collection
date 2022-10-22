@@ -337,7 +337,6 @@ class LogicalInterconnectGroupModule(OneViewModule):
                                     newLogicalLocation.get('locationEntries').append(entry)
                                 if entry.get('type') == 'Port':
                                     port_value = entry.get('relativeValue')
-                            
                             if not isinstance(port_value, int):
                                 if interconnect_map_entry_template.get(key):
                                     interconnectType = interconnect_map_entry_template[key]
