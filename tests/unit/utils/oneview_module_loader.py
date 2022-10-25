@@ -163,6 +163,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_scope_facts import 
 from ansible_collections.hpe.oneview.plugins.modules.oneview_repositories_facts import RepositoriesFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_repositories import RepositoriesModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_rack_manager import RackManagerModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_rack_manager_facts import RackManagerFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware import ServerHardwareModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_facts import ServerHardwareFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_type import ServerHardwareTypeModule
