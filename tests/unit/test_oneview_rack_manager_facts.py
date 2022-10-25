@@ -44,19 +44,19 @@ PARAMS_GET_BY_URI = dict(
 
 PARAMS_GATHER_ALL_FACTS = dict(
     config='config.json',
-    options = list(['chassis', 'partitions', 'managers'])
+    options=list(['chassis', 'partitions', 'managers'])
 )
 
 PARAMS_GATHER_CHASSIS_FACTS = dict(
     config='config.json',
     name="Test Rack Manager",
-    options = list(['chassis'])
+    options=list(['chassis'])
 )
 
 PARAMS_GATHER_ALL_FACTS_RACK_MANAGER = dict(
     config='config.json',
     name="Test Rack Manager",
-    options = list(['chassis', 'partitions', 'managers', 'environmental_configuration', 'remote_support_settings'])
+    options=list(['chassis', 'partitions', 'managers', 'environmental_configuration', 'remote_support_settings'])
 )
 
 
@@ -115,7 +115,7 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
     def test_gather_chassis_facts_about_a_rack_manager(self):
         self.resource.data = {"name": "Rack Manager Name"}
-        self.resource.get_associated_chassis.return_value = {"category": "rack-managers", "members":[{"name": "chassis name"}]}
+        self.resource.get_associated_chassis.return_value = {"category": "rack-managers", "members": [{"name": "chassis name"}]}
         self.current_resource = self.resource
         self.mock_ansible_module.params = PARAMS_GATHER_CHASSIS_FACTS
 
@@ -123,16 +123,16 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members":[{"name": "chassis name"}]}),
-            rack_managers=({"name": "Rack Manager Name"})
+            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members": [{"name": "chassis name"}]}),
+                               rack_managers=({"name": "Rack Manager Name"})
             )
         )
 
     def test_gather_all_facts_about_a_rack_manager(self):
         self.resource.data = {"name": "Rack Manager Name"}
-        self.resource.get_associated_chassis.return_value = {"category": "rack-managers", "members":[{"name": "chassis name"}]}
-        self.resource.get_associated_partitions.return_value = {"category": "rack-managers", "members":[{"name": "partition name"}]}
-        self.resource.get_associated_managers.return_value = {"category": "rack-managers", "members":[{"name": "manager name"}]}
+        self.resource.get_associated_chassis.return_value = {"category": "rack-managers", "members": [{"name": "chassis name"}]}
+        self.resource.get_associated_partitions.return_value = {"category": "rack-managers", "members": [{"name": "partition name"}]}
+        self.resource.get_associated_managers.return_value = {"category": "rack-managers", "members": [{"name": "manager name"}]}
         self.resource.get_environmental_configuration.return_value = {"rackName": "Rack Name"}
         self.resource.get_remote_support_settings.return_value = {"type": "Remote Support Settings"}
 
@@ -143,9 +143,9 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members":[{"name": "chassis name"}]}),
-                               rack_manager_partitions=({"category": "rack-managers", "members":[{"name": "partition name"}]}),
-                               rack_manager_managers=({"category": "rack-managers", "members":[{"name": "manager name"}]}),
+            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members": [{"name": "chassis name"}]}),
+                               rack_manager_partitions=({"category": "rack-managers", "members": [{"name": "partition name"}]}),
+                               rack_manager_managers=({"category": "rack-managers", "members": [{"name": "manager name"}]}),
                                rack_manager_env_conf=({"rackName": "Rack Name"}),
                                rack_manager_remote_support=({"type": "Remote Support Settings"}),
                                rack_managers=({"name": "Rack Manager Name"})
