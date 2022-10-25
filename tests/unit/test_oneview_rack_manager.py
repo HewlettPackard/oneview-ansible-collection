@@ -111,7 +111,6 @@ class TestRackManagerModule(OneViewBaseTest):
 
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=RackManagerModule.MSG_RACK_MANAGER_NOT_FOUND)
 
-
     def test_should_fail_with_missing_name_attribute(self):
         self.mock_ansible_module.params = {"state": "absent",
                                            "config": "config",
@@ -121,7 +120,6 @@ class TestRackManagerModule(OneViewBaseTest):
         RackManagerModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=RackManagerModule.MSG_MANDATORY_FIELD_MISSING.format('data.name'))
-
 
     def test_should_remove_rack_manager(self):
         self.resource.data = {'name': 'name'}
