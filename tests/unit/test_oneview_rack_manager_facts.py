@@ -70,7 +70,7 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_managers=({"name": "Rack Manager Name"}))
+            ansible_facts=dict(rack_managers=({"name": "Rack Manager Name"})),
         )
 
     def test_should_get_rack_manager_by_name(self):
@@ -81,7 +81,7 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_managers=({"name": "Test Rack Manager"}))
+            ansible_facts=dict(rack_managers=({"name": "Test Rack Manager"})),
         )
 
     def test_should_get_rack_manager_by_uri(self):
@@ -92,7 +92,9 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_managers=({"name": "Test Rack Manager", "uri": "resource_uri"}))
+            ansible_facts=dict(
+                rack_managers=({"name": "Test Rack Manager", "uri": "resource_uri"})
+            ),
         )
 
     def test_gather_facts_about_all_rack_managers(self):
@@ -106,11 +108,12 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(all_chassis=({"name": "Chassis Name"}),
-                               all_partitions=({"name": "Partition Name"}),
-                               all_managers=({"name": "Managers Name"}),
-                               rack_managers=({"name": "Rack Manager Name"})
-            )
+            ansible_facts=dict(
+                all_chassis=({"name": "Chassis Name"}),
+                all_partitions=({"name": "Partition Name"}),
+                all_managers=({"name": "Managers Name"}),
+                rack_managers=({"name": "Rack Manager Name"}),
+            ),
         )
 
     def test_gather_chassis_facts_about_a_rack_manager(self):
@@ -125,7 +128,7 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
             changed=False,
             ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members": [{"name": "chassis name"}]}),
                                rack_managers=({"name": "Rack Manager Name"})
-            )
+                              )
         )
 
     def test_gather_all_facts_about_a_rack_manager(self):
@@ -143,11 +146,21 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members": [{"name": "chassis name"}]}),
-                               rack_manager_partitions=({"category": "rack-managers", "members": [{"name": "partition name"}]}),
-                               rack_manager_managers=({"category": "rack-managers", "members": [{"name": "manager name"}]}),
-                               rack_manager_env_conf=({"rackName": "Rack Name"}),
-                               rack_manager_remote_support=({"type": "Remote Support Settings"}),
-                               rack_managers=({"name": "Rack Manager Name"})
-            )
+            ansible_facts=dict(
+                rack_manager_chassis=(
+                    {"category": "rack-managers", "members": [{"name": "chassis name"}]}
+                ),
+                rack_manager_partitions=(
+                    {
+                        "category": "rack-managers",
+                        "members": [{"name": "partition name"}],
+                    }
+                ),
+                rack_manager_managers=(
+                    {"category": "rack-managers", "members": [{"name": "manager name"}]}
+                ),
+                rack_manager_env_conf=({"rackName": "Rack Name"}),
+                rack_manager_remote_support=({"type": "Remote Support Settings"}),
+                rack_managers=({"name": "Rack Manager Name"}),
+            ),
         )
