@@ -126,9 +126,12 @@ class TestRackManagerFactsModule(OneViewBaseFactsTest):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(rack_manager_chassis=({"category": "rack-managers", "members": [{"name": "chassis name"}]}),
-                               rack_managers=({"name": "Rack Manager Name"})
-                              )
+            ansible_facts=dict(
+                rack_manager_chassis=(
+                    {"category": "rack-managers", "members": [{"name": "chassis name"}]}
+                ),
+                rack_managers=({"name": "Rack Manager Name"}),
+            ),
         )
 
     def test_gather_all_facts_about_a_rack_manager(self):
