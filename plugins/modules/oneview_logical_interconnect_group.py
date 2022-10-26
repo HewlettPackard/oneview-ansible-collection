@@ -320,39 +320,42 @@ class LogicalInterconnectGroupModule(OneViewModule):
                         interconnect_map_entry_template[key] = value.get('permittedInterconnectTypeUri')
                 for uplinkSet in self.data['uplinkSets']:
                     existingLogicalPortConfigInfos = uplinkSet.get('logicalPortConfigInfos')
-                    for item in existingLogicalPortConfigInfos:
-                        logicalLocation = item.get('logicalLocation')
-                        newLogicalLocation = {'locationEntries': []}
-                        key = ''
-                        port_value = ''
-                        port_check = False
-                        locationEntries = logicalLocation.get('locationEntries')
-                        for entry in locationEntries:
-                            if entry.get('type') == 'Enclosure':
-                                key = 'E' + str(entry.get('relativeValue')) + key
-                                newLogicalLocation.get('locationEntries').append(entry)
-                            if entry.get('type') == 'Bay':
-                                key = key + 'B' + str(entry.get('relativeValue'))
-                                newLogicalLocation.get('locationEntries').append(entry)
-                            if entry.get('type') == 'Port':
-                                port_value = entry.get('relativeValue')
-                        if not isinstance(port_value, int):
-                            if interconnect_map_entry_template.get(key):
-                                interconnectType = interconnect_map_entry_template[key]
-                                if not interconnect_type_dict.get(interconnectType):
-                                    interconnect_type_info = interconnect_types_client.get_by_uri(interconnectType)
-                                    interconnect_type_dict[interconnectType] = self.__filter_uplink_ports(interconnect_type_info)
-                                port_info = interconnect_type_dict[interconnectType]
-                                if port_info.get(port_value):
-                                    port_check = True
-                                    newLogicalLocation.get('locationEntries').append({'type': 'Port', 'relativeValue': port_info.get(port_value)})
-                                if port_check:
-                                    item.pop('logicalLocation')
-                                    item['logicalLocation'] = newLogicalLocation
+                    if existingLogicalPortConfigInfos:
+                        for item in existingLogicalPortConfigInfos:
+                            logicalLocation = item.get('logicalLocation')
+                            newLogicalLocation = {'locationEntries': []}
+                            key = ''
+                            port_value = ''
+                            port_check = False
+                            locationEntries = logicalLocation.get('locationEntries')
+                            for entry in locationEntries:
+                                if entry.get('type') == 'Enclosure':
+                                    key = 'E' + str(entry.get('relativeValue')) + key
+                                    newLogicalLocation.get('locationEntries').append(entry)
+                                if entry.get('type') == 'Bay':
+                                    key = key + 'B' + str(entry.get('relativeValue'))
+                                    newLogicalLocation.get('locationEntries').append(entry)
+                                if entry.get('type') == 'Port':
+                                    port_value = entry.get('relativeValue')
+                            if not isinstance(port_value, int):
+                                if interconnect_map_entry_template.get(key):
+                                    interconnectType = interconnect_map_entry_template[key]
+                                    if not interconnect_type_dict.get(interconnectType):
+                                        interconnect_type_info = interconnect_types_client.get_by_uri(interconnectType)
+                                        interconnect_type_dict[interconnectType] = self.__filter_uplink_ports(interconnect_type_info)
+                                    port_info = interconnect_type_dict[interconnectType]
+                                    if port_info.get(port_value):
+                                        port_check = True
+                                        newLogicalLocation.get('locationEntries').append({'type': 'Port', 'relativeValue': port_info.get(port_value)})
+                                    if port_check:
+                                        item.pop('logicalLocation')
+                                        item['logicalLocation'] = newLogicalLocation
+                                    else:
+                                        raise OneViewModuleResourceNotFound(self.PORT_NAME_INVALID)
                                 else:
-                                    raise OneViewModuleResourceNotFound(self.PORT_NAME_INVALID)
-                            else:
-                                raise OneViewModuleResourceNotFound(self.CONFIGURATION_NOT_VALID)
+                                    raise OneViewModuleResourceNotFound(self.CONFIGURATION_NOT_VALID)
+                    else:
+                        uplinkSet['logicalPortConfigInfos'] = []
 
     def __filter_uplink_ports(self, interconnect_info):
         portsInfo = interconnect_info.data['portInfos']
