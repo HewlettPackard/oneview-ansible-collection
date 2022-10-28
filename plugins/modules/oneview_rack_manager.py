@@ -64,13 +64,13 @@ extends_documentation_fragment:
 EXAMPLES = '''
 - name: Add a Rack Manager
   oneview_rack_manager:
-    hostname: 172.16.101.48
+    hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4400
     state: present
     data:
-        hostname : "172.18.6.15"
+        hostname : "5.6.7.8"
         username : "username"
         password : "password"
         force: false
@@ -79,7 +79,7 @@ EXAMPLES = '''
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
-    hostname: 172.16.101.48
+    hostname: 5.6.7.8
     username: administrator
     password: my_password
     api_version: 4400
@@ -91,7 +91,7 @@ EXAMPLES = '''
 
 - name: Do nothing when the rack manager is already present
   oneview_rack_manager:
-    hostname: 172.16.101.48
+    hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4400
@@ -106,7 +106,7 @@ EXAMPLES = '''
 
 - name: Refresh the rack manager
   oneview_rack_manager:
-    hostname: 172.16.101.48
+    hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4400
@@ -117,7 +117,7 @@ EXAMPLES = '''
 
 - name: Remove the rack manager by its name
   oneview_rack_manager:
-    hostname: 172.16.101.48
+    hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4400
@@ -129,7 +129,7 @@ EXAMPLES = '''
 
 - name: Do nothing when the rack manager is already removed
   oneview_rack_manager:
-    hostname: 172.16.101.48
+    hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4400
