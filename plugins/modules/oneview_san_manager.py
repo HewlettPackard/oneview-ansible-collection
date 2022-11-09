@@ -172,34 +172,41 @@ class SanManagerModule(OneViewModule):
         self.san_providers= self.oneview_client.san_providers
 
     def execute_module(self):
-        # changed, msg, ansible_facts = False, '', {}
         if self.state == 'present':
-            return self.__present()
+            if self.data.get('name'):
+                self.current_resource = self.resource_client.get_by_name(self.data['name'])
+                return dict(
+                changed=False,
+                msg=self.MSG_ALREADY_PRESENT,
+                ansible_facts={'san_managers': self.current_resource.data}
+            )
+            # if self.current_resource and self.data.get('uri'):
+            #     self.current_resource.update(self.data, self.data['uri'])
+            else:
+                return self.__present()
         else:
-            # if not self.data.get('name'):
-            #     raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
-
             if self.state == 'absent':
                 return self.resource_absent(method='remove')
             else:
+                if self.data.get('name'):
+                    self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 if not self.current_resource:
                     raise OneViewModuleResourceNotFound(self.MSG_SAN_MANAGER_NOT_FOUND)
-                # else:
-                #     if self.state == 'refresh_state_set':
-                #         #self.current_resource.patch('RefreshsanManagerOp', '', '')
-                #         return dict(changed=True,
-                #                     msg=self.MSG_san_MANAGER_REFRESHED,
-                #                     ansible_facts=dict(san_manager=self.current_resource.data))
-        # return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
+                else:
+                    if self.state == 'refresh_state_set':
+                        info = {
+                            'refreshState': self.data['refreshState']
+                        }
+                        self.current_resource.update(info, self.data['uri'])
+                        return dict(changed=False,
+                                    msg=self.MSG_SAN_MANAGER_REFRESHED,
+                                    ansible_facts=dict(san_managers=self.current_resource.data))
 
     def __present(self):
-        
-
         if not self.data.get('connectionInfo'):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.connectionInfo"))
 
         self.current_resource = self.resource_client.get_by_provider_display_name(self.data['connectionInfo'])
-       
 
         result = dict()
 

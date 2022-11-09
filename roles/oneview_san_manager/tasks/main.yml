@@ -63,19 +63,40 @@
 - debug:
     msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
   # var=san_manager
+- debug: var=san_manager1
 
+- name: Refresh the San Manager
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: refresh_state_set
+    data:
+      name: "172.18.19.1"
+      refreshState: "RefreshPending"
+      uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
+  delegate_to: localhost
 
-
-# - name: Update the San Manager changing the attribute autoLoginRedistribution to True
+# - name: Update the San Manager
 #   oneview_san_manager:
 #     config: "{{ config }}"
 #     sessionID: "{{ session.ansible_facts.session }}"
 #     state: present
-#     data:      
-#       refreshState: "RefreshPending"
-#       uri:  "{{ san_manager1.ansible_facts.san_managers.uri }}"
-#   delegate_to: localhost
-  
+#     data:
+#       name: "172.18.19.1"
+#       uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
+#       connectionInfo:
+#         - name: "Host"
+#           displayName: "Host"
+#           required: true
+#           value: "172.18.19.1"
+#           valueType: "String"
+#           valueFormat: "IPAddressOrHostname"
+#         - name: "Username"
+#           displayName: "Username"
+#           required: true
+#           value: "dcs"
+#           valueType: "String"
+#           valueFormat: "None"
 
 
 - name: Remove the San Manager from OneView
@@ -88,7 +109,7 @@
   delegate_to: localhost
   register: deleted
 
-- name: Do nothing when Fibre Channel Network is absent
+- name: Do nothing when San Manager is absent
   oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
