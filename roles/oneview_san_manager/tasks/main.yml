@@ -32,7 +32,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      providerDisplayName: "Brocade FOS Switch"
+      providerDisplayName: "<san_manager_provider_display_name>"
       connectionInfo:
         - name: "Host"
           displayName: "Host"
