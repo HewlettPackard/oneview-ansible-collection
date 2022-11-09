@@ -217,6 +217,7 @@ class SanManagerFactsModule(OneViewModule):
         return dict(changed=False,
                     ansible_facts=dict(san_managers=san_managers))
 
+
 def main():
     SanManagerFactsModule().run()
 

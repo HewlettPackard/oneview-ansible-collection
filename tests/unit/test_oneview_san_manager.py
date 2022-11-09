@@ -27,47 +27,47 @@ from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneV
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import SanManagerModule
 
 SAN_MANAGER_PRESENT = dict(
-        config='config.json',
-        state='present',
-        data=dict(
-            providerDisplayName="Brocade FOS Switch",
-            connectionInfo=[
-                dict(name="Host",
-                    displayName="Host",
-                    required="true",
-                    value="172.18.19.39",
-                    valueType="String",
-                    valueFormat="IPAddressOrHostname"),
-                    dict(name="Username",
-                        displayName="Username",
-                        required="true",
-                        value="dcs",
-                        valueType="String",
-                        valueFormat="None"),
-                    dict(name="Password",
-                        displayName="Password",
-                        required="true",
-                        value="dcs",
-                        valueType="String",
-                        valueFormat="SecuritySensitive"),
-                    dict(name="UseHttps",
-                        displayName="UseHttps",
-                        required="true",
-                        value="true",
-                        valueType="Boolean",
-                        valueFormat="None")]))
+    config='config.json',
+    state='present',
+    data=dict(
+        providerDisplayName="Brocade FOS Switch",
+        connectionInfo=[
+            dict(name="Host",
+                 displayName="Host",
+                 required="true",
+                 value="172.18.19.39",
+                 valueType="String",
+                 valueFormat="IPAddressOrHostname"),
+            dict(name="Username",
+                 displayName="Username",
+                 required="true",
+                 value="dcs",
+                 valueType="String",
+                 valueFormat="None"),
+            dict(name="Password",
+                 displayName="Password",
+                 required="true",
+                 value="dcs",
+                 valueType="String",
+                 valueFormat="SecuritySensitive"),
+            dict(name="UseHttps",
+                 displayName="UseHttps",
+                 required="true",
+                 value="true",
+                 valueType="Boolean",
+                 valueFormat="None")]))
 
 SAN_MANAGER_REFRESH = dict(
-                        config='config.json',
-                        state='refresh_state_set',
-                        data=dict(name="1.2.3.4",
-                        refreshState="RefreshPending",
-                        uri="/rest/fc-sans/device-managers/3123-432-432-44"))
+    config='config.json',
+    state='refresh_state_set',
+    data=dict(name="1.2.3.4",
+              refreshState="RefreshPending",
+              uri="/rest/fc-sans/device-managers/3123-432-432-44"))
 
 SAN_MANAGER_ABSENT = dict(
-                        config='config.json',
-                        state='absent',
-                        data=dict(name="1.2.3.4"))
+    config='config.json',
+    state='absent',
+    data=dict(name="1.2.3.4"))
 
 
 @pytest.mark.resource(TestSanManagerModule='san_managers')
