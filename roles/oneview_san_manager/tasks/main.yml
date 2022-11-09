@@ -37,19 +37,19 @@
         - name: "Host"
           displayName: "Host"
           required: true
-          value: "172.18.19.1"
+          value: "<san_manager_hostname>"
           valueType: "String"
           valueFormat: "IPAddressOrHostname"
         - name: "Username"
           displayName: "Username"
           required: true
-          value: "dcs"
+          value: "<san_manager_username>"
           valueType: "String"
           valueFormat: "None"
         - name: "Password"
           displayName: "Password"
           required: true
-          value : "dcs"
+          value : "<san_manager_password>"
           valueType: "String"
           valueFormat: "SecuritySensitive"
         - name: "UseHttps"
@@ -62,7 +62,6 @@
   register: san_manager1
 - debug:
     msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
-  # var=san_manager
 - debug: var=san_manager1
 
 - name: Refresh the San Manager
@@ -71,7 +70,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-      name: "172.18.19.1"
+      name: "<san_manager_hostname>"
       refreshState: "RefreshPending"
       uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
   delegate_to: localhost
@@ -82,22 +81,22 @@
 #     sessionID: "{{ session.ansible_facts.session }}"
 #     state: present
 #     data:
-#       name: "172.18.19.1"
+#       name: "<san_manager_hostname>"
 #       uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
 #       connectionInfo:
 #         - name: "Host"
 #           displayName: "Host"
 #           required: true
-#           value: "172.18.19.1"
+#           value: "<san_manager_hostname>"
 #           valueType: "String"
 #           valueFormat: "IPAddressOrHostname"
 #         - name: "Username"
 #           displayName: "Username"
 #           required: true
-#           value: "dcs"
+#           value: "<san_manager_username>"
 #           valueType: "String"
 #           valueFormat: "None"
-
+#   delegate_to: localhost
 
 - name: Remove the San Manager from OneView
   oneview_san_manager:
@@ -105,7 +104,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "172.18.19.1"
+      name: "<san_manager_hostname>"
   delegate_to: localhost
   register: deleted
 
@@ -115,7 +114,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "172.18.19.1"
+      name: "<san_manager_hostname>"
   delegate_to: localhost
   register: deleted
 

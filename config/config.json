@@ -147,6 +147,12 @@
             "inventory_hostname": "<inventory_hostname>",
             "server_profile_name": "<server_profile_name>"
         },
+        "san_manager":
+        {
+            "san_manager_hostname": "<san_manager_hostname>",
+            "san_manager_username": "<san_manager_username>",
+            "san_manager_password": "<san_manager_password>"
+        },
         "storage_volume_attachment":
         {
             "storage_volume_name": "<storage_volume_name>",

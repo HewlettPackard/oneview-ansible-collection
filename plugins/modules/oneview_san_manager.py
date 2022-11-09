@@ -151,6 +151,7 @@ class SanManagerModule(OneViewModule):
     MSG_ALREADY_ABSENT = 'san Manager is already absent.'
     MSG_SAN_MANAGER_REFRESHED = 'san Manager refreshed successfully.'
     MSG_SAN_MANAGER_NOT_FOUND = 'The provided san manager was not found.'
+    MSG_UPDATE_NOT_SUPPORTED = 'San Manager already exists. Update functionality is currently not supported.'
 
     argument_spec = dict(
         state=dict(
@@ -177,7 +178,7 @@ class SanManagerModule(OneViewModule):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 return dict(
                 changed=False,
-                msg=self.MSG_ALREADY_PRESENT,
+                msg=self.MSG_UPDATE_NOT_SUPPORTED,
                 ansible_facts={'san_managers': self.current_resource.data}
             )
             # if self.current_resource and self.data.get('uri'):
@@ -206,7 +207,7 @@ class SanManagerModule(OneViewModule):
         if not self.data.get('connectionInfo'):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.connectionInfo"))
 
-        self.current_resource = self.resource_client.get_by_provider_display_name(self.data['connectionInfo'])
+        self.current_resource = self.resource_client.get_by_provider_display_name(self.data['providerDisplayName'])
 
         result = dict()
 
