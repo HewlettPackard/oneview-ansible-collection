@@ -49,7 +49,7 @@
         - name: "Password"
           displayName: "Password"
           required: true
-          value : "dcs"
+          value: "dcs"
           valueType: "String"
           valueFormat: "SecuritySensitive"
         - name: "UseHttps"
@@ -118,5 +118,3 @@
       name: "172.18.19.1"
   delegate_to: localhost
   register: deleted
-
-
