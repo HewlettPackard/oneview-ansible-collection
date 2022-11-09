@@ -75,7 +75,6 @@ EXAMPLES = '''
         password : "password"
         force: false
   delegate_to: localhost
-  when: contents.rack_manager.variant == 'DL'
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
@@ -102,7 +101,6 @@ EXAMPLES = '''
           password: 'password'
           force: false
   delegate_to: localhost
-  when: contents.rack_manager.variant == 'DL'
 
 - name: Refresh the rack manager
   oneview_rack_manager:
@@ -125,7 +123,6 @@ EXAMPLES = '''
     data:
         name: "{{ rack_manager_name }}"
   delegate_to: localhost
-  when: contents.rack_manager.variant == 'DL'
 
 - name: Do nothing when the rack manager is already removed
   oneview_rack_manager:
@@ -137,7 +134,6 @@ EXAMPLES = '''
     data:
         name: "{{ rack_manager_name }}"
   delegate_to: localhost
-  when: contents.rack_manager.variant == 'DL'
 '''
 
 RETURN = '''
