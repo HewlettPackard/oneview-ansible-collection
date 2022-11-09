@@ -164,6 +164,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_repositories_facts 
 from ansible_collections.hpe.oneview.plugins.modules.oneview_repositories import RepositoriesModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware import ServerHardwareModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_san_manager import SanManagerModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_san_manager_facts import SanManagerFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_facts import ServerHardwareFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_type import ServerHardwareTypeModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
