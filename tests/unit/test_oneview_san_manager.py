@@ -30,44 +30,44 @@ SAN_MANAGER_PRESENT = dict(
         config='config.json',
         state='present',
         data=dict(
-            providerDisplayName= "Brocade FOS Switch",
+            providerDisplayName="Brocade FOS Switch",
             connectionInfo=[
-                dict(name= "Host",
-                displayName="Host",
-                required="true",
-                value="172.18.19.39",
-                valueType= "String",
-                valueFormat="IPAddressOrHostname"),
-                dict(name= "Username",
-                displayName= "Username",
-                required= "true",
-                value= "dcs",
-                valueType= "String",
-                valueFormat= "None"),
-                dict(name="Password",
-                displayName= "Password",
-                required= "true",
-                value = "dcs",
-                valueType= "String",
-                valueFormat= "SecuritySensitive"),
-                dict(name= "UseHttps",
-                displayName= "UseHttps",
-                required= "true",
-                value= "true",
-                valueType= "Boolean",
-                valueFormat= "None" )]))
+                dict(name="Host",
+                    displayName="Host",
+                    required="true",
+                    value="172.18.19.39",
+                    valueType="String",
+                    valueFormat="IPAddressOrHostname"),
+                    dict(name="Username",
+                        displayName="Username",
+                        required="true",
+                        value="dcs",
+                        valueType="String",
+                        valueFormat="None"),
+                    dict(name="Password",
+                        displayName="Password",
+                        required="true",
+                        value="dcs",
+                        valueType="String",
+                        valueFormat="SecuritySensitive"),
+                    dict(name="UseHttps",
+                        displayName="UseHttps",
+                        required="true",
+                        value="true",
+                        valueType="Boolean",
+                        valueFormat="None")]))
 
 SAN_MANAGER_REFRESH = dict(
-        config='config.json',
-        state='refresh_state_set',
-        data=dict(name="1.2.3.4",
-        refreshState="RefreshPending",
-        uri="/rest/fc-sans/device-managers/3123-432-432-44"))
+                        config='config.json',
+                        state='refresh_state_set',
+                        data=dict(name="1.2.3.4",
+                        refreshState="RefreshPending",
+                        uri="/rest/fc-sans/device-managers/3123-432-432-44"))
 
 SAN_MANAGER_ABSENT = dict(
-        config='config.json',
-        state='absent',
-        data=dict(name="1.2.3.4"))
+                        config='config.json',
+                        state='absent',
+                        data=dict(name="1.2.3.4"))
 
 
 @pytest.mark.resource(TestSanManagerModule='san_managers')
@@ -109,7 +109,7 @@ class TestSanManagerModule(OneViewBaseTest):
         )
 
     def test_should_refresh_san_manager(self):
-        self.resource.data = {"name":"name","uri": "resourceuri", "refreshState": "Stable"}
+        self.resource.data = {"name": "name", "uri": "resourceuri", "refreshState": "Stable"}
         self.resource.get_by_name.return_value = self.resource
         self.resource.update.return_value = {"name": "name"}
 
@@ -120,7 +120,7 @@ class TestSanManagerModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
             msg=SanManagerModule.MSG_SAN_MANAGER_REFRESHED,
-            ansible_facts=dict(san_managers={"name":"name","uri": "resourceuri", "refreshState": "Stable"})
+            ansible_facts=dict(san_managers={"name": "name", "uri": "resourceuri", "refreshState": "Stable"})
         )
 
     def test_should_remove_san_manager(self):

@@ -33,7 +33,7 @@ version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
-author: "Nabhajit Ray (@nabhajit.ray)"
+author: "Nabhajit Ray (@NabhajitRay)"
 options:
     sessionID:
         description:
@@ -169,17 +169,17 @@ class SanManagerModule(OneViewModule):
 
         super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.san_managers)
-        self.san_providers= self.oneview_client.san_providers
+        self.san_providers = self.oneview_client.san_providers
 
     def execute_module(self):
         if self.state == 'present':
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 return dict(
-                changed=False,
-                msg=self.MSG_ALREADY_PRESENT,
-                ansible_facts={'san_managers': self.current_resource.data}
-            )
+                    changed=False,
+                    msg=self.MSG_ALREADY_PRESENT,
+                    ansible_facts={'san_managers': self.current_resource.data}
+                )
             # if self.current_resource and self.data.get('uri'):
             #     self.current_resource.update(self.data, self.data['uri'])
             else:
@@ -211,8 +211,8 @@ class SanManagerModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-            provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])            
-            self.current_resource = self.san_providers.add(self.data,provider_uri)
+            provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
+            self.current_resource = self.san_providers.add(self.data, provider_uri)
             result = dict(
                 changed=True,
                 msg=self.MSG_ADDED,
