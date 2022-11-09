@@ -33,7 +33,7 @@ version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
     - "hpeOneView >= 5.4.0"
-author: "Nabhajit Ray (@nabhajit.ray)"
+author: "Nabhajit Ray (@NabhajitRay)"
 options:
     sessionID:
         description:
@@ -170,7 +170,7 @@ class SanManagerModule(OneViewModule):
 
         super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.san_managers)
-        self.san_providers= self.oneview_client.san_providers
+        self.san_providers = self.oneview_client.san_providers
 
     def execute_module(self):
         if self.state == 'present':
@@ -212,8 +212,8 @@ class SanManagerModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-            provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])            
-            self.current_resource = self.san_providers.add(self.data,provider_uri)
+            provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
+            self.current_resource = self.san_providers.add(self.data, provider_uri)
             result = dict(
                 changed=True,
                 msg=self.MSG_ADDED,

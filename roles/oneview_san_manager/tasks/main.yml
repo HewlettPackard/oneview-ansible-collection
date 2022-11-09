@@ -117,5 +117,3 @@
       name: "<san_manager_hostname>"
   delegate_to: localhost
   register: deleted
-
-
