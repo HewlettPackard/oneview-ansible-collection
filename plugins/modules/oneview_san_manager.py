@@ -15,12 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
+
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
-import logging,sys
-
-logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
-
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
@@ -258,10 +255,8 @@ class SanManagerModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-   
-            logging.info(self.san_providers.get_provider_uri(self.data['providerDisplayName']))
             if self.san_providers.get_provider_uri(self.data['providerDisplayName']) is None:
-                raise OneViewModuleResourceNotFound(self.MSG_PROVIDER_NOT_FOUND)          
+                raise OneViewModuleResourceNotFound(self.MSG_PROVIDER_NOT_FOUND)
             else:
                 provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
                 self.current_resource = self.san_providers.add(self.data, provider_uri)
@@ -270,8 +265,6 @@ class SanManagerModule(OneViewModule):
                     msg=self.MSG_ADDED,
                     ansible_facts={'san_managers': self.current_resource}
                 )
-                
-
         else:
             result = dict(
                 changed=False,
