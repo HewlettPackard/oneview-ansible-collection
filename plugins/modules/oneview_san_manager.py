@@ -15,9 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###
-
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
+import logging,sys
+
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
@@ -190,10 +193,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
 
 class SanManagerModule(OneViewModule):
     MSG_ADDED = 'san Manager added successfully.'
-    MSG_ALREADY_PRESENT = 'san Manager is already present.'
+    MSG_ALREADY_PRESENT = 'San Manager is already present.'
     MSG_DELETED = 'san Manager deleted successfully.'
-    MSG_ALREADY_ABSENT = 'san Manager is already absent.'
-    MSG_SAN_MANAGER_REFRESHED = 'san Manager refreshed successfully.'
+    MSG_ALREADY_ABSENT = 'San Manager is already absent.'
+    MSG_PROVIDER_NOT_FOUND = 'The provided Provider was not found.'
+    MSG_SAN_MANAGER_REFRESHED = 'San Manager refreshed successfully.'
     MSG_SAN_MANAGER_NOT_FOUND = 'The provided san manager was not found.'
     MSG_UPDATE_NOT_SUPPORTED = 'San Manager already exists. Update functionality is currently not supported.'
 
@@ -225,8 +229,6 @@ class SanManagerModule(OneViewModule):
                     msg=self.MSG_UPDATE_NOT_SUPPORTED,
                     ansible_facts={'san_managers': self.current_resource.data}
                 )
-            # if self.current_resource and self.data.get('uri'):
-            #     self.current_resource.update(self.data, self.data['uri'])
             else:
                 return self.__present()
         else:
@@ -256,13 +258,20 @@ class SanManagerModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-            provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
-            self.current_resource = self.san_providers.add(self.data, provider_uri)
-            result = dict(
-                changed=True,
-                msg=self.MSG_ADDED,
-                ansible_facts={'san_managers': self.current_resource}
-            )
+   
+            logging.info(self.san_providers.get_provider_uri(self.data['providerDisplayName']))
+            if self.san_providers.get_provider_uri(self.data['providerDisplayName']) is None:
+                raise OneViewModuleResourceNotFound(self.MSG_PROVIDER_NOT_FOUND)          
+            else:
+                provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
+                self.current_resource = self.san_providers.add(self.data, provider_uri)
+                result = dict(
+                    changed=True,
+                    msg=self.MSG_ADDED,
+                    ansible_facts={'san_managers': self.current_resource}
+                )
+                
+
         else:
             result = dict(
                 changed=False,
