@@ -113,6 +113,11 @@
             "multiple_hosts":[],
             "variant": "<variant>"
         },
+        "rack_manager":{
+            "rack_manager_hostname": "<rack_manager_hostname>",
+            "rack_manager_username": "<rack_manager_username>",
+            "rack_manager_password": "<rack_manager_password>"
+        },
         "storage_system":
         {
             "storage_domain": "<storage_domain>",
