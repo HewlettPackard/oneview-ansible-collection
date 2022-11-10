@@ -49,7 +49,7 @@
         - name: "Password"
           displayName: "Password"
           required: true
-          value : "<san_manager_password>"
+          value: "<san_manager_password>"
           valueType: "String"
           valueFormat: "SecuritySensitive"
         - name: "UseHttps"

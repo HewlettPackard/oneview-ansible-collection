@@ -51,7 +51,7 @@ options:
         type: str
     data:
         description:
-            - List with Server Hardware properties and its associated states.
+            - List with San Managers and its associated states.
         required: true
         type: dict
 extends_documentation_fragment:
@@ -66,21 +66,43 @@ EXAMPLES = '''
     hostname: 1.2.3.4
     username: administrator
     password: my_password
-    api_version: 4400
+    api_version: 4600
     state: present
     data:
-        hostname : "5.6.7.8"
-        username : "username"
-        password : "password"
-        force: false
+        providerDisplayName: "<san_manager_provider_display_name>"
+        connectionInfo:
+        - name: "Host"
+          displayName: "Host"
+          required: true
+          value: "<san_manager_hostname>"
+          valueType: "String"
+          valueFormat: "IPAddressOrHostname"
+        - name: "Username"
+          displayName: "Username"
+          required: true
+          value: "<san_manager_username>"
+          valueType: "String"
+          valueFormat: "None"
+        - name: "Password"
+          displayName: "Password"
+          required: true
+          value: "<san_manager_password>"
+          valueType: "String"
+          valueFormat: "SecuritySensitive"
+        - name: "UseHttps"
+          displayName: "UseHttps"
+          required: true
+          value: true
+          valueType: Boolean
+          valueFormat: "None"   
   delegate_to: localhost
-  when: contents.san_manager.variant == 'DL'
+
 - name: Gather facts about all san Managers
   oneview_san_manager_facts:
     hostname: 5.6.7.8
     username: administrator
     password: my_password
-    api_version: 4400
+    api_version: 4600
   delegate_to: localhost
 - debug: var=san_managers
 - set_fact:
@@ -93,44 +115,66 @@ EXAMPLES = '''
     api_version: 4400
     state: present
     data:
-          hostname: "{{ san_manager_name }}"
-          username: 'username'
-          password: 'password'
-          force: false
+      providerDisplayName: "<san_manager_provider_display_name>"
+      connectionInfo:
+        - name: "Host"
+          displayName: "Host"
+          required: true
+          value: "<san_manager_hostname>"
+          valueType: "String"
+          valueFormat: "IPAddressOrHostname"
+        - name: "Username"
+          displayName: "Username"
+          required: true
+          value: "<san_manager_username>"
+          valueType: "String"
+          valueFormat: "None"
+        - name: "Password"
+          displayName: "Password"
+          required: true
+          value: "<san_manager_password>"
+          valueType: "String"
+          valueFormat: "SecuritySensitive"
+        - name: "UseHttps"
+          displayName: "UseHttps"
+          required: true
+          value: true
+          valueType: Boolean
+          valueFormat: "None"   
   delegate_to: localhost
-  when: contents.san_manager.variant == 'DL'
+
 - name: Refresh the san manager
   oneview_san_manager:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
-    api_version: 4400
+    api_version: 4600
     state: refresh_state_set
     data:
         name: "{{ san_manager_name }}"
+        refreshState: "RefreshPending"
   delegate_to: localhost
 - name: Remove the san manager by its name
   oneview_san_manager:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
-    api_version: 4400
+    api_version: 4600
     state: absent
     data:
-        name: "{{ san_manager_name }}"
+        name: "{{ san_manager_name }}"  
   delegate_to: localhost
-  when: contents.san_manager.variant == 'DL'
+
 - name: Do nothing when the san manager is already removed
   oneview_san_manager:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
-    api_version: 4400
+    api_version: 4600
     state: absent
     data:
         name: "{{ san_manager_name }}"
   delegate_to: localhost
-  when: contents.san_manager.variant == 'DL'
 '''
 
 RETURN = '''
