@@ -94,7 +94,7 @@ EXAMPLES = '''
           required: true
           value: true
           valueType: Boolean
-          valueFormat: "None"   
+          valueFormat: "None"
   delegate_to: localhost
 
 - name: Gather facts about all san Managers
@@ -140,7 +140,7 @@ EXAMPLES = '''
           required: true
           value: true
           valueType: Boolean
-          valueFormat: "None"   
+          valueFormat: "None"
   delegate_to: localhost
 
 - name: Refresh the san manager
@@ -162,7 +162,7 @@ EXAMPLES = '''
     api_version: 4600
     state: absent
     data:
-        name: "{{ san_manager_name }}"  
+        name: "{{ san_manager_name }}"
   delegate_to: localhost
 
 - name: Do nothing when the san manager is already removed
@@ -221,10 +221,10 @@ class SanManagerModule(OneViewModule):
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 return dict(
-                changed=False,
-                msg=self.MSG_UPDATE_NOT_SUPPORTED,
-                ansible_facts={'san_managers': self.current_resource.data}
-            )
+                    changed=False,
+                    msg=self.MSG_UPDATE_NOT_SUPPORTED,
+                    ansible_facts={'san_managers': self.current_resource.data}
+                )
             # if self.current_resource and self.data.get('uri'):
             #     self.current_resource.update(self.data, self.data['uri'])
             else:

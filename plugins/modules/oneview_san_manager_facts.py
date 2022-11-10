@@ -39,7 +39,7 @@ options:
       description:
         - san Manager name.
       required: false
-      type: str    
+      type: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
@@ -74,8 +74,8 @@ EXAMPLES = '''
     params:
       start: 0
       count: 2
-      sort: name:ascending 
-      filter: 'refreshState=Stable'   
+      sort: name:ascending
+      filter: 'refreshState=Stable'
   delegate_to: localhost
 - debug: msg="{{san_managers | map(attribute='name') | list }}"
 - name: Gather facts about a San Manager by name
@@ -101,7 +101,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class SanManagerFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
-            name=dict(required=False, type='str'),  
+            name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
         )
