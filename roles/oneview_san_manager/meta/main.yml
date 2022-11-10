@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: oneview_fc_network
-  author: Chebrolu Bala Sai Harika
-  description: Ansible role to manage OneView Fibre Channel Network resources.
+  role_name: oneview_san_manager
+  author: Nabhajit Ray
+  description: Ansible role to manage OneView San Manager resources.
   company: Hewlett Packard Enterprise
   license: Apache
   min_ansible_version: 2.9

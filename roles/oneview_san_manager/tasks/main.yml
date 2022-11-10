@@ -74,30 +74,7 @@
       refreshState: "RefreshPending"
       uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
   delegate_to: localhost
-
-# - name: Update the San Manager
-#   oneview_san_manager:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
-#     state: present
-#     data:
-#       name: "<san_manager_hostname>"
-#       uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
-#       connectionInfo:
-#         - name: "Host"
-#           displayName: "Host"
-#           required: true
-#           value: "<san_manager_hostname>"
-#           valueType: "String"
-#           valueFormat: "IPAddressOrHostname"
-#         - name: "Username"
-#           displayName: "Username"
-#           required: true
-#           value: "<san_manager_username>"
-#           valueType: "String"
-#           valueFormat: "None"
-#   delegate_to: localhost
-
+  
 - name: Remove the San Manager from OneView
   oneview_san_manager:
     config: "{{ config }}"
