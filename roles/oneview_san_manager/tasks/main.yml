@@ -1,0 +1,96 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Get currentVersion from URL
+  oneview_version_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+  when: config_file.api_version == ""
+  register: version
+
+- name: Print currentVersion if api version is not specified in config file
+  set_fact: 
+    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
+  when: config_file.api_version == ""
+
+- name: Print currentVersion if api version is specified in config file
+  set_fact: 
+    currentVersion: config_file.api_version | string
+  when: config_file.api_version != ""
+
+- name: Add a San Manager Storage System
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      providerDisplayName: "<san_manager_provider_display_name>"
+      connectionInfo:
+        - name: "Host"
+          displayName: "Host"
+          required: true
+          value: "<san_manager_hostname>"
+          valueType: "String"
+          valueFormat: "IPAddressOrHostname"
+        - name: "Username"
+          displayName: "Username"
+          required: true
+          value: "<san_manager_username>"
+          valueType: "String"
+          valueFormat: "None"
+        - name: "Password"
+          displayName: "Password"
+          required: true
+          value: "<san_manager_password>"
+          valueType: "String"
+          valueFormat: "SecuritySensitive"
+        - name: "UseHttps"
+          displayName: "UseHttps"
+          required: true
+          value: true
+          valueType: Boolean
+          valueFormat: "None"     
+  delegate_to: localhost
+  register: san_manager1
+- debug:
+    msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
+- debug: var=san_manager1
+
+- name: Refresh the San Manager
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: refresh_state_set
+    data:
+      name: "<san_manager_hostname>"
+      refreshState: "RefreshPending"
+      uri: "{{ san_manager1.ansible_facts.san_managers.uri }}"
+  delegate_to: localhost
+  
+- name: Remove the San Manager from OneView
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+      name: "<san_manager_hostname>"
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when San Manager is absent
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+      name: "<san_manager_hostname>"
+  delegate_to: localhost
+  register: deleted
