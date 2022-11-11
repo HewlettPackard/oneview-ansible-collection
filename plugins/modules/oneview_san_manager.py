@@ -28,7 +28,7 @@ DOCUMENTATION = '''
 module: oneview_san_manager
 short_description: Manage OneView san Manager resources.
 description:
-    - "Provides an interface to manage Server Hardware resources."
+    - "Provides an interface to manage San Manager resources."
 version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"

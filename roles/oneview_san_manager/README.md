@@ -2,7 +2,7 @@
 Manage OneView San Manager resources.
 
 #### Synopsis
- Provides an interface to manage Fibre Channel Network resources. Can create, update, and delete.
+ Provides an interface to manage San Manager resources. Can create, update, and delete.
 
 #### Requirements (on the host that executes the module)
   * hpeOneView >= 5.4.0

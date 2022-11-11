@@ -26,9 +26,9 @@ ANSIBLE_METADATA = {'status': ['stableinterface'],
 DOCUMENTATION = '''
 ---
 module: oneview_san_manager_facts
-short_description: Retrieve facts about the OneView san Manager.
+short_description: Retrieve facts about the OneView San Manager.
 description:
-    - Retrieve facts about the san Manager from OneView.
+    - Retrieve facts about the San Manager from OneView.
 version_added: "2.3.0"
 requirements:
     - "python >= 2.7.9"
@@ -90,7 +90,7 @@ EXAMPLES = '''
 
 RETURN = '''
 san_managers:
-    description: Has all the OneView facts about all the san Managers.
+    description: Has all the OneView facts about all the San Managers.
     returned: Always, but can be null.
     type: dict
 '''

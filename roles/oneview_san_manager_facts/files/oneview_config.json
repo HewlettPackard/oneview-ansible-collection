@@ -1,12 +1,13 @@
 {
-    "ip": "172.27.2.238",
-    "credentials": {
-      "userName": "Administrator",
-      "password": "admin123",
-      "authLoginDomain": "local"
+  "ip": "<oneview_ip>",
+  "credentials": {
+    "userName": "<user_name>",
+    "password": "<password>",
+    "authLoginDomain": "<domain_directory>"
 },
-    "image_streamer_ip": "",
-    "api_version": 4400,
-    "variant": "Synergy"
-  }
+  "image_streamer_ip": "",
+  "api_version": 4600,
+  "variant": "Synergy"
+}
+  
   
