@@ -113,6 +113,11 @@
             "multiple_hosts":[],
             "variant": "<variant>"
         },
+        "rack_manager":{
+            "rack_manager_hostname": "<rack_manager_hostname>",
+            "rack_manager_username": "<rack_manager_username>",
+            "rack_manager_password": "<rack_manager_password>"
+        },
         "storage_system":
         {
             "storage_domain": "<storage_domain>",
@@ -146,6 +151,13 @@
             "server_profile_description": "<server_profile_description>",
             "inventory_hostname": "<inventory_hostname>",
             "server_profile_name": "<server_profile_name>"
+        },
+        "san_manager":
+        {
+            "san_manager_hostname": "<san_manager_hostname>",
+            "san_manager_username": "<san_manager_username>",
+            "san_manager_password": "<san_manager_password>",
+            "san_manager_provider_display_name": "<san_manager_provider_display_name>"
         },
         "storage_volume_attachment":
         {

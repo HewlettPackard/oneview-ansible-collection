@@ -32,6 +32,8 @@ plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-lic
 plugins/modules/oneview_hypervisor_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_san_manager.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_san_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_system.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_storage_system_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_fc_network.py validate-modules:missing-gplv3-license
@@ -100,3 +102,5 @@ tests/unit/utils/hpe_test_utils.py pylint!skip
 plugins/modules/oneview_repositories_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_repositories.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_get_session_id.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_rack_manager.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_rack_manager_facts.py validate-modules:missing-gplv3-license
