@@ -212,6 +212,8 @@ class ServerProfileTemplateModule(OneViewModule):
         return True, self.MSG_CREATED, resource.data
 
     def __update(self, data):
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
         merged_data = ServerProfileMerger().merge_data(self.current_resource.data, data)
         updated_data = deepcopy(merged_data)
         updated_data.pop('initialScopeUris', None)
