@@ -109,6 +109,19 @@ EXAMPLES = '''
       force: True
   delegate_to: localhost
 
+- name: Rename Server Profile Template
+  oneview_server_profile_template:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1600
+    state: "present"
+    data:
+      newName: "ProfileTemplate102-Updated"
+      name: "ProfileTemplate102"
+  delegate_to: localhost
+  register: result
+
 - name: Delete the Server Profile Template
   oneview_server_profile_template:
     hostname: 172.16.101.48
