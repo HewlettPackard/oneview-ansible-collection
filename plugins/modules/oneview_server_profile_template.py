@@ -109,6 +109,19 @@ EXAMPLES = '''
       force: True
   delegate_to: localhost
 
+- name: Rename Server Profile Template
+  oneview_server_profile_template:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1600
+    state: "present"
+    data:
+      newName: "ProfileTemplate102-Updated"
+      name: "ProfileTemplate102"
+  delegate_to: localhost
+  register: result
+
 - name: Delete the Server Profile Template
   oneview_server_profile_template:
     hostname: 172.16.101.48
@@ -212,6 +225,8 @@ class ServerProfileTemplateModule(OneViewModule):
         return True, self.MSG_CREATED, resource.data
 
     def __update(self, data):
+        if "newName" in self.data:
+            self.data["name"] = self.data.pop("newName")
         merged_data = ServerProfileMerger().merge_data(self.current_resource.data, data)
         updated_data = deepcopy(merged_data)
         updated_data.pop('initialScopeUris', None)

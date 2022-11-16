@@ -50,13 +50,24 @@
       force: True # Supprted only for API version >= 600
   delegate_to: localhost
 
+- name: Rename Server Profile Template
+  oneview_server_profile_template:
+    config: "{{ config }}"
+    state: "present"
+    sessionID: "{{ session.ansible_facts.session }}"
+    data:
+      newName: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}"
+  delegate_to: localhost
+  register: result
+
 - name: Delete the Server Profile Template
   oneview_server_profile_template:
     config: "{{ config }}"
     state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile_template.server_profile_template_name }}"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
     params:
       force: True # Supported only for API version >= 600
   delegate_to: localhost
@@ -67,5 +78,5 @@
     state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile_template.server_profile_template_name }}"
+      name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
   delegate_to: localhost

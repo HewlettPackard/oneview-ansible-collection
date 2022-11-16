@@ -1,4 +1,10 @@
 # Ansible Collections for HPE OneView Change Log
+## v8.1.0 (Unreleased)
+This release extends the planned support of the collections to OneView REST API version 4800(OneView v8.1).
+
+#### Bug fixes & Enhancements
+- [#226] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/226) Server Profile Template module missing the newName property
+
 ## v8.0.0
 This release extends the planned support of the collections to OneView REST API version 4600(OneView v8.0).
 #### Major changes
