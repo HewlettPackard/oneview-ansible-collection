@@ -216,8 +216,8 @@ class TestSanManagerModule(OneViewBaseTest):
         self.mock_ansible_module.params = {"state": "present",
                                            "config": "config",
                                            "data":
-                                               {"field": "invalid", 
-                                                "connectionInfo":"some_data"}}
+                                               {"field": "invalid",
+                                                "connectionInfo": "some_data"}}
 
         SanManagerModule().run()
 
