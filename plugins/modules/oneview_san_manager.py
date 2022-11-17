@@ -196,7 +196,7 @@ class SanManagerModule(OneViewModule):
     MSG_PROVIDER_NOT_FOUND = 'The provided Provider was not found.'
     MSG_SAN_MANAGER_REFRESHED = 'San Manager refreshed successfully.'
     MSG_SAN_MANAGER_NOT_FOUND = 'The provided san manager was not found.'
-    MSG_UPDATE_NOT_SUPPORTED = 'San Manager already exists. Update functionality is currently not supported.'
+    MSG_SAN_MANAGER_UPDATED = 'San Manager updated successfully.'
 
     argument_spec = dict(
         state=dict(
@@ -221,11 +221,13 @@ class SanManagerModule(OneViewModule):
         if self.state == 'present':
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
-                return dict(
-                    changed=False,
-                    msg=self.MSG_UPDATE_NOT_SUPPORTED,
-                    ansible_facts={'san_managers': self.current_resource.data}
-                )
+                if self.current_resource:
+                    self.current_resource.update(self.data, self.current_resource.data.get('uri'))
+                    return dict(changed=True,
+                                msg=self.MSG_SAN_MANAGER_UPDATED,
+                                ansible_facts=dict(san_managers=self.current_resource.data))
+                else:
+                    raise OneViewModuleResourceNotFound(self.MSG_SAN_MANAGER_NOT_FOUND)
             else:
                 return self.__present()
         else:
@@ -241,7 +243,7 @@ class SanManagerModule(OneViewModule):
                         info = {
                             'refreshState': self.data['refreshState']
                         }
-                        self.current_resource.update(info, self.data['uri'])
+                        self.current_resource.update(info, self.current_resource.data.get('uri'))
                         return dict(changed=False,
                                     msg=self.MSG_SAN_MANAGER_REFRESHED,
                                     ansible_facts=dict(san_managers=self.current_resource.data))
@@ -249,13 +251,15 @@ class SanManagerModule(OneViewModule):
     def __present(self):
         if not self.data.get('connectionInfo'):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.connectionInfo"))
+        if not self.data.get('providerDisplayName'):
+            raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.providerDisplayName"))
 
         self.current_resource = self.resource_client.get_by_provider_display_name(self.data['providerDisplayName'])
 
         result = dict()
 
         if not self.current_resource:
-            if self.san_providers.get_provider_uri(self.data['providerDisplayName']) is None:
+            if self.san_providers.get_provider_uri(self.data.get('providerDisplayName')) is None:
                 raise OneViewModuleResourceNotFound(self.MSG_PROVIDER_NOT_FOUND)
             else:
                 provider_uri = self.san_providers.get_provider_uri(self.data['providerDisplayName'])
