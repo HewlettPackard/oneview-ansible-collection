@@ -216,13 +216,14 @@ class TestSanManagerModule(OneViewBaseTest):
         self.mock_ansible_module.params = {"state": "present",
                                            "config": "config",
                                            "data":
-                                               {"field": "invalid",
+                                               {"field": "invalid", 
                                                 "connectionInfo":"some_data"}}
 
         SanManagerModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
             exception=mock.ANY, msg=SanManagerModule.MSG_MANDATORY_FIELD_MISSING.format('data.providerDisplayName'))
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
