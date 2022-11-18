@@ -1,4 +1,0 @@
----
-# defaults file for oneview_os_deployment_plan_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_os_deployment_plan_facts/files/oneview_config.json"
-os_deployment_plan_name: "RHEL_7.3"

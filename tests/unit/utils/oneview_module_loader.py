@@ -50,18 +50,6 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           LIGMerger
                                                                           )
 # from ansible_collections.hpe.oneview.plugins.module_utils import ICspHelper
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_artifact_bundle import ArtifactBundleModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_build_plan import BuildPlanModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_build_plan_facts import BuildPlanFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_deployment_group_facts import DeploymentGroupFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_deployment_plan import DeploymentPlanModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_deployment_plan_facts import DeploymentPlanFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_golden_image import GoldenImageModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_golden_image_facts import GoldenImageFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_os_volume_facts import OsVolumeFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_plan_script import PlanScriptModule
-from ansible_collections.hpe.oneview.plugins.modules.image_streamer_plan_script_facts import PlanScriptFactsModule
 # from oneview_alert_facts import AlertFactsModule
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_appliance_device_read_community import ApplianceDeviceReadCommunityModule
 # from ansible_collections.hpe.oneview.plugins.modules.oneview_appliance_device_read_community_facts import ApplianceDeviceReadCommunityFactsModule

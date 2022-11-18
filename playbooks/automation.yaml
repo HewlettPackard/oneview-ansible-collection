@@ -741,16 +741,4 @@
           - name: (Display)
             debug:
               msg: "{{ msg.include_args.name }}"
-  # roles:   
-    # - hpe.oneview.image_streamer_plan_script
-    # - hpe.oneview.image_streamer_plan_script_facts
-    # - hpe.oneview.image_streamer_build_plan
-    # - hpe.oneview.image_streamer_build_plan_facts
-    # - hpe.oneview.image_streamer_deployment_group_facts
-    # - hpe.oneview.image_streamer_os_volume_facts
-    # - hpe.oneview.image_streamer_deployment_plan
-    # - hpe.oneview.image_streamer_deployment_plan_facts
-    # - hpe.oneview.image_streamer_golden_image
-    # - hpe.oneview.image_streamer_golden_image_facts
-    # - hpe.oneview.image_streamer_artifact_bundle
-    # - hpe.oneview.image_streamer_artifact_bundle_facts
+

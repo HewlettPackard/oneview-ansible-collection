@@ -95,7 +95,6 @@ class TestOneViewModule():
     EXPECTED_ARG_SPEC = {'api_version': {'type': u'int'},
                          'config': {'type': 'path'},
                          'hostname': {'type': 'str'},
-                         'image_streamer_hostname': {'type': 'str'},
                          'password': {'type': 'str', 'no_log': True},
                          'username': {'type': 'str'},
                          'auth_login_domain': {'type': 'str'},
@@ -188,9 +187,8 @@ class TestOneViewModule():
 
     def test_should_load_config_from_parameters(self):
 
-        params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500,
-                  'image_streamer_hostname': '172.16.1.2'}
-        params_for_expect = {'image_streamer_ip': '172.16.1.2', 'api_version': 500, 'ip': '172.16.1.1',
+        params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500}
+        params_for_expect = {'api_version': 500, 'ip': '172.16.1.1',
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
@@ -205,8 +203,8 @@ class TestOneViewModule():
     def test_should_load_config_from_parameters_with_domain(self):
 
         params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500,
-                  'image_streamer_hostname': '172.16.1.2', 'auth_login_domain': 'ADDomain'}
-        params_for_expect = {'image_streamer_ip': '172.16.1.2', 'api_version': 500, 'ip': '172.16.1.1',
+                  'auth_login_domain': 'ADDomain'}
+        params_for_expect = {'api_version': 500, 'ip': '172.16.1.1',
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 
@@ -727,7 +725,6 @@ class TestOneViewModuleBase():
     EXPECTED_ARG_SPEC = {'api_version': {'type': u'int'},
                          'config': {'type': 'path'},
                          'hostname': {'type': 'str'},
-                         'image_streamer_hostname': {'type': 'str'},
                          'password': {'type': 'str', 'no_log': True},
                          'username': {'type': 'str'},
                          'auth_login_domain': {'type': 'str'},
@@ -820,9 +817,8 @@ class TestOneViewModuleBase():
 
     def test_should_load_config_from_parameters(self):
 
-        params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500,
-                  'image_streamer_hostname': '172.16.1.2'}
-        params_for_expect = {'image_streamer_ip': '172.16.1.2', 'api_version': 500, 'ip': '172.16.1.1',
+        params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500}
+        params_for_expect = {'api_version': 500, 'ip': '172.16.1.1',
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': ''}}
         self.mock_ansible_module.params = params
 
@@ -837,8 +833,8 @@ class TestOneViewModuleBase():
     def test_should_load_config_from_parameters_with_domain(self):
 
         params = {'hostname': '172.16.1.1', 'username': 'admin', 'password': 'mypass', 'api_version': 500,
-                  'image_streamer_hostname': '172.16.1.2', 'auth_login_domain': 'ADDomain'}
-        params_for_expect = {'image_streamer_ip': '172.16.1.2', 'api_version': 500, 'ip': '172.16.1.1',
+                  'auth_login_domain': 'ADDomain'}
+        params_for_expect = {'api_version': 500, 'ip': '172.16.1.1',
                              'credentials': {'userName': 'admin', 'password': 'mypass', 'authLoginDomain': 'ADDomain'}}
         self.mock_ansible_module.params = params
 

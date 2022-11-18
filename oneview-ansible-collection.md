@@ -3,18 +3,6 @@
 ### Roles
 
   * [dependencies_list](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/dependencies_list/README.md)
-  * [image_streamer_artifact_bundle - Manage the Artifact Bundle resource.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_artifact_bundle/README.md)
-  * [image_streamer_artifact_bundle_facts - Retrieve facts about the Artifact Bundle.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_artifact_bundle_facts/README.md)
-  * [image_streamer_build_plan - Manages Image Stream OS Build Plan resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_build_plan/README.md)
-  * [image_streamer_build_plan_facts - Retrieve facts about one or more of the Image Streamer Build Plans.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_build_plan_facts/README.md)
-  * [image_streamer_deployment_group_facts - Retrieve facts about the Image Streamer Deployment Groups.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_deployment_group_facts/README.md)
-  * [image_streamer_deployment_plan - Manage Image Streamer Deployment Plan resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_deployment_plan/README.md)
-  * [image_streamer_deployment_plan_facts - Retrieve facts about the Image Streamer Deployment Plans.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_deployment_plan_facts/README.md)
-  * [image_streamer_golden_image - Manage Image Streamer Golden Image resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_golden_image/README.md)
-  * [image_streamer_golden_image_facts - Retrieve facts about one or more of the Image Streamer Golden Image.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_golden_image_facts/README.md)
-  * [image_streamer_os_volume_facts - Retrieve facts about the Image Streamer OS Volumes.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_os_volume_facts/README.md)
-  * [image_streamer_plan_script - Manage the Image Streamer Plan Script resources.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_plan_script/README.md)
-  * [image_streamer_plan_script_facts - Retrieve facts about the Image Streamer Plan Scripts.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/image_streamer_plan_script_facts/README.md)
   * [oneview_appliance_configuration_timeconfig_facts - Retrieve facts about the OneView appliance supported locales.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_appliance_configuration_timeconfig_facts/README.md)
   * [oneview_appliance_device_snmp_v1_trap_destinations - Manage the Appliance Device SNMPv1 Trap Destinations.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_appliance_device_snmp_v1_trap_destination/README.md)
   * [oneview_appliance_device_snmp_v1_trap_destinations_facts - Retrieve the facts about the OneView appliance SNMPv1 trap forwarding destinations.](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/roles/oneview_appliance_device_snmp_v1_trap_destination_facts/README.md)

@@ -76,11 +76,6 @@ options:
             - List with the hostname.
         required: false
         type: str
-    image_streamer_hostname:
-        description:
-            - List with the image_streamer_hostname.
-        required: false
-        type: str
     password:
         description:
             - List with the password.

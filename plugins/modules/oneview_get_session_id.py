@@ -114,8 +114,7 @@ class GetSessionIDModule(OneViewModule):
             oneview_config = dict(ip=self.module.params['hostname'],
                                   credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
                                                    authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                                  api_version=self.module.params['api_version'],
-                                  image_streamer_ip=self.module.params['image_streamer_hostname'])
+                                  api_version=self.module.params['api_version'])
         return oneview_config
 
 

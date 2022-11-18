@@ -554,7 +554,6 @@ class OneViewModule(object):
         api_version=dict(type='int'),
         config=dict(type='path'),
         hostname=dict(type='str'),
-        image_streamer_hostname=dict(type='str'),
         password=dict(type='str', no_log=True),
         username=dict(type='str'),
         auth_login_domain=dict(type='str')
@@ -616,8 +615,7 @@ class OneViewModule(object):
             config = dict(ip=self.module.params['hostname'],
                           credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                          api_version=self.module.params['api_version'],
-                          image_streamer_ip=self.module.params['image_streamer_hostname'])
+                          api_version=self.module.params['api_version'])
             if self.module.params.get('sessionID'):
                 self.oneview_client = OneViewClient(config, sessionID=self.module.params['sessionID'])
             else:
@@ -890,7 +888,6 @@ class OneViewModuleBase(object):
         api_version=dict(type='int'),
         config=dict(type='path'),
         hostname=dict(type='str'),
-        image_streamer_hostname=dict(type='str'),
         password=dict(type='str', no_log=True),
         username=dict(type='str'),
         auth_login_domain=dict(type='str')
@@ -951,8 +948,7 @@ class OneViewModuleBase(object):
             config = dict(ip=self.module.params['hostname'],
                           credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                          api_version=self.module.params['api_version'],
-                          image_streamer_ip=self.module.params['image_streamer_hostname'])
+                          api_version=self.module.params['api_version'])
             if self.module.params.get('sessionID'):
                 self.oneview_client = OneViewClient(config, self.module.params['sessionID'])
             else:
