@@ -128,9 +128,6 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_logical_interconnec
 # from oneview_managed_san_facts import ManagedSanFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_network_set import NetworkSetModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_network_set_facts import NetworkSetFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
-from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_server import OsDeploymentServerModule
-from ansible_collections.hpe.oneview.plugins.modules.oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
 # from oneview_power_device import PowerDeviceModule
 # from oneview_power_device_facts import PowerDeviceFactsModule
 # from oneview_rack import RackModule
