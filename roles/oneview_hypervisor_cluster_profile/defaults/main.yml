@@ -1,7 +1,4 @@
 ---
 # defaults file for oneview_hypervisor_cluster_profile
 config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_cluster_profile/files/oneview_config.json"
-contents: "{{lookup('file', config)}}"
-cluster_profile_name: 'Test_HCP'
-spt_name: 'Test_spt-1' # SPT with no deployment plan and having one management connection
-hyp_mgr_name: '<hypervisor_ip>'
+contents: "{{lookup('file','../config/config.json')| from_json}}"

@@ -54,6 +54,11 @@
         "hypervisor_manager_username": "<hypervisor_manager_username>",
         "hypervisor_manager_password": "<hypervisor_manager_password>"
     },
+    "hypervisor_cluster_profile":{
+        "hypervisor_cluster_profile_name": "<hypervisor_cluster_profile_name>",
+        "server_profile_template_name": "<server_profile_template_name>",
+        "hypervisor_manager_name": "<hypervisor_manager_name>"
+    },
     "logical_interconnect_group":
     {
         "permitted_interconnect_type_name_1": "<permitted_interconnect_type_name_1>",

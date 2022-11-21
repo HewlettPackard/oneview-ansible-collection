@@ -2112,33 +2112,6 @@ class TestServerProfileReplaceNamesByUris():
         yield
         patcher_json_file.stop
 
-    def test_should_replace_os_deployment_name_by_uri(self):
-        uri = '/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493'
-
-        sp_data = deepcopy(self.BASIC_PROFILE)
-        sp_data[SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = [dict(uri=uri)]
-
-        ServerProfileReplaceNamesByUris().replace(self.mock_ov_client, sp_data)
-
-        assert sp_data[SPKeys.OS_DEPLOYMENT] == dict(osDeploymentPlanUri=uri)
-
-    def test_should_fail_when_deployment_plan_not_found(self):
-        sp_data = deepcopy(self.BASIC_PROFILE)
-        sp_data[SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = []
-
-        expected_error = ServerProfileReplaceNamesByUris.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND + "Deployment Plan Name"
-
-        try:
-            ServerProfileReplaceNamesByUris().replace(self.mock_ov_client, sp_data)
-        except OneViewModuleResourceNotFound as e:
-            assert e.msg == expected_error
-        else:
-            pytest.fail(msg="Expected Exception was not raised")
-
     def test_should_replace_enclosure_group_name_by_uri(self):
         uri = '/rest/enclosure-groups/81decf85-0dff-4a5e-8a95-52994eeb6493'
 
@@ -2791,10 +2764,6 @@ class TestServerProfileMerger():
     OS_CUSTOM_ATTRIBUTES = [dict(name="hostname", value="newhostname"),
                             dict(name="username", value="administrator")]
 
-    OS_DEPLOYMENT_SETTINGS = dict(osDeploymentPlanUri="/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493",
-                                  osVolumeUri="/rest/deployed-targets/a166c84a-4964-4f20-b4ba-ef2f154b8596",
-                                  osCustomAttributes=OS_CUSTOM_ATTRIBUTES)
-
     SAS_LOGICAL_JBOD_1 = dict(id=1, deviceSlot="Mezz 1", name="jbod-1", driveTechnology="SasHdd", status="OK",
                               sasLogicalJBODUri="/rest/sas-logical-jbods/3128c9e6-e3de-43e7-b196-612707b54967")
 
@@ -2819,9 +2788,6 @@ class TestServerProfileMerger():
     profile_with_san_storage = CREATED_BASIC_PROFILE.copy()
     profile_with_san_storage[SPKeys.CONNECTIONS] = [CONNECTION_1, CONNECTION_2]
     profile_with_san_storage[SPKeys.SAN] = SAN_STORAGE
-
-    profile_with_os_deployment = CREATED_BASIC_PROFILE.copy()
-    profile_with_os_deployment[SPKeys.OS_DEPLOYMENT] = OS_DEPLOYMENT_SETTINGS
 
     profile_with_local_storage = CREATED_BASIC_PROFILE.copy()
     profile_with_local_storage[SPKeys.LOCAL_STORAGE] = dict()
@@ -3168,147 +3134,6 @@ class TestServerProfileMerger():
         merged_data = ServerProfileMerger().merge_data(resource, data)
 
         assert merged_data[SPKeys.BOOT_MODE] == dict(newField="123")
-
-    def test_merge_when_os_deployment_is_equals(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        assert merged_data == resource
-
-    def test_merge_when_os_deployment_has_changes(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        data[SPKeys.OS_DEPLOYMENT]['osDeploymentPlanUri'] = "/rest/os-deployment-plans/other-id"
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment['osDeploymentPlanUri'] = "/rest/os-deployment-plans/other-id"
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_os_deployment_not_provided(self):
-        data = dict(name="Profile101")
-
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = resource[SPKeys.OS_DEPLOYMENT]
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_existing_os_deployment_settings_are_null(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-
-        resource = deepcopy(self.profile_with_os_deployment)
-        resource[SPKeys.OS_DEPLOYMENT] = None
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_custom_attributes_have_changes(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0]['hostname'] = 'updatedhostname'
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment[SPKeys.ATTRIBUTES][0]['hostname'] = 'updatedhostname'
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_custom_attributes_have_new_item(self):
-        new_item = dict(name="password", value="secret123")
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES].append(new_item.copy())
-
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment[SPKeys.ATTRIBUTES].append(new_item.copy())
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_custom_attributes_have_removed_item(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES].pop()
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment[SPKeys.ATTRIBUTES].pop()
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_custom_attributes_are_equals_with_different_order(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        first_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0]
-        second_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1]
-
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0] = second_attr
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1] = first_attr
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        list1 = sorted(merged_data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES], key=_str_sorted)
-        list2 = sorted(deepcopy(self.profile_with_os_deployment)[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES],
-                       key=_str_sorted)
-
-        assert list1 == list2
-
-    def test_merge_when_custom_attributes_have_different_values_and_order(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-
-        first_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0]
-        second_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1]
-
-        first_attr['value'] = 'newValue'
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0] = second_attr
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1] = first_attr
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_attributes = [dict(name="username", value="administrator"),
-                                  dict(name="hostname", value="newValue")]
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment[SPKeys.ATTRIBUTES] = expected_os_attributes
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_custom_attributes_are_removed(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES] = None
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_os_deployment = deepcopy(self.OS_DEPLOYMENT_SETTINGS)
-        expected_os_deployment[SPKeys.ATTRIBUTES] = None
-        assert merged_data[SPKeys.OS_DEPLOYMENT] == expected_os_deployment
-
-    def test_merge_when_existing_custom_attributes_are_null(self):
-        data = dict(name="Profile101",
-                    osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
-        resource = deepcopy(self.profile_with_os_deployment)
-
-        merged_data = ServerProfileMerger().merge_data(resource, data)
-
-        expected_attributes = deepcopy(self.OS_DEPLOYMENT_SETTINGS).get(SPKeys.ATTRIBUTES)
-        assert merged_data[SPKeys.OS_DEPLOYMENT].get(SPKeys.ATTRIBUTES) == expected_attributes
 
     def test_merge_when_local_storage_removed(self):
         data = dict(name="Profile101",

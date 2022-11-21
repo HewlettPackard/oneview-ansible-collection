@@ -61,7 +61,6 @@ plugins/modules/oneview_scope.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_scope_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_interconnect_group.py validate-modules:missing-gplv3-license
@@ -72,8 +71,6 @@ plugins/modules/oneview_server_profile.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_server_profile_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_server_profile_template_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_server_profile_template.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_server_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_range.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_subnet.py validate-modules:missing-gplv3-license
