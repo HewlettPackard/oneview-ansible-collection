@@ -106,4 +106,3 @@ class OneViewBaseFactsTest(OneViewBaseTest):
         self.testing_class().run()
 
         self.resource.get_all.assert_called_once_with()
-
