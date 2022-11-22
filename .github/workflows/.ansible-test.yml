@@ -6,9 +6,9 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.7"]
+        python_version: ["3.6", "3.7"]
         ansible_version: ["stable-2.9", "stable-2.10", "stable-2.11"]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
       - name: Check out code
