@@ -50,7 +50,7 @@ jobs:
           path: "./"         
   
   units:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       # As soon as the first unit test fails, cancel the others to free up the CI queue
       fail-fast: true
