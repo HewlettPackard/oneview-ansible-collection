@@ -185,7 +185,7 @@ san_manager:
     type: dict
 '''
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound,
-                                                                          OneViewModuleValueError)
+                                                                          OneViewModuleValueError, compare)
 
 
 class SanManagerModule(OneViewModule):
@@ -222,10 +222,7 @@ class SanManagerModule(OneViewModule):
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 if self.current_resource:
-                    self.current_resource.update(self.data, self.current_resource.data.get('uri'))
-                    return dict(changed=True,
-                                msg=self.MSG_SAN_MANAGER_UPDATED,
-                                ansible_facts=dict(san_managers=self.current_resource.data))
+                    return self.__update()
                 else:
                     raise OneViewModuleResourceNotFound(self.MSG_SAN_MANAGER_NOT_FOUND)
             else:
@@ -277,6 +274,17 @@ class SanManagerModule(OneViewModule):
             )
         return result
 
+    def __update(self):
+        merged_data = self.current_resource.data.copy()
+        merged_data.update(self.data)
+
+        if not compare(self.current_resource.data, merged_data):
+            self.current_resource.update(merged_data, self.current_resource.data.get('uri'))
+            return dict(changed=True,
+                        msg=self.MSG_SAN_MANAGER_UPDATED,
+                        ansible_facts=dict(san_managers=self.current_resource.data))
+        else:
+            return dict(changed=False, msg=self.MSG_ALREADY_PRESENT, ansible_facts=dict(san_managers=self.current_resource.data))
 
 def main():
     SanManagerModule().run()
