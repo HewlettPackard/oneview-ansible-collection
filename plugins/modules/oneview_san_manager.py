@@ -286,6 +286,7 @@ class SanManagerModule(OneViewModule):
         else:
             return dict(changed=False, msg=self.MSG_ALREADY_PRESENT, ansible_facts=dict(san_managers=self.current_resource.data))
 
+
 def main():
     SanManagerModule().run()
 
