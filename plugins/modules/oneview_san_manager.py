@@ -18,6 +18,9 @@
 
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
+from operator import itemgetter
+import itertools
+import copy
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
@@ -274,10 +277,21 @@ class SanManagerModule(OneViewModule):
             )
         return result
 
-    def __update(self):
-        merged_data = self.current_resource.data.copy()
-        merged_data.update(self.data)
+    # Function to merge connectionInfo list in san manager
+    def merge_data(self, connection1, connection2):
+        connection1 = sorted(connection1, key=itemgetter('name'))
+        connection2 = sorted(connection2, key=itemgetter('name'))
+        for (i, j) in zip(connection1, connection2):
+            i.update(j)
+        return connection1
 
+    def __update(self):
+        merged_data = copy.deepcopy(self.current_resource.data)
+        # Merging connectionInfo list to avoid data overwrite
+        merged_connection_data = self.merge_data(merged_data['connectionInfo'], self.data['connectionInfo'])
+        data = self.data
+        data['connectionInfo'] = merged_connection_data
+        merged_data.update(data)
         if not compare(self.current_resource.data, merged_data):
             self.current_resource.update(merged_data, self.current_resource.data.get('uri'))
             return dict(changed=True,
