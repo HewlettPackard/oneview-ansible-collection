@@ -18,9 +18,6 @@
 
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
-from operator import itemgetter
-import itertools
-import copy
 
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
@@ -190,6 +187,9 @@ san_manager:
 '''
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound,
                                                                           OneViewModuleValueError, compare)
+from operator import itemgetter
+import itertools
+import copy
 
 
 class SanManagerModule(OneViewModule):
@@ -291,7 +291,7 @@ class SanManagerModule(OneViewModule):
         update_password = False
         parameter_to_ignore = None
         for ele in connectionInfo:
-            if ele.get("name")=="Password":
+            if ele.get("name") == "Password":
                 update_password = ele.get("updatePassword")
                 if update_password:
                     ele.pop("updatePassword")
