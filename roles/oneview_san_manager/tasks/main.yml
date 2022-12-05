@@ -33,6 +33,7 @@
     state: present
     data:
       providerDisplayName: "{{ contents.san_manager.san_manager_provider_display_name }}"
+      name: "{{ contents.san_manager.san_manager_hostname }}"
       connectionInfo:
         - name: "Host"
           value: "{{ contents.san_manager.san_manager_hostname }}"
@@ -41,7 +42,7 @@
         - name: "Password"
           value: "{{ contents.san_manager.san_manager_password }}"
         - name: "UseHttps"
-          value: true  
+          value: true
   delegate_to: localhost
   register: san_manager1
 - debug:
@@ -55,6 +56,7 @@
     state: present
     data:
       providerDisplayName: "{{ contents.san_manager.san_manager_provider_display_name }}"
+      name: "{{ contents.san_manager.san_manager_hostname }}"
       connectionInfo:
         - name: "Host"
           value: "{{ contents.san_manager.san_manager_hostname }}"
@@ -90,6 +92,25 @@
           value: "{{ contents.san_manager.san_manager_username }}"
         - name: "Password"
           value: "{{ contents.san_manager.san_manager_password }}"
+        - name: "UseHttps"
+          value: true
+  delegate_to: localhost
+
+- name: Update password of San Manager
+  oneview_san_manager:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: "{{ contents.san_manager.san_manager_hostname }}"
+      connectionInfo:
+        - name: "Host"
+          value: "{{ contents.san_manager.san_manager_hostname }}"
+        - name: "Username"
+          value: "{{ contents.san_manager.san_manager_username }}"
+        - name: "Password"
+          value: "{{ contents.san_manager.san_manager_password }}"
+          updatePassword: True
         - name: "UseHttps"
           value: true
   delegate_to: localhost

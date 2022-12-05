@@ -154,7 +154,7 @@ class TestSanManagerModule(OneViewBaseTest):
         )
 
     def test_should_update_san_manager(self):
-        self.resource.data = {"name": "name", "uri": "resourceuri"}
+        self.resource.data = {"name": "name", "uri": "resourceuri", "connectionInfo": []}
         self.resource.get_by_name.return_value = self.resource
         self.resource.update.return_value = {"name": "name"}
 
@@ -165,17 +165,8 @@ class TestSanManagerModule(OneViewBaseTest):
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             msg=SanManagerModule.MSG_SAN_MANAGER_UPDATED,
-            ansible_facts=dict(san_managers={"name": "name", "uri": "resourceuri"})
+            ansible_facts=dict(san_managers={"name": "name", "uri": "resourceuri", "connectionInfo": []})
         )
-
-    def test_should_error_when_san_manager_not_found_while_update(self):
-        self.resource.data = None
-        self.resource.get_by_name.return_value = None
-        self.mock_ansible_module.params = SAN_MANAGER_UPDATE
-
-        SanManagerModule().run()
-
-        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=SanManagerModule.MSG_SAN_MANAGER_NOT_FOUND)
 
     def test_should_remove_san_manager(self):
         self.resource.data = {'name': 'name'}

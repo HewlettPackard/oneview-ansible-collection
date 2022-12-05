@@ -22,6 +22,7 @@ from operator import itemgetter
 import itertools
 import copy
 
+
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
@@ -227,7 +228,7 @@ class SanManagerModule(OneViewModule):
                 if self.current_resource:
                     return self.__update()
                 else:
-                    raise OneViewModuleResourceNotFound(self.MSG_SAN_MANAGER_NOT_FOUND)
+                    return self.__present()
             else:
                 return self.__present()
         else:
@@ -254,7 +255,7 @@ class SanManagerModule(OneViewModule):
         if not self.data.get('providerDisplayName'):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.providerDisplayName"))
 
-        self.current_resource = self.resource_client.get_by_provider_display_name(self.data['providerDisplayName'])
+        self.current_resource = self.resource_client.get_by_name(self.data.get('name'))
 
         result = dict()
 
@@ -286,13 +287,24 @@ class SanManagerModule(OneViewModule):
         return connection1
 
     def __update(self):
+        connectionInfo = self.data.get("connectionInfo")
+        update_password = False
+        parameter_to_ignore = None
+        for ele in connectionInfo:
+            if ele.get("name")=="Password":
+                update_password = ele.get("updatePassword")
+                if update_password:
+                    ele.pop("updatePassword")
+                    update_password = True
+        if not update_password:
+            parameter_to_ignore = {"name": "Password"}
         merged_data = copy.deepcopy(self.current_resource.data)
         # Merging connectionInfo list to avoid data overwrite
         merged_connection_data = self.merge_data(merged_data['connectionInfo'], self.data['connectionInfo'])
         data = self.data
         data['connectionInfo'] = merged_connection_data
         merged_data.update(data)
-        if not compare(self.current_resource.data, merged_data):
+        if not compare(self.current_resource.data, merged_data, parameter_to_ignore=parameter_to_ignore):
             self.current_resource.update(merged_data, self.current_resource.data.get('uri'))
             return dict(changed=True,
                         msg=self.MSG_SAN_MANAGER_UPDATED,

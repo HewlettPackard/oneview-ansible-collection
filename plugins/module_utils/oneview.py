@@ -283,7 +283,7 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
     """
     resource1 = first_resource
     resource2 = second_resource
-
+    break_flag = False
     debug_resources = "resource1 = {0}, resource2 = {1}".format(
         resource1, resource2)
     # The first resource is True / Not Null and the second resource is False / Null
@@ -293,10 +293,18 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
 
     # Checks all keys in first dict against the second dict
     for key in resource1:
-        if parameter_to_ignore is not None:
+        if parameter_to_ignore is not None and isinstance(parameter_to_ignore, list):
             parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
             if key.lower() in parameter_to_ignore_lower:
                 continue
+        elif isinstance(parameter_to_ignore, dict):
+            for key_in_dict in parameter_to_ignore:
+                if(key_in_dict == key and resource1[key] == parameter_to_ignore[key_in_dict]):
+                    break_flag = True
+        # break_flag is to break from the loop if a key in parameter to ingnore is encountered
+        if break_flag:
+            break_flag = False
+            break
         if key not in resource2:
             if resource1[key] is not None:
                 # Inexistent key is equivalent to exist with value None
@@ -308,13 +316,13 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
             continue
         elif isinstance(resource1[key], Mapping):
             # recursive call
-            if not compare(resource1[key], resource2[key]):
+            if not compare(resource1[key], resource2[key], parameter_to_ignore=parameter_to_ignore):
                 logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                     key), debug_resources)
                 return False
         elif isinstance(resource1[key], list):
             # change comparison function to compare_list
-            if not compare_list(resource1[key], resource2[key]):
+            if not compare_list(resource1[key], resource2[key], parameter_to_ignore=parameter_to_ignore):
                 logger.debug("%s %s", OneViewModuleBase.MSG_DIFF_AT_KEY.format(
                     key), debug_resources)
                 return False
@@ -325,10 +333,17 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
 
     # Checks all keys in the second dict, looking for missing elements
     for key in resource2.keys():
-        if parameter_to_ignore is not None:
+        if parameter_to_ignore is not None and isinstance(parameter_to_ignore, list):
             parameter_to_ignore_lower = [i.lower() for i in parameter_to_ignore]
             if key.lower() in parameter_to_ignore_lower:
                 continue
+        elif isinstance(parameter_to_ignore, dict):
+            for key_in_dict in parameter_to_ignore:
+                if(key_in_dict == key and resource2[key] == parameter_to_ignore[key_in_dict]):
+                    break_flag = True
+        if break_flag:
+            break_flag = False
+            break
         if key not in resource1:
             if resource2[key] is not None:
                 # Inexistent key is equivalent to exist with value None
@@ -339,7 +354,7 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
     return True
 
 
-def compare_list(first_resource, second_resource):
+def compare_list(first_resource, second_resource, parameter_to_ignore=None):
     """
     Recursively compares lists contents equivalence, ignoring types and element orders.
     Lists with same size are compared value by value after a sort,
@@ -370,12 +385,12 @@ def compare_list(first_resource, second_resource):
     for i, val in enumerate(resource1):
         if isinstance(val, Mapping):
             # change comparison function to compare dictionaries
-            if not compare(val, resource2[i]):
+            if not compare(val, resource2[i], parameter_to_ignore=parameter_to_ignore):
                 logger.debug("resources are different. %s", debug_resources)
                 return False
         elif isinstance(val, list):
             # recursive call
-            if not compare_list(val, resource2[i]):
+            if not compare_list(val, resource2[i], parameter_to_ignore=parameter_to_ignore):
                 logger.debug("lists are different. %s", debug_resources)
                 return False
         elif _standardize_value(val) != _standardize_value(resource2[i]):
