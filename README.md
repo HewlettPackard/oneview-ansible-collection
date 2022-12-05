@@ -203,6 +203,10 @@ The API list is as follows:
 - HPE OneView 7.20 API version: `4400`
 - HPE OneView 8.00 API version: `4600`
 
+### HPE Synergy Image Streamer
+
+From Release 8.1, Image streamer is no longer supported.
+
 ### Usage
 
 Playbooks
