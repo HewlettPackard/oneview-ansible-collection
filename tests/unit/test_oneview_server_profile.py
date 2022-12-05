@@ -117,11 +117,7 @@ PARAMS_FOR_UPDATE = dict(
         name=SERVER_PROFILE_NAME,
         serverHardwareTypeUri=SERVER_HARDWARE_TEMPLATE_URI,
         enclosureGroupUri=ENCLOSURE_GROUP_URI,
-        uri=SERVER_PROFILE_URI,
-        osDeploymentSettings=dict(osCustomAttributes=[{'name': 'test.ipv4', 'value': 'fakeip'},
-                                                      {'name': 'Password', 'value': 'test123'},
-                                                      {'name': 'test.ipv4disable', 'value': False},
-                                                      {'name': 'test.dhcp', 'value': True}])
+        uri=SERVER_PROFILE_URI
     )
 )
 
@@ -192,13 +188,6 @@ VOLUME_2 = dict(id=2, volumeUri="/rest/volume/id2", lun=345, lunType="Auto", sto
 
 SAN_STORAGE = dict(hostOSType="Windows 2012 / WS2012 R2",
                    volumeAttachments=[VOLUME_1, VOLUME_2])
-
-OS_CUSTOM_ATTRIBUTES = [dict(name="hostname", value="newhostname"),
-                        dict(name="username", value="administrator")]
-
-OS_DEPLOYMENT_SETTINGS = dict(osDeploymentPlanUri="/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493",
-                              osVolumeUri="/rest/deployed-targets/a166c84a-4964-4f20-b4ba-ef2f154b8596",
-                              osCustomAttributes=OS_CUSTOM_ATTRIBUTES)
 
 SAS_LOGICAL_JBOD_1 = dict(id=1, deviceSlot="Mezz 1", name="jbod-1", driveTechnology="SasHdd", status="OK",
                           sasLogicalJBODUri="/rest/sas-logical-jbods/3128c9e6-e3de-43e7-b196-612707b54967")
@@ -854,35 +843,6 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
-
-    def test_should_replace_os_deployment_name_by_uri_on_creation(self):
-        uri = '/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493'
-
-        params = deepcopy(PARAMS_FOR_PRESENT)
-        params['data'][SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.resource.get_by_name.return_value = None
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = [dict(uri=uri)]
-        self.mock_ansible_module.params = deepcopy(params)
-        self.mock_ov_client.api_version = 1200
-
-        ServerProfileModule().run()
-
-        args, _ = self.resource.create.call_args
-        assert(args[0][SPKeys.OS_DEPLOYMENT] == dict(osDeploymentPlanUri=uri))
-
-    def test_should_fail_when_deployment_plan_not_found_on_creation(self):
-        params = deepcopy(PARAMS_FOR_PRESENT)
-        params['data'][SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.resource.get_by_name.return_value = None
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = []
-        self.mock_ansible_module.params = deepcopy(params)
-
-        ServerProfileModule().run()
-
-        expected_error = ServerProfileReplaceNamesByUris.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND + "Deployment Plan Name"
-        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=expected_error)
 
     def test_should_replace_enclosure_group_name_by_uri_on_creation(self):
         uri = '/rest/enclosure-groups/81decf85-0dff-4a5e-8a95-52994eeb6493'
@@ -1839,38 +1799,6 @@ class TestServerProfileModule(OneViewBaseTest):
 
         mock_resource_compare.assert_called_once_with(server_profile, merged_data)
 
-    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
-    def test_should_replace_os_deployment_name_by_uri_on_update(self, mock_resource_compare):
-        uri = '/rest/os-deployment-plans/81decf85-0dff-4a5e-8a95-52994eeb6493'
-        mock_resource_compare.return_value = False
-
-        params = deepcopy(PARAMS_FOR_PRESENT)
-        params['data'][SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.resource.data = deepcopy(BASIC_PROFILE)
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = [dict(uri=uri)]
-        self.mock_ansible_module.params = deepcopy(params)
-        self.mock_ov_client.api_version = 1200
-
-        ServerProfileModule().run()
-
-        args, _ = self.resource.update.call_args
-        assert(args[0][SPKeys.OS_DEPLOYMENT] == dict(osDeploymentPlanUri=uri))
-
-    def test_should_fail_when_deployment_plan_not_found_on_update(self):
-        params = deepcopy(PARAMS_FOR_PRESENT)
-        params['data'][SPKeys.OS_DEPLOYMENT] = dict(osDeploymentPlanName="Deployment Plan Name")
-
-        self.resource.data = deepcopy(BASIC_PROFILE)
-        self.mock_ov_client.os_deployment_plans.get_by.return_value = []
-        self.mock_ansible_module.params = deepcopy(params)
-        self.mock_ov_client.api_version = 1200
-
-        ServerProfileModule().run()
-
-        expected_error = ServerProfileReplaceNamesByUris.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND + "Deployment Plan Name"
-        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=expected_error)
-
     def test_should_replace_enclosure_group_name_by_uri_on_update(self):
         uri = '/rest/enclosure-groups/81decf85-0dff-4a5e-8a95-52994eeb6493'
 
@@ -2150,38 +2078,6 @@ class TestServerProfileModule(OneViewBaseTest):
             msg=ServerProfileModule.MSG_DELETED
         )
 
-    @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
-    def test_should_not_update_when_mac_not_passed_in_deployment_settings(self, mock_resource_compare):
-        profile_data = deepcopy(CREATED_BASIC_PROFILE)
-        profile_data['osDeploymentSettings'] = dict(osDeploymentPlanUri='/rest/fake',
-                                                    osCustomAttributes=[{'name': 'test.mac', 'value': 'fakemac'},
-                                                                        {'name': 'test.ipv4', 'value': 'fakeip'},
-                                                                        {'name': 'Password', 'value': 'None'},
-                                                                        {'name': 'test.ipv4disable', 'value': 'false'},
-                                                                        {'name': 'test.dhcp', 'value': 'true'}])
-
-        mock_resource_compare.return_value = True
-        mock_facts = gather_facts(self.mock_ov_client)
-        mock_facts['server_profile']['osDeploymentSettings'] = profile_data['osDeploymentSettings']
-        mock_facts['server_hardware'] = None
-
-        self.resource.data = profile_data
-        obj = mock.Mock()
-        obj.data = dict(additionalParameters=[{'name': 'test',
-                                               'caType': 'nic'}])
-        self.mock_ov_client.os_deployment_plans.get_by_uri.return_value = obj
-        self.mock_ov_client.server_hardware.get_by_uri.return_value = None
-        self.mock_ov_client.api_version = 1200
-        self.mock_ansible_module.params = deepcopy(PARAMS_FOR_UPDATE)
-
-        ServerProfileModule().run()
-
-        self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=False,
-            msg=ServerProfileModule.MSG_ALREADY_PRESENT,
-            ansible_facts=mock_facts
-        )
-
     def test_should_unassign_server_hardware(self):
         sp_without_sh = deepcopy(CREATED_BASIC_PROFILE)
         sp_without_sh['serverHardwareUri'] = None
@@ -2203,7 +2099,6 @@ class TestServerProfileModule(OneViewBaseTest):
 
     def test_validating_os_custom_attr_should_return_if_no_attributes_found_on_resource(self):
         sp_get_value = deepcopy(CREATED_BASIC_PROFILE)
-        sp_get_value['osDeploymentSettings'] = {}
         sp_exit_value = deepcopy(CREATED_BASIC_PROFILE)
         sp_exit_value.update(deepcopy(PARAMS_FOR_UPDATE['data']))
 
@@ -2217,13 +2112,10 @@ class TestServerProfileModule(OneViewBaseTest):
 
     def test_validating_os_custom_attr_should_return_if_no_attributes_found_on_data(self):
         sp_get_value = deepcopy(CREATED_BASIC_PROFILE)
-        sp_get_value['osDeploymentSettings'] = {}
         sp_exit_value = deepcopy(CREATED_BASIC_PROFILE)
         sp_exit_value.update(deepcopy(PARAMS_FOR_UPDATE['data']))
-        sp_exit_value['osDeploymentSettings']['osCustomAttributes'] = None
 
         params_for_update = deepcopy(PARAMS_FOR_UPDATE)
-        params_for_update['data']['osDeploymentSettings']['osCustomAttributes'] = None
 
         self.resource.data = sp_get_value
         self.resource.update.return_value = deepcopy(CREATED_BASIC_PROFILE)

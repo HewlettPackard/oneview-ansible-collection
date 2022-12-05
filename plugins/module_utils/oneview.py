@@ -554,7 +554,6 @@ class OneViewModule(object):
         api_version=dict(type='int'),
         config=dict(type='path'),
         hostname=dict(type='str'),
-        image_streamer_hostname=dict(type='str'),
         password=dict(type='str', no_log=True),
         username=dict(type='str'),
         auth_login_domain=dict(type='str')
@@ -616,8 +615,7 @@ class OneViewModule(object):
             config = dict(ip=self.module.params['hostname'],
                           credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                          api_version=self.module.params['api_version'],
-                          image_streamer_ip=self.module.params['image_streamer_hostname'])
+                          api_version=self.module.params['api_version'])
             if self.module.params.get('sessionID'):
                 self.oneview_client = OneViewClient(config, sessionID=self.module.params['sessionID'])
             else:
@@ -890,7 +888,6 @@ class OneViewModuleBase(object):
         api_version=dict(type='int'),
         config=dict(type='path'),
         hostname=dict(type='str'),
-        image_streamer_hostname=dict(type='str'),
         password=dict(type='str', no_log=True),
         username=dict(type='str'),
         auth_login_domain=dict(type='str')
@@ -951,8 +948,7 @@ class OneViewModuleBase(object):
             config = dict(ip=self.module.params['hostname'],
                           credentials=dict(userName=self.module.params['username'], password=self.module.params['password'],
                                            authLoginDomain=self.module.params.get('auth_login_domain', '')),
-                          api_version=self.module.params['api_version'],
-                          image_streamer_ip=self.module.params['image_streamer_hostname'])
+                          api_version=self.module.params['api_version'])
             if self.module.params.get('sessionID'):
                 self.oneview_client = OneViewClient(config, self.module.params['sessionID'])
             else:
@@ -1147,9 +1143,6 @@ class SPKeys(object):
     DEVICE_SLOT = 'deviceSlot'
     CONNECTION_SETTINGS = 'connectionSettings'
     CONNECTIONS = 'connections'
-    OS_DEPLOYMENT = 'osDeploymentSettings'
-    OS_DEPLOYMENT_URI = 'osDeploymentPlanUri'
-    ATTRIBUTES = 'osCustomAttributes'
     SAN = 'sanStorage'
     VOLUMES = 'volumeAttachments'
     PATHS = 'storagePaths'
@@ -1185,8 +1178,6 @@ class ServerProfileMerger(object):
         merged_data = self._merge_bios_and_boot(merged_data, resource, data)
         merged_data = self._merge_connections(merged_data, resource, data)
         merged_data = self._merge_san_storage(merged_data, data, resource)
-        merged_data = self._merge_os_deployment_settings(
-            merged_data, resource, data)
         merged_data = self._merge_local_storage(merged_data, resource, data)
 
         return merged_data
@@ -1288,35 +1279,6 @@ class ServerProfileMerger(object):
                     merged_volume[SPKeys.PATHS] = merged_paths
         return merged_data
 
-    def _merge_os_deployment_settings(self, merged_data, resource, data):
-        if self._should_merge(data, resource, key=SPKeys.OS_DEPLOYMENT):
-            merged_data = self._merge_os_deployment_custom_attr(
-                merged_data, resource, data)
-        return merged_data
-
-    def _merge_os_deployment_custom_attr(self, merged_data, resource, data):
-        if SPKeys.ATTRIBUTES in data[SPKeys.OS_DEPLOYMENT]:
-            existing_os_deployment = resource[SPKeys.OS_DEPLOYMENT]
-            params_os_deployment = data[SPKeys.OS_DEPLOYMENT]
-            merged_os_deployment = merged_data[SPKeys.OS_DEPLOYMENT]
-
-            if self._removed_data(params_os_deployment, existing_os_deployment, key=SPKeys.ATTRIBUTES):
-                merged_os_deployment[SPKeys.ATTRIBUTES] = params_os_deployment[SPKeys.ATTRIBUTES]
-            else:
-                existing_attributes = existing_os_deployment[SPKeys.ATTRIBUTES]
-                params_attributes = params_os_deployment[SPKeys.ATTRIBUTES]
-
-                merged_data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES] = merge_list_by_key(
-                    existing_attributes,
-                    params_attributes,
-                    key='name',
-                )
-
-                if compare_list(existing_attributes, params_attributes):
-                    merged_os_deployment[SPKeys.ATTRIBUTES] = existing_attributes
-
-        return merged_data
-
     def _merge_local_storage(self, merged_data, resource, data):
         if self._removed_data(data, resource, key=SPKeys.LOCAL_STORAGE):
             merged_data[SPKeys.LOCAL_STORAGE] = dict(
@@ -1399,7 +1361,6 @@ class ServerProfileMerger(object):
 
 class ServerProfileReplaceNamesByUris(object):
     SCOPE_NOT_FOUND = 'Scope not found: '
-    SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND = 'OS Deployment Plan not found: '
     SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND = 'Enclosure Group not found: '
     SERVER_PROFILE_NETWORK_NOT_FOUND = 'Network not found: '
     SERVER_HARDWARE_TYPE_NOT_FOUND = 'Server Hardware Type not found: '
@@ -1414,7 +1375,6 @@ class ServerProfileReplaceNamesByUris(object):
 
     def replace(self, oneview_client, data):
         self.oneview_client = oneview_client
-        self._replace_os_deployment_name_by_uri(data)
         self._replace_enclosure_group_name_by_uri(data)
         self._replace_networks_name_by_uri(data)
         self._replace_server_hardware_type_name_by_uri(data)
@@ -1452,12 +1412,6 @@ class ServerProfileReplaceNamesByUris(object):
                         self.SCOPE_NOT_FOUND + name)
                 scope_uris.append(scope["uri"])
             data["initialScopeUris"] = scope_uris
-
-    def _replace_os_deployment_name_by_uri(self, data):
-        if SPKeys.OS_DEPLOYMENT in data and data[SPKeys.OS_DEPLOYMENT]:
-            self._replace_name_by_uri(data[SPKeys.OS_DEPLOYMENT], 'osDeploymentPlanName',
-                                      self.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND,
-                                      self.oneview_client.os_deployment_plans)
 
     def _replace_enclosure_group_name_by_uri(self, data):
         self._replace_name_by_uri(data, 'enclosureGroupName', self.SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND,

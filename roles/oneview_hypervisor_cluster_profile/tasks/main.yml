@@ -12,27 +12,18 @@
   oneview_server_profile_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ spt_name }}"
+    name: "{{ contents.hypervisor_cluster_profile.server_profile_template_name }}"
   delegate_to: localhost
 
 - debug: var=server_profile_templates
 - set_fact:
     spt_uri: "{{ server_profile_templates[0]['uri'] }}"
 
-- name: Gather facts about OS deployment plans
-  oneview_os_deployment_plan_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "Basic Deployment Plan"
-  delegate_to: localhost
-- set_fact:
-    dp_uri: "{{ os_deployment_plans[0]['uri'] }}"
-
 - name: Gather facts about hypervisor managers
   oneview_hypervisor_manager_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ hyp_mgr_name }}"
+    name: "{{ contents.hypervisor_cluster_profile.hypervisor_manager_name }}"
   delegate_to: localhost
 - set_fact:
     hyp_mgr_uri: "{{ hypervisor_managers[0]['uri'] }}"
@@ -43,16 +34,14 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ cluster_profile_name }}"
+      name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
       hypervisorType: 'Vmware'
       hypervisorHostProfileTemplate:
         serverProfileTemplateUri: "{{ spt_uri }}"
-        deploymentPlan:
-          deploymentPlanUri: "{{ dp_uri }}"
-          serverPassword: 
         hostprefix: 'Test-cluster-host'
+        deploymentManagerType: "UserManaged"
   delegate_to: localhost
   register: hyp_cp
 
@@ -75,9 +64,7 @@
         virtualSwitchType: "Standard"
       hypervisorHostProfileTemplate:
         serverProfileTemplateUri: "{{ spt_uri }}"
-        deploymentPlan:
-          deploymentPlanUri: "{{ dp_uri }}"
-          serverPassword: "test"
+        deploymentManagerType: "UserManaged"
         hostprefix: "Test_cluster_profile_with_vswitch"
         virtualSwitches:                                 # this is the json body used to create vswitch
           serverProfileTemplateUri: "{{ spt_uri }}"
@@ -88,10 +75,9 @@
         virtualSwitchConfigPolicy:
           manageVirtualSwitches: True
           configurePortGroups: True
-      name: "{{ cluster_profile_name }}_with_vswitch"
+      name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}_with_vswitch"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: "DC1"
-
   delegate_to: localhost
   register: hyp_cp_vswitch
 
@@ -101,7 +87,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ cluster_profile_name }}"
+      name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
       hypervisorType: 'Vmware'
@@ -113,7 +99,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ cluster_profile_name }}"
+      name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
       newName: "HCP-renamed"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: 'DC1'
@@ -143,7 +129,7 @@
 #        data: "{{ hyp_cp_vswitch.ansible_facts.hypervisor_cluster_profile }}"
 #      delegate_to: localhost
 #      register: deleted
-#
+
 - name: Do nothing when Hypervisor Cluster Profile is absent
   oneview_hypervisor_cluster_profile:
     config: "{{ config }}"

@@ -75,8 +75,7 @@ options:
     required: False
     type: dict
 notes:
-    - "For the following data, you can provide either a name or a URI: enclosureGroupName or enclosureGroupUri,
-       osDeploymentPlanName or osDeploymentPlanUri (on the osDeploymentSettings), networkName or networkUri (on the
+    - "For the following data, you can provide either a name or a URI: enclosureGroupName or enclosureGroupUri, networkName or networkUri (on the
        connections list), volumeName or volumeUri (on the volumeAttachments list), volumeStoragePoolName or
        volumeStoragePoolUri (on the volumeAttachments list), volumeStorageSystemName or volumeStorageSystemUri (on the
        volumeAttachments list), serverHardwareTypeName or  serverHardwareTypeUri, enclosureName or enclosureUri,
@@ -285,7 +284,6 @@ class ServerProfileModule(OneViewModule):
 
         self.server_profile_templates = self.oneview_client.server_profile_templates
         self.server_hardware = self.oneview_client.server_hardware
-        self.os_deployment_plans = self.oneview_client.os_deployment_plans
         self.server_template = None
 
     def execute_module(self):
@@ -358,8 +356,6 @@ class ServerProfileModule(OneViewModule):
 
             merged_data = ServerProfileMerger().merge_data(self.current_resource.data, self.data)
 
-            self.__validations_for_os_custom_attributes(merged_data, self.current_resource.data)
-
             # removed the below fields as part of idempotency checks
             updated_data = deepcopy(merged_data)
             updated_data.pop('initialScopeUris', None)
@@ -372,46 +368,6 @@ class ServerProfileModule(OneViewModule):
                 msg = self.MSG_ALREADY_PRESENT
 
         return created, changed, msg, self.current_resource.data
-
-    # Removes .mac entries from resource os_custom_attributes if no .mac passed into data params.
-    # Swaps True values for 'true' string, and False values for 'false' string to avoid common user errors.
-    # Changes the value of 'Password' attribute to 'None' in merged_data
-    def __validations_for_os_custom_attributes(self, merged_data, resource):
-        if self.data.get('osDeploymentSettings') is None or resource.get('osDeploymentSettings') is None:
-            return
-        elif self.data.get('osDeploymentSettings', {}).get('osCustomAttributes') is None:
-            return
-        elif resource.get('osDeploymentSettings', {}).get('osCustomAttributes') is None:
-            return
-
-        attributes_merged = merged_data.get('osDeploymentSettings', {}).get('osCustomAttributes', None)
-        attributes_resource = resource.get('osDeploymentSettings', {}).get('osCustomAttributes', None)
-
-        dp_uri = resource.get('osDeploymentSettings', {}).get('osDeploymentPlanUri', None)
-        dp = self.os_deployment_plans.get_by_uri(dp_uri)
-        nics = []
-        if dp:
-            for parameter in dp.data['additionalParameters']:
-                if parameter['caType'] == 'nic':
-                    nics.append(parameter['name'])
-
-        mac_positions_in_merged_data = self.__find_in_array_of_hashes(attributes_merged, '.mac', -4)
-        mac_positions_in_resource = self.__find_in_array_of_hashes(attributes_resource, '.mac', -4)
-
-        if not mac_positions_in_merged_data:
-            for index in sorted(mac_positions_in_resource, reverse=True):
-                if attributes_resource[index].get('name').split('.')[0] in nics:
-                    del attributes_resource[index]
-
-        if attributes_merged:
-            for attribute in attributes_merged:
-                if attribute['value'] is True:
-                    attribute['value'] = 'true'
-                elif attribute['value'] is False:
-                    attribute['value'] = 'false'
-
-                if attribute['name'] == 'Password':
-                    attribute['value'] = 'None'
 
     # Searches for a key or suffix of a key inside an array of hashes. The search looks for {'name': <key>} pairs
     # inside the array.

@@ -59,8 +59,7 @@ options:
         required: false
         type: dict
 notes:
-    - "For the following data, you can provide either a name  or a URI: enclosureGroupName or enclosureGroupUri,
-       osDeploymentPlanName or osDeploymentPlanUri (on the osDeploymentSettings), networkName or networkUri (on the
+    - "For the following data, you can provide either a name  or a URI: enclosureGroupName or enclosureGroupUri, networkName or networkUri (on the
        connections list), volumeName or volumeUri (on the volumeAttachments list), volumeStoragePoolName or
        volumeStoragePoolUri (on the volumeAttachments list), volumeStorageSystemName or volumeStorageSystemUri (on the
        volumeAttachments list), serverHardwareTypeName or  serverHardwareTypeUri, enclosureName or enclosureUri,

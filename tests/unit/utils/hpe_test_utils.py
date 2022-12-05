@@ -106,18 +106,3 @@ class OneViewBaseFactsTest(OneViewBaseTest):
         self.testing_class().run()
 
         self.resource.get_all.assert_called_once_with()
-
-
-class ImageStreamerBaseTest(OneViewBaseTest):
-    @pytest.fixture
-    def mock_ov_client(self, mock_ov_client):
-        return mock_ov_client.create_image_streamer_client()
-
-    def underscore(self, word):
-        word = re.findall('[A-Z][^A-Z]*', word)
-        word = 'image_streamer_' + str.join('_', word).lower()
-        return word
-
-
-class ImageStreamerBaseFactsTest(ImageStreamerBaseTest, OneViewBaseFactsTest):
-    pass

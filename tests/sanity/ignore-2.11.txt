@@ -1,11 +1,4 @@
 tests/unit/test_oneview_server_profile.py pylint:blacklisted-name
-plugins/modules/image_streamer_build_plan.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_build_plan_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_golden_image.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_golden_image_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_plan_script.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_plan_script_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_plan_script_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_appliance_configuration_timeconfig_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_users.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_users_facts.py validate-modules:missing-gplv3-license
@@ -24,14 +17,6 @@ plugins/modules/oneview_appliance_device_snmp_v1_trap_destinations.py validate-m
 plugins/modules/oneview_appliance_device_snmp_v1_trap_destinations_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_trap_destinations.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_device_snmp_v3_trap_destinations_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_artifact_bundle.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_artifact_bundle_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_artifact_bundle_facts.py validate-modules:parameter-list-no-elements
-plugins/modules/image_streamer_deployment_plan.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_deployment_plan_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_deployment_group_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_os_volume_facts.py validate-modules:missing-gplv3-license
-plugins/modules/image_streamer_os_volume_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_hypervisor_manager.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_hypervisor_cluster_profile.py validate-modules:missing-gplv3-license
@@ -92,7 +77,6 @@ plugins/modules/oneview_scope_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_connection_template_facts.py validate-modules:parameter-list-no-elements
-plugins/modules/oneview_os_deployment_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_logical_enclosure_facts.py validate-modules:parameter-list-no-elements
@@ -107,10 +91,6 @@ plugins/modules/oneview_server_profile_facts.py validate-modules:parameter-list-
 plugins/modules/oneview_server_profile_template_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_server_profile_template_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_server_profile_template.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_server_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_server_facts.py validate-modules:parameter-list-no-elements
-plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_os_deployment_plan_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_id_pools_ipv4_range.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_id_pools_ipv4_range_facts.py validate-modules:parameter-list-no-elements

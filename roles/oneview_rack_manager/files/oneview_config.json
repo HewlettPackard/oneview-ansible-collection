@@ -5,7 +5,6 @@
     "password": "<password>",
     "authLoginDomain": "<domain_directory>"
 },
-  "image_streamer_ip": "",
   "api_version": 4400,
   "variant": "Synergy"
 }

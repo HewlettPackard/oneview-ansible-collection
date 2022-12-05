@@ -147,7 +147,7 @@ A SessionID remains valid for 24 hours.
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
 
-This option allows the parameters `hostname`, `auth_login_domain`, `username`, `password`, `api_version` and `image_streamer_hostname` to be passed directly inside your task.
+This option allows the parameters `hostname`, `auth_login_domain`, `username`, `password`, and `api_version` to be passed directly inside your task.
 
 ```yaml
 - name: Create a Fibre Channel Network
@@ -205,19 +205,7 @@ The API list is as follows:
 
 ### HPE Synergy Image Streamer
 
-Modules to manage HPE Synergy Image Streamer appliances are also included in this project.
-To use these modules, you must set the Image Streamer IP on the OneViewClient configuration,
-either using the JSON configuration:
-
-```json
-"image_streamer_ip": "<image_streamer_ip>"
-```
-
-OR using the Environment variable:
-
-```bash
-export ONEVIEWSDK_IMAGE_STREAMER_IP='100.100.100.100'
-```
+From Release 8.1, Image streamer is no longer supported.
 
 ### Usage
 

@@ -1,5 +1,0 @@
----
-# defaults file for image_streamer_artifact_bundle_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/image_streamer_artifact_bundle_facts/files/oneview_config.json"
-artifact_bundle_name: 'AB_test'
-backup_artifact_bundle_name: 'ci-9cb654980018backup2017-01-06T12:40:07.161Z'
