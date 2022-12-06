@@ -153,7 +153,7 @@ class TestSanManagerModule(OneViewBaseTest):
         )
 
     def test_should_not_update_san_manager_for_same_data(self):
-        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"}, {"name": "Username", "value": "dcs"}, 
+        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"}, {"name": "Username", "value": "dcs"},
                                                                                                {"name": "Password", "value": "dcs"}, {"name": "UseHttps", "value": "true"}]}
         self.resource.get_by_name.return_value = self.resource
 
@@ -168,7 +168,7 @@ class TestSanManagerModule(OneViewBaseTest):
         )
 
     def test_should_update_if_update_password_if_update_flag_set(self):
-        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"}, {"name": "Username", "value": "dcs"}, 
+        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"}, {"name": "Username", "value": "dcs"},
                                                                                                {"name": "Password", "value": ""}, {"name": "UseHttps", "value": "true"}]}
         self.resource.get_by_name.return_value = self.resource
 
