@@ -55,6 +55,8 @@ options:
             - List with San Managers and its associated states.
         required: true
         type: dict
+notes: If you need to update password of san manager, you should pass "updatePassword" field as true as in
+        example given below. In all other cases, password won't be considered while updating the san manager.
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -73,29 +75,13 @@ EXAMPLES = '''
         providerDisplayName: "<san_manager_provider_display_name>"
         connectionInfo:
         - name: "Host"
-          displayName: "Host"
-          required: true
           value: "<san_manager_hostname>"
-          valueType: "String"
-          valueFormat: "IPAddressOrHostname"
         - name: "Username"
-          displayName: "Username"
-          required: true
           value: "<san_manager_username>"
-          valueType: "String"
-          valueFormat: "None"
         - name: "Password"
-          displayName: "Password"
-          required: true
           value: "<san_manager_password>"
-          valueType: "String"
-          valueFormat: "SecuritySensitive"
         - name: "UseHttps"
-          displayName: "UseHttps"
-          required: true
           value: true
-          valueType: Boolean
-          valueFormat: "None"
   delegate_to: localhost
 
 - name: Gather facts about all san Managers
@@ -108,6 +94,7 @@ EXAMPLES = '''
 - debug: var=san_managers
 - set_fact:
     san_manager_name: "{{ san_managers[0]['name'] }}"
+
 - name: Do nothing when the san manager is already present
   oneview_san_manager:
     hostname: 1.2.3.4
@@ -119,29 +106,13 @@ EXAMPLES = '''
       providerDisplayName: "<san_manager_provider_display_name>"
       connectionInfo:
         - name: "Host"
-          displayName: "Host"
-          required: true
           value: "<san_manager_hostname>"
-          valueType: "String"
-          valueFormat: "IPAddressOrHostname"
         - name: "Username"
-          displayName: "Username"
-          required: true
           value: "<san_manager_username>"
-          valueType: "String"
-          valueFormat: "None"
         - name: "Password"
-          displayName: "Password"
-          required: true
           value: "<san_manager_password>"
-          valueType: "String"
-          valueFormat: "SecuritySensitive"
         - name: "UseHttps"
-          displayName: "UseHttps"
-          required: true
           value: true
-          valueType: Boolean
-          valueFormat: "None"
   delegate_to: localhost
 
 - name: Refresh the san manager
@@ -155,6 +126,48 @@ EXAMPLES = '''
         name: "{{ san_manager_name }}"
         refreshState: "RefreshPending"
   delegate_to: localhost
+
+- name: Update the San Manager
+  oneview_san_manager:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: present
+    data:
+      name: "{{ san_manager_name }}"
+      connectionInfo:
+        - name: "Host"
+          value: "<san_manager_hostname>"
+        - name: "Username"
+          value: "<san_manager_username>"
+        - name: "Password"
+          value: "<san_manager_password>"
+        - name: "UseHttps"
+          value: true
+  delegate_to: localhost
+
+- name: Update password of San Manager
+  oneview_san_manager:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4400
+    state: present
+    data:
+      name: "{{ san_manager_name }}"
+      connectionInfo:
+        - name: "Host"
+          value: "<san_manager_hostname>"
+        - name: "Username"
+          value: "<san_manager_username>"
+        - name: "Password"
+          value: "<san_manager_password>"
+          updatePassword: True
+        - name: "UseHttps"
+          value: true
+  delegate_to: localhost
+
 - name: Remove the san manager by its name
   oneview_san_manager:
     hostname: 1.2.3.4

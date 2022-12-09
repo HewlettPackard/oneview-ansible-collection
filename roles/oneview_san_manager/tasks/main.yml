@@ -96,6 +96,8 @@
           value: true
   delegate_to: localhost
 
+# To update password of san manager, "updatePassword" field inside password element of connectionInfo
+# should be set to True
 - name: Update password of San Manager
   oneview_san_manager:
     config: "{{ config }}"
