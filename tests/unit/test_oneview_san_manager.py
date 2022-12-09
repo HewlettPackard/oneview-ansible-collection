@@ -33,41 +33,55 @@ SAN_MANAGER_PRESENT = dict(
         providerDisplayName="Brocade FOS Switch",
         connectionInfo=[
             dict(name="Host",
-                 displayName="Host",
-                 required="true",
-                 value="172.18.19.39",
-                 valueType="String",
-                 valueFormat="IPAddressOrHostname"),
+                 value="172.18.19.39"),
             dict(name="Username",
-                 displayName="Username",
-                 required="true",
-                 value="dcs",
-                 valueType="String",
-                 valueFormat="None"),
+                 value="dcs"),
             dict(name="Password",
-                 displayName="Password",
-                 required="true",
-                 value="dcs",
-                 valueType="String",
-                 valueFormat="SecuritySensitive"),
+                 value="dcs"),
             dict(name="UseHttps",
-                 displayName="UseHttps",
-                 required="true",
-                 value="true",
-                 valueType="Boolean",
-                 valueFormat="None")]))
+                 value="true")]))
+
+SAN_MANAGER_UPDATE = dict(
+    config='config.json',
+    state='present',
+    data=dict(
+        name="172.18.19.39",
+        connectionInfo=[
+            dict(name="Host",
+                 value="172.18.19.39"),
+            dict(name="Username",
+                 value="dcs"),
+            dict(name="Password",
+                 value="dcs"),
+            dict(name="UseHttps",
+                 value="true")]))
+
+SAN_MANAGER_PASSWORD_UPDATE = dict(
+    config='config.json',
+    state='present',
+    data=dict(
+        name="172.18.19.39",
+        connectionInfo=[
+            dict(name="Host",
+                 value="172.18.19.39"),
+            dict(name="Username",
+                 value="dcs"),
+            dict(name="Password",
+                 value="dcs",
+                 updatePassword=True),
+            dict(name="UseHttps",
+                 value="true")]))
 
 SAN_MANAGER_REFRESH = dict(
     config='config.json',
     state='refresh_state_set',
-    data=dict(name="1.2.3.4",
-              refreshState="RefreshPending",
-              uri="/rest/fc-sans/device-managers/3123-432-432-44"))
+    data=dict(name="172.18.19.39",
+              refreshState="RefreshPending"))
 
 SAN_MANAGER_ABSENT = dict(
     config='config.json',
     state='absent',
-    data=dict(name="1.2.3.4"))
+    data=dict(name="172.18.19.39"))
 
 
 @pytest.mark.resource(TestSanManagerModule='san_managers')
@@ -123,6 +137,55 @@ class TestSanManagerModule(OneViewBaseTest):
             ansible_facts=dict(san_managers={"name": "name", "uri": "resourceuri", "refreshState": "Stable"})
         )
 
+    def test_should_update_san_manager(self):
+        self.resource.data = {"name": "name", "uri": "resourceuri", "connectionInfo": []}
+        self.resource.get_by_name.return_value = self.resource
+        self.resource.update.return_value = {"name": "name"}
+
+        self.mock_ansible_module.params = SAN_MANAGER_UPDATE
+
+        SanManagerModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=SanManagerModule.MSG_SAN_MANAGER_UPDATED,
+            ansible_facts=dict(san_managers={"name": "name", "uri": "resourceuri", "connectionInfo": []})
+        )
+
+    def test_should_not_update_san_manager_for_same_data(self):
+        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"},
+                                                                                               {"name": "Username", "value": "dcs"},
+                                                                                               {"name": "Password", "value": "dcs"},
+                                                                                               {"name": "UseHttps", "value": "true"}]}
+        self.resource.get_by_name.return_value = self.resource
+
+        self.mock_ansible_module.params = SAN_MANAGER_UPDATE
+
+        SanManagerModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=SanManagerModule.MSG_ALREADY_PRESENT,
+            ansible_facts=dict(san_managers=self.resource.data)
+        )
+
+    def test_should_update_if_update_password_if_update_flag_set(self):
+        self.resource.data = {"name": "172.18.19.39", "uri": "resourceuri", "connectionInfo": [{"name": "Host", "value": "172.18.19.39"},
+                                                                                               {"name": "Username", "value": "dcs"},
+                                                                                               {"name": "Password", "value": ""},
+                                                                                               {"name": "UseHttps", "value": "true"}]}
+        self.resource.get_by_name.return_value = self.resource
+
+        self.mock_ansible_module.params = SAN_MANAGER_PASSWORD_UPDATE
+
+        SanManagerModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=SanManagerModule.MSG_SAN_MANAGER_UPDATED,
+            ansible_facts=dict(san_managers=self.resource.data)
+        )
+
     def test_should_remove_san_manager(self):
         self.resource.data = {'name': 'name'}
 
@@ -157,6 +220,18 @@ class TestSanManagerModule(OneViewBaseTest):
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
             exception=mock.ANY, msg=SanManagerModule.MSG_MANDATORY_FIELD_MISSING.format('data.connectionInfo'))
+
+    def test_present_should_fail_with_missing_providerDisplayName_attribute(self):
+        self.mock_ansible_module.params = {"state": "present",
+                                           "config": "config",
+                                           "data":
+                                               {"field": "invalid",
+                                                "connectionInfo": "some_data"}}
+
+        SanManagerModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            exception=mock.ANY, msg=SanManagerModule.MSG_MANDATORY_FIELD_MISSING.format('data.providerDisplayName'))
 
 
 if __name__ == '__main__':
