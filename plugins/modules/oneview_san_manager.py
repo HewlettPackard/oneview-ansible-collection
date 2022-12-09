@@ -55,8 +55,10 @@ options:
             - List with San Managers and its associated states.
         required: true
         type: dict
-notes: If you need to update password of san manager, you should pass "updatePassword" field as true as in
-        example given below. In all other cases, password won't be considered while updating the san manager.
+notes:
+    - "If you need to update password of san manager, you should pass "updatePassword" field as true as in
+       example given below. In all other cases, password won't be considered while updating the san manager."
+
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -305,10 +307,13 @@ class SanManagerModule(OneViewModule):
         parameter_to_ignore = None
         for ele in connectionInfo:
             if ele.get("name") == "Password":
-                update_password = ele.get("updatePassword")
-                if update_password:
+                if "updatePassword" in ele:
+                    update_password = ele.get("updatePassword")
                     ele.pop("updatePassword")
-                    update_password = True
+                    if (update_password == True or update_password == "true"):
+                        update_password = True
+                    else:
+                        update_password = False
         if not update_password:
             parameter_to_ignore = {"name": "Password"}
         merged_data = copy.deepcopy(self.current_resource.data)
