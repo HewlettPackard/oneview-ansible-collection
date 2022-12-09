@@ -56,7 +56,7 @@ options:
         required: true
         type: dict
 notes:
-    - If you need to update password of san manager, you should pass "updatePassword" field as true as in 
+    - If you need to update password of san manager, you should pass "updatePassword" field as true as in
       example given below. In all other cases, password won't be considered while updating the san manager.
 
 extends_documentation_fragment:
@@ -310,7 +310,7 @@ class SanManagerModule(OneViewModule):
                 if "updatePassword" in ele:
                     update_password = ele.get("updatePassword")
                     ele.pop("updatePassword")
-                    if (update_password == True or update_password == "true"):
+                    if (update_password is True or update_password == "true"):
                         update_password = True
                     else:
                         update_password = False
