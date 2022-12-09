@@ -56,8 +56,8 @@ options:
         required: true
         type: dict
 notes:
-    - "If you need to update password of san manager, you should pass "updatePassword" field as true as in 
-       example given below. In all other cases, password won't be considered while updating the san manager."
+    - If you need to update password of san manager, you should pass "updatePassword" field as true as in 
+      example given below. In all other cases, password won't be considered while updating the san manager.
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
