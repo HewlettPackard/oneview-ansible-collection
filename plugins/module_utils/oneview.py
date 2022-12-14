@@ -1394,6 +1394,7 @@ class ServerProfileReplaceNamesByUris(object):
         self._replace_networks_name_by_uri(data)
         self._replace_server_hardware_type_name_by_uri(data)
         self._replace_volume_attachment_names_by_uri(data)
+        self._replace_volume_attachment_connection_name_by_uri(data)
         self._replace_enclosure_name_by_uri(data)
         self._replace_interconnect_name_by_uri(data)
         self._replace_firmware_baseline_name_by_uri(data)
@@ -1486,6 +1487,20 @@ class ServerProfileReplaceNamesByUris(object):
                                                   self.STORAGE_POOL_NOT_FOUND,
                                                   self.oneview_client.storage_pools,
                                                   replace_name_with='')
+
+    def _replace_volume_attachment_connection_name_by_uri(self, data):
+        volume_attachments = (data.get('sanStorage') or {}).get(
+            'volumeAttachments') or []
+        if len(volume_attachments)>0:
+            for volume in volume_attachments:
+                storage_paths = volume.get('storagePaths') or []
+                if len(storage_paths)>0:
+                    for storage_path in storage_paths:
+                        if storage_path.get('networkName'):
+                            network_name = storage_path['networkName']
+                            del storage_path['networkName']
+                            if network_name is not None:
+                                storage_path['networkUri'] = self._get_network_by_name(network_name)['uri']
 
     def _replace_enclosure_name_by_uri(self, data):
         self._replace_name_by_uri(
