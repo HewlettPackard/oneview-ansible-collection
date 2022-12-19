@@ -1491,10 +1491,10 @@ class ServerProfileReplaceNamesByUris(object):
     def _replace_volume_attachment_connection_name_by_uri(self, data):
         volume_attachments = (data.get('sanStorage') or {}).get(
             'volumeAttachments') or []
-        if len(volume_attachments)>0:
+        if len(volume_attachments) > 0:
             for volume in volume_attachments:
                 storage_paths = volume.get('storagePaths') or []
-                if len(storage_paths)>0:
+                if len(storage_paths) > 0:
                     for storage_path in storage_paths:
                         if storage_path.get('networkName'):
                             network_name = storage_path['networkName']
