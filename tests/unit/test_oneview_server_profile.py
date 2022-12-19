@@ -1034,13 +1034,13 @@ class TestServerProfileModule(OneViewBaseTest):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data']['sanStorage'] = {
             "volumeAttachments": [
-                {"id": 1, "storagePaths":[{"connection":1, "networkName":"network1"}]},
-                {"id": 2, "storagePaths":[{"connection":2, "networkName":"network2"}]}
+                {"id": 1, "storagePaths": [{"connection": 1, "networkName": "network1"}]},
+                {"id": 2, "storagePaths": [{"connection": 2, "networkName": "network2"}]}
             ]
         }
         expected_dict = deepcopy(params['data'])
-        expected_dict['sanStorage']['volumeAttachments'][0] = {"id": 1, "storagePaths":[{"connection":1, "networkUri":"/rest/fc-networks/1"}]}
-        expected_dict['sanStorage']['volumeAttachments'][1] = {"id": 2, "storagePaths":[{"connection":2, "networkUri":"/rest/fc-networks/2"}]}
+        expected_dict['sanStorage']['volumeAttachments'][0] = {"id": 1, "storagePaths": [{"connection": 1, "networkUri": "/rest/fc-networks/1"}]}
+        expected_dict['sanStorage']['volumeAttachments'][1] = {"id": 2, "storagePaths": [{"connection": 2, "networkUri": "/rest/fc-networks/2"}]}
 
         self.resource.get_by_name.return_value = None
         self.mock_ov_client.fc_networks.get_by.side_effect = [[network1], [network2]]
@@ -1057,8 +1057,8 @@ class TestServerProfileModule(OneViewBaseTest):
         params = deepcopy(PARAMS_FOR_PRESENT)
         params['data']['sanStorage'] = {
             "volumeAttachments": [
-                {"id": 1, "storagePaths":[{"connection":1, "networkUri":"/rest/fc-networks/1"}]},
-                {"id": 2, "storagePaths":[{"connection":2, "networkUri":"/rest/fc-networks/2"}]}
+                {"id": 1, "storagePaths": [{"connection": 1, "networkUri": "/rest/fc-networks/1"}]},
+                {"id": 2, "storagePaths": [{"connection": 2, "networkUri": "/rest/fc-networks/2"}]}
             ]
         }
         expected_dict = deepcopy(params['data'])
@@ -1080,7 +1080,7 @@ class TestServerProfileModule(OneViewBaseTest):
         params['data']['sanStorage'] = {
             "volumeAttachments": [
                 {"id": 1},
-                {"id": 2, "storagePaths":[]}
+                {"id": 2, "storagePaths": []}
             ]
         }
         expected_dict = deepcopy(params['data'])
