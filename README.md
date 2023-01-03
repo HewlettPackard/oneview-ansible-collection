@@ -126,10 +126,6 @@ example:
 - name: Create a Fibre Channel Network
   oneview_fc_network:
     hostname: <hostname>
-    username: <username>
-    password: <password>
-    auth_login_domain: <domain_directory>
-    api_version: 4600
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
