@@ -350,7 +350,7 @@ class ServerProfileModule(OneViewModule):
                 server_hardware_uri_exists = False
                 if 'serverHardwareUri' in self.module.params['data'].keys() or 'serverHardwareName' in self.module.params['data'].keys():
                     server_hardware_uri_exists = True
-                if self.data.get('serverHardwareUri') is None and server_hardware_uri_exists:
+                if (self.data.get('serverHardwareUri') is None or self.data.get('serverHardwareUri') == "") and server_hardware_uri_exists:
                     self.data['serverHardwareUri'] = None
 
             # Auto assigns a Server Hardware to Server Profile if auto_assign_server_hardware is True and no SH uris/enclosure uri and bay exist
