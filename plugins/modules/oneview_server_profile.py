@@ -311,7 +311,12 @@ class ServerProfileModule(OneViewModule):
 
     def __present(self):
         server_template_name = self.data.pop('serverProfileTemplateName', '')
-        server_hardware_name = self.data.pop('serverHardwareName', '')
+        if 'serverHardwareName' in self.module.params['data'].keys():
+            server_hardware_name = self.data.pop('serverHardwareName', '')
+            if not server_hardware_name:
+                self.data['serverHardwareUri'] = None
+        else:
+            server_hardware_name = ''
         changed = False
         created = False
 
