@@ -9,6 +9,7 @@ This release extends the planned support of the collections to OneView REST API 
 #### Bug fixes & Enhancements
 - [#226] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/226) Server Profile Template module missing the newName property
 - [#232] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/232) NetworkName to NetworkUri Mapping for StoragePaths in SP and SPT
+- [#235] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/235) Unassign server profile
 
 ### Modules supported in this release
 - oneview_appliance_configuration_timeconfig_facts
