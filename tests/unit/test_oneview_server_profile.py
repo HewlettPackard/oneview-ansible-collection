@@ -1028,6 +1028,74 @@ class TestServerProfileModule(OneViewBaseTest):
         assert(args[0] == expected_dict)
         self.mock_ov_client.volumes.get_by.assert_not_called()
 
+    def test_should_replace_network_name_in_storage_paths_by_uri(self):
+        network1 = {"name": "network1", "uri": "/rest/fc-networks/1"}
+        network2 = {"name": "network2", "uri": "/rest/fc-networks/2"}
+        params = deepcopy(PARAMS_FOR_PRESENT)
+        params['data']['sanStorage'] = {
+            "volumeAttachments": [
+                {"id": 1, "storagePaths": [{"connection": 1, "networkName": "network1"}]},
+                {"id": 2, "storagePaths": [{"connection": 2, "networkName": "network2"}]}
+            ]
+        }
+        expected_dict = deepcopy(params['data'])
+        expected_dict['sanStorage']['volumeAttachments'][0] = {"id": 1, "storagePaths": [{"connection": 1, "networkUri": "/rest/fc-networks/1"}]}
+        expected_dict['sanStorage']['volumeAttachments'][1] = {"id": 2, "storagePaths": [{"connection": 2, "networkUri": "/rest/fc-networks/2"}]}
+
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.fc_networks.get_by.side_effect = [[network1], [network2]]
+        self.mock_ov_client.api_version = 1200
+
+        self.mock_ansible_module.params = params
+
+        ServerProfileModule().run()
+
+        args, _ = self.resource.create.call_args
+        assert(args[0] == expected_dict)
+
+    def test_should_not_replace_network_uri_in_storage_paths(self):
+        params = deepcopy(PARAMS_FOR_PRESENT)
+        params['data']['sanStorage'] = {
+            "volumeAttachments": [
+                {"id": 1, "storagePaths": [{"connection": 1, "networkUri": "/rest/fc-networks/1"}]},
+                {"id": 2, "storagePaths": [{"connection": 2, "networkUri": "/rest/fc-networks/2"}]}
+            ]
+        }
+        expected_dict = deepcopy(params['data'])
+
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.fc_networks.get_by.side_effect = None
+        self.mock_ov_client.api_version = 1200
+
+        self.mock_ansible_module.params = params
+
+        ServerProfileModule().run()
+
+        args, _ = self.resource.create.call_args
+        assert(args[0] == expected_dict)
+        self.mock_ov_client.fc_networks.get_by.assert_not_called()
+
+    def test_should_not_replace_network_uri_if_storage_path_none(self):
+        params = deepcopy(PARAMS_FOR_PRESENT)
+        params['data']['sanStorage'] = {
+            "volumeAttachments": [
+                {"id": 1},
+                {"id": 2, "storagePaths": []}
+            ]
+        }
+        expected_dict = deepcopy(params['data'])
+        self.resource.get_by_name.return_value = None
+        self.mock_ov_client.fc_networks.get_by.side_effect = None
+        self.mock_ov_client.api_version = 1200
+
+        self.mock_ansible_module.params = params
+
+        ServerProfileModule().run()
+
+        args, _ = self.resource.create.call_args
+        assert(args[0] == expected_dict)
+        self.mock_ov_client.fc_networks.get_by.assert_not_called()
+
     def test_should_replace_storage_pool_names_by_uri(self):
         pool1 = {"name": "pool1", "uri": "/rest/storage-pools/1"}
         pool2 = {"name": "pool2", "uri": "/rest/storage-pools/2"}
