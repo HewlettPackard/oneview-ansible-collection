@@ -255,6 +255,8 @@ class ServerHardwareModule(OneViewModule):
     MSG_MANDATORY_FIELD_MISSING = "Mandatory field was not informed: {0}"
     MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED = "Servers added successfully."
     MSG_ONE_TIME_BOOT_CHANGED = 'Server Hardware one-time boot state changed successfully.'
+    MSG_CHECKED_FIRMWARE_COMPLIANCE = 'Checked firmware compliance successfully.'
+    MSG_FIRMWARE_UPDATED = 'Perfomed firmware update successfully.'
 
     patch_success_message = dict(
         ilo_state_reset=MSG_ILO_STATE_RESET,
@@ -292,6 +294,8 @@ class ServerHardwareModule(OneViewModule):
                 'refresh_state_set',
                 'ilo_firmware_version_updated',
                 'ilo_state_reset',
+                'check_firmware_compliance',
+                'firmware_update',
                 'uid_state_on',
                 'uid_state_off',
                 'enable_maintenance_mode',
@@ -320,6 +324,8 @@ class ServerHardwareModule(OneViewModule):
             return self.__present()
         elif self.state == 'multiple_servers_added':
             changed, msg, ansible_facts = self.__add_multiple_rack_mount_servers()
+        elif self.state == 'check_firmware_compliance':
+            changed, msg, ansible_facts = self.__check_firmware_compliance()
         else:
             if not self.data.get('name'):
                 raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
@@ -338,6 +344,8 @@ class ServerHardwareModule(OneViewModule):
                     changed, msg, ansible_facts = self.__update_mp_firmware_version()
                 elif self.state == 'environmental_configuration_set':
                     changed, msg, ansible_facts = self.__set_environmental_configuration()
+                elif self.state == 'firmware_update':
+                    changed, msg, ansible_facts = self.__update_firmware()
                 else:
                     changed, msg, ansible_facts = self.__patch()
 
@@ -391,6 +399,21 @@ class ServerHardwareModule(OneViewModule):
             resource = self.current_resource.update_environmental_configuration(
                 self.data['environmentalConfigurationData'])
             return True, self.MSG_ENV_CONFIG_UPDATED, dict(server_hardware=resource)
+
+    def __check_firmware_compliance(self):
+        if self.data.get('firmwareComplianceData'):
+            resource = self.resource_client.check_firmware_compliance(self.data['firmwareComplianceData'])
+            return False, self.MSG_CHECKED_FIRMWARE_COMPLIANCE, dict(server_hardware=resource)
+        else:
+            raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.firmwareComplianceData"))
+
+    def __update_firmware(self):
+        if self.data.get('firmwareUpdateData'):
+            configuration = [{ "op": "replace", "value": self.data['firmwareUpdateData']}]
+            resource = self.current_resource.perform_firmware_update(configuration)
+            return True, self.MSG_FIRMWARE_UPDATED, dict(server_hardware=resource)
+        else:
+            raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.firmwareUpdateData"))
 
     def __set_refresh_state(self):
         if self.current_resource.data.get('refreshState') == 'NotRefreshing':

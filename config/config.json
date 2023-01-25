@@ -116,7 +116,8 @@
             "server_hardware_username": "<server_hardware_username>",
             "server_hardware_password": "<server_hardware_password>",
             "multiple_hosts":[],
-            "variant": "<variant>"
+            "variant": "<variant>",
+            "firmware_baseline_id": "<firmware_baseline_id>"
         },
         "rack_manager":{
             "rack_manager_hostname": "<rack_manager_hostname>",
