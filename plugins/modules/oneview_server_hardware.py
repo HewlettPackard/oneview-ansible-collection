@@ -63,8 +63,9 @@ options:
               C(one_time_boot_hdd) will set the server one-time boot device to Hard Disk Drive.
               C(one_time_boot_network) will Set the server one-time boot device to Network.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
-                  'ilo_state_reset', 'check_firmware_compliance', 'firmware_update', 'uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
-                  'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
+                  'ilo_state_reset', 'check_firmware_compliance', 'firmware_update', 'uid_state_on', 'uid_state_off',
+                  'enable_maintenance_mode', 'disable_maintenance_mode', 'environmental_configuration_set',
+                  'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
                   'one_time_boot_hdd', 'one_time_boot_network']
         required: true
         type: str
