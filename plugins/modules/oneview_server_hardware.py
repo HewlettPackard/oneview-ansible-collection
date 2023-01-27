@@ -49,6 +49,8 @@ options:
               C(refresh_state_set) will set the refresh state of the Server Hardware.
               C(ilo_firmware_version_updated) will update the iLO firmware version of the Server Hardware.
               C(ilo_state_reset) will reset the iLO state.
+              C(check_firmware_compliance) checks the firmware compliance of server with the selected firmware baseline
+              C(firmware_update) updates the firmware settings for a given server
               C(uid_state_on) will set on the UID state, if necessary.
               C(uid_state_off) will set off the UID state, if necessary.
               C(enable_maintenance_mode) will enable maintenance mode.
@@ -140,6 +142,36 @@ EXAMPLES = '''
             powerState: "Off"
             powerControl: "MomentaryPress"
   delegate_to: localhost
+
+- name: Check for Firmware Compliance
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: check_firmware_compliance
+    data:
+        firmwareComplianceData:
+            firmwareBaselineId: "abc-123-def-456-baseline-id"
+            serverUUID: "abc-123-def-456"
+  delegate_to: localhost
+
+- name: Update Firmware of the server hardware
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: firmware_update
+    data:
+        name: "172.18.6.15"
+        firmwareUpdateData:
+            baselineUri: "/rest/firmware-drivers/abc-123"
+            forceApplyFirmware: "false"
+            firmwareInstallType: "FirmwareOnlyOfflineMode"
+            installationPolicy: "LowerThanBaseline"
+  delegate_to: localhost
+  when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
 
 - name: Refresh the server hardware
   oneview_server_hardware:
