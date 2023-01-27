@@ -63,7 +63,7 @@ options:
               C(one_time_boot_hdd) will set the server one-time boot device to Hard Disk Drive.
               C(one_time_boot_network) will Set the server one-time boot device to Network.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
-                  'ilo_state_reset','uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
+                  'ilo_state_reset', 'check_firmware_compliance', 'firmware_update', 'uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
                   'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
                   'one_time_boot_hdd', 'one_time_boot_network']
         required: true
@@ -441,7 +441,7 @@ class ServerHardwareModule(OneViewModule):
 
     def __update_firmware(self):
         if self.data.get('firmwareUpdateData'):
-            configuration = [{ "op": "replace", "value": self.data['firmwareUpdateData']}]
+            configuration = [{"op": "replace", "value": self.data['firmwareUpdateData']}]
             resource = self.current_resource.perform_firmware_update(configuration)
             return True, self.MSG_FIRMWARE_UPDATED, dict(server_hardware=resource)
         else:

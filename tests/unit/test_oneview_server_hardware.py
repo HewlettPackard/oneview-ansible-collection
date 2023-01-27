@@ -347,7 +347,7 @@ class TestServerHardwareModule(OneViewBaseTest):
         self.resource.data = {"uri": "resourceuri"}
         self.resource.get_by_name.return_value = self.resource
         self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_UPDATE_FIRMWARE)
-        self.resource.perform_firmware_update.return_value = {"name":"name"}
+        self.resource.perform_firmware_update.return_value = {"name": "name"}
 
         ServerHardwareModule().run()
 
