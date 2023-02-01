@@ -1,0 +1,67 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all Scopes
+  oneview_scope_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+  
+- name: Power Off the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: power_state_set
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
+        powerStateData:
+            powerState: "Off"
+            powerControl: "MomentaryPress"
+  delegate_to: localhost
+
+- name: Check for Firmware Compliance
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: check_firmware_compliance
+    data:
+        firmwareComplianceData:
+            firmwareBaselineId: "{{ contents.server_hardware.firmware_baseline_id }}"
+            serverUUID: "{{ server_hardwares[0]['uuid'] }}"
+  delegate_to: localhost
+
+- debug: var=ansible_facts['server_hardware']['serverFirmwareUpdateRequired']
+
+- name: Update Firmware of the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: firmware_update
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
+        firmwareUpdateData:
+            baselineUri: "/rest/firmware-drivers/{{ contents.server_hardware.firmware_baseline_id }}"
+            forceApplyFirmware: "false"
+            firmwareInstallType: "FirmwareOnlyOfflineMode"
+            installationPolicy: "LowerThanBaseline"
+  delegate_to: localhost
+  when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
+
+- name: Power On the server hardware
+  oneview_server_hardware:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: power_state_set
+    data:
+        name: "{{ server_hardwares[0]['name'] }}"
+        powerStateData:
+            powerState: "On"
+            powerControl: "MomentaryPress"
+  delegate_to: localhost

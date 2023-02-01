@@ -443,8 +443,12 @@ class ServerHardwareModule(OneViewModule):
     def __update_firmware(self):
         if self.data.get('firmwareUpdateData'):
             configuration = [{"op": "replace", "value": self.data['firmwareUpdateData']}]
-            resource = self.current_resource.perform_firmware_update(configuration)
-            return True, self.MSG_FIRMWARE_UPDATED, dict(server_hardware=resource)
+            try:
+                resource = self.current_resource.perform_firmware_update(configuration)
+                if resource:
+                    return True, self.MSG_FIRMWARE_UPDATED, dict(server_hardware=resource)
+            except ValueError as e:
+                raise OneViewModuleValueError("Errors found while updating firmware:" + str(e))
         else:
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.firmwareUpdateData"))
 
