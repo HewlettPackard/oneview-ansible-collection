@@ -1,0 +1,49 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all Drive Enclosures
+  oneview_drive_enclosure_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=drive_enclosures
+
+- name: Gather paginated, filtered and sorted facts about Drive Enclosures
+  oneview_drive_enclosure_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=OK'
+
+- debug: var=drive_enclosures
+
+- name: Gather facts about an Enclosure by name
+  oneview_drive_enclosure_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
+  delegate_to: localhost
+
+- debug: var=drive_enclosures
+
+- name: Gather Port map facts about a Drive Enclosure by name
+  oneview_drive_enclosure_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
+    options:
+      - port_map
+  delegate_to: localhost
+
+- debug: var=port_map

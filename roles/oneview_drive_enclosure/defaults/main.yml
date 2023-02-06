@@ -1,0 +1,4 @@
+# ---
+# defaults file for oneview_enclosure
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_drive_enclosure/files/oneview_config.json"
+contents: "{{lookup('file','../config/config.json')| from_json}}"
