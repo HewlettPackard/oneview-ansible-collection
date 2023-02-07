@@ -1,0 +1,4 @@
+# ---
+# defaults file for oneview_sas_logical_jbod
+config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_sas_logical_jbod/files/oneview_config.json"
+contents: "{{lookup('file','../config/config.json')| from_json}}"

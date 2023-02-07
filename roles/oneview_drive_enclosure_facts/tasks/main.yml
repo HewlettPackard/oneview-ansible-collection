@@ -28,11 +28,23 @@
 
 - debug: var=drive_enclosures
 
-- name: Gather facts about an Enclosure by name
+- name: Gather facts about a Drive Enclosure by name
   oneview_drive_enclosure_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
+  delegate_to: localhost
+
+- debug: var=drive_enclosures
+
+- set_fact:
+    drive_en_uri : "{{ drive_enclosures[0]['uri'] }}"
+
+- name: Gather facts about a Drive Enclosure by uri
+  oneview_drive_enclosure_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    uri: "{{ drive_en_uri }}"
   delegate_to: localhost
 
 - debug: var=drive_enclosures

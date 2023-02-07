@@ -25,10 +25,10 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: oneview_drive_enclosure_facts
-short_description: Retrieve facts about one or more Drive Enclosures
+module: oneview_sas_logical_jbod_facts
+short_description: Retrieve facts about one or more SAS Logical JBODs
 description:
-    - Retrieve facts about one or more of the Drive Enclosures from OneView.
+    - Retrieve facts about one or more SAS Logical JBODs from OneView.
 version_added: "2.5.0"
 requirements:
     - hpeOneView >= 5.4.0
@@ -37,7 +37,7 @@ author:
 options:
     name:
       description:
-        - Drive Enclosure name.
+        - SAS Logical JBOD name
       type: str
     sessionID:
       description:
@@ -46,8 +46,8 @@ options:
       required: false
     options:
       description:
-        - "List with options to gather additional facts about a Drive Enclosure and related resources.
-          Options allowed: C(port_map)
+        - "List with options to gather additional facts about a SAS Logical JBOD and related resources.
+          Options allowed: C(jbod_drives).
       type: list
 
 extends_documentation_fragment:
@@ -57,18 +57,23 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-- name: Gather facts about all Drive Enclosures
-  oneview_drive_enclosure_facts:
+- name: Gather facts about all SAS Logical JBODs
+  oneview_sas_logical_jbod_facts:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4600
   delegate_to: localhost
 
-- debug: var=drive_enclosures
+- debug: var=sas_logical_jbods
 
-- name: Gather paginated, filtered and sorted facts about Drive Enclosures
-  oneview_drive_enclosure_facts:
+- set_fact:
+    jbod_name : "{{ sas_logical_jbods[0]['name'] }}"
+- set_fact:
+    jbod_uri : "{{ sas_logical_jbods[0]['uri'] }}"
+
+- name: Gather paginated, filtered and sorted facts about SAS Logical JBODs
+  oneview_sas_logical_jbod_facts:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
@@ -79,41 +84,52 @@ EXAMPLES = '''
       sort: 'name:descending'
       filter: 'status=OK'
 
-- debug: var=drive_enclosures
+- debug: var=sas_logical_jbods
 
-- name: Gather facts about an Enclosure by name
-  oneview_drive_enclosure_facts:
+- name: Gather facts about an SAS Logical JBOD by name
+  oneview_sas_logical_jbod_facts:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4600
-    name: "Drive Enclosure Name"
+    name: "{{ jbod_name }}"
   delegate_to: localhost
 
-- debug: var=drive_enclosures
+- debug: var=sas_logical_jbods
 
-- name: Gather Port map facts about a Drive Enclosure by name
-  oneview_drive_enclosure_facts:
+- name: Gather facts about an SAS Logical JBOD by uri
+  oneview_sas_logical_jbod_facts:
     hostname: 1.2.3.4
     username: administrator
     password: my_password
     api_version: 4600
-    name: "Drive Enclosure Name"
+    uri: "{{ jbod_uri }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_jbods
+
+- name: Gather Drives facts about a SAS Logical JBOD by name
+  oneview_sas_logical_jbod_facts:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    name: "{{ jbod_name }}"
     options:
-      - port_map
+      - jbod_drives
   delegate_to: localhost
 
-- debug: var=port_map
+- debug: var=jbod_drives
 '''
 
 RETURN = '''
-drive_enclosures:
-    description: Has all the OneView facts about the Drive Enclosures.
+enclosures:
+    description: Has all the OneView facts about the Enclosures.
     returned: Always, but can be null.
     type: dict
 
-port_map:
-    description: Has all the OneView facts about Port Map of a Drive Enclosure.
+jbod_drives:
+    description: Has the list of drives allocated to a SAS logical JBOD.
     returned: When requested, but can be null.
     type: dict
 '''
@@ -121,27 +137,27 @@ port_map:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
-class DriveEnclosureFactsModule(OneViewModule):
+class SASLogicalJBODFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)
-        self.set_resource_object(self.oneview_client.drive_enclosures)
+        self.set_resource_object(self.oneview_client.sas_logical_jbods)
 
     def execute_module(self):
 
         ansible_facts = {}
 
         if self.current_resource:
-            drive_enclosures = [self.current_resource.data]
+            sas_logical_jbods = [self.current_resource.data]
             if self.options:
                 ansible_facts = self._gather_optional_facts(self.options)
         elif not self.module.params.get("name") and not self.module.params.get('uri'):
-            drive_enclosures = self.resource_client.get_all(**self.facts_params)
+            sas_logical_jbods = self.resource_client.get_all(**self.facts_params)
         else:
-            drive_enclosures = []
+            sas_logical_jbods = []
 
-        ansible_facts['drive_enclosures'] = drive_enclosures
+        ansible_facts['sas_logical_jbods'] = sas_logical_jbods
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)
@@ -150,13 +166,14 @@ class DriveEnclosureFactsModule(OneViewModule):
 
         ansible_facts = {}
 
-        if options.get('port_map'):
-            ansible_facts['port_map'] = self.current_resource.get_port_map()
+        if options.get('jbod_drives'):
+            ansible_facts['jbod_drives'] = self.current_resource.get_drives()
+
         return ansible_facts
 
 
 def main():
-    DriveEnclosureFactsModule().run()
+    SASLogicalJBODFactsModule().run()
 
 
 if __name__ == '__main__':

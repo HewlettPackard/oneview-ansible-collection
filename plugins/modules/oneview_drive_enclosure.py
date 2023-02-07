@@ -67,31 +67,154 @@ extends_documentation_fragment:
 EXAMPLES = '''
 - name: Refresh the drive enclosure
   oneview_drive_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
     state: refreshed
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
       refreshState: 'RefreshPending'
+  when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Power Off the drive enclosure
   oneview_drive_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
     state: power_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Do nothing when drive enclosure is already powered off
   oneview_drive_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
     state: power_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Power On the drive enclosure
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: power_on
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Do nothing when drive enclosure is already powered on
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: power_on
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Set the UID state of the drive enclosure to On
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: uid_on
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Do nothing when UID state is already set to On
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: uid_on
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Set the UID state of the drive enclosure to Off
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: uid_off
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Do nothing when UID state is already set to Off
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: uid_off
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Request a hard reset of the drive enclosure
+  oneview_drive_enclosure:
+    hostname: 1.2.3.4
+    username: administrator
+    password: my_password
+    api_version: 4600
+    state: hard_reset
+    data:
+      name: '0000A66101, bay 1'
+  when: contents.drive_enclosure.variant == 'Synergy'
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+  when: contents.drive_enclosure.variant == 'Synergy'
 '''
 
 RETURN = '''

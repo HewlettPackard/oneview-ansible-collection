@@ -127,6 +127,10 @@
             "rack_manager_username": "<rack_manager_username>",
             "rack_manager_password": "<rack_manager_password>"
         },
+        "sas_logical_jbod":{
+            "sas_logical_jbod_name": "<sas_logical_jbod_name>",
+            "variant": "<variant>"
+        },
         "storage_system":
         {
             "storage_domain": "<storage_domain>",

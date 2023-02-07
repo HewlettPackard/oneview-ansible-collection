@@ -1,8 +1,8 @@
-## oneview_enclosure_facts
-Retrieve facts about one or more of the OneView Enclosures.
+## oneview_drive_enclosure
+Manage OneView Drive Enclosure resources.
 
 #### Synopsis
-Retrieve facts about one or more of the Enclosures from OneView.
+Provides an interface to manage Drive Enclosure resources. Can refresh and do patch operations.
 
 #### Requirements (on the host that executes the module)
   * python >= 2.7.9
@@ -13,22 +13,21 @@ Retrieve facts about one or more of the Enclosures from OneView.
 | Parameter     | Required    | Default  | Choices    | Comments |
 | ------------- |-------------| ---------|----------- |--------- |
 | config  |   No  |  | |  Path to a .json configuration file containing the OneView client configuration. The configuration file is optional. If the file path is not provided, the configuration will be loaded from environment variables.  |
-| name  |   No  |  | |  Enclosure name.  |
-| options  |   No  |  | |  List with options to gather additional facts about Enclosure. 
-| params  |   No  |  | |  List of params to delimit, filter and sort the list of resources.  params allowed: `start`: The first item to return, using 0-based indexing. `count`: The number of resources to return. `filter`: A general filter/query string to narrow the list of items returned. `sort`: The sort order of the returned data set.  |
+| data  |   Yes  |  | |  List with Drive Enclosure properties.  |
+| state  |   |  | <ul> <li>refreshed</li>  <li>power_on/power_off</li> <li>uid_on/uid_off</li> <li>hard_reset</li></ul> |  Indicates the desired state for the Drive Enclosure resource. `refreshed` will refresh the drive enclosure resource. `power_on/power_off` will change the power status. `uid_on/uid_off` will change the uid status. `hard_reset` will hard reset the drive enclosure.  |
 
 ## Example Playbook
- 
+
 ```yaml
 - hosts: all
   collections:
     - hpe.oneview
   roles:
-    - hpe.oneview.oneview_enclosure_facts
+    - hpe.oneview.oneview_drive_enclosure
 ```
 
 #### Return Values
 
 | Name          | Description  | Returned | Type       |
 | ------------- |-------------| ---------|----------- |
-| enclosure   | Has all the OneView facts about the Enclosures. |  Always, but can be null. |  dict |
+| drive_enclosure   | Has the facts about the Drive Enclosure. |  On all available states. Can be null. |  dict |
