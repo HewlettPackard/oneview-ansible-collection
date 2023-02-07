@@ -1,0 +1,53 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all SAS Logical JBOD Attachments
+  oneview_sas_logical_jbod_attachment_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_jbod_attachments
+
+- set_fact:
+    jbod_attachment_name : "{{ sas_logical_jbod_attachments[0]['name'] }}"
+- set_fact:
+    jbod_attachment_uri : "{{ sas_logical_jbod_attachments[0]['uri'] }}"
+
+- name: Gather paginated, filtered and sorted facts about SAS Logical JBOD attachments
+  oneview_sas_logical_jbod_attachment_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=OK'
+
+- debug: var=sas_logical_jbod_attachments
+
+- name: Gather facts about a SAS Logical JBOD Attachment by name
+  oneview_sas_logical_jbod_attachment_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ jbod_attachment_name }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_jbod_attachments
+
+- name: Gather facts about a SAS Logical JBOD Attachment by uri
+  oneview_sas_logical_jbod_attachment_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    uri: "{{ jbod_attachment_uri }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_jbod_attachments
+
