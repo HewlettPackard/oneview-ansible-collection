@@ -137,7 +137,7 @@ jbod_drives:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
-class SASLogicalJBODFactsModule(OneViewModule):
+class SasLogicalJbodFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
 
     def __init__(self):
@@ -173,7 +173,7 @@ class SASLogicalJBODFactsModule(OneViewModule):
 
 
 def main():
-    SASLogicalJBODFactsModule().run()
+    SasLogicalJbodFactsModule().run()
 
 
 if __name__ == '__main__':

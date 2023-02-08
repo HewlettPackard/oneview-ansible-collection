@@ -271,7 +271,7 @@ sas_logical_jbod:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound)
 
 
-class SASLogicalJbod(OneViewModule):
+class SasLogicalJbodModule(OneViewModule):
     MSG_JBOD_CREATED = "SAS logical JBOD created successfully."
     MSG_JBOD_ALREADY_EXISTS = "SAS logical jbod with same name already exists."
     MSG_JBOD_NAME_CHANGED = "SAS logical JBOD name changed successfully."
@@ -385,7 +385,7 @@ class SASLogicalJbod(OneViewModule):
 
 
 def main():
-    SASLogicalJbod().run()
+    SasLogicalJbodModule().run()
 
 if __name__ == '__main__':
     main()

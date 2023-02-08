@@ -114,7 +114,7 @@ sas_logical_jbod_attachments:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 
-class SASLogicalJbodAttachmentFactsModule(OneViewModule):
+class SasLogicalJbodAttachmentFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), params=dict(type='dict'))
 
     def __init__(self):
@@ -139,7 +139,7 @@ class SASLogicalJbodAttachmentFactsModule(OneViewModule):
 
 
 def main():
-    SASLogicalJbodAttachmentFactsModule().run()
+    SasLogicalJbodAttachmentFactsModule().run()
 
 
 if __name__ == '__main__':

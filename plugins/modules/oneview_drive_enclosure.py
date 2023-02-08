@@ -224,7 +224,7 @@ drive_enclosure:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError)
 
 
 class DriveEnclosureModule(OneViewModule):
@@ -239,6 +239,7 @@ class DriveEnclosureModule(OneViewModule):
     MSG_UID_ALREADY_POWERED_OFF = "UID state is already set to Off."
     MSG_HARD_RESET_DRIVE_ENCLOSURE = "Hard Reset drive enclosure successfully."
     MSG_DRIVE_ENCLOSURE_NOT_FOUND = "Drive Enclosure not found."
+    MSG_DRIVE_ENCLOSURE_NAME_REQUIRED = "Drive Enclosure name is required."
 
     argument_spec = dict(
         state=dict(
@@ -276,6 +277,8 @@ class DriveEnclosureModule(OneViewModule):
         self.set_resource_object(self.oneview_client.drive_enclosures)
     
     def execute_module(self):
+        if not self.data.get("name"):
+            raise OneViewModuleValueError(self.MSG_DRIVE_ENCLOSURE_NAME_REQUIRED)
         if not self.current_resource:
             raise OneViewModuleResourceNotFound(self.MSG_DRIVE_ENCLOSURE_NOT_FOUND)
         else:
@@ -299,7 +302,7 @@ class DriveEnclosureModule(OneViewModule):
         changed = False
         state_name = self.module.params['state']
         state = self.patch_params[state_name].copy()
-        current_property_value = self.__get_current_property_value(state_name, state)
+        current_property_value = self.__get_current_property_value(state)
 
         if current_property_value and self.__is_update_needed(state_name, state, current_property_value):
             resource_obj = self.current_resource.patch(**state)
@@ -312,7 +315,7 @@ class DriveEnclosureModule(OneViewModule):
 
         return changed, msg, resource
 
-    def __get_current_property_value(self, state_name, state):
+    def __get_current_property_value(self, state):
         property_name = state['path'].split('/')[1]
         if self.current_resource.data.get(property_name):
             return self.current_resource.data.get(property_name)
