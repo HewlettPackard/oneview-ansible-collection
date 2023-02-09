@@ -39,6 +39,10 @@ options:
       description:
         - SAS Logical JBOD Attachment name
       type: str
+    uri:
+      description:
+        - SAS Logical JBOD Attachment uri
+      type: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
