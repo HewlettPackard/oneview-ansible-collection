@@ -374,17 +374,6 @@ class ServerProfileModule(OneViewModule):
 
         return created, changed, msg, self.current_resource.data
 
-    # Searches for a key or suffix of a key inside an array of hashes. The search looks for {'name': <key>} pairs
-    # inside the array.
-    # Returns an array containing the positions of matches.
-    def __find_in_array_of_hashes(self, array_of_hashes, key, part=None):
-        matches = []
-        for position in range(0, len(array_of_hashes)):
-            attribute_name = array_of_hashes[position].get('name', None)
-            if attribute_name and attribute_name[part:] == key:
-                matches.append(position)
-        return matches
-
     def __update_server_profile(self, profile_with_updates):
         self.module.log(msg="Updating Server Profile")
 

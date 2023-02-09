@@ -38,7 +38,7 @@
 - debug: var=drive_enclosures
 
 - set_fact:
-    drive_en_uri : "{{ drive_enclosures[0]['uri'] }}"
+    drive_en_uri: "{{ drive_enclosures[0]['uri'] }}"
 
 - name: Gather facts about a Drive Enclosure by uri
   oneview_drive_enclosure_facts:

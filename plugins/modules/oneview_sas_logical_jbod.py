@@ -54,6 +54,13 @@ options:
         ]
       type: str
       required: true
+    validate_etag:
+      description:
+         - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
+           for the resource matches the ETag provided in the data.
+      default: true
+      choices: []
+      type: bool
     data:
       description:
         - List with the SAS logical JBOD properties.
@@ -289,12 +296,12 @@ class SasLogicalJbodModule(OneViewModule):
         state=dict(
             required=True,
             choices=[
-              'present',
-              'absent',
-              'change_name',
-              'change_description',
-              'erase_data',
-              'clear_metadata'
+                'present',
+                'absent',
+                'change_name',
+                'change_description',
+                'erase_data',
+                'clear_metadata'
             ]
         ),
         sessionID=dict(required=False, type='str'),
@@ -370,7 +377,7 @@ class SasLogicalJbodModule(OneViewModule):
 
     def __get_current_property_value(self, state_name, state):
         property_name = state['path'].split('/')[1]
-        if self.current_resource.data.get(property_name) != None:
+        if self.current_resource.data.get(property_name) is not None:
             return self.current_resource.data.get(property_name)
         else:
             return None
@@ -386,6 +393,7 @@ class SasLogicalJbodModule(OneViewModule):
 
 def main():
     SasLogicalJbodModule().run()
+
 
 if __name__ == '__main__':
     main()

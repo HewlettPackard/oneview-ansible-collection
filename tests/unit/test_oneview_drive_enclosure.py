@@ -251,7 +251,7 @@ class TestDriveEnclosureModule(OneViewBaseTest):
             changed=True,
             ansible_facts=dict(drive_enclosure=self.resource.data),
             msg=DriveEnclosureModule.MSG_DRIVE_ENCLOSURE_REFRESHED
-        )       
+        )
 
     def test_refresh_should_fail_if_no_drive_enclosure_found(self):
         self.resource.get_by_name.return_value = None

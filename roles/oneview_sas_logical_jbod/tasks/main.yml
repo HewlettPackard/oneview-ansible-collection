@@ -19,7 +19,7 @@
 - debug: var=drive_enclosures[2]['name']
 
 - set_fact:
-    drive_enclosure_uri_list : ["{{ drive_enclosures[0]['uri'] }}"]
+    drive_enclosure_uri_list: ["{{ drive_enclosures[0]['uri'] }}"]
 - set_fact:
     drive_bay_uris: ["{{ drive_enclosures[1]['driveBays'][2]['uri'] }}", "{{ drive_enclosures[1]['driveBays'][3]['uri'] }}"]
 

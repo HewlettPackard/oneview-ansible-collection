@@ -307,7 +307,7 @@ class TestLogicalInterconnectModule(OneViewBaseTest):
         try:
             LogicalInterconnectModule().run()
         except OneViewModuleException as e:
-            assert(e.args[0] == FAKE_MSG_ERROR)
+            assert (e.args[0] == FAKE_MSG_ERROR)
 
     def test_should_fail_when_logical_interconnect_not_found(self):
         self.resource.get_by_name.return_value = None

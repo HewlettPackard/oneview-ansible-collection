@@ -112,3 +112,10 @@ plugins/modules/oneview_get_session_id.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_rack_manager.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_rack_manager_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_rack_manager_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_drive_enclosure.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_drive_enclosure_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_sas_logical_jbod.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_sas_logical_jbod_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_sas_logical_jbod_attachment_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_drive_enclosure_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/oneview_sas_logical_jbod_facts.py validate-modules:parameter-list-no-elements

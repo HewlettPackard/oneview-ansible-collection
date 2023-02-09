@@ -41,8 +41,7 @@ PARAMS_FOR_CREATE = dict(
     data=dict(name='SASJbod',
               numPhysicalDrives=1,
               eraseData="true",
-              driveEnclosureUris=["some/uri"]
-    )
+              driveEnclosureUris=["some/uri"])
 )
 PARAMS_FOR_DELETE = dict(
     config='config.json',

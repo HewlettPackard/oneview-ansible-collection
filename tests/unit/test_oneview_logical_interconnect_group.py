@@ -579,7 +579,7 @@ class TestLogicalInterconnectGroupModule(OneViewBaseTest):
         try:
             LogicalInterconnectGroupModule().run()
         except OneViewModuleException as e:
-            assert(e.args[0] == FAKE_MSG_ERROR)
+            assert (e.args[0] == FAKE_MSG_ERROR)
 
     def test_update_when_data_has_modified_uplinkset_attributes(self):
         self.resource.data = DEFAULT_LIG_TEMPLATE

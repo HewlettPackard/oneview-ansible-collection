@@ -48,12 +48,19 @@ options:
           C(power_off) will power off the drive enclosure.
           C(uid_on) will set the UID state On.
           C(uid_off) will set the UID state Off.
-          C(hard_reset) Request a hard reset of the drive enclosure. A hard reset will interrupt active I/O.	
+          C(hard_reset) Request a hard reset of the drive enclosure. A hard reset will interrupt active I/O.
       choices: [
         'refreshed', 'power_on', 'power_off', 'uid_on', 'uid_off', 'hard_reset'
         ]
       type: str
       required: true
+    validate_etag:
+      description:
+         - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
+           for the resource matches the ETag provided in the data.
+      default: true
+      choices: []
+      type: bool
     data:
       description:
         - List with the Drive Enclosure properties.
@@ -245,14 +252,14 @@ class DriveEnclosureModule(OneViewModule):
         state=dict(
             required=True,
             choices=[
-              'refreshed',
-              'power_on',
-              'power_off',
-              'uid_on',
-              'uid_off',
-              'hard_reset'
+                'refreshed',
+                'power_on',
+                'power_off',
+                'uid_on',
+                'uid_off',
+                'hard_reset'
             ]
-          ),
+        ),
         sessionID=dict(required=False, type='str'),
         data=dict(required=True, type='dict')
     )
@@ -275,7 +282,7 @@ class DriveEnclosureModule(OneViewModule):
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True)
         self.set_resource_object(self.oneview_client.drive_enclosures)
-    
+
     def execute_module(self):
         if not self.data.get("name"):
             raise OneViewModuleValueError(self.MSG_DRIVE_ENCLOSURE_NAME_REQUIRED)
@@ -333,6 +340,7 @@ class DriveEnclosureModule(OneViewModule):
 
 def main():
     DriveEnclosureModule().run()
+
 
 if __name__ == '__main__':
     main()

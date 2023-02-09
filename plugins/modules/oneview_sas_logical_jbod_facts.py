@@ -39,6 +39,10 @@ options:
       description:
         - SAS Logical JBOD name
       type: str
+    uri:
+      description:
+        - SAS Logical JBOD uri
+      type: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
@@ -47,7 +51,7 @@ options:
     options:
       description:
         - "List with options to gather additional facts about a SAS Logical JBOD and related resources.
-          Options allowed: C(jbod_drives).
+          Options allowed: C(jbod_drives)."
       type: list
 
 extends_documentation_fragment:
@@ -138,7 +142,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class SasLogicalJbodFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'),
+                         uri=dict(required=False, type='str'),
+                         sessionID=dict(required=False, type='str'),
+                         options=dict(type='list'),
+                         params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)

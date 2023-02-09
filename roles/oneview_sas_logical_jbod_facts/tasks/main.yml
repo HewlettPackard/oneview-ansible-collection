@@ -17,9 +17,9 @@
 - debug: var=sas_logical_jbods
 
 - set_fact:
-    jbod_name : "{{ sas_logical_jbods[0]['name'] }}"
+    jbod_name: "{{ sas_logical_jbods[0]['name'] }}"
 - set_fact:
-    jbod_uri : "{{ sas_logical_jbods[0]['uri'] }}"
+    jbod_uri: "{{ sas_logical_jbods[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBODs
   oneview_sas_logical_jbod_facts:

@@ -924,7 +924,7 @@ class OneViewModuleBase(object):
             additional_arg_spec, validate_etag_support)
 
         self.module = AnsibleModule(
-            argument_spec=argument_spec, supports_check_mode=False)
+            argument_spec=argument_spec, supports_check_mode=True)
 
         self._check_hpe_oneview_sdk()
         self._create_oneview_client()

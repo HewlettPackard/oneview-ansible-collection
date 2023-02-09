@@ -39,6 +39,10 @@ options:
       description:
         - Drive Enclosure name.
       type: str
+    uri:
+      description:
+        - Drive Enclosure uri.
+      type: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
@@ -47,7 +51,7 @@ options:
     options:
       description:
         - "List with options to gather additional facts about a Drive Enclosure and related resources.
-          Options allowed: C(port_map)
+          Options allowed: C(port_map)"
       type: list
 
 extends_documentation_fragment:
@@ -122,7 +126,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class DriveEnclosureFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'),
+                         uri=dict(required=False, type='str'),
+                         sessionID=dict(required=False, type='str'),
+                         options=dict(type='list'),
+                         params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)

@@ -54,7 +54,7 @@ PRESENT_DRIVE_ENCLOSURES = [{
 
 DRIVE_ENCLOSURE_PORT_MAP = {
     "type": "DriveEnclosurePortMap",
-    "deviceSlots":[{
+    "deviceSlots": [{
         "slotNumber": "1",
         "physicalPorts": [
             {
