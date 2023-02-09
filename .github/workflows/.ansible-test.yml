@@ -6,7 +6,7 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.7"]
+        python_version: ["3.7", "3.8", "3.9"]
         ansible_version: ["stable-2.9", "stable-2.10", "stable-2.11"]
     runs-on: ubuntu-22.04
     steps:
@@ -50,14 +50,15 @@ jobs:
           path: "./"         
   
   units:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       # As soon as the first unit test fails, cancel the others to free up the CI queue
       fail-fast: true
       matrix:
         python_version:
-          - 3.6
           - 3.7
+          - 3.8
+          - 3.9
         ansible:
           - stable-2.9
           - stable-2.10
