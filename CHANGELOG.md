@@ -1,4 +1,13 @@
 # Ansible Collections for HPE OneView Change Log
+## v8.2.0(Unreleased)
+This release extends the planned support of the collections to OneView REST API version 5000(OneView v8.2).
+
+#### Major Changes
+ 1. Added support for Drive Enclosures
+ 2. Added support for SAS logical JBOD
+ 3. Added support for SAS logical JBOD attachments
+ 4. Added support for firmware update on a Server Hardware without profile
+
 ## v8.1.0
 This release extends the planned support of the collections to OneView REST API version 4800(OneView v8.1).
 
