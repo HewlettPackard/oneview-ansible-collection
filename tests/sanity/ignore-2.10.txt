@@ -8,7 +8,7 @@ plugins/modules/oneview_appliance_network_interface_facts.py validate-modules:mi
 plugins/modules/oneview_appliance_network_interface_facts.py validate-modules:parameter-list-no-elements
 plugins/modules/oneview_appliance_ssh_access_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_ssh_access.py validate-modules:missing-gplv3-license
-plugins/modules/oneview_appliance_time_and_l=ocale_configuration_facts.py validate-modules:missing-gplv3-license
+plugins/modules/oneview_appliance_time_and_locale_configuration_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_appliance_time_and_locale_configuration.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_certificates_server_facts.py validate-modules:missing-gplv3-license
