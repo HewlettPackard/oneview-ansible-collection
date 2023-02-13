@@ -299,7 +299,7 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
                 continue
         elif isinstance(parameter_to_ignore, dict):
             for key_in_dict in parameter_to_ignore:
-                if(key_in_dict == key and resource1[key] == parameter_to_ignore[key_in_dict]):
+                if (key_in_dict == key and resource1[key] == parameter_to_ignore[key_in_dict]):
                     break_flag = True
         # break_flag is to break from the loop if a key in parameter to ingnore is encountered
         if break_flag:
@@ -339,7 +339,7 @@ def compare(first_resource, second_resource, parameter_to_ignore=None):
                 continue
         elif isinstance(parameter_to_ignore, dict):
             for key_in_dict in parameter_to_ignore:
-                if(key_in_dict == key and resource2[key] == parameter_to_ignore[key_in_dict]):
+                if (key_in_dict == key and resource2[key] == parameter_to_ignore[key_in_dict]):
                     break_flag = True
         if break_flag:
             break_flag = False
