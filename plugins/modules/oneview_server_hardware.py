@@ -49,6 +49,8 @@ options:
               C(refresh_state_set) will set the refresh state of the Server Hardware.
               C(ilo_firmware_version_updated) will update the iLO firmware version of the Server Hardware.
               C(ilo_state_reset) will reset the iLO state.
+              C(check_firmware_compliance) checks the firmware compliance of server with the selected firmware baseline
+              C(firmware_update) updates the firmware settings for a given server
               C(uid_state_on) will set on the UID state, if necessary.
               C(uid_state_off) will set off the UID state, if necessary.
               C(enable_maintenance_mode) will enable maintenance mode.
@@ -61,8 +63,9 @@ options:
               C(one_time_boot_hdd) will set the server one-time boot device to Hard Disk Drive.
               C(one_time_boot_network) will Set the server one-time boot device to Network.
         choices: ['present', 'absent', 'power_state_set', 'refresh_state_set', 'ilo_firmware_version_updated',
-                  'ilo_state_reset','uid_state_on', 'uid_state_off',  'enable_maintenance_mode', 'disable_maintenance_mode',
-                  'environmental_configuration_set', 'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
+                  'ilo_state_reset', 'check_firmware_compliance', 'firmware_update', 'uid_state_on', 'uid_state_off',
+                  'enable_maintenance_mode', 'disable_maintenance_mode', 'environmental_configuration_set',
+                  'multiple_servers_added', 'one_time_boot_normal', 'one_time_boot_cdrom', 'one_time_boot_usb',
                   'one_time_boot_hdd', 'one_time_boot_network']
         required: true
         type: str
@@ -140,6 +143,36 @@ EXAMPLES = '''
             powerState: "Off"
             powerControl: "MomentaryPress"
   delegate_to: localhost
+
+- name: Check for Firmware Compliance
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: check_firmware_compliance
+    data:
+        firmwareComplianceData:
+            firmwareBaselineId: "abc-123-def-456-baseline-id"
+            serverUUID: "abc-123-def-456"
+  delegate_to: localhost
+
+- name: Update Firmware of the server hardware
+  oneview_server_hardware:
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    state: firmware_update
+    data:
+        name: "172.18.6.15"
+        firmwareUpdateData:
+            baselineUri: "/rest/firmware-drivers/abc-123"
+            forceApplyFirmware: "false"
+            firmwareInstallType: "FirmwareOnlyOfflineMode"
+            installationPolicy: "LowerThanBaseline"
+  delegate_to: localhost
+  when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
 
 - name: Refresh the server hardware
   oneview_server_hardware:
@@ -255,6 +288,8 @@ class ServerHardwareModule(OneViewModule):
     MSG_MANDATORY_FIELD_MISSING = "Mandatory field was not informed: {0}"
     MSG_MULTIPLE_RACK_MOUNT_SERVERS_ADDED = "Servers added successfully."
     MSG_ONE_TIME_BOOT_CHANGED = 'Server Hardware one-time boot state changed successfully.'
+    MSG_CHECKED_FIRMWARE_COMPLIANCE = 'Checked firmware compliance successfully.'
+    MSG_FIRMWARE_UPDATED = 'Perfomed firmware update successfully.'
 
     patch_success_message = dict(
         ilo_state_reset=MSG_ILO_STATE_RESET,
@@ -292,6 +327,8 @@ class ServerHardwareModule(OneViewModule):
                 'refresh_state_set',
                 'ilo_firmware_version_updated',
                 'ilo_state_reset',
+                'check_firmware_compliance',
+                'firmware_update',
                 'uid_state_on',
                 'uid_state_off',
                 'enable_maintenance_mode',
@@ -320,6 +357,8 @@ class ServerHardwareModule(OneViewModule):
             return self.__present()
         elif self.state == 'multiple_servers_added':
             changed, msg, ansible_facts = self.__add_multiple_rack_mount_servers()
+        elif self.state == 'check_firmware_compliance':
+            changed, msg, ansible_facts = self.__check_firmware_compliance()
         else:
             if not self.data.get('name'):
                 raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
@@ -338,6 +377,8 @@ class ServerHardwareModule(OneViewModule):
                     changed, msg, ansible_facts = self.__update_mp_firmware_version()
                 elif self.state == 'environmental_configuration_set':
                     changed, msg, ansible_facts = self.__set_environmental_configuration()
+                elif self.state == 'firmware_update':
+                    changed, msg, ansible_facts = self.__update_firmware()
                 else:
                     changed, msg, ansible_facts = self.__patch()
 
@@ -391,6 +432,25 @@ class ServerHardwareModule(OneViewModule):
             resource = self.current_resource.update_environmental_configuration(
                 self.data['environmentalConfigurationData'])
             return True, self.MSG_ENV_CONFIG_UPDATED, dict(server_hardware=resource)
+
+    def __check_firmware_compliance(self):
+        if self.data.get('firmwareComplianceData'):
+            resource = self.resource_client.check_firmware_compliance(self.data['firmwareComplianceData'])
+            return False, self.MSG_CHECKED_FIRMWARE_COMPLIANCE, dict(server_hardware=resource)
+        else:
+            raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.firmwareComplianceData"))
+
+    def __update_firmware(self):
+        if self.data.get('firmwareUpdateData'):
+            configuration = [{"op": "replace", "value": self.data['firmwareUpdateData']}]
+            try:
+                resource = self.current_resource.perform_firmware_update(configuration)
+                if resource:
+                    return True, self.MSG_FIRMWARE_UPDATED, dict(server_hardware=resource)
+            except ValueError as e:
+                raise OneViewModuleValueError("Errors found while updating firmware:" + str(e))
+        else:
+            raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.firmwareUpdateData"))
 
     def __set_refresh_state(self):
         if self.current_resource.data.get('refreshState') == 'NotRefreshing':

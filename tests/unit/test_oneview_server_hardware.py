@@ -25,6 +25,7 @@ import yaml
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ServerHardwareModule
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleValueError
 
 FAKE_MSG_ERROR = 'Fake message error'
 
@@ -94,6 +95,24 @@ YAML_SERVER_HARDWARE_SET_CALIBRATED_MAX_POWER = """
         name : "172.18.6.15"
         environmentalConfigurationData:
             calibratedMaxPower: 2500
+"""
+
+YAML_SERVER_HARDWARE_FIRMWARE_COMPLIANCE = """
+    config: "{{ config }}"
+    state: check_firmware_compliance
+    data:
+        firmwareComplianceData:
+            firmwareBaselineId: "abc-123-def-456-baseline-id"
+            serverUUID: "abc-123-def-456"
+"""
+
+YAML_SERVER_HARDWARE_UPDATE_FIRMWARE = """
+    config: "{{ config }}"
+    state: firmware_update
+    data:
+        name: "172.18.6.15"
+        firmwareUpdateData:
+            baselineUri: "/rest/firmware-drivers/abc-123"
 """
 
 YAML_SERVER_HARDWARE_ILO_STATE_RESET = """
@@ -312,6 +331,67 @@ class TestServerHardwareModule(OneViewBaseTest):
             changed=False,
             msg=ServerHardwareModule.MSG_ALREADY_ABSENT
         )
+
+    def test_should_check_compliance(self):
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_FIRMWARE_COMPLIANCE)
+        self.resource.check_firmware_compliance.return_value = [{"name": "name1"}, {"name": "name2"}]
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=ServerHardwareModule.MSG_CHECKED_FIRMWARE_COMPLIANCE,
+            ansible_facts=dict(server_hardware=[{"name": "name1"}, {"name": "name2"}])
+        )
+
+    def test_should_update_firmware(self):
+        self.resource.data = {"uri": "resourceuri"}
+        self.resource.get_by_name.return_value = self.resource
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_UPDATE_FIRMWARE)
+        self.resource.perform_firmware_update.return_value = {"name": "name"}
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=ServerHardwareModule.MSG_FIRMWARE_UPDATED,
+            ansible_facts=dict(server_hardware={"name": "name"})
+        )
+
+    def test_should_fail_when_firmware_update_on_powered_on_server(self):
+        self.resource.data = {"uri": "resourceuri"}
+        self.resource.get_by_name.return_value = self.resource
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_UPDATE_FIRMWARE)
+        expected_error_list = ["Server Hardware is in Powered On state"]
+        self.resource.perform_firmware_update.side_effect = ValueError(expected_error_list)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            exception=mock.ANY,
+            msg="Errors found while updating firmware:{0}".format(expected_error_list))
+
+    def test_should_fail_when_firmware_update_on_server_powered_on_and_attached_server_profile(self):
+        self.resource.data = {"uri": "resourceuri"}
+        self.resource.get_by_name.return_value = self.resource
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_UPDATE_FIRMWARE)
+        expected_error_list = ["Server Hardware has a profile attached", "Server Hardware is in Powered On state"]
+        self.resource.perform_firmware_update.side_effect = ValueError(expected_error_list)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            exception=mock.ANY,
+            msg="Errors found while updating firmware:{0}".format(expected_error_list))
+
+    def test_should_fail_when_firmware_update_and_server_hardware_was_not_found(self):
+        self.resource.get_by_name.return_value = None
+
+        self.mock_ansible_module.params = yaml.safe_load(YAML_SERVER_HARDWARE_UPDATE_FIRMWARE)
+
+        ServerHardwareModule().run()
+
+        self.mock_ansible_module.fail_json.assert_called_once_with(exception=mock.ANY, msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND)
 
     def test_should_set_power_state(self):
         self.resource.data = {"uri": "resourceuri"}
