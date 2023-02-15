@@ -201,7 +201,7 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
             if self.options.get('freeFragments'):
                 facts['id_pools_ipv4_ranges_free_fragments'] = \
                     self.oneview_client.id_pools_ipv4_ranges.get_free_fragments(range_uri, **query_params)
-        elif self.options and not(is_specific_resource):
+        elif self.options and not (is_specific_resource):
             if self.options.get('schema'):
                 facts['id_pools_ipv4_ranges_schema'] = \
                     self.oneview_client.id_pools_ipv4_ranges.get_schema()

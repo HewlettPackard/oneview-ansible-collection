@@ -87,6 +87,10 @@
          "base64Data": "<base64Data>",
          "bayNumber": "<bayNumber>"
     },
+    "drive_enclosure":{
+        "drive_enclosure_name": "<drive_enclosure_name>",
+        "variant": "<variant>"
+    },
     "interconnect":
     {
         "interconnect_name": "<interconnect_name>",
@@ -122,6 +126,10 @@
             "rack_manager_hostname": "<rack_manager_hostname>",
             "rack_manager_username": "<rack_manager_username>",
             "rack_manager_password": "<rack_manager_password>"
+        },
+        "sas_logical_jbod":{
+            "sas_logical_jbod_name": "<sas_logical_jbod_name>",
+            "variant": "<variant>"
         },
         "storage_system":
         {

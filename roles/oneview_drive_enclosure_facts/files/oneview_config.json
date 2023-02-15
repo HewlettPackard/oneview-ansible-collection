@@ -1,0 +1,10 @@
+{
+  "ip": "<oneview_ip>",
+  "credentials": {
+    "userName": "<user_name>",
+    "password": "<password>",
+    "authLoginDomain": "<domain_directory>"
+},
+  "api_version": 4800,
+  "variant": "Synergy"
+}

@@ -301,6 +301,51 @@
             debug:
               msg: "{{ msg.include_args.name }}"
       - block:
+          - name: (drive_enclosure)
+            include_role:
+              name: hpe.oneview.oneview_drive_enclosure
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (drive_enclosure_facts)
+            include_role:
+              name: hpe.oneview.oneview_drive_enclosure_facts
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (sas_logical_jbod)
+            include_role:
+              name: hpe.oneview.oneview_sas_logical_jbod
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (sas_logical_jbod_facts)
+            include_role:
+              name: hpe.oneview.oneview_sas_logical_jbod_facts
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
+          - name: (sas_logical_jbod_attachment_facts)
+            include_role:
+              name: hpe.oneview.oneview_sas_logical_jbod_attachment_facts
+            register: msg
+        rescue:
+          - name: (Display)
+            debug:
+              msg: "{{ msg.include_args.name }}"
+      - block:
           - name: (uplink_set)
             include_role:
               name: hpe.oneview.oneview_uplink_set

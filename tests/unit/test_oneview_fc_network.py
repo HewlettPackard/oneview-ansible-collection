@@ -266,7 +266,7 @@ class TestFcNetworkModule(OneViewBaseTest):
         self.mock_ansible_module.check_mode = True
         FcNetworkModule().run()
 
-        del(patch_return['scopeUris'])
+        del (patch_return['scopeUris'])
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
             ansible_facts=dict(fc_network=patch_return),
