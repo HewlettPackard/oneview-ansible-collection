@@ -78,6 +78,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_connection_template
 # from oneview_datacenter_facts import DatacenterFactsModule
 # from oneview_drive_enclosure import DriveEnclosureModule
 # from oneview_drive_enclosure_facts import DriveEnclosureFactsModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_sas_interconnect_type_facts import SasInterconnectTypeFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_drive_enclosure import DriveEnclosureModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_drive_enclosure_facts import DriveEnclosureFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_sas_logical_jbod import SasLogicalJbodModule
