@@ -1,0 +1,83 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Create a SAS Logical Interconnect Group
+  oneview_sas_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: '{{ item.name }}'
+      enclosureType: 'SY12000'
+      interconnectBaySet: 1
+      enclosureIndexes: [1]
+      interconnectMapTemplate:
+        interconnectMapEntryTemplates:
+          - enclosureIndex: 1
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 1
+                      type: "Enclosure"
+                    - relativeValue: 4
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ contents.sas_logical_interconnect_group.permitted_interconnect_type_name }}"
+          - enclosureIndex: 1
+            logicalLocation:
+                locationEntries:
+                    - relativeValue: 1
+                      type: "Enclosure"
+                    - relativeValue: 1
+                      type: "Bay"
+            permittedInterconnectTypeName: "{{ contents.sas_logical_interconnect_group.permitted_interconnect_type_name }}"
+            # Alternatively you can inform permittedInterconnectTypeUri
+  delegate_to: localhost
+  with_items:
+    - { name: 'SAS LIG' }
+    - { name: 'SAS Test Logical Interconnect Group' }
+
+- name: Do nothing with the Logical Interconnect Group when no changes are provided
+  oneview_sas_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: 'SAS Test Logical Interconnect Group'
+      enclosureType: 'SY12000'
+  delegate_to: localhost
+
+- name: Rename the Logical Interconnect Group to 'Updated SAS Logical Interconnect Group'
+  oneview_sas_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: 'SAS Test Logical Interconnect Group'
+      newName: 'Updated SAS Logical Interconnect Group'
+  delegate_to: localhost
+
+- name: Delete the Logical Interconnect Group
+  oneview_sas_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+      name: 'Updated SAS Logical Interconnect Group'
+  delegate_to: localhost
+  register: deleted
+
+- name: Do nothing when the Logical Interconnect Group is absent
+  oneview_sas_logical_interconnect_group:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+      name: 'Updated Logical Interconnect Group'
+  delegate_to: localhost
+  register: deleted
