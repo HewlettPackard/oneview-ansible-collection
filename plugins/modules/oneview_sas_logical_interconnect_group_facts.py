@@ -111,7 +111,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-sas_logical_interconnect_group_facts:
+sas_logical_interconnect_group:
     description: Has all the OneView facts about the SAS Logical Interconnect Group.
     returned: Always, but can be null.
     type: dict

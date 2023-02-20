@@ -111,7 +111,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-sas_interconnect_types:
+sas_interconnects:
     description: Has all the OneView facts about the SAS Interconnects.
     returned: Always, but can be null.
     type: dict
