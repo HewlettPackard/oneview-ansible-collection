@@ -81,17 +81,18 @@ PARAMS_WITHOUT_NAME = dict(
 PARAMS_FOR_REFRESH = dict(
     config='config.json',
     state='refreshed',
-    data=dict(name='Sas-Interconnect',  
-              refreshState = 'RefreshPending'
-    )
+    data=dict(name='Sas-Interconnect',
+              refreshState='RefreshPending'
+              )
 )
 
-PARAMS_FOR_REFRESH_WITHOUT_NAME= dict(
+PARAMS_FOR_REFRESH_WITHOUT_NAME = dict(
     config='config.json',
     state='refreshed',
-    data=dict(refreshState = 'RefreshPending'
-    )
+    data=dict(refreshState='RefreshPending'
+              )
 )
+
 
 @pytest.mark.resource(TestSasInterconnectModule='sas_interconnects')
 class TestSasInterconnectModule(OneViewBaseTest):

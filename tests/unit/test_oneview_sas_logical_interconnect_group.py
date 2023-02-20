@@ -45,48 +45,49 @@ SAS_LIG_FROM_ONEVIEW = dict(
         )]
     )
 )
-
 PARAMS_FOR_CREATE = dict(
-    config='config.json',
-    state='present',
-    data=dict(name='SAS_LIG',
-              enclosureType='SY12000',
-              interconnectMapTemplate=dict(
-                interconnectMapEntryTemplates=[dict(
+    config="config.json",
+    state="present",
+    data=dict(
+        name="SAS_LIG",
+        enclosureType="SY12000",
+        interconnectMapTemplate=dict(
+            interconnectMapEntryTemplates=[
+                dict(
                     enclosureIndex=1,
-                    logicalLocation=dict(locationEntries=[dict(
-                        relativeValue=1,
-                        type="Bay"
-                    ), dict(
-                        relativeValue=1,
-                        type="Enclosure"
-                    )
-                    ]),
-                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
-                )]
-            ))
+                    logicalLocation=dict(
+                        locationEntries=[
+                            dict(relativeValue=1, type="Bay"),
+                            dict(relativeValue=1, type="Enclosure"),
+                        ]
+                    ),
+                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                )
+            ]
+        ),
+    ),
 )
-
 PARAMS_FOR_CREATE_NO_NAME = dict(
-    config='config.json',
-    state='present',
-    data=dict(enclosureType='SY12000',
-              interconnectMapTemplate=dict(
-                interconnectMapEntryTemplates=[dict(
+    config="config.json",
+    state="present",
+    data=dict(
+        enclosureType="SY12000",
+        interconnectMapTemplate=dict(
+            interconnectMapEntryTemplates=[
+                dict(
                     enclosureIndex=1,
-                    logicalLocation=dict(locationEntries=[dict(
-                        relativeValue=1,
-                        type="Bay"
-                    ), dict(
-                        relativeValue=1,
-                        type="Enclosure"
-                    )
-                    ]),
-                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
-                )]
-            ))
+                    logicalLocation=dict(
+                        locationEntries=[
+                            dict(relativeValue=1, type="Bay"),
+                            dict(relativeValue=1, type="Enclosure"),
+                        ]
+                    ),
+                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
+                )
+            ]
+        ),
+    ),
 )
-
 PARAMS_FOR_DELETE = dict(
     config='config.json',
     state='absent',
@@ -98,63 +99,64 @@ PARAMS_FOR_NAME_CHANGE = dict(
     data=dict(name='SAS_LIG',
               newName="New_SAS_LIG")
 )
-
 PARAMS_FOR_UPDATE = dict(
-    config='config.json',
-    state='present',
-    data=dict(name='SAS_LIG',
-              enclosureType='SY12000',
-              interconnectMapTemplate=dict(
-                interconnectMapEntryTemplates=[dict(
+    config="config.json",
+    state="present",
+    data=dict(
+        name="SAS_LIG",
+        enclosureType="SY12000",
+        interconnectMapTemplate=dict(
+            interconnectMapEntryTemplates=[
+                dict(
                     enclosureIndex=1,
-                    logicalLocation=dict(locationEntries=[dict(
-                        relativeValue=1,
-                        type="Bay"
-                    ), dict(
-                        relativeValue=1,
-                        type="Enclosure"
-                    )
-                    ]),
-                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad"
-                )]
-            ))
+                    logicalLocation=dict(
+                        locationEntries=[
+                            dict(relativeValue=1, type="Bay"),
+                            dict(relativeValue=1, type="Enclosure"),
+                        ]
+                    ),
+                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad",
+                )
+            ]
+        ),
+    ),
 )
-
-RESOURCE_AFTER_UPDATE = dict(name='SAS_LIG',
-                            enclosureType='SY12000',
-                            interconnectMapTemplate=dict(
-                            interconnectMapEntryTemplates=[dict(
-                            enclosureIndex=1,
-                            logicalLocation=dict(locationEntries=[dict(
-                                relativeValue=1,
-                                type="Bay"
-                            ), dict(
-                                relativeValue=1,
-                                type="Enclosure"
-                            )       
-                    ]),
-                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad"
-                )]
+RESOURCE_AFTER_UPDATE = dict(
+    name="SAS_LIG",
+    enclosureType="SY12000",
+    interconnectMapTemplate=dict(
+        interconnectMapEntryTemplates=[
+            dict(
+                enclosureIndex=1,
+                logicalLocation=dict(
+                    locationEntries=[
+                        dict(relativeValue=1, type="Bay"),
+                        dict(relativeValue=1, type="Enclosure"),
+                    ]
+                ),
+                permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad",
             )
-        )
-
-RESOURCE_AFTER_NAME_UPDATE = dict(name='New_SAS_LIG',
-                            enclosureType='SY12000',
-                            interconnectMapTemplate=dict(
-                            interconnectMapEntryTemplates=[dict(
-                            enclosureIndex=1,
-                            logicalLocation=dict(locationEntries=[dict(
-                                relativeValue=1,
-                                type="Bay"
-                            ), dict(
-                                relativeValue=1,
-                                type="Enclosure"
-                            )       
-                    ]),
-                    permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03"
-                )]
+        ]
+    ),
+)
+RESOURCE_AFTER_NAME_UPDATE = dict(
+    name="New_SAS_LIG",
+    enclosureType="SY12000",
+    interconnectMapTemplate=dict(
+        interconnectMapEntryTemplates=[
+            dict(
+                enclosureIndex=1,
+                logicalLocation=dict(
+                    locationEntries=[
+                        dict(relativeValue=1, type="Bay"),
+                        dict(relativeValue=1, type="Enclosure"),
+                    ]
+                ),
+                permittedInterconnectTypeUri="/rest/sas-interconnect-types/18c3a8d1-cb92-4e71-b9ad-224c9d289c03",
             )
-        )
+        ]
+    ),
+)
 
 
 @pytest.mark.resource(TestSasLogicalInterconnectGroupModule='sas_logical_interconnect_groups')
@@ -240,7 +242,7 @@ class TestSasLogicalInterconnectGroupModule(OneViewBaseTest):
             changed=True,
             ansible_facts=dict(sas_logical_interconnect_group=self.resource.data),
             msg=SasLogicalInterconnectGroupModule.MSG_UPDATED
-        )       
+        )
 
     def test_should_remove_sas_lig(self):
         self.resource.data = SAS_LIG_FROM_ONEVIEW

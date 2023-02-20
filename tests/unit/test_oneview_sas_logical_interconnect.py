@@ -50,15 +50,16 @@ PARAMS_FOR_FIRMWARE_INSTALL = dict(
               firmware=dict(command="Stage",
                             force="false",
                             sppUri="/rest/firmware-drivers/afdaf-adsf")
-        )
+              )
 )
 PARAMS_FOR_REPLACE_DR_ENCL = dict(
-    config='config.json',
-    state='replace_drive_enclosure',
-    data=dict(name='SAS_LI',driveReplaceConfig=dict(oldSerialNumber="SN1100",
-                                                    newSerialNumber= "SN1101")
-            )
-        )
+    config="config.json",
+    state="replace_drive_enclosure",
+    data=dict(
+        name="SAS_LI",
+        driveReplaceConfig=dict(oldSerialNumber="SN1100", newSerialNumber="SN1101"),
+    ),
+)
 PARAMS_WITH_NO_CONFIG_FIRMWARE = dict(
     config='config.json',
     state='install_firmware',

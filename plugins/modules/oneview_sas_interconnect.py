@@ -350,7 +350,7 @@ class SasInterconnectModule(OneViewModule):
 
     def __is_update_needed(self, state_name, state, current_property_value):
         need_request_update = False
-        if(state_name == 'hardResetState' or state_name == 'softResetState'):
+        if (state_name == 'hardResetState' or state_name == 'softResetState'):
             need_request_update = True
         elif current_property_value != state['value']:
             need_request_update = True

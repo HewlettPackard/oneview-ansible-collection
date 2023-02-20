@@ -53,10 +53,10 @@ PRESENT_SAS_LOGICAL_INTERCONNECTS = [{
 }]
 
 SAS_LI_FIRMWARE_FACTS = {
-    "interconnects":[{
-                        "interconnectUri": "/rest/sas-interconnects/2M220105SL",
-                        "model": "Synergy 12Gb SAS Connection Module",
-                        "installedFw": "1.5.203.0"
+    "interconnects": [{
+        "interconnectUri": "/rest/sas-interconnects/2M220105SL",
+        "model": "Synergy 12Gb SAS Connection Module",
+        "installedFw": "1.5.203.0"
     }]
 }
 
