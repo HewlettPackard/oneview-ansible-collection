@@ -1,0 +1,63 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all SAS Logical Interconnects
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_interconnects
+
+- set_fact:
+    sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
+- set_fact:
+    sas_logical_interconnect_uri: "{{ sas_logical_interconnects[0]['uri'] }}"
+
+- name: Gather paginated, filtered and sorted facts about SAS Logical Interconnects
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    params:
+      start: 0
+      count: 3
+      sort: 'name:descending'
+      filter: 'status=OK'
+
+- debug: var=sas_logical_interconnects
+
+- name: Gather facts about an SAS Logical interconnect by name
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ sas_logical_interconnect_name }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_interconnects
+
+- name: Gather facts about an SAS Logical interconnect by uri
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    uri: "{{ sas_logical_interconnect_uri }}"
+  delegate_to: localhost
+
+- debug: var=sas_logical_interconnects
+
+- name: Gather baseline firmware facts about a SAS Logical interconnect by name
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    name: "{{ sas_logical_interconnect_name }}"
+    options:
+      - firmware_facts
+  delegate_to: localhost
+
+- debug: var=firmware_facts

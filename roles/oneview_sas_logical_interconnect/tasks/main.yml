@@ -1,0 +1,74 @@
+---
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- debug: var=session
+
+- name: Gather facts about all SAS Logical Interconnects
+  oneview_sas_logical_interconnect_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- set_fact:
+    sas_logical_interconnect_name : "{{ sas_logical_interconnects[0]['name'] }}"
+
+- name: Return the SAS Logical Interconnect to a consistent state
+  oneview_sas_logical_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: compliance
+    data:
+      name: "{{ sas_logical_interconnect_name }}"
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+
+- name: Update the configuration on the logical interconnect
+  oneview_sas_logical_interconnect:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: apply_configuration
+    data:
+      name: "{{ sas_logical_interconnect_name }}"
+  delegate_to: localhost
+  register: result
+- debug: var=result.msg
+
+- name: Gather facts about all Firmware Drivers
+  oneview_firmware_driver_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=firmware_drivers
+
+# - name: Installs firmware to the member interconnects of a logical interconnect
+#   oneview_sas_logical_interconnect:
+#     config: "{{ config }}"
+#     sessionID: "{{ session.ansible_facts.session }}"
+#     state: update_firmware
+#     data:
+#       name: "{{ sas_logical_interconnect_name }}"
+#       firmware:
+#         command: "Stage"
+#         force: false
+#         sppUri: "{{ firmware_drivers[0]['uri'] }}"
+#   when: firmware_drivers is defined
+#   delegate_to: localhost
+
+# - name: Replace Drive Enclosure
+#   oneview_sas_logical_interconnect:
+#     config: "{{ config }}"
+#     sessionID: "{{ session.ansible_facts.session }}"
+#     state: replace_drive_enclosure
+#     data:
+#       name: "{{ sas_logical_interconnect_name }}"
+#       driveReplaceConfig:
+#         oldSerialNumber: "SN1100"
+#         newSerialNumber: "SN1101"
+  
