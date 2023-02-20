@@ -1,0 +1,11 @@
+{
+  "ip": "172.27.2.238",
+  "credentials": {
+    "userName": "administrator",
+    "password": "admin123",
+    "authLoginDomain": "LOCAL"
+},
+  "api_version": 4400,
+  "variant": "Synergy"
+}
+  
