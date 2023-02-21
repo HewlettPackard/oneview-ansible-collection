@@ -7,6 +7,10 @@ This release extends the planned support of the collections to OneView REST API 
  2. Added support for SAS logical JBOD
  3. Added support for SAS logical JBOD attachments
  4. Added support for firmware update on a Server Hardware without profile
+ 5. Added support for SAS Interconnect Types
+ 6. Added support for SAS Interconnects
+ 7. Added support for SAS Logical Interconnects
+ 8. Added support for SAS Logical Interconnect groups
 
 ## v8.1.0
 This release extends the planned support of the collections to OneView REST API version 4800(OneView v8.1).
