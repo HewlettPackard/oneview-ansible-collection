@@ -59,6 +59,8 @@
       repositoryType: "FirmwareExternalRepo"
   delegate_to: localhost
 
+- wait_for: port=22 host="{{ ansible_host }}" delay=60
+
 - name: Update the attributes of repository resource
   oneview_repositories:
     config: '{{ config }}'

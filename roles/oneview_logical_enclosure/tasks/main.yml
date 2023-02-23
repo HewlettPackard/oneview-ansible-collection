@@ -27,6 +27,11 @@
 #
 #- debug: var=firmware_drivers
 
+- debug: var=enclosures[0]['uri']
+- debug: var=enclosures[1]['uri']
+- debug: var=enclosures[2]['uri']
+
+
 # This operation is only available on HPE Synergy
 - name: Create a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
@@ -35,9 +40,9 @@
     state: present
     data:
         enclosureUris:
-          - "{{ enclosures[1]['uri'] }}"
-          - "{{ enclosures[2]['uri'] }}"
-          - "{{ enclosures[0]['uri'] }}"
+          - "/rest/enclosures/0000000000A66101"
+          - "/rest/enclosures/0000000000A66102"
+          - "/rest/enclosures/0000000000A66103"
         enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
         name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   ignore_errors: true
