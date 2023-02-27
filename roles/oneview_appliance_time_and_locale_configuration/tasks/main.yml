@@ -8,6 +8,14 @@
 
 - debug: var=session
 
+- name: Gather facts about the Appliance time and locale configuration
+  oneview_appliance_time_and_locale_configuration_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+
+- debug: var=appliance_time_and_locale_configuration
+
 - name: Add the Appliance time and locale configuration locale is ja_JP.UTF-8
   oneview_appliance_time_and_locale_configuration:
     config: "{{ config }}"
@@ -15,9 +23,10 @@
     state: present
     data:
       locale: ja_JP.UTF-8
-      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
+      ntpServers: []
       timezone: UTC
       type: TimeAndLocale
+      dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
 - debug: var=appliance_time_and_locale_configuration
 
@@ -28,9 +37,10 @@
     state: present
     data:
       locale: ja_JP.UTF-8
-      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
+      ntpServers: []
       timezone: UTC
       type: TimeAndLocale
+      dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
 - debug: var=appliance_time_and_locale_configuration
 
@@ -41,8 +51,9 @@
     state: present
     data:
       locale: en_US.UTF-8
-      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server }}"]
+      ntpServers: []
       timezone: UTC
       type: TimeAndLocale
+      dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
 - debug: var=appliance_time_and_locale_configuration
