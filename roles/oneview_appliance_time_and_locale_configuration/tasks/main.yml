@@ -37,7 +37,7 @@
     state: present
     data:
       locale: ja_JP.UTF-8
-      ntpServers: ["{{ contents.appliance_time_and_locale_configuration.ntp_server2 }}"]
+      ntpServers: []
       timezone: UTC
       type: TimeAndLocale
       dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
