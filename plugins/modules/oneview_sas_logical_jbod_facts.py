@@ -127,8 +127,8 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-enclosures:
-    description: Has all the OneView facts about the Enclosures.
+sas_logical_jbods:
+    description: Has all the OneView facts about the SAS Logical JBODs.
     returned: Always, but can be null.
     type: dict
 

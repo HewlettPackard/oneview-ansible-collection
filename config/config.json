@@ -132,6 +132,10 @@
             "sas_logical_jbod_name": "<sas_logical_jbod_name>",
             "variant": "<variant>"
         },
+        "sas_logical_interconnect_group":
+        {
+            "permitted_interconnect_type_name": "<permitted_interconnect_type_name>"
+        },
         "storage_system":
         {
             "storage_domain": "<storage_domain>",
