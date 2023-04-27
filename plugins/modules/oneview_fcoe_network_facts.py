@@ -46,6 +46,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -106,6 +111,7 @@ class FcoeNetworkFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(type='str'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             params=dict(type='dict'),
         )
 
@@ -118,6 +124,9 @@ class FcoeNetworkFactsModule(OneViewModule):
             fcoe_networks = self.resource_client.get_by('name', self.module.params['name'])
         else:
             fcoe_networks = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(fcoe_networks=fcoe_networks))

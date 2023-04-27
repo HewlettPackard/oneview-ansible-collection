@@ -39,6 +39,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the ID Pools resource.
@@ -120,6 +125,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class IdPoolsFactsModule(OneViewModule):
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['generate', 'validate_id_pool', 'check_range_availability', 'get_pool_type', 'schema']
@@ -154,6 +160,9 @@ class IdPoolsFactsModule(OneViewModule):
             id_pool = id_pool.data
 
         ansible_facts['id_pool'] = id_pool
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

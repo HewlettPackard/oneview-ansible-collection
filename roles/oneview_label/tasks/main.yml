@@ -55,6 +55,8 @@
 - name: Create Labels for enclosure resource
   oneview_label:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       resourceUri: "{{ enclosures[0]['uri']}}" 

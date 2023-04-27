@@ -49,6 +49,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.factsparams
@@ -111,6 +116,7 @@ class ApplianceDeviceSnmpV3UsersFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             params=dict(required=False, type='dict')
         )
         super().__init__(additional_arg_spec=argument_spec)
@@ -123,6 +129,9 @@ class ApplianceDeviceSnmpV3UsersFactsModule(OneViewModule):
             appliance_device_snmp_v3_users = self.current_resource.data
         elif not self.module.params.get("name") and not self.module.params.get('uri'):
             appliance_device_snmp_v3_users = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=dict(appliance_device_snmp_v3_users=appliance_device_snmp_v3_users))
 

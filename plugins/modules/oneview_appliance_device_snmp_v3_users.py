@@ -51,6 +51,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     data:
         description:
             - List with the SNMPv3 Users properties
@@ -134,6 +139,7 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             data=dict(required=False, type='dict'),
             name=dict(required=False, type='str'),
             state=dict(
@@ -148,9 +154,15 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
         if self.oneview_client.api_version < 600:
             raise OneViewModuleValueError(self.MSG_API_VERSION_ERROR)
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME, parameter_to_ignore=parameter_to_ignore)
+            result = self.resource_present(self.RESOURCE_FACT_NAME, parameter_to_ignore=parameter_to_ignore)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
 
 def main():

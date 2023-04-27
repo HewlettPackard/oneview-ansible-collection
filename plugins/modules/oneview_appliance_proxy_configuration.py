@@ -39,6 +39,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
           - Indicates the desired state for the Appliance Proxy Config.
@@ -97,6 +102,7 @@ class ApplianceProxyConfigurationModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             data=dict(required=False, type='dict'),
             state=dict(
                 required=True,
@@ -108,9 +114,15 @@ class ApplianceProxyConfigurationModule(OneViewModule):
     def execute_module(self):
         self.current_resource = self.resource_client.get_by_proxy(self.data.get('server'))
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def __present(self):
         changed, field_changed = False, False

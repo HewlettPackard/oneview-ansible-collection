@@ -12,6 +12,7 @@
   oneview_appliance_configuration_timeconfig_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
   delegate_to: localhost
 
 - debug: var=appliance_configuration_timeconfig

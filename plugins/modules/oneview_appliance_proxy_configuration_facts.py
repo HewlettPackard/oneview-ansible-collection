@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -65,11 +70,15 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceProxyConfigurationFactsModule(OneViewModule):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str'),
+                                                  logout=dict(required=False, type='bool')))
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):
         proxy_configuration = self.resource_client.get_all()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(appliance_proxy_configuration=proxy_configuration.data))

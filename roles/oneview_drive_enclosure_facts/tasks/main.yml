@@ -53,6 +53,7 @@
   oneview_drive_enclosure_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
     options:
       - port_map

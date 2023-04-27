@@ -38,6 +38,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Fibre Channel Network resource.
@@ -128,6 +133,7 @@ class FcNetworkModule(OneViewModule):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))
@@ -141,14 +147,25 @@ class FcNetworkModule(OneViewModule):
         changed, msg, ansible_facts = False, '', {}
 
         if self.state == 'present':
-            return self._present()
+            result = self._present()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
             elif not self.module.check_mode:
-                return self.resource_absent()
+                result = self.resource_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
+                return result
             else:
-                return self.check_resource_absent()
+                result = self.check_resource_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
+                return result
 
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 

@@ -39,6 +39,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
           - Indicates the desired state for the Appliance Device SNMPv1 Trap Destinations.
@@ -134,6 +139,7 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
         data=dict(required=False, type='dict'),
         name=dict(required=True, type='str'),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['present', 'absent'])
@@ -145,10 +151,15 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result =  self.resource_present(self.RESOURCE_FACT_NAME)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
-            return self.resource_absent()
-
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
 def main():
     ApplianceDeviceSnmpV1TrapDestinationsModule().run()

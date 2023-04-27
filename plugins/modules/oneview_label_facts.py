@@ -53,6 +53,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+          - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.factsparams
@@ -132,6 +137,7 @@ class LabelFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(required=False, type='str'),
             resourceUri=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
@@ -149,6 +155,10 @@ class LabelFactsModule(OneViewModule):
             labels = self.oneview_client.labels.get_by_resource(self.module.params['resourceUri']).data
         else:
             labels = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(labels=labels))
 
 

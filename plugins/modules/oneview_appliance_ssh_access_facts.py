@@ -39,6 +39,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 author:
     "Shanmugam M (@SHANDCRUZ)"
 extends_documentation_fragment:
@@ -70,12 +75,15 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceSshAccessFactsModule(OneViewModule):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str'),
+                                                  logout=dict(required=False, type='bool')))
         self.set_resource_object(self.oneview_client.appliance_ssh_access)
 
     def execute_module(self):
         appliance_ssh_access = self.resource_client.get_all()
         appliance_ssh_access = appliance_ssh_access.data
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(appliance_ssh_access=appliance_ssh_access))
 

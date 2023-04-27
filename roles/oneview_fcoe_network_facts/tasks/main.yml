@@ -32,6 +32,7 @@
   oneview_fcoe_network_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ fcoe_networks[0]['name'] }}"
   delegate_to: localhost
   when: fcoe_networks | default('', True)

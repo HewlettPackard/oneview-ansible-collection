@@ -39,6 +39,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Hypervisor Cluster Profiles resource.
@@ -142,6 +147,7 @@ class HypervisorClusterProfileModule(OneViewModule):
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    params=dict(type='dict', required=False),
                                    sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent']))
@@ -158,6 +164,9 @@ class HypervisorClusterProfileModule(OneViewModule):
             changed, msg, ansible_facts = self.__present()
         elif self.state == 'absent':
             changed, msg, ansible_facts = self.__absent()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=changed,
                     msg=msg,

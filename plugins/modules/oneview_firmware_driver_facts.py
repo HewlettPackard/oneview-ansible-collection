@@ -39,6 +39,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     name:
       description:
         - Firmware driver name.
@@ -140,6 +145,7 @@ class FirmwareDriverFactsModule(OneViewModule):
             version=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
         )
@@ -169,6 +175,9 @@ class FirmwareDriverFactsModule(OneViewModule):
             firmware_drivers = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['firmware_drivers'] = firmware_drivers
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

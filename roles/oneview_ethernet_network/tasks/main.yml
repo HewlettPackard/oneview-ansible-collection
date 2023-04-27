@@ -137,6 +137,7 @@
   oneview_ethernet_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       vlanIdRange: '1-3,5,7'

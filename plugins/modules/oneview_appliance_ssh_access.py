@@ -41,6 +41,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Appliance SSH Access.
@@ -102,6 +107,7 @@ class ApplianceSshAccessModule(OneViewModule):
 
     def __init__(self):
         additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    data=dict(required=True, type='dict'),
                                    state=dict(required=True, choices=['present']))
         super().__init__(additional_arg_spec=additional_arg_spec)
@@ -112,6 +118,8 @@ class ApplianceSshAccessModule(OneViewModule):
         self.current_resource = self.resource_client.get_all()
         changed, msg = self._update_resource()
         ansible_facts = dict(appliance_ssh_access=self.current_resource.data)
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

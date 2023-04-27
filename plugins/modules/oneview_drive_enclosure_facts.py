@@ -48,6 +48,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     options:
       description:
         - "List with options to gather additional facts about a Drive Enclosure and related resources.
@@ -129,6 +134,7 @@ class DriveEnclosureFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'),
                          uri=dict(required=False, type='str'),
                          sessionID=dict(required=False, type='str'),
+                         logout=dict(required=False, type='bool'),
                          options=dict(type='list'),
                          params=dict(type='dict'))
 
@@ -150,6 +156,9 @@ class DriveEnclosureFactsModule(OneViewModule):
             drive_enclosures = []
 
         ansible_facts['drive_enclosures'] = drive_enclosures
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

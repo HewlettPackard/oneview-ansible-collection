@@ -42,6 +42,7 @@
   oneview_connection_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     options:
       - defaultConnectionTemplate
   delegate_to: localhost

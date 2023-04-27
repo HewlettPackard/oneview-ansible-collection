@@ -46,6 +46,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     options:
       description:
         - "List with options to gather additional facts about an Enclosure and related resources.
@@ -162,7 +167,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class EnclosureFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'),
+                         sessionID=dict(required=False, type='str'),
+                         logout=dict(required=False, type='bool'),
+                         options=dict(type='list'),
+                         params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)
@@ -182,6 +191,9 @@ class EnclosureFactsModule(OneViewModule):
             enclosures = []
 
         ansible_facts['enclosures'] = enclosures
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

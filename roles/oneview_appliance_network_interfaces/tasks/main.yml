@@ -54,6 +54,7 @@
   oneview_appliance_network_interfaces:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       macAddress: "{{mac_address}}"

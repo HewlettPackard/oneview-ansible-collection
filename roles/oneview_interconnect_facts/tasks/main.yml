@@ -113,6 +113,7 @@
   oneview_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.interconnect.interconnect_name }}"
     options:
         - pluggableModuleInformation

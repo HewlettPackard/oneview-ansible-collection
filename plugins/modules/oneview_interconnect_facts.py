@@ -37,6 +37,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     name:
       description:
         - Interconnect name.
@@ -246,6 +251,7 @@ class InterconnectFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
         )
@@ -263,6 +269,9 @@ class InterconnectFactsModule(OneViewModule):
         else:
             facts['interconnects'] = self.resource_client.get_all(
                 **self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(
             changed=False,

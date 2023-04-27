@@ -22,6 +22,7 @@
   oneview_appliance_ssh_access:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       allowSshAccess: true

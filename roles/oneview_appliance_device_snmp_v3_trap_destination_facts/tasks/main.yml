@@ -45,6 +45,7 @@
   oneview_appliance_device_snmp_v3_trap_destinations_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     uri: "{{ appliance_device_snmp_v3_trap_destinations['uri'] }}"
   delegate_to: localhost
   when: appliance_device_snmp_v3_trap_destinations is defined

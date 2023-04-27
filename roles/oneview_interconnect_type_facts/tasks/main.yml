@@ -32,6 +32,7 @@
   oneview_interconnect_type_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ interconnect_types.0.name }}"
   delegate_to: localhost
 

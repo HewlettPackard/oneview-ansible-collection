@@ -40,6 +40,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     name:
       description:
         - Connection Template name.
@@ -126,6 +131,7 @@ class ConnectionTemplateFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict')
         )
@@ -141,6 +147,9 @@ class ConnectionTemplateFactsModule(OneViewModule):
             ansible_facts['connection_templates'] = self.get_by_name(self.module.params['name'])
         else:
             ansible_facts['connection_templates'] = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

@@ -41,6 +41,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Appliance Locale and Time Configuration.
@@ -88,6 +93,7 @@ class ApplianceTimeAndLocaleConfigurationModule(OneViewModule):
 
     def __init__(self):
         additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    data=dict(required=True, type='dict'),
                                    state=dict(
                                        required=True,
@@ -99,6 +105,8 @@ class ApplianceTimeAndLocaleConfigurationModule(OneViewModule):
     def execute_module(self):
         if self.state == 'present':
             changed, msg, appliance_time_and_locale_configuration = self.__present()
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
         return dict(changed=changed, msg=msg, ansible_facts=appliance_time_and_locale_configuration)
 
     def __present(self):

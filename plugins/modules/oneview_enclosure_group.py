@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Enclosure Group resource.
@@ -124,6 +129,7 @@ class EnclosureGroupModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['present', 'absent']
@@ -141,9 +147,15 @@ class EnclosureGroupModule(OneViewModule):
                 if self.data['configurationScript'] == self.current_resource.get_script():
                     del self.data['configurationScript']
 
-            return self.resource_present('enclosure_group')
+            result = self.resource_present('enclosure_group')
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
 
 def main():

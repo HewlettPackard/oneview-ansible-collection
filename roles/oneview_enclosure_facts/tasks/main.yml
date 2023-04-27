@@ -71,6 +71,7 @@
     config: "{{ config }}"
     name: "{{ contents.enclosure.enclosure_name }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     options:
       - environmentalConfiguration   # optional
       - utilization:                 # optional

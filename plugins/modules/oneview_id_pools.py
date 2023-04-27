@@ -39,6 +39,11 @@ options:
            - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the ID Pools resource.
@@ -121,6 +126,7 @@ class IdPoolsModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['allocate', 'collect', 'validate', 'update_pool_type']
@@ -150,6 +156,9 @@ class IdPoolsModule(OneViewModule):
             changed, msg, id_pool = self.__collect({'idList': idList}, poolType)
         elif self.state == 'validate':
             changed, msg, id_pool = self.__validate({'idList': idList}, poolType)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=changed, msg=msg, ansible_facts=dict(id_pool=id_pool))
 

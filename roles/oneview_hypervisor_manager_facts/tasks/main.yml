@@ -31,6 +31,7 @@
   oneview_hypervisor_manager_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ name }}"
   delegate_to: localhost
 

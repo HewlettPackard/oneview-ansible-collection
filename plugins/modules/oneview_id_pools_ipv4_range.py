@@ -41,6 +41,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the ID pools IPV4 Range resource.
@@ -98,6 +103,7 @@ class IdPoolsIpv4RangeModule(OneViewModule):
     def __init__(self):
 
         additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    data=dict(required=True, type='dict'),
                                    state=dict(
                                        required=True,
@@ -120,9 +126,15 @@ class IdPoolsIpv4RangeModule(OneViewModule):
                     self.current_resource = maybe_resource
 
         if self.state == 'present':
-            return self._present()
+            result = self._present()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def _present(self):
         # If no resource was found during get operation, it creates new one

@@ -32,6 +32,7 @@
   oneview_fc_network_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ fc_networks[0]['name'] }}"
   delegate_to: localhost
   when: fc_networks | default('', True)

@@ -72,6 +72,7 @@
   oneview_appliance_proxy_configuration:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       server: "{{ contents.appliance_proxy.server_ip }}"

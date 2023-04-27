@@ -40,6 +40,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the ID pools IPV4 Subnet resource.
@@ -99,6 +104,7 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
     RESOURCE_FACT_NAME = 'id_pools_ipv4_subnet'
 
     additional_arg_spec = dict(sessionID=dict(required=False, type='str'),
+                               logout=dict(required=False, type='bool'),
                                data=dict(required=True, type='dict'),
                                state=dict(required=True,
                                choices=['present', 'absent', 'allocate', 'collect']))
@@ -118,15 +124,25 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
             self.current_resource = self.resource_client.get_by_uri(self.data.get('uri'))
 
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result =  self.resource_present(self.RESOURCE_FACT_NAME)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'allocate':
             changed, msg, ipv4_subnet = self.__allocator(self.current_resource)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
             return dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
         elif self.state == 'collect':
             changed, msg, ipv4_subnet = self.__collector(self.current_resource)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
             return dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def __allocator(self, resource):
         subnet_id = resource.data['allocatorUri'].split('/')[-2]

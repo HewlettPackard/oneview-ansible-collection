@@ -39,6 +39,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     aliasName:
       description:
         - Server Certificate aliasname.
@@ -87,6 +92,7 @@ class CertificatesServerFactsModule(OneViewModule):
 
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             remote=dict(required=False, type='str'),
             aliasName=dict(required=False, type='str'),
         )
@@ -105,6 +111,9 @@ class CertificatesServerFactsModule(OneViewModule):
             remote_address = self.module.params['remote']
             remote_cert = self.resource_client.get_remote(remote_address)
             ansible_facts['remote_certificate'] = remote_cert.data
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

@@ -50,6 +50,7 @@
   oneview_enclosure_group_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.enclosure_group.eg_name}}"
     options:
       - configuration_script

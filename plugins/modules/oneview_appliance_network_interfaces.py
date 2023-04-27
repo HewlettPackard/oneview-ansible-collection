@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
           - Indicates the desired state for the Appliance Network Interface.
@@ -100,6 +105,7 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             data=dict(required=True, type='dict'),
             state=dict(
                 required=True,
@@ -129,6 +135,10 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
             changed, msg = True, self.MSG_CREATED
         else:
             msg = self.MSG_ALREADY_PRESENT
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
         return dict(
             msg=msg,
             changed=changed,

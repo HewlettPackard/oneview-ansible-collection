@@ -21,6 +21,7 @@
   oneview_certificates_server_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     aliasName: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 

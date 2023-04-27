@@ -48,6 +48,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     data:
         description:
             - List with FCoE Network properties.
@@ -134,6 +139,7 @@ class FcoeNetworkModule(OneViewModule):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    state=dict(default='present',
                                               choices=['present', 'absent']))
 
@@ -143,12 +149,20 @@ class FcoeNetworkModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
             else:
-                return self.resource_absent()
+                result = self.resource_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
+                return result
 
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 

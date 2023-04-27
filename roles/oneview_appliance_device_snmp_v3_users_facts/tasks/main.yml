@@ -43,7 +43,8 @@
 - name: Gather facts about a SNMPv3 user by Uri
   oneview_appliance_device_snmp_v3_users_facts:
     config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"        
+    sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     uri: "{{ appliance_device_snmp_v3_users['uri'] }}"        
   delegate_to: localhost
   when: appliance_device_snmp_v3_users is defined

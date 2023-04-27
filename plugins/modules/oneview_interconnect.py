@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Interconnect resource.
@@ -175,6 +180,7 @@ class InterconnectModule(OneViewModule):
                 ]
             ),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(required=False, type='str'),
             ip=dict(required=False, type='str'),
             ports=dict(required=False, type='list')
@@ -200,6 +206,9 @@ class InterconnectModule(OneViewModule):
                 changed, msg, resource = self.device_reset(state)
             else:
                 changed, msg, resource = self.change_state(state)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(
             changed=changed,

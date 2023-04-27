@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     params:
         description:
           - mac_address of the Appliance Network Interface.
@@ -94,6 +99,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class ApplianceNetworkInterfaceFactsModule(OneViewModule):
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         params=dict(required=False, type='dict'),
         options=dict(required=False, type='list')
     )
@@ -110,6 +116,9 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
             network_interfaces = self.resource_client.get_all_mac_address()
         else:
             network_interfaces = self.resource_client.get_all().data
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(appliance_network_interfaces=network_interfaces))

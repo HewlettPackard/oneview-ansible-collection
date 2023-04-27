@@ -38,6 +38,7 @@
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ id_pools_ipv4_subnets[0]['name'] }}"
   delegate_to: localhost
 

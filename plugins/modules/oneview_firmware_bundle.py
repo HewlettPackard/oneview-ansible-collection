@@ -39,6 +39,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Firmware Driver resource.
@@ -105,6 +110,7 @@ class FirmwareBundleModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(sessionID=dict(required=False, type='str'),
+                             logout=dict(required=False, type='bool'),
                              state=dict(required=True, choices=['present', 'add_signature']),
                              file_path=dict(required=True, type='str'))
 
@@ -115,9 +121,15 @@ class FirmwareBundleModule(OneViewModule):
         file_path = self.module.params['file_path']
         self.current_resource = self.resource_client.get_by_name(file_path)
         if self.state == 'present':
-            return self.__present(file_path)
+            result = self.__present(file_path)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
         elif self.state == 'add_signature':
-            return self.__add_compsig(file_path)
+            result = self.__add_compsig(file_path)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def __present(self, file_path):
         if not self.current_resource:

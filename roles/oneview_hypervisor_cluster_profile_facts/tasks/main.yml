@@ -49,6 +49,7 @@
   oneview_hypervisor_cluster_profile_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "ClusterProfile"
     options:
       - compliancePreview

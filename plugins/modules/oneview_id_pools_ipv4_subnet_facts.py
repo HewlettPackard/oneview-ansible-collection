@@ -51,6 +51,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+          - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     name:
       description:
         - ID Pools IPV4 Subnet name.
@@ -111,6 +116,7 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(required=False, type='str'),
             networkId=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
@@ -127,6 +133,9 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
             id_pools_ipv4_subnets = [self.resource_client.get_by_field('networkId', self.module.params['networkId']).data]
         else:
             id_pools_ipv4_subnets = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=dict(id_pools_ipv4_subnets=id_pools_ipv4_subnets))
 

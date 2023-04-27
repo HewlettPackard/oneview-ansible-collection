@@ -57,6 +57,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "List with options to gather additional facts about an IPv4 Range and related resources.
@@ -151,7 +156,8 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
             subnetUri=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
-            sessionID=dict(required=False, type='str')
+            sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.resource_client = self.oneview_client.id_pools_ipv4_ranges
@@ -185,6 +191,9 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
         self.__get_options(facts, id_pools_ipv4_ranges, is_specific_resource)
 
         facts['id_pools_ipv4_ranges'] = [id_pools_ipv4_ranges] if is_specific_resource else id_pools_ipv4_ranges
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

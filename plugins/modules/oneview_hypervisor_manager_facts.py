@@ -39,6 +39,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+          - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     name:
       description:
         - Hypervisor Manager name.
@@ -96,6 +101,7 @@ class HypervisorManagerFactsModule(OneViewModule):
 
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict')
         )
@@ -109,6 +115,9 @@ class HypervisorManagerFactsModule(OneViewModule):
             hypervisor_managers = self.resource_client.get_by('name', self.module.params['name'])
         else:
             hypervisor_managers = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=dict(hypervisor_managers=hypervisor_managers))
 

@@ -70,6 +70,7 @@
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     options:
       - freeFragments
       - allocatedFragments

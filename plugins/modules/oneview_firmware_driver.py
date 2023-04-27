@@ -39,6 +39,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
       description:
         - Indicates the desired state for the Firmware Driver.
@@ -120,6 +125,7 @@ class FirmwareDriverModule(OneViewModule):
 
     def __init__(self):
         argument_spec = dict(sessionID=dict(required=False, type='str'),
+                             logout=dict(required=False, type='bool'),
                              state=dict(required=True, choices=['absent', 'present']),
                              name=dict(required=False, type='str'),
                              data=dict(required=False, type='dict'))
@@ -141,9 +147,14 @@ class FirmwareDriverModule(OneViewModule):
 
         if self.state == 'present':
             changed, msg, firmware_driver = self.__present(data)
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
             return dict(changed=changed, msg=msg, ansible_facts=firmware_driver)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def __present(self, data):
         if not self.current_resource:

@@ -47,6 +47,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+          - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Hypervisor Cluster Profile related resources.
@@ -134,6 +139,7 @@ class HypervisorClusterProfileFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(type='str'),
             uri=dict(type='str'),
             options=dict(type='list'),
@@ -155,6 +161,9 @@ class HypervisorClusterProfileFactsModule(OneViewModule):
             ansible_facts = self.__gather_option_facts()
 
         ansible_facts["hypervisor_cluster_profiles"] = hypervisor_cluster_profiles
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

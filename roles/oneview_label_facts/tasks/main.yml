@@ -57,6 +57,7 @@
   oneview_label_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     resourceUri: "{{ enclosures[0]['uri'] }}" 
   delegate_to: localhost
 
