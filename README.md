@@ -139,6 +139,25 @@ example:
 
 A SessionID remains valid for 24 hours.
 
+#### Logout a Session
+
+To logout from a session, add param `logout: true` to your task. This will do a logout from the current session.
+
+```yaml
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    logout: true
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+```
 #### Parameters in roles
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.

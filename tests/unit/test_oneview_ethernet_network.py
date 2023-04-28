@@ -46,6 +46,13 @@ PARAMS_FOR_PRESENT = dict(
     data=dict(name=DEFAULT_ETHERNET_NAME)
 )
 
+PARAMS_WITH_LOGOUT = dict(
+    config='config.json',
+    state='present',
+    logout='true',
+    data=dict(name=DEFAULT_ETHERNET_NAME)
+)
+
 PARAMS_TO_RENAME = dict(
     config='config.json',
     state='present',
@@ -419,6 +426,21 @@ class TestEthernetNetworkModule(OneViewBaseTest):
             changed=False,
             ansible_facts=dict(ethernet_network=resource_data),
             msg=EthernetNetworkModule.MSG_ALREADY_PRESENT
+        )
+
+    def test_should_create_new_ethernet_network_with_logout_param(self):
+        self.resource.get_by_name.return_value = None
+        self.resource.create.return_value = self.resource
+        self.resource.data = DEFAULT_ENET_TEMPLATE
+
+        self.mock_ansible_module.params = PARAMS_WITH_LOGOUT
+
+        EthernetNetworkModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=True,
+            msg=EthernetNetworkModule.MSG_CREATED,
+            ansible_facts=dict(ethernet_network=DEFAULT_ENET_TEMPLATE)
         )
 
 

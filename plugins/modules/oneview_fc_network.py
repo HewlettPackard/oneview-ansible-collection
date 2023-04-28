@@ -145,6 +145,7 @@ class FcNetworkModule(OneViewModule):
 
     def execute_module(self):
         changed, msg, ansible_facts = False, '', {}
+        result = {}
         if self.state == 'present':
             result = self._present()
         elif self.state == 'absent':

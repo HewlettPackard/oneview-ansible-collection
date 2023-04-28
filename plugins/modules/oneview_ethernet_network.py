@@ -225,23 +225,25 @@ class EthernetNetworkModule(OneViewModule):
     def execute_module(self):
 
         changed, msg, ansible_facts = False, '', {}
-
+        result = {}
         if self.state == 'present':
             if self.data.get('vlanIdRange'):
                 changed, msg, ansible_facts = self.__bulk_present()
             else:
-                return self.__present()
+                result = self.__present()
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
             else:
-                return self.resource_absent()
+                result = self.resource_absent()
         elif self.state == 'default_bandwidth_reset':
             changed, msg, ansible_facts = self.__default_bandwidth_reset()
 
         if self.module.params.get('logout'):
             self.oneview_client.connection.logout()
 
+        if result:
+            return result
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 
     def __present(self):
