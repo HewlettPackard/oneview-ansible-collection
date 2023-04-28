@@ -335,6 +335,8 @@
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     data:
       serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
       name: "{{ contents.server_profile.inventory_hostname }}"

@@ -202,6 +202,7 @@
   oneview_user:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       userName: "{{ contents.users.user_name }}"

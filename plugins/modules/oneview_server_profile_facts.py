@@ -48,6 +48,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "List with options to gather additional facts about Server Profile related resources.
@@ -260,6 +265,7 @@ class ServerProfileFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(type='str'),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         uri=dict(type='str'),
         options=dict(type='list'),
         params=dict(type='dict')
@@ -282,6 +288,9 @@ class ServerProfileFactsModule(OneViewModule):
             ansible_facts = self.__gather_option_facts()
 
         ansible_facts["server_profiles"] = server_profiles
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

@@ -77,6 +77,7 @@
     config: "{{ config }}"
     state: absent
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     data:
       name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
   delegate_to: localhost

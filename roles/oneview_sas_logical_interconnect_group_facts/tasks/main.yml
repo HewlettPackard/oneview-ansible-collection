@@ -46,6 +46,7 @@
   oneview_sas_logical_interconnect_group_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     uri: "{{ sas_logical_interconnect_group_uri }}"
   delegate_to: localhost
 

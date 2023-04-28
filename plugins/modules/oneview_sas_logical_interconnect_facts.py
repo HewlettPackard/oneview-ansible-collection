@@ -48,6 +48,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "List with options to gather additional facts about a SAS Logical interconnect and related resources.
@@ -144,6 +149,7 @@ class SasLogicalInterconnectFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'),
                          uri=dict(required=False, type='str'),
                          sessionID=dict(required=False, type='str'),
+                         logout=dict(required=False, type='bool'),
                          options=dict(type='list'),
                          params=dict(type='dict'))
 
@@ -165,6 +171,9 @@ class SasLogicalInterconnectFactsModule(OneViewModule):
             sas_logical_interconnects = []
 
         ansible_facts['sas_logical_interconnects'] = sas_logical_interconnects
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

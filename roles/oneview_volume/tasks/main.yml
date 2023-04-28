@@ -174,6 +174,7 @@
   oneview_volume:
     config: '{{ config }}'
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
       properties:

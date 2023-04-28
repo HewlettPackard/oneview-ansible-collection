@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Volume resource.
@@ -275,6 +280,7 @@ class VolumeModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             state=dict(
                 required=True,
                 choices=['present', 'absent', 'managed', 'repaired',
@@ -302,21 +308,26 @@ class VolumeModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.__present()
-        if self.state == 'managed':
-            return self.__managed()
+            result = self.__present()
+        elif self.state == 'managed':
+            result = self.__managed()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
         else:
             if not self.current_resource:
                 raise OneViewModuleResourceNotFound(self.MSG_NOT_FOUND)
 
             if self.state == 'repaired':
-                return self.__repair()
+                result = self.__repair()
             elif self.state == 'snapshot_created':
-                return self.__create_snapshot()
+                result = self.__create_snapshot()
             elif self.state == 'snapshot_deleted':
-                return self.__delete_snapshot()
+                result = self.__delete_snapshot()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self):
         # get volume template uri from name

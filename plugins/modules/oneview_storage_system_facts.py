@@ -47,6 +47,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "List with options to gather additional facts about a Storage System and related resources.
@@ -206,6 +211,7 @@ class StorageSystemFactsModule(OneViewModule):
             options=dict(type='list'),
             params=dict(type='dict'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             storage_hostname=dict(type='str')
         )
 
@@ -234,6 +240,9 @@ class StorageSystemFactsModule(OneViewModule):
         self.__get_options(facts, is_specific_storage_system)
 
         facts['storage_systems'] = storage_systems
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

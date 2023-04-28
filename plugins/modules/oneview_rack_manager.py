@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
         description:
             - Indicates the desired state for the Rack manager resource.
@@ -166,6 +171,7 @@ class RackManagerModule(OneViewModule):
             ]
         ),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         data=dict(required=True, type='dict')
     )
 
@@ -175,24 +181,25 @@ class RackManagerModule(OneViewModule):
         self.set_resource_object(self.oneview_client.rack_managers)
 
     def execute_module(self):
-
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         else:
             if not self.data.get('name'):
                 raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
-
             if self.state == 'absent':
-                return self.resource_absent(method='remove')
+                result = self.resource_absent(method='remove')
             else:
                 if not self.current_resource:
                     raise OneViewModuleResourceNotFound(self.MSG_RACK_MANAGER_NOT_FOUND)
                 else:
                     if self.state == 'refresh_state_set':
                         self.current_resource.patch('RefreshRackManagerOp', '', '')
-                        return dict(changed=True,
-                                    msg=self.MSG_RACK_MANAGER_REFRESHED,
-                                    ansible_facts=dict(rack_manager=self.current_resource.data))
+                        result = dict(changed=True,
+                                      msg=self.MSG_RACK_MANAGER_REFRESHED,
+                                      ansible_facts=dict(rack_manager=self.current_resource.data))
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
 

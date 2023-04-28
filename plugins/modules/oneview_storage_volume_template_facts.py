@@ -51,6 +51,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -159,6 +164,7 @@ class StorageVolumeTemplateFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
@@ -187,6 +193,9 @@ class StorageVolumeTemplateFactsModule(OneViewModule):
         if 'reachableVolumeTemplates' in self.options:
             ansible_facts['reachable_volume_templates'] = self.resource_client.get_reachable_volume_templates(
                 **self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

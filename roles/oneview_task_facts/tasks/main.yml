@@ -52,6 +52,7 @@
   oneview_task_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     params:
       count: 5
       view: "flat-tree"

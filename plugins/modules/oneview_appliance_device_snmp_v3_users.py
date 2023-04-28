@@ -155,14 +155,11 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
             raise OneViewModuleValueError(self.MSG_API_VERSION_ERROR)
         if self.state == 'present':
             result = self.resource_present(self.RESOURCE_FACT_NAME, parameter_to_ignore=parameter_to_ignore)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
 
 def main():

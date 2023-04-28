@@ -113,6 +113,7 @@
   oneview_server_profile_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     options:
       - available_networks:
           serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"

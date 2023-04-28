@@ -40,6 +40,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
       description:
         - Indicates the desired patch operation for SAS logical JBOD
@@ -305,6 +310,7 @@ class SasLogicalJbodModule(OneViewModule):
             ]
         ),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         data=dict(required=True, type='dict')
     )
 
@@ -328,17 +334,22 @@ class SasLogicalJbodModule(OneViewModule):
 
     def execute_module(self):
         if self.state == "present":
-            return self.__present()
+            result = self.__present()
         elif self.state == "absent":
-            return self.resource_absent()
+            result = self.resource_absent()
         else:
             if not self.current_resource:
                 raise OneViewModuleResourceNotFound(self.MSG_JBOD_NOT_FOUND)
             else:
                 changed, msg, resource = self.__patch(self.state)
-        return dict(changed=changed,
-                    msg=msg,
-                    ansible_facts=dict(sas_logical_jbod=resource))
+                result = dict(changed=changed,
+                              msg=msg,
+                              ansible_facts=dict(sas_logical_jbod=resource))
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self):
         if not self.current_resource:

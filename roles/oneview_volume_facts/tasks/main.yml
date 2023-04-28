@@ -62,6 +62,7 @@
   oneview_volume_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.volume.storage_volume_name }}"
     options:
         - snapshots:  # optional

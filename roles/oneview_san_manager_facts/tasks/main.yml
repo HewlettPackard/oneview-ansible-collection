@@ -32,6 +32,7 @@
   oneview_san_manager_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ san_managers[0]['name'] }}"
   delegate_to: localhost
   when: san_managers | default('', True)

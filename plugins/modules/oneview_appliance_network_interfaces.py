@@ -117,7 +117,10 @@ class ApplianceNetworkInterfacesModule(OneViewModule):
     def execute_module(self):
         self.current_resource = self.resource_client.get_by_mac_address(self.data.get('macAddress'))
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
+            if self.module.params.get('logout'):
+                self.oneview_client.connection.logout()
+            return result
 
     def __present(self):
         changed, field_changed, data = False, False, {}

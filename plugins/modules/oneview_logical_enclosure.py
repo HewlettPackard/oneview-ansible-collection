@@ -43,6 +43,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Logical Enclosure resource.
@@ -235,6 +240,7 @@ class LogicalEnclosureModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['present', 'firmware_updated', 'script_updated',
@@ -268,6 +274,9 @@ class LogicalEnclosureModule(OneViewModule):
                 changed, msg, ansible_facts = self.__reconfigure()
             elif self.state == 'updated_from_group':
                 changed, msg, ansible_facts = self.__update_from_group()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=changed,
                     msg=msg,

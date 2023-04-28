@@ -137,15 +137,12 @@ class LabelModule(OneViewModule):
         self.current_resource = None
         if self.state == 'present':
             result = self._present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             self.current_resource = self.resource_client.get_by_resource(self.data.get('resourceUri'))
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def _present(self):
         if self.data.get('resourceUri'):

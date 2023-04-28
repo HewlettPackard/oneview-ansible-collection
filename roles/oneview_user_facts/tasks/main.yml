@@ -50,6 +50,7 @@
   oneview_user_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     userName: "testUser"
     options: 
         - getUserRoles

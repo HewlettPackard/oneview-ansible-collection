@@ -41,6 +41,7 @@
   oneview_uplink_set_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "ULS-2"
   delegate_to: localhost
 

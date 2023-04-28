@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
         description:
             - Indicates the desired state for the Server Hardware Type resource.
@@ -116,6 +121,7 @@ class ServerHardwareTypeModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(required=True, choices=['present', 'absent']),
         data=dict(required=True, type='dict'))
 
@@ -126,9 +132,12 @@ class ServerHardwareTypeModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         changed, msg = False, self.MSG_ALREADY_PRESENT

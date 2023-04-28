@@ -124,25 +124,19 @@ class IdPoolsIpv4SubnetModule(OneViewModule):
             self.current_resource = self.resource_client.get_by_uri(self.data.get('uri'))
 
         if self.state == 'present':
-            result =  self.resource_present(self.RESOURCE_FACT_NAME)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'allocate':
             changed, msg, ipv4_subnet = self.__allocator(self.current_resource)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
+            result = dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
         elif self.state == 'collect':
             changed, msg, ipv4_subnet = self.__collector(self.current_resource)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
+            result = dict(changed=changed, msg=msg, ansible_facts=dict(id_pools_ipv4_subnet=ipv4_subnet))
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __allocator(self, resource):
         subnet_id = resource.data['allocatorUri'].split('/')[-2]

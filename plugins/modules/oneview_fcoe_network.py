@@ -150,21 +150,16 @@ class FcoeNetworkModule(OneViewModule):
     def execute_module(self):
         if self.state == 'present':
             result = self.__present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
-                if self.module.params.get('logout'):
-                    self.oneview_client.connection.logout()
+                result = dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
             else:
                 result = self.resource_absent()
-                if self.module.params.get('logout'):
-                    self.oneview_client.connection.logout()
-                return result
 
-        return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         scope_uris = self.data.pop('scopeUris', None)

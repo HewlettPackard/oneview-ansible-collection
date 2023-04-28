@@ -45,6 +45,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -102,6 +107,7 @@ class UplinkSetFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.uplink_sets)
@@ -111,6 +117,9 @@ class UplinkSetFactsModule(OneViewModule):
             resources = [self.current_resource.data] if self.current_resource else []
         else:
             resources = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(uplink_sets=resources))

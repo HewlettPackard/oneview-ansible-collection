@@ -127,14 +127,12 @@ class IdPoolsIpv4RangeModule(OneViewModule):
 
         if self.state == 'present':
             result = self._present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def _present(self):
         # If no resource was found during get operation, it creates new one

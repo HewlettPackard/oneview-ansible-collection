@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Logical Interconnect resource.
@@ -361,6 +366,7 @@ class LogicalInterconnectModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['compliant', 'ethernet_settings_updated', 'internal_networks_updated', 'settings_updated',
@@ -419,6 +425,9 @@ class LogicalInterconnectModule(OneViewModule):
             result = dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
         else:
             result = dict(changed=changed, msg=msg)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return result
 

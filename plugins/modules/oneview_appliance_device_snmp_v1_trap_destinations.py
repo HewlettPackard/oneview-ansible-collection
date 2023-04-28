@@ -151,15 +151,13 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            result =  self.resource_present(self.RESOURCE_FACT_NAME)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
+
 
 def main():
     ApplianceDeviceSnmpV1TrapDestinationsModule().run()

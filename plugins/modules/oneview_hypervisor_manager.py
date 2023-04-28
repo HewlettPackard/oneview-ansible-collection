@@ -147,14 +147,11 @@ class HypervisorManagerModule(OneViewModule):
     def execute_module(self):
         if self.state == 'present':
             result = self._present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def _present(self):
         scope_uris = self.data.pop('scopeUris', None)

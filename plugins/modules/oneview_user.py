@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the User.
@@ -262,6 +267,7 @@ class UserModule(OneViewModule):
 
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
                                    sessionID=dict(required=False, type='str'),
+                                   logout=dict(required=False, type='bool'),
                                    state=dict(
                                        required=True,
                                        choices=['present', 'absent', 'add_multiple_users', 'add_role_to_username', 'update_role_to_username',
@@ -277,58 +283,67 @@ class UserModule(OneViewModule):
         if self.data and self.data.get('userName'):
             self.current_resource = self.resource_client.get_by_userName(self.data['userName'])
             if self.state == 'present':
-                return self.__present(self.current_resource)
-
+                result = self.__present(self.current_resource)
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
+                return result
             elif self.state == 'absent':
-                return self.resource_absent()
-
+                result = self.resource_absent()
+                if self.module.params.get('logout'):
+                    self.oneview_client.connection.logout()
+                return result
             if self.current_resource:
                 if self.data.get('role_list'):
                     if self.state == 'add_role_to_username':
                         resource = self.resource_client.add_role_to_userName(self.data['userName'], self.data['role_list']).data
-                        return dict(changed=True, msg=self.MSG_ADDED_ROLE, ansible_facts=dict(user=resource))
+                        result = dict(changed=True, msg=self.MSG_ADDED_ROLE, ansible_facts=dict(user=resource))
                     elif self.state == 'update_role_to_username':
                         resource = self.resource_client.update_role_to_userName(self.data['userName'], self.data['role_list'])
-                        return dict(changed=True, msg=self.MSG_UPDATED_ROLE, ansible_facts=dict(user=resource))
+                        result = dict(changed=True, msg=self.MSG_UPDATED_ROLE, ansible_facts=dict(user=resource))
 
                     elif self.state == 'remove_role_from_username':
                         resource = self.resource_client.remove_role_from_username(self.data['userName'], self.data['role_list'])
-                        return dict(changed=True, msg=self.MSG_DELETED_ROLE, ansible_facts=dict(user=resource))
+                        result = dict(changed=True, msg=self.MSG_DELETED_ROLE, ansible_facts=dict(user=resource))
 
                 elif self.state == 'validate_user_name':
                     resource = self.resource_client.validate_user_name(self.data['userName']).data
-                    return dict(changed=True, msg=self.MSG_VALIDATED_USERNAME, ansible_facts=dict(user=resource))
+                    result = dict(changed=True, msg=self.MSG_VALIDATED_USERNAME, ansible_facts=dict(user=resource))
 
                 elif self.state == 'set_password':
                     if self.data.get('oldPassword') and self.data.get('newPassword'):
                         resource = self.resource_client.change_password(self.data)
-                        return dict(changed=True, msg=self.MSG_PASSWORD_UPDATED, ansible_facts=dict(user=resource))
+                        result = dict(changed=True, msg=self.MSG_PASSWORD_UPDATED, ansible_facts=dict(user=resource))
                     else:
-                        return dict(failed=True, msg=self.MSG_PASSWORD_MISSING)
+                        result = dict(failed=True, msg=self.MSG_PASSWORD_MISSING)
                 else:
-                    return dict(failed=True, msg=self.MSG_ROLELIST_MISSING)
+                    result = dict(failed=True, msg=self.MSG_ROLELIST_MISSING)
             else:
-                return dict(failed=True, msg=self.MSG_USERNAME_DOES_NOT_EXIST)
+                result = dict(failed=True, msg=self.MSG_USERNAME_DOES_NOT_EXIST)
 
         elif self.data and not self.data.get('userName') and (self.data.get('users_list') or self.data.get('fullName')):
             if self.state == 'delete_multiple_users':
                 self.resource_client.delete_multiple_user(self.data['users_list'])
-                return dict(changed=True, msg=self.MSG_MULTIPLE_USER_DELETED, ansible_facts=dict(user=True))
+                result = dict(changed=True, msg=self.MSG_MULTIPLE_USER_DELETED, ansible_facts=dict(user=True))
 
             elif self.state == 'add_multiple_users':
                 resource = self.resource_client.create_multiple_user(self.data['users_list']).data
-                return dict(changed=True, msg=self.MSG_MULTIPLE_USER_CREATED, ansible_facts=dict(user=resource))
+                result = dict(changed=True, msg=self.MSG_MULTIPLE_USER_CREATED, ansible_facts=dict(user=resource))
 
             elif self.state == 'validate_full_name':
                 resource = self.resource_client.validate_full_name(self.data['fullName']).data
-                return dict(changed=True, msg=self.MSG_VALIDATED_FULLNAME, ansible_facts=dict(user=resource))
+                result = dict(changed=True, msg=self.MSG_VALIDATED_FULLNAME, ansible_facts=dict(user=resource))
 
         elif not self.data and (self.state == 'add_multiple_users' or self.state == 'delete_multiple_users'):
-            return dict(failed=True, msg=self.MSG_USERLIST_MISSING)
+            result = dict(failed=True, msg=self.MSG_USERLIST_MISSING)
         elif not self.data and (self.state == 'validate_full_name'):
-            return dict(failed=True, msg=self.MSG_FULLNAME_MISSING)
+            result = dict(failed=True, msg=self.MSG_FULLNAME_MISSING)
         else:
-            return dict(failed=True, msg=self.MSG_USERNAME_MISSING)
+            result = dict(failed=True, msg=self.MSG_USERNAME_MISSING)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self, resource):
 

@@ -33,6 +33,7 @@
   oneview_scope_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost
 

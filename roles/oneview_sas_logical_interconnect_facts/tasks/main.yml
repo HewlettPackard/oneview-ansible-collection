@@ -55,6 +55,7 @@
   oneview_sas_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ sas_logical_interconnect_name }}"
     options:
       - firmware_facts

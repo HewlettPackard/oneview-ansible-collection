@@ -46,6 +46,7 @@
   oneview_sas_logical_jbod_attachment_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     uri: "{{ jbod_attachment_uri }}"
   delegate_to: localhost
 

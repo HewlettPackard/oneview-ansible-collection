@@ -147,14 +147,12 @@ class FirmwareDriverModule(OneViewModule):
 
         if self.state == 'present':
             changed, msg, firmware_driver = self.__present(data)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return dict(changed=changed, msg=msg, ansible_facts=firmware_driver)
+            result = dict(changed=changed, msg=msg, ansible_facts=firmware_driver)
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self, data):
         if not self.current_resource:

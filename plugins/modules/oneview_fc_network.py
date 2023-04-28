@@ -145,28 +145,20 @@ class FcNetworkModule(OneViewModule):
 
     def execute_module(self):
         changed, msg, ansible_facts = False, '', {}
-
         if self.state == 'present':
             result = self._present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
-                if self.module.params.get('logout'):
-                    self.oneview_client.connection.logout()
+                result = dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
             elif not self.module.check_mode:
                 result = self.resource_absent()
-                if self.module.params.get('logout'):
-                    self.oneview_client.connection.logout()
-                return result
             else:
                 result = self.check_resource_absent()
-                if self.module.params.get('logout'):
-                    self.oneview_client.connection.logout()
-                return result
-
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        if result:
+            return result
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 
     def _present(self):

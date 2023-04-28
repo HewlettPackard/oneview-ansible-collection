@@ -43,6 +43,7 @@
   oneview_firmware_driver_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
   delegate_to: localhost
 
 - debug: var=firmware_drivers

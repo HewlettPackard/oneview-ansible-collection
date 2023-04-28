@@ -78,6 +78,7 @@
   oneview_rack_manager_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ rack_manager_name }}"
     options:
       - chassis                       # optional

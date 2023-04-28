@@ -54,6 +54,11 @@ options:
       - Session ID to use for login to the appliance
     type: str
     required: false
+  logout:
+    description:
+      - Param to logout from the appliance when the task is done.
+    type: bool
+    required: false
   data:
     description:
       - List with Server Profile properties.
@@ -272,6 +277,7 @@ class ServerProfileModule(OneViewModule):
     argument_spec = dict(
         state=dict(choices=['present', 'absent', 'compliant'], default='present'),
         sessionID=dict(type='str', required=False),
+        logout=dict(required=False, type='bool'),
         data=dict(type='dict', required=True),
         params=dict(type='dict', required=False),
         auto_assign_server_hardware=dict(choices=[True, False], type='bool', default=True)
@@ -295,19 +301,24 @@ class ServerProfileModule(OneViewModule):
             created, changed, msg, server_profile = self.__present()
             facts = self.__gather_facts()
             facts['created'] = created
-            return dict(
+            result = dict(
                 changed=changed, msg=msg, ansible_facts=facts
             )
         elif self.state == 'absent':
             changed, msg = self.__delete_profile()
-            return dict(
+            result = dict(
                 changed=changed, msg=msg
             )
         elif self.state == "compliant":
             changed, msg, server_profile = self.__make_compliant()
-            return dict(
+            result = dict(
                 changed=changed, msg=msg, ansible_facts=self.__gather_facts()
             )
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self):
         server_template_name = self.data.pop('serverProfileTemplateName', '')

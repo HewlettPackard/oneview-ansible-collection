@@ -63,6 +63,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "Retrieve additional facts. Options available:
@@ -201,6 +206,7 @@ class StorageVolumeAttachmentFactsModule(OneViewModule):
             storageVolumeName=dict(required=False, type='str'),
             options=dict(required=False, type='list'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             params=dict(required=False, type='dict'),
         )
         super().__init__(additional_arg_spec=argument_spec)
@@ -226,6 +232,9 @@ class StorageVolumeAttachmentFactsModule(OneViewModule):
         if self.options.get('extraUnmanagedStorageVolumes'):
             volumes_options = self.__get_sub_options(self.options['extraUnmanagedStorageVolumes'])
             facts['extra_unmanaged_storage_volumes'] = self.resource_client.get_extra_unmanaged_storage_volumes(**volumes_options)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

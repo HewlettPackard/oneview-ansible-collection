@@ -85,6 +85,7 @@
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     serverProfileName: "{{ contents.storage_volume_attachment.server_profile_name }}"
     storageVolumeName: "{{ contents.storage_volume_attachment.storage_volume_name }}"
     options:

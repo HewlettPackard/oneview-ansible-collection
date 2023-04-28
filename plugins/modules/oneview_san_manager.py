@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
         description:
             - Indicates the desired state for the san manager resource.
@@ -227,6 +232,7 @@ class SanManagerModule(OneViewModule):
             ]
         ),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         data=dict(required=True, type='dict')
     )
 
@@ -241,14 +247,14 @@ class SanManagerModule(OneViewModule):
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 if self.current_resource:
-                    return self.__update()
+                    result = self.__update()
                 else:
-                    return self.__present()
+                    result = self.__present()
             else:
-                return self.__present()
+                result = self.__present()
         else:
             if self.state == 'absent':
-                return self.resource_absent(method='remove')
+                result = self.resource_absent(method='remove')
             else:
                 if self.data.get('name'):
                     self.current_resource = self.resource_client.get_by_name(self.data['name'])
@@ -260,9 +266,12 @@ class SanManagerModule(OneViewModule):
                             'refreshState': self.data['refreshState']
                         }
                         self.current_resource.update(info, self.current_resource.data.get('uri'))
-                        return dict(changed=False,
-                                    msg=self.MSG_SAN_MANAGER_REFRESHED,
-                                    ansible_facts=dict(san_managers=self.current_resource.data))
+                        result = dict(changed=False,
+                                      msg=self.MSG_SAN_MANAGER_REFRESHED,
+                                      ansible_facts=dict(san_managers=self.current_resource.data))
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         if not self.data.get('connectionInfo'):

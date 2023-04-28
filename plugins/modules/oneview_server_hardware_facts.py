@@ -57,6 +57,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 notes:
     - The options C(firmware) and C(firmwares) are only available for API version 300 or later.
     - The option C(physicalServerHardware) is only available for API version 500 or later on SDX enclosures.
@@ -239,6 +244,7 @@ class ServerHardwareFactsModule(OneViewModule):
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.server_hardware)
@@ -259,6 +265,9 @@ class ServerHardwareFactsModule(OneViewModule):
             ansible_facts['server_hardware_firmwares'] = self.get_all_firmwares()
 
         ansible_facts["server_hardwares"] = server_hardwares
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Storage Volume Template resource.
@@ -122,6 +127,7 @@ class StorageVolumeTemplateModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             state=dict(
                 required=True,
                 choices=['present', 'absent']
@@ -137,9 +143,14 @@ class StorageVolumeTemplateModule(OneViewModule):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING)
 
         if self.state == 'present':
-            return self._present()
+            result = self._present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def _present(self):
         if not self.current_resource:

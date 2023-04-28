@@ -51,6 +51,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     options:
       description:
         - "To gather the additonal facts about the roles associated with username.
@@ -133,6 +138,7 @@ class UserFactsModule(OneViewModule):
 
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             userName=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             role=dict(required=False, type='str'),
@@ -155,6 +161,9 @@ class UserFactsModule(OneViewModule):
 
         if self.module.params['userName'] and self.options.get('getUserRoles'):
             ansible_facts['user_roles'] = self.resource_client.get_role_associated_with_userName(self.module.params['userName'])
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

@@ -122,14 +122,11 @@ class FirmwareBundleModule(OneViewModule):
         self.current_resource = self.resource_client.get_by_name(file_path)
         if self.state == 'present':
             result = self.__present(file_path)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'add_signature':
             result = self.__add_compsig(file_path)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self, file_path):
         if not self.current_resource:

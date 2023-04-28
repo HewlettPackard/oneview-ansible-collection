@@ -40,6 +40,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+        description:
+            - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     state:
         description:
             - Indicates the desired state for the Storage Pool resource.
@@ -136,6 +141,7 @@ class StoragePoolModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             state=dict(
                 required=True,
                 choices=['present', 'absent']
@@ -155,9 +161,14 @@ class StoragePoolModule(OneViewModule):
             self.current_resource = self.resource_client.get_by_name(self.data.get("poolName"))
 
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self):
         changed = False

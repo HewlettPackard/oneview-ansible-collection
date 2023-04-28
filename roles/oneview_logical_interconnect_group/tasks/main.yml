@@ -238,6 +238,7 @@
   oneview_logical_interconnect_group:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: absent
     data:
       name: 'Updated Logical Interconnect Group'

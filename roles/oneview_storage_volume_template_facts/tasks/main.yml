@@ -91,6 +91,7 @@
   oneview_storage_volume_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.storage_volume.volume_template_name }}"
     options:
       - connectableVolumeTemplates

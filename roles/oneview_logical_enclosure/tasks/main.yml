@@ -147,6 +147,7 @@
   oneview_logical_enclosure:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: present
     data:
         name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"

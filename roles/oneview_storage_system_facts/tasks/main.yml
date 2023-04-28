@@ -101,6 +101,7 @@
   oneview_storage_system_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
     options:
       - templates

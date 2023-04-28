@@ -53,6 +53,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -133,6 +138,7 @@ class LogicalEnclosureFactsModule(OneViewModule):
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict'),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool')
     )
 
     def __init__(self):
@@ -150,6 +156,9 @@ class LogicalEnclosureFactsModule(OneViewModule):
             logical_enclosures = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['logical_enclosures'] = logical_enclosures
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

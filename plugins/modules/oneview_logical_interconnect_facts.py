@@ -48,6 +48,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
     options:
       description:
         - "List with options to gather additional facts about Logical Interconnect.
@@ -217,6 +222,7 @@ class LogicalInterconnectFactsModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         name=dict(required=False, type='str'),
         options=dict(required=False, type='list'),
         params=dict(required=False, type='dict'),
@@ -235,6 +241,9 @@ class LogicalInterconnectFactsModule(OneViewModule):
         else:
             logical_interconnects = self.resource_client.get_all(**self.facts_params)
             facts = dict(logical_interconnects=logical_interconnects)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

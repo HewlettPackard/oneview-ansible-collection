@@ -48,6 +48,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -111,7 +116,11 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class SasInterconnectTypeFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'),
+                         uri=dict(required=False, type='str'),
+                         sessionID=dict(required=False, type='str'),
+                         logout=dict(required=False, type='bool'),
+                         params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)
@@ -129,6 +138,9 @@ class SasInterconnectTypeFactsModule(OneViewModule):
             sas_interconnect_types = []
 
         ansible_facts['sas_interconnect_types'] = sas_interconnect_types
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

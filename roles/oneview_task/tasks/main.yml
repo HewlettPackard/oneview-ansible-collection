@@ -24,6 +24,7 @@
   oneview_task:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     data:
       name: "{{ tasks[0]['name'] }}"
       uri: "{{ tasks[0]['uri'] }}"

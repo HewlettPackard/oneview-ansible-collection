@@ -48,6 +48,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+        description:
+          - Param to logout from the appliance when the task is done.
+        type: bool
+        required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -123,6 +128,7 @@ class LogicalInterconnectGroupFactsModule(OneViewModule):
 
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool'),
             name=dict(type='str'),
             params=dict(type='dict'),
         )
@@ -135,6 +141,9 @@ class LogicalInterconnectGroupFactsModule(OneViewModule):
             ligs = self.resource_client.get_by('name', self.module.params['name'])
         else:
             ligs = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=dict(logical_interconnect_groups=ligs))
 

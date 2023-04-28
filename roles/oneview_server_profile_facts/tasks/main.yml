@@ -106,6 +106,7 @@
   oneview_server_profile_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{contents.server_profile.server_profile_name}}"
     options:
         - compliancePreview

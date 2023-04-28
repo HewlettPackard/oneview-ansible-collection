@@ -40,6 +40,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
       description:
         - Indicates the desired state for the SAS Interconnect resource.
@@ -278,6 +283,7 @@ class SasInterconnectModule(OneViewModule):
             ]
         ),
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         data=dict(required=True, type='dict')
     )
     patch_params = dict(
@@ -312,6 +318,10 @@ class SasInterconnectModule(OneViewModule):
                 changed, msg, resource = self.__refresh()
             else:
                 changed, msg, resource = self.__patch(self.state)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=dict(sas_interconnects=resource))

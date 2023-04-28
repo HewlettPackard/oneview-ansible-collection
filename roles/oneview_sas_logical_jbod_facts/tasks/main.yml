@@ -55,6 +55,7 @@
   oneview_sas_logical_jbod_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ jbod_name }}"
     options:
       - jbod_drives

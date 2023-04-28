@@ -115,14 +115,11 @@ class ApplianceProxyConfigurationModule(OneViewModule):
         self.current_resource = self.resource_client.get_by_proxy(self.data.get('server'))
         if self.state == 'present':
             result = self.__present()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.__absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         changed, field_changed = False, False

@@ -140,14 +140,11 @@ class CertificatesServerModule(OneViewModule):
     def execute_module(self):
         if self.state == 'present':
             result = self.resource_present(self.RESOURCE_FACT_NAME)
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __set_current_resource(self, resource_client):
         self.resource_client = resource_client

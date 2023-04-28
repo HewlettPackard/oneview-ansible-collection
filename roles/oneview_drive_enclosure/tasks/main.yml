@@ -14,7 +14,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
       refreshState: 'RefreshPending'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -28,7 +28,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -41,7 +41,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -54,7 +54,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_on
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -67,7 +67,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_on
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -80,7 +80,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -93,7 +93,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -106,7 +106,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -119,7 +119,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -133,7 +133,7 @@
     logout: true
     state: hard_reset
     data:
-      name: '{{ contents.drive_enclosure.drive_enclosure_name }}'
+      name: '0000A66101, bay 1'
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result

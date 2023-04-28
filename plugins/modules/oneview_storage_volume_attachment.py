@@ -40,6 +40,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
       description:
         - Indicates the desired state for the Storage Volume Attachment
@@ -100,6 +105,7 @@ class StorageVolumeAttachmentModule(OneViewModule):
     def __init__(self):
         argument_spec = {
             "sessionID": {"required": False, "type": 'str'},
+            "logout": {"required": False, "type": 'bool'},
             "state": {"required": True, "type": 'str'},
             "server_profile": {"required": True, "type": 'str'},
         }
@@ -115,6 +121,10 @@ class StorageVolumeAttachmentModule(OneViewModule):
         }
 
         attachment = self.resource_client.remove_extra_presentations(data)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+
         return dict(changed=True, msg=self.PRESENTATIONS_REMOVED,
                     ansible_facts=dict(server_profile=attachment))
 

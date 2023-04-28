@@ -57,6 +57,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -223,6 +228,7 @@ class RackManagerFactsModule(OneViewModule):
             options=dict(required=False, type='list'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.rack_managers)
@@ -247,6 +253,9 @@ class RackManagerFactsModule(OneViewModule):
             rack_managers = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts["rack_managers"] = rack_managers
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

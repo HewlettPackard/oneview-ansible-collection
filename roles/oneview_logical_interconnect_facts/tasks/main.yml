@@ -152,6 +152,7 @@
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
     options:
       - ethernet_settings

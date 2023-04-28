@@ -41,6 +41,7 @@
   oneview_repositories_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: "{{ repositories[0]['name'] }}"
   delegate_to: localhost
   when: repositories | default('', True)

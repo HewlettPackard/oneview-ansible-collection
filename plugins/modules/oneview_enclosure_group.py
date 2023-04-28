@@ -148,14 +148,11 @@ class EnclosureGroupModule(OneViewModule):
                     del self.data['configurationScript']
 
             result = self.resource_present('enclosure_group')
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
         elif self.state == 'absent':
             result = self.resource_absent()
-            if self.module.params.get('logout'):
-                self.oneview_client.connection.logout()
-            return result
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
 
 def main():

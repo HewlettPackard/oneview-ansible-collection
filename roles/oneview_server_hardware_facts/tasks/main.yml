@@ -114,6 +114,7 @@
   oneview_server_hardware_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     options:
     - firmwares:
         filter: [

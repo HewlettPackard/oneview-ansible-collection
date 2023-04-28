@@ -12,6 +12,7 @@
   oneview_storage_volume_attachment:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     state: "extra_presentations_removed"
     server_profile: "{{ server_profile_name }}"
   delegate_to: localhost

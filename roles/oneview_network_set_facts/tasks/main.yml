@@ -53,6 +53,7 @@
   oneview_network_set_facts:
     config: '{{ config }}'
     sessionID: "{{ session.ansible_facts.session }}"
+    logout: true
     name: '{{ contents.network_set.network_name }}'
     options:
         - withoutEthernet

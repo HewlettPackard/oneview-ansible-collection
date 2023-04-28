@@ -45,6 +45,11 @@ options:
         - Session ID to use for login to the appliance
       type: str
       required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -104,6 +109,7 @@ class SanManagerFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
+            logout=dict(required=False, type='bool')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.san_managers)
@@ -116,6 +122,9 @@ class SanManagerFactsModule(OneViewModule):
             san_managers = self.resource_client.get_by('name', name)
         else:
             san_managers = self.resource_client.get_all(**self.facts_params)
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(san_managers=san_managers))

@@ -48,6 +48,11 @@ options:
           - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     data:
         description:
             - Dict with Server Profile Template properties.
@@ -161,6 +166,7 @@ class ServerProfileTemplateModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['present', 'absent', 'refresh_state']
@@ -185,6 +191,9 @@ class ServerProfileTemplateModule(OneViewModule):
             result = self.__patch()
         else:
             result = self.__absent()
+
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
 
         return result
 

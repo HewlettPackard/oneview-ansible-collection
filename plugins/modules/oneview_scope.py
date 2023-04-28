@@ -41,6 +41,11 @@ options:
             - Session ID to use for login to the appliance
         type: str
         required: false
+    logout:
+      description:
+        - Param to logout from the appliance when the task is done.
+      type: bool
+      required: false
     state:
         description:
             - Indicates the desired state for the Scope resource.
@@ -135,6 +140,7 @@ class ScopeModule(OneViewModule):
 
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
+        logout=dict(required=False, type='bool'),
         state=dict(
             required=True,
             choices=['present', 'absent', 'resource_assignments_updated']
@@ -151,11 +157,14 @@ class ScopeModule(OneViewModule):
 
     def execute_module(self):
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
         elif self.state == 'resource_assignments_updated':
-            return self.__update_resource_assignments()
+            result = self.__update_resource_assignments()
+        if self.module.params.get('logout'):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         changed = False
