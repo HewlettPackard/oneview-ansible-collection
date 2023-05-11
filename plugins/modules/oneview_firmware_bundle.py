@@ -112,12 +112,16 @@ class FirmwareBundleModule(OneViewModule):
         self.resource_client = self.oneview_client.firmware_bundles
 
     def execute_module(self):
+        result = {}
         file_path = self.module.params['file_path']
         self.current_resource = self.resource_client.get_by_name(file_path)
         if self.state == 'present':
-            return self.__present(file_path)
+            result = self.__present(file_path)
         elif self.state == 'add_signature':
-            return self.__add_compsig(file_path)
+            result = self.__add_compsig(file_path)
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self, file_path):
         if not self.current_resource:

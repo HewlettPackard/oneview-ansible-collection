@@ -99,6 +99,8 @@ class ApplianceTimeAndLocaleConfigurationModule(OneViewModule):
     def execute_module(self):
         if self.state == 'present':
             changed, msg, appliance_time_and_locale_configuration = self.__present()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=changed, msg=msg, ansible_facts=appliance_time_and_locale_configuration)
 
     def __present(self):

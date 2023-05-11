@@ -125,10 +125,12 @@ class ServerHardwareTypeModule(OneViewModule):
         self.set_resource_object(self.oneview_client.server_hardware_types)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
+        return result
 
     def __present(self):
         changed, msg = False, self.MSG_ALREADY_PRESENT

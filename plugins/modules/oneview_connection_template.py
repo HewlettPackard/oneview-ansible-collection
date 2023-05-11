@@ -112,6 +112,9 @@ class ConnectionTemplateModule(OneViewModule):
             changed, msg = self.__present()
             ansible_facts = dict(connection_template=self.current_resource.data)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

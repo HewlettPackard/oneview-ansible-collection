@@ -112,6 +112,9 @@ class UplinkSetFactsModule(OneViewModule):
         else:
             resources = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=dict(uplink_sets=resources))
 

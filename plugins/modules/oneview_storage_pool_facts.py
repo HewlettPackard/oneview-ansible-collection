@@ -50,6 +50,7 @@ options:
         - List with options to gather additional facts about Storage Pools.
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
@@ -128,7 +129,7 @@ class StoragePoolFactsModule(OneViewModule):
             sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
-            options=dict(required=False, type='list')
+            options=dict(required=False, type='list', elements='str')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.storage_pools)
@@ -143,6 +144,8 @@ class StoragePoolFactsModule(OneViewModule):
 
         facts['storage_pools'] = pools
         self.__get_options(facts)
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False, ansible_facts=facts)
 
     def __get_options(self, facts):

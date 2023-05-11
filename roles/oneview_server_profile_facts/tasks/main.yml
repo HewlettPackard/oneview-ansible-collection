@@ -133,3 +133,9 @@
 - debug: var=server_profile_available_storage_system
 - debug: var=server_profile_available_storage_systems
 - debug: var=server_profile_available_targets
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

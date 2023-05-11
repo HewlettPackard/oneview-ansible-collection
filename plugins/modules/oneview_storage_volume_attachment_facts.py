@@ -71,6 +71,7 @@ options:
            specific path a C(pathUri) or a C(pathId) must be informed"
       required: false
       type: list
+      elements: str
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -199,7 +200,7 @@ class StorageVolumeAttachmentFactsModule(OneViewModule):
             storageVolumeAttachmentUri=dict(required=False, type='str'),
             storageVolumeUri=dict(required=False, type='str'),
             storageVolumeName=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             sessionID=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
         )
@@ -226,6 +227,9 @@ class StorageVolumeAttachmentFactsModule(OneViewModule):
         if self.options.get('extraUnmanagedStorageVolumes'):
             volumes_options = self.__get_sub_options(self.options['extraUnmanagedStorageVolumes'])
             facts['extra_unmanaged_storage_volumes'] = self.resource_client.get_extra_unmanaged_storage_volumes(**volumes_options)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

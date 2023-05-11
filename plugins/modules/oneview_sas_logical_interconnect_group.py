@@ -176,10 +176,14 @@ class SasLogicalInterconnectGroupModule(OneViewModule):
         self.set_resource_object(self.oneview_client.sas_logical_interconnect_groups)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         if "newName" in self.data:

@@ -110,6 +110,9 @@ class HypervisorManagerFactsModule(OneViewModule):
         else:
             hypervisor_managers = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(hypervisor_managers=hypervisor_managers))
 
 

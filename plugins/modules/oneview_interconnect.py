@@ -80,6 +80,7 @@ options:
         - List with ports to update. This option should be used together with C(update_ports) state.
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
@@ -177,7 +178,7 @@ class InterconnectModule(OneViewModule):
             sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
             ip=dict(required=False, type='str'),
-            ports=dict(required=False, type='list')
+            ports=dict(required=False, type='list', elements='str')
         )
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.interconnects)
@@ -200,6 +201,9 @@ class InterconnectModule(OneViewModule):
                 changed, msg, resource = self.device_reset(state)
             else:
                 changed, msg, resource = self.change_state(state)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(
             changed=changed,

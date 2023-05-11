@@ -94,3 +94,9 @@
           base64Data: "{{ certificate }}"
   delegate_to: localhost
   register: svr_cert
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

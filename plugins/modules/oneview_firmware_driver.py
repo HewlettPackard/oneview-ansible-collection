@@ -128,6 +128,7 @@ class FirmwareDriverModule(OneViewModule):
         self.set_resource_object(self.oneview_client.firmware_drivers)
 
     def execute_module(self):
+        result = {}
         data = deepcopy(self.data) or {}
         # Checks for the name and data['customBaselineName'] params for a name attribute to the Firmware Driver.
         if not data.get('customBaselineName') and not self.module.params.get('name'):
@@ -141,9 +142,15 @@ class FirmwareDriverModule(OneViewModule):
 
         if self.state == 'present':
             changed, msg, firmware_driver = self.__present(data)
-            return dict(changed=changed, msg=msg, ansible_facts=firmware_driver)
+            result = dict(changed=changed, msg=msg, ansible_facts=firmware_driver)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        if result:
+            return result
 
     def __present(self, data):
         if not self.current_resource:

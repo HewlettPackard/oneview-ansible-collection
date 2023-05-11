@@ -287,6 +287,7 @@ class ServerProfileModule(OneViewModule):
         self.server_template = None
 
     def execute_module(self):
+        result = {}
         self.auto_assign_server_hardware = self.module.params.get('auto_assign_server_hardware')
         params = self.module.params.get("params")
         self.params = params if params else {}
@@ -295,19 +296,20 @@ class ServerProfileModule(OneViewModule):
             created, changed, msg, server_profile = self.__present()
             facts = self.__gather_facts()
             facts['created'] = created
-            return dict(
+            result = dict(
                 changed=changed, msg=msg, ansible_facts=facts
             )
         elif self.state == 'absent':
             changed, msg = self.__delete_profile()
-            return dict(
+            result = dict(
                 changed=changed, msg=msg
             )
         elif self.state == "compliant":
             changed, msg, server_profile = self.__make_compliant()
-            return dict(
+            result = dict(
                 changed=changed, msg=msg, ansible_facts=self.__gather_facts()
             )
+        return result
 
     def __present(self):
         server_template_name = self.data.pop('serverProfileTemplateName', '')

@@ -85,3 +85,9 @@
 - debug: var=enclosure_script
 - debug: var=enclosure_environmental_configuration
 - debug: var=enclosure_utilization
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

@@ -37,3 +37,9 @@
   when: san_managers | default('', True)
 
 - debug: var=san_managers
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

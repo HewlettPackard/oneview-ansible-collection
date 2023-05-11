@@ -115,6 +115,8 @@ class StorageVolumeAttachmentModule(OneViewModule):
         }
 
         attachment = self.resource_client.remove_extra_presentations(data)
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=True, msg=self.PRESENTATIONS_REMOVED,
                     ansible_facts=dict(server_profile=attachment))
 

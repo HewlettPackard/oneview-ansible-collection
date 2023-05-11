@@ -136,14 +136,20 @@ class EnclosureGroupModule(OneViewModule):
         self.set_resource_object(self.oneview_client.enclosure_groups)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
             if self.current_resource and "configurationScript" in self.data:
                 if self.data['configurationScript'] == self.current_resource.get_script():
                     del self.data['configurationScript']
 
-            return self.resource_present('enclosure_group')
+            result = self.resource_present('enclosure_group')
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        return result
 
 
 def main():

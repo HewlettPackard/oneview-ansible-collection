@@ -68,6 +68,8 @@ class VersionFactsModule(OneViewModuleBase):
 
     def execute_module(self):
         version = self.oneview_client.versions.get_version()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(version=version))
 

@@ -108,6 +108,7 @@ class IdPoolsIpv4RangeModule(OneViewModule):
 
     def execute_module(self):
         self.current_resource = None
+        result = {}
         # If Range URI is provided then it sets the resource client
         if self.data.get('uri'):
             self.current_resource = self.resource_client.get_by_uri(self.data.get('uri'))
@@ -120,9 +121,15 @@ class IdPoolsIpv4RangeModule(OneViewModule):
                     self.current_resource = maybe_resource
 
         if self.state == 'present':
-            return self._present()
+            result = self._present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        if result:
+            return result
 
     def _present(self):
         # If no resource was found during get operation, it creates new one

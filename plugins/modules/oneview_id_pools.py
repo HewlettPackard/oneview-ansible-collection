@@ -151,6 +151,9 @@ class IdPoolsModule(OneViewModule):
         elif self.state == 'validate':
             changed, msg, id_pool = self.__validate({'idList': idList}, poolType)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed, msg=msg, ansible_facts=dict(id_pool=id_pool))
 
     def __update_pool_type(self, poolType):

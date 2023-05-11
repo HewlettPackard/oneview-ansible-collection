@@ -128,6 +128,9 @@ class IdPoolsIpv4SubnetFactsModule(OneViewModule):
         else:
             id_pools_ipv4_subnets = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(id_pools_ipv4_subnets=id_pools_ipv4_subnets))
 
 

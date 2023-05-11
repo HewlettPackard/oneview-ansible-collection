@@ -53,6 +53,7 @@ options:
         - "List with options to gather additional facts about a SAS Logical JBOD and related resources.
           Options allowed: C(jbod_drives)."
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -145,7 +146,7 @@ class SasLogicalJbodFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'),
                          uri=dict(required=False, type='str'),
                          sessionID=dict(required=False, type='str'),
-                         options=dict(type='list'),
+                         options=dict(type='list', elements='str'),
                          params=dict(type='dict'))
 
     def __init__(self):
@@ -166,6 +167,9 @@ class SasLogicalJbodFactsModule(OneViewModule):
             sas_logical_jbods = []
 
         ansible_facts['sas_logical_jbods'] = sas_logical_jbods
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

@@ -76,6 +76,8 @@ class ApplianceSshAccessFactsModule(OneViewModule):
     def execute_module(self):
         appliance_ssh_access = self.resource_client.get_all()
         appliance_ssh_access = appliance_ssh_access.data
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(appliance_ssh_access=appliance_ssh_access))
 

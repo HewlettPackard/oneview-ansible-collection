@@ -293,6 +293,10 @@ class DriveEnclosureModule(OneViewModule):
                 changed, msg, resource = self.__refresh()
             else:
                 changed, msg, resource = self.__patch(self.state)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=dict(drive_enclosure=resource))

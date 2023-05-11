@@ -57,3 +57,9 @@
 
 - debug: var=logical_enclosures
 - debug: var=logical_enclosure_script
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

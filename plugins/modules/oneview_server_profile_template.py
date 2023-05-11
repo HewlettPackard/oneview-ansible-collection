@@ -186,6 +186,9 @@ class ServerProfileTemplateModule(OneViewModule):
         else:
             result = self.__absent()
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return result
 
     def __present(self):

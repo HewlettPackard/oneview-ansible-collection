@@ -54,6 +54,7 @@ options:
         - "To gather facts about C(compliancePreview), a Hypervisor Cluster Profile name is required.
           Otherwise, these options will be ignored."
       type: list
+      elements: str
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -136,7 +137,7 @@ class HypervisorClusterProfileFactsModule(OneViewModule):
             sessionID=dict(required=False, type='str'),
             name=dict(type='str'),
             uri=dict(type='str'),
-            options=dict(type='list'),
+            options=dict(type='list', elements='str'),
             params=dict(type='dict')
         )
         super().__init__(additional_arg_spec=argument_spec)
@@ -155,6 +156,9 @@ class HypervisorClusterProfileFactsModule(OneViewModule):
             ansible_facts = self.__gather_option_facts()
 
         ansible_facts["hypervisor_cluster_profiles"] = hypervisor_cluster_profiles
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

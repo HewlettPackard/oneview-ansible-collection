@@ -52,6 +52,7 @@ options:
           Options allowed: C(script), C(environmentalConfiguration), and C(utilization). For the option C(utilization),
           you can provide specific parameters."
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -162,7 +163,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 
 class EnclosureFactsModule(OneViewModule):
-    argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
+    argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list', elements='str'), params=dict(type='dict'))
 
     def __init__(self):
         super().__init__(additional_arg_spec=self.argument_spec)
@@ -182,6 +183,9 @@ class EnclosureFactsModule(OneViewModule):
             enclosures = []
 
         ansible_facts['enclosures'] = enclosures
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

@@ -99,3 +99,9 @@
 
 - debug: var=storage_volume_templates
 - debug: var=connectable_volume_templates
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

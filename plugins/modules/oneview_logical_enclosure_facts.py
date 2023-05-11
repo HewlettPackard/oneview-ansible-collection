@@ -48,6 +48,7 @@ options:
           Options allowed: script."
       required: false
       type: list
+      elements: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
@@ -130,7 +131,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class LogicalEnclosureFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
-        options=dict(required=False, type='list'),
+        options=dict(required=False, type='list', elements='str'),
         params=dict(required=False, type='dict'),
         sessionID=dict(required=False, type='str'),
     )
@@ -150,6 +151,9 @@ class LogicalEnclosureFactsModule(OneViewModule):
             logical_enclosures = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['logical_enclosures'] = logical_enclosures
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

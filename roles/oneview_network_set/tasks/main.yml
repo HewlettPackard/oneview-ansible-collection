@@ -102,3 +102,9 @@
         maximumBandwidth: 15000
         typicalBandwidth: 3000
   delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

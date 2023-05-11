@@ -54,6 +54,7 @@ options:
           C(configuration_script) Gets the configuration script for an Enclosure Group."
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -120,7 +121,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 class EnclosureGroupFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
-        options=dict(required=False, type='list'),
+        options=dict(required=False, type='list', elements='str'),
         params=dict(required=False, type='dict'),
         sessionID=dict(required=False, type='str')
     )
@@ -143,6 +144,10 @@ class EnclosureGroupFactsModule(OneViewModule):
             enclosure_groups = self.resource_client.get_all(**self.facts_params)
 
         facts["enclosure_groups"] = enclosure_groups
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=facts)
 
 

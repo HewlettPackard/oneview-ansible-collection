@@ -185,3 +185,9 @@
   delegate_to: localhost
   when: (storage_pools is not none and storage_pools is not undefined and 
           storage_volume_templates is not none and storage_volume_templates is not undefined)
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

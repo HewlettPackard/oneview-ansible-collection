@@ -353,8 +353,9 @@ class ServerHardwareModule(OneViewModule):
 
     def execute_module(self):
 
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'multiple_servers_added':
             changed, msg, ansible_facts = self.__add_multiple_rack_mount_servers()
         elif self.state == 'check_firmware_compliance':
@@ -364,7 +365,7 @@ class ServerHardwareModule(OneViewModule):
                 raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
 
             if self.state == 'absent':
-                return self.resource_absent(method='remove')
+                result = self.resource_absent(method='remove')
             else:
                 if not self.current_resource:
                     raise OneViewModuleResourceNotFound(self.MSG_SERVER_HARDWARE_NOT_FOUND)
@@ -381,7 +382,8 @@ class ServerHardwareModule(OneViewModule):
                     changed, msg, ansible_facts = self.__update_firmware()
                 else:
                     changed, msg, ansible_facts = self.__patch()
-
+        if result:
+            return result
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

@@ -301,22 +301,28 @@ class VolumeModule(OneViewModule):
         return name
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
-        if self.state == 'managed':
-            return self.__managed()
+            result = self.__present()
+        elif self.state == 'managed':
+            result = self.__managed()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
         else:
             if not self.current_resource:
                 raise OneViewModuleResourceNotFound(self.MSG_NOT_FOUND)
 
             if self.state == 'repaired':
-                return self.__repair()
+                result = self.__repair()
             elif self.state == 'snapshot_created':
-                return self.__create_snapshot()
+                result = self.__create_snapshot()
             elif self.state == 'snapshot_deleted':
-                return self.__delete_snapshot()
+                result = self.__delete_snapshot()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __present(self):
         # get volume template uri from name

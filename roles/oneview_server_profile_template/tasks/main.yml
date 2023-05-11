@@ -80,3 +80,9 @@
     data:
       name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
   delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

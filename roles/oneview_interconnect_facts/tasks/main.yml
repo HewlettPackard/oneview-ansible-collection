@@ -119,3 +119,9 @@
 
 - debug: msg="Interconnect '{{ interconnects[0]['name'] }}'"
 - debug: var=interconnect_pluggable_module_information
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

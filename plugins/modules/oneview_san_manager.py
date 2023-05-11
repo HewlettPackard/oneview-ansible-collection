@@ -237,18 +237,19 @@ class SanManagerModule(OneViewModule):
         self.san_providers = self.oneview_client.san_providers
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
             if self.data.get('name'):
                 self.current_resource = self.resource_client.get_by_name(self.data['name'])
                 if self.current_resource:
-                    return self.__update()
+                    result = self.__update()
                 else:
-                    return self.__present()
+                    result = self.__present()
             else:
-                return self.__present()
+                result = self.__present()
         else:
             if self.state == 'absent':
-                return self.resource_absent(method='remove')
+                result = self.resource_absent(method='remove')
             else:
                 if self.data.get('name'):
                     self.current_resource = self.resource_client.get_by_name(self.data['name'])
@@ -260,9 +261,13 @@ class SanManagerModule(OneViewModule):
                             'refreshState': self.data['refreshState']
                         }
                         self.current_resource.update(info, self.current_resource.data.get('uri'))
-                        return dict(changed=False,
-                                    msg=self.MSG_SAN_MANAGER_REFRESHED,
-                                    ansible_facts=dict(san_managers=self.current_resource.data))
+                        result = dict(changed=False,
+                                      msg=self.MSG_SAN_MANAGER_REFRESHED,
+                                      ansible_facts=dict(san_managers=self.current_resource.data))
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        if result:
+            return result
 
     def __present(self):
         if not self.data.get('connectionInfo'):

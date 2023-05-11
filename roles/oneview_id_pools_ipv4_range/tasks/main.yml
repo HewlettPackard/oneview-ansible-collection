@@ -163,3 +163,9 @@
         - startAddress: "{{ contents.id_pools_ipv4_range.start_address }}"
           endAddress: "{{ contents.id_pools_ipv4_range.end_address2 }}"
   delegate_to: localhost 
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

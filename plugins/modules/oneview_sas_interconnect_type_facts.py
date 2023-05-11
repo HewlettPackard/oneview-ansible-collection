@@ -130,6 +130,9 @@ class SasInterconnectTypeFactsModule(OneViewModule):
 
         ansible_facts['sas_interconnect_types'] = sas_interconnect_types
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=ansible_facts)
 

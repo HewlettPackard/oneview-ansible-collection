@@ -83,3 +83,9 @@
         isManaged: True
   delegate_to: localhost
   when: (storage_systems is not none and storage_systems is not undefined)
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

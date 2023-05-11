@@ -139,10 +139,14 @@ class HypervisorManagerModule(OneViewModule):
         self.set_resource_object(self.oneview_client.hypervisor_managers)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self._present()
+            result = self._present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def _present(self):
         scope_uris = self.data.pop('scopeUris', None)

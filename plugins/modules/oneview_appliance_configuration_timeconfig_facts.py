@@ -73,6 +73,8 @@ class ApplianceConfigurationTimeconfigFactsModule(OneViewModule):
 
     def execute_module(self):
         appliance_configuration_timeconfig = self.resource_client.get_all()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(appliance_configuration_timeconfig=appliance_configuration_timeconfig))
 

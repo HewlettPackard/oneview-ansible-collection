@@ -50,3 +50,9 @@
   delegate_to: localhost
 
 - debug: var=sas_logical_interconnect_groups
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

@@ -142,14 +142,16 @@ class FcoeNetworkModule(OneViewModule):
         self.set_resource_object(self.oneview_client.fcoe_networks)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
             else:
-                return self.resource_absent()
-
+                result = self.resource_absent()
+        if result:
+            return result
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 
     def __present(self):

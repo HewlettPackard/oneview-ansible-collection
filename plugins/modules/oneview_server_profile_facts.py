@@ -57,6 +57,7 @@ options:
         - "To gather facts about C(compliancePreview), C(messages), C(newProfileTemplate) and C(transformation)
            a Server Profile name is required. Otherwise, these options will be ignored."
       type: list
+      elements: str
 notes:
     - The option C(newProfileTemplate), C(available_servers) is only available till API version 1200.
 
@@ -261,7 +262,7 @@ class ServerProfileFactsModule(OneViewModule):
         name=dict(type='str'),
         sessionID=dict(required=False, type='str'),
         uri=dict(type='str'),
-        options=dict(type='list'),
+        options=dict(type='list', elements='str'),
         params=dict(type='dict')
     )
 
@@ -282,6 +283,9 @@ class ServerProfileFactsModule(OneViewModule):
             ansible_facts = self.__gather_option_facts()
 
         ansible_facts["server_profiles"] = server_profiles
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

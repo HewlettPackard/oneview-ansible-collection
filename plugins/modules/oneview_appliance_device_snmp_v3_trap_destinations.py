@@ -140,15 +140,20 @@ class ApplianceDeviceSnmpV3TrapDestinationsModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v3_trap_destinations)
 
     def execute_module(self):
+        result = {}
         if self.oneview_client.api_version < 600:
             raise OneViewModuleValueError(self.MSG_API_VERSION_ERROR)
 
         self.__replace_snmpv3_username_by_userid()
 
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def __replace_snmpv3_username_by_userid(self):
         if self.data and self.data.get('userName'):

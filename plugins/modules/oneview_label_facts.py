@@ -149,6 +149,10 @@ class LabelFactsModule(OneViewModule):
             labels = self.oneview_client.labels.get_by_resource(self.module.params['resourceUri']).data
         else:
             labels = self.resource_client.get_all(**self.facts_params)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(labels=labels))
 
 

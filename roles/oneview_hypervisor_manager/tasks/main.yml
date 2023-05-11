@@ -129,3 +129,9 @@
       username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
       password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
   delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

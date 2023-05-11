@@ -53,6 +53,7 @@ options:
            C(getAllMacAddress)."
       required: false
       type: list
+      elements: str
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -95,7 +96,7 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
         params=dict(required=False, type='dict'),
-        options=dict(required=False, type='list')
+        options=dict(required=False, type='list', elements='str')
     )
 
     def __init__(self):
@@ -110,6 +111,9 @@ class ApplianceNetworkInterfaceFactsModule(OneViewModule):
             network_interfaces = self.resource_client.get_all_mac_address()
         else:
             network_interfaces = self.resource_client.get_all().data
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=dict(appliance_network_interfaces=network_interfaces))

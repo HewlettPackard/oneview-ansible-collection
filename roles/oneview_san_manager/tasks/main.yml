@@ -136,3 +136,9 @@
       name: "{{ contents.san_manager.san_manager_hostname }}"
   delegate_to: localhost
   register: deleted
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
