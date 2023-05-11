@@ -74,6 +74,7 @@ import json
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 try:
     from hpeOneView.connection import connection
+    from hpeOneView.exceptions import HPEOneViewException
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
@@ -82,6 +83,7 @@ except ImportError:
 class LogoutSessionModule(OneViewModule):
     MSG_LOGGED_OUT = 'Session logged out successfully.'
     MSG_LOGOUT_FAILED = 'Session logout failed.'
+    MSG_MISSING_SESSION_ID = 'SessionID parameter is missing.'
 
     def __init__(self):
         additional_arg_spec = dict(sessionID=dict(required=True, type='str'))
@@ -97,8 +99,11 @@ class LogoutSessionModule(OneViewModule):
         if oneview_config:
             conn = connection(oneview_config.get('ip'), oneview_config.get('api_version'),
                               oneview_config.get('ssl_certificate', False), oneview_config.get('timeout'))
-            conn.set_session_id(self.module.params.get('sessionID'))
-            conn.delete('/rest/login-sessions', oneview_config.get('credentials'))
+            try:
+                conn.set_session_id(self.module.params.get('sessionID'))
+                conn.delete('/rest/login-sessions', oneview_config.get('credentials'))
+            except HPEOneViewException as exception:
+                return dict(changed=False, msg=self.MSG_LOGOUT_FAILED)
             return dict(changed=True, msg=self.MSG_LOGGED_OUT)
         else:
             return dict(changed=False, msg=self.MSG_LOGOUT_FAILED)
