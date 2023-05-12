@@ -139,6 +139,40 @@ example:
 
 A SessionID remains valid for 24 hours.
 
+#### Logout from Session
+
+New sessionID will be generated for each task run from Ansible collection SDK if a sessionID is not passed as param to task. And the session will be logged out once task is done.
+
+If a sessionID is passed as param, it will not do the default logout as above. User need to do an explicit logout as below.
+
+```yaml
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+```
+
 #### Parameters in roles
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.
