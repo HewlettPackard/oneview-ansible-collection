@@ -143,7 +143,25 @@ A SessionID remains valid for 24 hours.
 
 New sessionID will be generated for each task run from Ansible collection SDK if a sessionID is not passed as param to task. And the session will be logged out once task is done.
 
-If a sessionID is passed as param, it will not do the default logout as above. User need to do an explicit logout as below.
+For example, In the below task, session will be logged out once it is done.
+
+```yaml
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    state: present
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+```
+
+If a sessionID is passed as param, it will not do the default logout as above. User need to do an explicit logout.
+
+In this example, a session is fetched, then the sessionID is passed as param for the create fc network task. In this case, it will not do a session logout and user can logout the session once all tasks are done.
 
 ```yaml
 - name: Fetch Session Id
