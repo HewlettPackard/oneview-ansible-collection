@@ -1,4 +1,10 @@
 # Ansible Collections for HPE OneView Change Log
+## v8.4.0
+This release extends the planned support of the collections to OneView REST API version 5400(OneView v8.4).
+
+#### Major Changes
+ 1. OneView Session logout Implementation
+
 ## v8.3.0
 This release extends the planned support of the collections to OneView REST API version 5200(OneView v8.3).
 

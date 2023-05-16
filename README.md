@@ -141,9 +141,15 @@ A SessionID remains valid for 24 hours.
 
 #### Logout from Session
 
-New sessionID will be generated for each task run from Ansible collection SDK if a sessionID is not passed as param to task. And the session will be logged out once task is done.
+Ansible SDK handles OneView session in two different way
 
-For example, In the below task, session will be logged out once it is done.
+1. By default OneView session will be logged out when each task run from Ansible collection SDK. In this case always new session gets created whenever any task invoked from the SDK
+
+2. One can run multiple tasks using same session. In this case first one needs to use task to get a session id and then use the same session id for all the subsequent tasks. At the end, logout task need to be invoked to delete that specific session
+
+
+Scenario 1: In the below task, session will be logged out once it is done. So if we run multiple tasks then in no condition multiple sessions remain active.
+
 
 ```yaml
 - name: Create a Fibre Channel Network
@@ -159,9 +165,7 @@ For example, In the below task, session will be logged out once it is done.
   delegate_to: localhost
 ```
 
-If a sessionID is passed as param, it will not do the default logout as above. User need to do an explicit logout.
-
-In this example, a session is fetched, then the sessionID is passed as param for the create fc network task. In this case, it will not do a session logout and user can logout the session once all tasks are done.
+Scenario-2: In this example, a session is fetched, then the OneView session id is passed as param for the create fc network task. In this case, it will not do a session logout and user can logout the session once all tasks are done.
 
 ```yaml
 - name: Fetch Session Id
