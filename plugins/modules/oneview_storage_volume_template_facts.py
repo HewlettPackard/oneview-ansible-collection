@@ -46,6 +46,7 @@ options:
             Options available: C(connectableVolumeTemplates), C(reachableVolumeTemplates), C(compatibleSystems)"
       required: false
       type: list
+      elements: str
     sessionID:
       description:
         - Session ID to use for login to the appliance
@@ -160,7 +161,7 @@ class StorageVolumeTemplateFactsModule(OneViewModule):
         argument_spec = dict(
             sessionID=dict(required=False, type='str'),
             name=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict'),
         )
         super().__init__(additional_arg_spec=argument_spec)
@@ -187,6 +188,9 @@ class StorageVolumeTemplateFactsModule(OneViewModule):
         if 'reachableVolumeTemplates' in self.options:
             ansible_facts['reachable_volume_templates'] = self.resource_client.get_reachable_volume_templates(
                 **self.facts_params)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

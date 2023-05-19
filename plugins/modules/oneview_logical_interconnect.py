@@ -415,6 +415,9 @@ class LogicalInterconnectModule(OneViewModule):
         elif self.state == 'scopes_updated':
             changed, msg, ansible_facts = self.__update_scopes()
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         if ansible_facts:
             result = dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
         else:

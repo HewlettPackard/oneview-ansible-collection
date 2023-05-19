@@ -140,6 +140,9 @@ class SasLogicalInterconnectGroupFactsModule(OneViewModule):
 
         ansible_facts['sas_logical_interconnect_groups'] = sas_logical_interconnect_groups
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=ansible_facts)
 

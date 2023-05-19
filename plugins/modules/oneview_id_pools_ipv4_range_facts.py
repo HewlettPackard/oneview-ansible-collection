@@ -64,6 +64,7 @@ options:
           C(allocatedFragments) gets all fragments that have been allocated in range.
           C(freeFragments) gets all free fragments in an IPv4 range."
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -149,7 +150,7 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             subnetUri=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str')
         )
@@ -185,6 +186,9 @@ class IdPoolsIpv4RangeFactsModule(OneViewModule):
         self.__get_options(facts, id_pools_ipv4_ranges, is_specific_resource)
 
         facts['id_pools_ipv4_ranges'] = [id_pools_ipv4_ranges] if is_specific_resource else id_pools_ipv4_ranges
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

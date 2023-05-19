@@ -269,6 +269,9 @@ class LogicalEnclosureModule(OneViewModule):
             elif self.state == 'updated_from_group':
                 changed, msg, ansible_facts = self.__update_from_group()
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

@@ -139,17 +139,19 @@ class FcNetworkModule(OneViewModule):
 
     def execute_module(self):
         changed, msg, ansible_facts = False, '', {}
-
+        result = {}
         if self.state == 'present':
-            return self._present()
+            result = self._present()
         elif self.state == 'absent':
             if self.data.get('networkUris'):
                 changed, msg, ansible_facts = self.__bulk_absent()
             elif not self.module.check_mode:
-                return self.resource_absent()
+                result = self.resource_absent()
             else:
-                return self.check_resource_absent()
+                result = self.check_resource_absent()
 
+        if result:
+            return result
         return dict(changed=changed, msg=msg, ansible_facts=ansible_facts)
 
     def _present(self):

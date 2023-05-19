@@ -94,3 +94,9 @@
 
 - debug: var=storage_volume_attachments
 - debug: var=storage_volume_attachment_paths
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

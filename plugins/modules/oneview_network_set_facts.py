@@ -53,6 +53,7 @@ options:
           Option allowed: C(withoutEthernet).
           The option C(withoutEthernet) retrieves the list of network_sets excluding Ethernet networks."
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -144,7 +145,7 @@ class NetworkSetFactsModule(OneViewModule):
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
         name=dict(type='str'),
-        options=dict(type='list'),
+        options=dict(type='list', elements='str'),
         params=dict(type='dict'),
     )
 
@@ -163,7 +164,8 @@ class NetworkSetFactsModule(OneViewModule):
             network_sets = self.resource_client.get_by('name', name)
         else:
             network_sets = self.resource_client.get_all(**self.facts_params)
-
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(network_sets=network_sets))
 

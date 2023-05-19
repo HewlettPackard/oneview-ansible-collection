@@ -172,6 +172,7 @@ from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_fact
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_template import ServerProfileTemplateModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_get_session_id import GetSessionIDModule
+from ansible_collections.hpe.oneview.plugins.modules.oneview_logout_session import LogoutSessionModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_pool import StoragePoolModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_pool_facts import StoragePoolFactsModule
 from ansible_collections.hpe.oneview.plugins.modules.oneview_storage_system import StorageSystemModule

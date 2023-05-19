@@ -53,6 +53,7 @@ options:
           Options allowed: C(associatedProfiles) and C(associatedUplinkGroups)."
       required: false
       type: list
+      elements: str
 extends_documentation_fragment:
     - hpe.oneview.oneview
     - hpe.oneview.oneview.params
@@ -133,7 +134,7 @@ class EthernetNetworkFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(required=False, type='str'),
         sessionID=dict(required=False, type='str'),
-        options=dict(required=False, type='list'),
+        options=dict(required=False, type='list', elements='str'),
         params=dict(required=False, type='dict')
     )
 
@@ -154,6 +155,9 @@ class EthernetNetworkFactsModule(OneViewModule):
             ethernet_networks = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['ethernet_networks'] = ethernet_networks
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

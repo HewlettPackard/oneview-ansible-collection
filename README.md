@@ -139,6 +139,62 @@ example:
 
 A SessionID remains valid for 24 hours.
 
+#### Logout from Session
+
+Ansible SDK handles OneView session in two different way
+
+1. By default OneView session will be logged out when each task run from Ansible collection SDK. In this case always new session gets created whenever any task invoked from the SDK
+
+2. One can run multiple tasks using same session. In this case first one needs to use task to get a session id and then use the same session id for all the subsequent tasks. At the end, logout task need to be invoked to delete that specific session
+
+
+Scenario 1: In the below task, session will be logged out once it is done. So if we run multiple tasks then in no condition multiple sessions remain active.
+
+
+```yaml
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    state: present
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+```
+
+Scenario-2: In this example, a session is fetched, then the OneView session id is passed as param for the create fc network task. In this case, it will not do a session logout and user can logout the session once all tasks are done.
+
+```yaml
+- name: Fetch Session Id
+  oneview_get_session_id:
+    config: "{{ config }}"
+    name: "Test_Session"
+  delegate_to: localhost
+  register: session
+
+- name: Create a Fibre Channel Network
+  oneview_fc_network:
+    hostname: <hostname>
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: present
+    data:
+      name: "{{ network_name }}"
+      fabricType: 'FabricAttach'
+      linkStabilityTime: '30'
+      autoLoginRedistribution: true
+  no_log: true
+  delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
+```
+
 #### Parameters in roles
 
 The another way is to pass in your HPE OneView credentials to your tasks is through explicit specification on the task.

@@ -35,3 +35,9 @@
     name: "SY 480 Gen9 1"
   delegate_to: localhost
 - debug: var=server_hardware_types
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

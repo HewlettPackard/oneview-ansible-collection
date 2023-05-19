@@ -56,3 +56,9 @@
 
 - debug: var=hypervisor_cluster_profiles
 - debug: var=hypervisor_cluster_profile_compliance_preview
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

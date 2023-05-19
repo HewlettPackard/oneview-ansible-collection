@@ -80,3 +80,9 @@
 - debug: var=id_pools_ipv4_ranges
 - debug: var=id_pools_ipv4_ranges_free_fragments
 - debug: var=id_pools_ipv4_ranges_allocated_fragments
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

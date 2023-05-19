@@ -197,6 +197,9 @@ class SasLogicalInterconnectModule(OneViewModule):
         else:
             result = dict(changed=changed, msg=msg)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return result
 
     def __compliance(self):

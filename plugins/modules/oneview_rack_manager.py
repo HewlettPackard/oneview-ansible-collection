@@ -176,23 +176,28 @@ class RackManagerModule(OneViewModule):
 
     def execute_module(self):
 
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         else:
             if not self.data.get('name'):
                 raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
 
             if self.state == 'absent':
-                return self.resource_absent(method='remove')
+                result = self.resource_absent(method='remove')
             else:
                 if not self.current_resource:
                     raise OneViewModuleResourceNotFound(self.MSG_RACK_MANAGER_NOT_FOUND)
                 else:
                     if self.state == 'refresh_state_set':
                         self.current_resource.patch('RefreshRackManagerOp', '', '')
-                        return dict(changed=True,
-                                    msg=self.MSG_RACK_MANAGER_REFRESHED,
-                                    ansible_facts=dict(rack_manager=self.current_resource.data))
+                        result = dict(changed=True,
+                                      msg=self.MSG_RACK_MANAGER_REFRESHED,
+                                      ansible_facts=dict(rack_manager=self.current_resource.data))
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        if result:
+            return result
 
     def __present(self):
 

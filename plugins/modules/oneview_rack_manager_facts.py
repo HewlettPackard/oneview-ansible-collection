@@ -47,6 +47,7 @@ options:
           C(remote_support_settings)."
       required: false
       type: list
+      elements: str
     uri:
       description:
         - Rack Manager Uri
@@ -220,7 +221,7 @@ class RackManagerFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
         )
@@ -247,6 +248,9 @@ class RackManagerFactsModule(OneViewModule):
             rack_managers = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts["rack_managers"] = rack_managers
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

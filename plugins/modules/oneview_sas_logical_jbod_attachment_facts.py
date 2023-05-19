@@ -138,6 +138,9 @@ class SasLogicalJbodAttachmentFactsModule(OneViewModule):
 
         ansible_facts['sas_logical_jbod_attachments'] = sas_logical_jbod_attachments
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=ansible_facts)
 

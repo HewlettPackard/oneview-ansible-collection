@@ -523,7 +523,10 @@ class EnclosureModule(OneViewModule):
         if self.state == 'present':
             changed, msg, resource = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent('remove')
+            result = self.resource_absent('remove')
+            if not self.module.params.get("sessionID"):
+                self.oneview_client.connection.logout()
+            return result
         else:
             if not self.current_resource:
                 raise OneViewModuleResourceNotFound(self.MSG_ENCLOSURE_NOT_FOUND)
@@ -542,6 +545,9 @@ class EnclosureModule(OneViewModule):
                 changed, msg, resource = self.__import_certificate_request()
             else:
                 changed, msg, resource = self.__patch()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=changed,
                     msg=msg,

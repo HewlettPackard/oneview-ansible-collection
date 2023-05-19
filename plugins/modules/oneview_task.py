@@ -108,6 +108,9 @@ class TaskModule(OneViewModule):
             error_msg = '; '.join(str(e) for e in exception.args)
             raise OneViewModuleException(error_msg)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(
             changed=True,
             msg=self.MSG_TASK_UPDATED,

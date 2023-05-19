@@ -57,3 +57,9 @@
       dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
 - debug: var=appliance_time_and_locale_configuration
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

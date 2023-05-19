@@ -144,13 +144,19 @@ class ApplianceDeviceSnmpV3UsersModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v3_users)
 
     def execute_module(self):
+        result = {}
         parameter_to_ignore = ["authenticationPassphrase", "privacyPassphrase"]
         if self.oneview_client.api_version < 600:
             raise OneViewModuleValueError(self.MSG_API_VERSION_ERROR)
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME, parameter_to_ignore=parameter_to_ignore)
+            result = self.resource_present(self.RESOURCE_FACT_NAME, parameter_to_ignore=parameter_to_ignore)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        return result
 
 
 def main():

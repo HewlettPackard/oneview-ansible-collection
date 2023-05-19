@@ -52,6 +52,7 @@ options:
            C(defaultConnectionTemplate)."
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -126,7 +127,7 @@ class ConnectionTemplateFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict')
         )
         super().__init__(additional_arg_spec=argument_spec)
@@ -141,6 +142,9 @@ class ConnectionTemplateFactsModule(OneViewModule):
             ansible_facts['connection_templates'] = self.get_by_name(self.module.params['name'])
         else:
             ansible_facts['connection_templates'] = self.resource_client.get_all(**self.facts_params)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

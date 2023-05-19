@@ -80,3 +80,9 @@
       password: "{{ contents.appliance_proxy.password }}"
       communicationProtocol: "HTTP"
   delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

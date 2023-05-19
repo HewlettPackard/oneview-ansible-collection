@@ -106,6 +106,9 @@ class CertificatesServerFactsModule(OneViewModule):
             remote_cert = self.resource_client.get_remote(remote_address)
             ansible_facts['remote_certificate'] = remote_cert.data
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=ansible_facts)
 
 

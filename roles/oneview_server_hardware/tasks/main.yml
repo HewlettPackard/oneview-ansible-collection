@@ -209,3 +209,9 @@
         name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

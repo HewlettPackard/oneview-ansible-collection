@@ -127,6 +127,9 @@ class TaskFactsModule(OneViewModule):
     def execute_module(self):
         facts = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(tasks=facts))
 
 

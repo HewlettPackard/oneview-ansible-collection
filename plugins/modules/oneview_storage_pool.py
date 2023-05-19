@@ -148,6 +148,7 @@ class StoragePoolModule(OneViewModule):
 
     def execute_module(self):
 
+        result = {}
         if not self.data.get("poolName") and not self.data.get("name"):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING)
 
@@ -155,9 +156,10 @@ class StoragePoolModule(OneViewModule):
             self.current_resource = self.resource_client.get_by_name(self.data.get("poolName"))
 
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
+        return result
 
     def __present(self):
         changed = False

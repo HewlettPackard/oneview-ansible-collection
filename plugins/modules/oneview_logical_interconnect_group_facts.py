@@ -136,6 +136,9 @@ class LogicalInterconnectGroupFactsModule(OneViewModule):
         else:
             ligs = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(logical_interconnect_groups=ligs))
 
 

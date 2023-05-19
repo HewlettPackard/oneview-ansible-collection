@@ -124,6 +124,9 @@ class ApplianceDeviceSnmpV3UsersFactsModule(OneViewModule):
         elif not self.module.params.get("name") and not self.module.params.get('uri'):
             appliance_device_snmp_v3_users = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False, ansible_facts=dict(appliance_device_snmp_v3_users=appliance_device_snmp_v3_users))
 
 

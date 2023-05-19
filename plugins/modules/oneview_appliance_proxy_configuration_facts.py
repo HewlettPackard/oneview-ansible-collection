@@ -71,6 +71,9 @@ class ApplianceProxyConfigurationFactsModule(OneViewModule):
     def execute_module(self):
         proxy_configuration = self.resource_client.get_all()
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=dict(appliance_proxy_configuration=proxy_configuration.data))
 

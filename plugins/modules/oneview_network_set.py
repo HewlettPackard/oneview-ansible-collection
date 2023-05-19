@@ -147,10 +147,12 @@ class NetworkSetModule(OneViewModule):
 
     def execute_module(self):
 
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+        return result
 
     def __present(self):
 

@@ -31,3 +31,9 @@
        - getAllMacAddress
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

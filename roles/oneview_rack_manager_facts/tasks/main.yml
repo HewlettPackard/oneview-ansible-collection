@@ -92,3 +92,9 @@
 - debug: var=rack_manager_managers
 - debug: var=rack_manager_env_conf
 - debug: var=rack_manager_remote_support
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

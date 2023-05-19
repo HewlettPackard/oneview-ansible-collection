@@ -139,7 +139,8 @@ class ApplianceDeviceSnmpV1TrapDestinationsFactsModule(OneViewModule):
             appliance_device_snmp_v1_trap_destinations = self.current_resource.data
         elif not self.module.params.get('name') or self.module.params.get('uri'):
             appliance_device_snmp_v1_trap_destinations = self.resource_client.get_all(**self.facts_params)
-
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False, ansible_facts=dict(appliance_device_snmp_v1_trap_destinations=appliance_device_snmp_v1_trap_destinations))
 
 

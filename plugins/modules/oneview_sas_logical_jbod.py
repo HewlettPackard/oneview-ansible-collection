@@ -327,15 +327,20 @@ class SasLogicalJbodModule(OneViewModule):
         self.set_resource_object(self.oneview_client.sas_logical_jbods)
 
     def execute_module(self):
+        result = {}
         if self.state == "present":
-            return self.__present()
+            result = self.__present()
         elif self.state == "absent":
-            return self.resource_absent()
+            result = self.resource_absent()
         else:
             if not self.current_resource:
                 raise OneViewModuleResourceNotFound(self.MSG_JBOD_NOT_FOUND)
             else:
                 changed, msg, resource = self.__patch(self.state)
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        if result:
+            return result
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=dict(sas_logical_jbod=resource))

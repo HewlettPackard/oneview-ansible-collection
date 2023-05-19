@@ -144,10 +144,14 @@ class ApplianceDeviceSnmpV1TrapDestinationsModule(OneViewModule):
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v1_trap_destinations)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
 
 def main():

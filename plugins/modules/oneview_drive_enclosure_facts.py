@@ -53,6 +53,7 @@ options:
         - "List with options to gather additional facts about a Drive Enclosure and related resources.
           Options allowed: C(port_map)"
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -129,7 +130,7 @@ class DriveEnclosureFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'),
                          uri=dict(required=False, type='str'),
                          sessionID=dict(required=False, type='str'),
-                         options=dict(type='list'),
+                         options=dict(type='list', elements='str'),
                          params=dict(type='dict'))
 
     def __init__(self):
@@ -150,6 +151,9 @@ class DriveEnclosureFactsModule(OneViewModule):
             drive_enclosures = []
 
         ansible_facts['drive_enclosures'] = drive_enclosures
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

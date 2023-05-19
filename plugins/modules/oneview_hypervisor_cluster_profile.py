@@ -159,6 +159,9 @@ class HypervisorClusterProfileModule(OneViewModule):
         elif self.state == 'absent':
             changed, msg, ansible_facts = self.__absent()
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

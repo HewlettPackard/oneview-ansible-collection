@@ -119,6 +119,9 @@ class FcoeNetworkFactsModule(OneViewModule):
         else:
             fcoe_networks = self.resource_client.get_all(**self.facts_params)
 
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=False,
                     ansible_facts=dict(fcoe_networks=fcoe_networks))
 

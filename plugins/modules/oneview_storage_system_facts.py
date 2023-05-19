@@ -59,6 +59,7 @@ options:
         - "To gather facts about C(storagePools), C(reachablePorts), and C(templates) it is required to inform
             either the argument C(name), C(ip_hostname), or C(hostname). Otherwise, this option will be ignored."
       type: list
+      elements: str
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -203,7 +204,7 @@ class StorageSystemFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(
             name=dict(type='str'),
-            options=dict(type='list'),
+            options=dict(type='list', elements='str'),
             params=dict(type='dict'),
             sessionID=dict(required=False, type='str'),
             storage_hostname=dict(type='str')
@@ -234,6 +235,9 @@ class StorageSystemFactsModule(OneViewModule):
         self.__get_options(facts, is_specific_storage_system)
 
         facts['storage_systems'] = storage_systems
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

@@ -55,3 +55,9 @@
       poolType: 'ipv4'
       idList: ['172.18.9.11']
   delegate_to: localhost
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

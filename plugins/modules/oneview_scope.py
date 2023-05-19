@@ -150,12 +150,17 @@ class ScopeModule(OneViewModule):
         self.set_resource_object(self.oneview_client.scopes)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
         elif self.state == 'resource_assignments_updated':
-            return self.__update_resource_assignments()
+            result = self.__update_resource_assignments()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        if result:
+            return result
 
     def __present(self):
         changed = False

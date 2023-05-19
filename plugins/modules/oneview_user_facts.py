@@ -58,6 +58,7 @@ options:
           C(getUserRoles) get all the role associated with the user."
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -136,7 +137,7 @@ class UserFactsModule(OneViewModule):
             userName=dict(required=False, type='str'),
             params=dict(required=False, type='dict'),
             role=dict(required=False, type='str'),
-            options=dict(required=False, type='list')
+            options=dict(required=False, type='list', elements='str')
         )
 
         super(UserFactsModule, self).__init__(additional_arg_spec=argument_spec)
@@ -155,6 +156,9 @@ class UserFactsModule(OneViewModule):
 
         if self.module.params['userName'] and self.options.get('getUserRoles'):
             ansible_facts['user_roles'] = self.resource_client.get_role_associated_with_userName(self.module.params['userName'])
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

@@ -49,3 +49,9 @@
 
 - debug: var=enet_associated_profiles
 - debug: var=enet_associated_uplink_groups
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

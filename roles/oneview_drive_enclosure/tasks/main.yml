@@ -138,3 +138,9 @@
   register: result
 - debug: var=result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

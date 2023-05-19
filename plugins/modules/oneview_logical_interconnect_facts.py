@@ -68,6 +68,7 @@ options:
         - These options are valid just when a C(name) is provided. Otherwise it will be ignored."
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
@@ -218,7 +219,7 @@ class LogicalInterconnectFactsModule(OneViewModule):
     argument_spec = dict(
         sessionID=dict(required=False, type='str'),
         name=dict(required=False, type='str'),
-        options=dict(required=False, type='list'),
+        options=dict(required=False, type='list', elements='str'),
         params=dict(required=False, type='dict'),
     )
 
@@ -235,6 +236,9 @@ class LogicalInterconnectFactsModule(OneViewModule):
         else:
             logical_interconnects = self.resource_client.get_all(**self.facts_params)
             facts = dict(logical_interconnects=logical_interconnects)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

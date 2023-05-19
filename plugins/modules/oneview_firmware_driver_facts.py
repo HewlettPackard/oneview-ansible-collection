@@ -69,6 +69,7 @@ options:
           Options allowed: C(schema)"
       required: false
       type: list
+      elements: str
 
 extends_documentation_fragment:
 - hpe.oneview.oneview
@@ -140,7 +141,7 @@ class FirmwareDriverFactsModule(OneViewModule):
             version=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
             sessionID=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict')
         )
 
@@ -169,6 +170,9 @@ class FirmwareDriverFactsModule(OneViewModule):
             firmware_drivers = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['firmware_drivers'] = firmware_drivers
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

@@ -179,15 +179,17 @@ class StorageSystemModule(OneViewModule):
         self.set_resource_object(self.oneview_client.storage_systems)
 
     def execute_module(self):
+        result = {}
         if self.oneview_client.api_version < 500:
             self.__get_resource_hostname('ip_hostname', 'newIp_hostname')
         else:
             self.__get_resource_hostname('hostname', 'newHostname')
 
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.resource_absent('remove')
+            result = self.resource_absent('remove')
+        return result
 
     def __present(self):
         changed = False

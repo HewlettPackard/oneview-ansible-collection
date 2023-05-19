@@ -29,3 +29,9 @@
       uri: "{{ tasks[0]['uri'] }}"
   delegate_to: localhost
   when: config_file.api_version >= 1200 and ( tasks | length > 0 )
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

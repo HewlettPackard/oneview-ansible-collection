@@ -144,6 +144,7 @@ class UplinkSetModule(OneViewModule):
         self.set_resource_object(self.oneview_client.uplink_sets)
 
     def execute_module(self):
+        result = {}
         self.__validate_key()
         self.__replace_logical_interconnect_name_by_uri()
         self.__replace_network_name_by_uri()
@@ -151,9 +152,14 @@ class UplinkSetModule(OneViewModule):
         self.__set_current_resource(self.data['name'], self.data['logicalInterconnectUri'])
 
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def __validate_key(self):
         if 'name' not in self.data:

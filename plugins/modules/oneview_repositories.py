@@ -164,12 +164,16 @@ class RepositoriesModule(OneViewModule):
         self.set_resource_object(self.oneview_client.repositories)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.__present()
+            result = self.__present()
         elif self.state == 'absent':
-            return self.__absent()
+            result = self.__absent()
         elif self.state == 'patch':
-            return self.__patch()
+            result = self.__patch()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def __present(self):
         changed = False

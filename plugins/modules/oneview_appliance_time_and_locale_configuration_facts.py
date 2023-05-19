@@ -74,6 +74,8 @@ class ApplianceTimeAndLocaleConfigurationFactsModule(OneViewModule):
 
     def execute_module(self):
         appliance_time_and_locale_configuration = self.resource_client.get_all()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
         return dict(changed=False,
                     ansible_facts=dict(appliance_time_and_locale_configuration=appliance_time_and_locale_configuration.data))
 

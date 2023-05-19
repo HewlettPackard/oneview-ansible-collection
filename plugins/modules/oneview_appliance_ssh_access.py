@@ -112,6 +112,10 @@ class ApplianceSshAccessModule(OneViewModule):
         self.current_resource = self.resource_client.get_all()
         changed, msg = self._update_resource()
         ansible_facts = dict(appliance_ssh_access=self.current_resource.data)
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
         return dict(changed=changed,
                     msg=msg,
                     ansible_facts=ansible_facts)

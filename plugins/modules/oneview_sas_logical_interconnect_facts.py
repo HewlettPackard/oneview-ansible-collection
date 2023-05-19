@@ -53,6 +53,7 @@ options:
         - "List with options to gather additional facts about a SAS Logical interconnect and related resources.
           Options allowed: C(firmware_facts)."
       type: list
+      elements: str
 
 extends_documentation_fragment:
     - hpe.oneview.oneview
@@ -144,7 +145,7 @@ class SasLogicalInterconnectFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'),
                          uri=dict(required=False, type='str'),
                          sessionID=dict(required=False, type='str'),
-                         options=dict(type='list'),
+                         options=dict(type='list', elements='str'),
                          params=dict(type='dict'))
 
     def __init__(self):
@@ -165,6 +166,9 @@ class SasLogicalInterconnectFactsModule(OneViewModule):
             sas_logical_interconnects = []
 
         ansible_facts['sas_logical_interconnects'] = sas_logical_interconnects
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False,
                     ansible_facts=ansible_facts)

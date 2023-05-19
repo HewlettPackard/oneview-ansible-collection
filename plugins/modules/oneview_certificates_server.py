@@ -132,10 +132,14 @@ class CertificatesServerModule(OneViewModule):
         self.__set_current_resource(self.oneview_client.certificates_server)
 
     def execute_module(self):
+        result = {}
         if self.state == 'present':
-            return self.resource_present(self.RESOURCE_FACT_NAME)
+            result = self.resource_present(self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+        return result
 
     def __set_current_resource(self, resource_client):
         self.resource_client = resource_client

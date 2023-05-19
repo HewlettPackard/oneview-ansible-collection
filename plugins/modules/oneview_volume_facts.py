@@ -54,6 +54,7 @@ options:
             - C(snapshots). For this option, you may provide a name."
       required: false
       type: list
+      elements: str
 extends_documentation_fragment:
 - hpe.oneview.oneview
 - hpe.oneview.oneview.factsparams
@@ -146,7 +147,10 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class VolumeFactsModule(OneViewModule):
     def __init__(self):
-        argument_spec = dict(name=dict(type='str'), sessionID=dict(required=False, type='str'), options=dict(type='list'), params=dict(type='dict'))
+        argument_spec = dict(name=dict(type='str'),
+                             sessionID=dict(required=False, type='str'),
+                             options=dict(type='list', elements='str'),
+                             params=dict(type='dict'))
         super().__init__(additional_arg_spec=argument_spec)
         self.set_resource_object(self.oneview_client.volumes)
 
@@ -163,6 +167,9 @@ class VolumeFactsModule(OneViewModule):
             self.facts_params['networks'] = networks
 
         ansible_facts.update(self._gather_facts_from_appliance())
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

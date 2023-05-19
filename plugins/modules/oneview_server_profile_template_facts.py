@@ -52,6 +52,7 @@ options:
         - "List with options to gather additional facts about Server Profile Template resources.
           Options allowed: C(new_profile), C(transformation) and C(available_networks)."
       type: list
+      elements: str
 notes:
     - The option C(transformation) is only available for API version 300 or later.
     - The option C(available_networks) is only available for API version 600 or later.
@@ -150,7 +151,7 @@ class ServerProfileTemplateFactsModule(OneViewModule):
     argument_spec = dict(
         name=dict(type='str'),
         sessionID=dict(required=False, type='str'),
-        options=dict(type='list'),
+        options=dict(type='list', elements='str'),
         params=dict(type='dict'),
         uri=dict(type='str')
     )
@@ -171,6 +172,9 @@ class ServerProfileTemplateFactsModule(OneViewModule):
             facts = {"server_profile_template_available_networks": self.resource_client.get_available_networks(**network_params)}
         else:
             facts = self.__get_all()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=facts)
 

@@ -133,13 +133,19 @@ class StorageVolumeTemplateModule(OneViewModule):
 
     def execute_module(self):
 
+        result = {}
         if not self.data.get('name'):
             raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING)
 
         if self.state == 'present':
-            return self._present()
+            result = self._present()
         elif self.state == 'absent':
-            return self.resource_absent()
+            result = self.resource_absent()
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
+
+        return result
 
     def _present(self):
         if not self.current_resource:

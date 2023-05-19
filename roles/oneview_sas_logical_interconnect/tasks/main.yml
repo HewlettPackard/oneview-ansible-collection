@@ -71,4 +71,9 @@
 #       driveReplaceConfig:
 #         oldSerialNumber: "SN1100"
 #         newSerialNumber: "SN1101"
-  
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

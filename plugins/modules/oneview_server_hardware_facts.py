@@ -47,6 +47,7 @@ options:
           C(utilization), C(firmware), C(firmwares) and C(physicalServerHardware)."
       required: false
       type: list
+      elements: str
     uri:
       description:
         - server Hardware Uri
@@ -236,7 +237,7 @@ class ServerHardwareFactsModule(OneViewModule):
         argument_spec = dict(
             name=dict(required=False, type='str'),
             uri=dict(required=False, type='str'),
-            options=dict(required=False, type='list'),
+            options=dict(required=False, type='list', elements='str'),
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
         )
@@ -259,6 +260,9 @@ class ServerHardwareFactsModule(OneViewModule):
             ansible_facts['server_hardware_firmwares'] = self.get_all_firmwares()
 
         ansible_facts["server_hardwares"] = server_hardwares
+
+        if not self.module.params.get("sessionID"):
+            self.oneview_client.connection.logout()
 
         return dict(changed=False, ansible_facts=ansible_facts)
 

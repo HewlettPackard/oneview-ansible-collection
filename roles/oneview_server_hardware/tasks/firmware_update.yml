@@ -41,3 +41,9 @@
             installationPolicy: "LowerThanBaseline"
   delegate_to: localhost
   when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost

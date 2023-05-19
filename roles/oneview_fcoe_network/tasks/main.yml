@@ -104,3 +104,9 @@
         - "{{ fcoe_network1.results[1].ansible_facts.fcoe_network.uri }}"
   delegate_to: localhost
   when: currentVersion >= '1600'
+
+- name: Logout Session
+  oneview_logout_session:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+  delegate_to: localhost
