@@ -4,6 +4,8 @@ This release extends the planned support of the collections to OneView REST API 
 
 #### Major Changes
  1. OneView Session logout Implementation
+#### Bug fixes & Enhancements
+- [#253] (https://github.com/HewlettPackard/oneview-ansible-collection/issues/253) Excessive login sessions on OneView
 
 ### Modules supported in this release
 - oneview_appliance_configuration_timeconfig_facts
