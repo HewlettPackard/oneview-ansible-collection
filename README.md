@@ -75,7 +75,7 @@ example:
     "authLoginDomain": "",
     "password": "<password>"
   },
-  "api_version": 5400
+  "api_version": 5600
 }
 ```
 
@@ -208,7 +208,7 @@ This option allows the parameters `hostname`, `auth_login_domain`, `username`, `
     username: <username>
     password: <password>
     auth_login_domain: <domain_directory>
-    api_version: 5400
+    api_version: 5600
     state: present
     data:
       name: "{{ network_name }}"
@@ -223,19 +223,19 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible collections for HPE OneView support the API endpoints for HPE OneView  6.00, 6.10, 6.20, 6.30, 6.40, 6.50, 6.60, 7.00, 7.10, 7.20, 8.00, 8.10, 8.20, 8.30, 8.40
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView  6.00, 6.10, 6.20, 6.30, 6.40, 6.50, 6.60, 7.00, 7.10, 7.20, 8.00, 8.10, 8.20, 8.30, 8.40, 8.50
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 5400
+"api_version": 5600
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='5400'
+export ONEVIEWSDK_API_VERSION='5600'
 ```
 
 If this property is not specified, it will fall back to default value.
@@ -258,6 +258,7 @@ The API list is as follows:
 - HPE OneView 8.20 API version: `5000`
 - HPE OneView 8.30 API version: `5200`
 - HPE OneView 8.40 API version: `5400`
+- HPE OneView 8.50 API version: `5600`
 
 
 ### HPE Synergy Image Streamer
