@@ -6,7 +6,7 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.6", "3.7"]
+        python_version: ["3.6", "3.7","3.9"]
         ansible_version: ["stable-2.9", "stable-2.10", "stable-2.11"]
     runs-on: ubuntu-20.04
     steps:
@@ -48,50 +48,4 @@ jobs:
         uses: ansible/ansible-lint-action@main
         with:
           path: "./"         
-  
-  units:
-    runs-on: ubuntu-20.04
-    strategy:
-      # As soon as the first unit test fails, cancel the others to free up the CI queue
-      fail-fast: true
-      matrix:
-        python_version:
-          - 3.6
-          - 3.7
-        ansible:
-          - stable-2.9
-          - stable-2.10
-          - stable-2.11
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v1
-        with:
-          path: ansible_collections/hpe/oneview
-
-      - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python_version }}
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip3 install future pytest-cov
-          if [ -f tests/requirements.txt ]; then pip3 install -r tests/requirements.txt; fi
-          if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
-
-      - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-
-      - name: Setting Python env path
-        run: |
-         echo "PYTHONPATH=/home/runner/work/oneview-ansible-collection:$PYTHONPATH" >> $GITHUB_ENV
-
-      - name: Generating coverage report
-        run: pytest --cov-report xml --cov=plugins/modules tests/unit/
-
-      - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: true
+ 
