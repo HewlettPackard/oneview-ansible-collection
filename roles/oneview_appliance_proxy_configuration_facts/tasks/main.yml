@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about the Appliance Proxy
   oneview_appliance_proxy_configuration_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=appliance_proxy_configuration
+- ansible.builtin.debug:
+    var: appliance_proxy_configuration
 
 - name: Logout Session
   oneview_logout_session:

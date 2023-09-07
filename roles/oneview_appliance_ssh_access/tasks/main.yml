@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Ensures the Appliance SSH Access is false
   oneview_appliance_ssh_access:
@@ -16,7 +17,8 @@
     data:
       allowSshAccess: false
   delegate_to: localhost
-- debug: var=appliance_ssh_access
+- ansible.builtin.debug:
+    var: appliance_ssh_access
 
 - name: Ensures the Appliance SSH Access is true
   oneview_appliance_ssh_access:
@@ -26,7 +28,8 @@
     data:
       allowSshAccess: true
   delegate_to: localhost
-- debug: var=appliance_ssh_access
+- ansible.builtin.debug:
+    var: appliance_ssh_access
 
 - name: Logout Session
   oneview_logout_session:

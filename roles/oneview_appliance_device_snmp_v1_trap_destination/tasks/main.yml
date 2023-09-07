@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Create or Update an Appliance Device SNMPv1 Trap Destination by Destination Address
   oneview_appliance_device_snmp_v1_trap_destinations:
@@ -20,7 +21,7 @@
       port: 162
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: appliance_device_snmp_v1_trap_destinations
 
 - name: Ensure Appliance Device SNMPv1 Trap Destination by Destination Address is already present

@@ -6,31 +6,35 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about the Appliance Network Interfaces
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-- debug: var=appliance_network_interfaces
+- ansible.builtin.debug:
+    var: appliance_network_interfaces
 - name: Gather facts about the Network Interfaces by Mac Address
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     params:
-       mac_address: "{{ contents.appliance_network_interface.mac_address }}"
+      mac_address: "{{ contents.appliance_network_interface.mac_address }}"
   delegate_to: localhost
-- debug: var=appliance_network_interfaces
+- ansible.builtin.debug:
+    var: appliance_network_interfaces
 
 - name: Gather facts about the all unconfigured Mac Addresses
   oneview_appliance_network_interface_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     options:
-       - getAllMacAddress
+      - getAllMacAddress
   delegate_to: localhost
-- debug: var=appliance_network_interfaces
+- ansible.builtin.debug:
+    var: appliance_network_interfaces
 
 - name: Logout Session
   oneview_logout_session:
