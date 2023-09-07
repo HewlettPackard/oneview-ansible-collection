@@ -66,7 +66,7 @@
     resourceUri: "{{ enclosures[0]['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin:debug:
+- ansible.builtin.debug:
     var: labels
 
 - name: Logout Session
