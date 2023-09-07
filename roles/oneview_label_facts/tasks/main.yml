@@ -6,14 +6,16 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: var=enclosures[0]['uri']
+- ansible.builtin.debug:
+    var: enclosures[0]['uri']
 
 - name: Gather facts about all Labels
   oneview_label_facts:
@@ -21,7 +23,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=labels
+- ansible.builtin.debug:
+    var: labels
 
 - name: Gather paginated, filtered and sorted facts about Labels
   oneview_label_facts:
@@ -32,7 +35,8 @@
       count: 3
       sort: 'name:descending'
       filter: ''
-- debug: var=labels
+- ansible.builtin.debug:
+    var: labels
 
 - name: Gather facts about a Label by name
   oneview_label_facts:
@@ -41,26 +45,29 @@
     name: "{{ labels[0]['name'] }}"
   delegate_to: localhost
 
-- debug: var=labels
+- ansible.builtin.debug:
+    var: labels
 
 - name: Gets all resources assigned with label name
   oneview_label_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ labels[0]['name'] }}"
-    get_resources: True
+    get_resources: true
   delegate_to: localhost
 
-- debug: var=labels
+- ansible.builtin.debug:
+    var: labels
 
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    resourceUri: "{{ enclosures[0]['uri'] }}" 
+    resourceUri: "{{ enclosures[0]['uri'] }}"
   delegate_to: localhost
 
-- debug: var=labels
+- ansible.builtin:debug:
+    var: labels
 
 - name: Logout Session
   oneview_logout_session:

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Removes extra presentations from a specified server profile name
   oneview_storage_volume_attachment:
@@ -16,7 +17,8 @@
     server_profile: "{{ server_profile_name }}"
   delegate_to: localhost
 
-- debug: var=server_profile
+- ansible.builtin.debug:
+    var: server_profile
 
 - name: Logout Session
   oneview_logout_session:

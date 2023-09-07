@@ -6,14 +6,16 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
-- debug: var={{server_hardware_types | map(attribute='name') | list }}
+- ansible.builtin.debug:
+    var: "{{server_hardware_types | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Server Hardware Types
   oneview_server_hardware_type_facts:
@@ -26,7 +28,8 @@
       filter: formFactor='HalfHeight'
   delegate_to: localhost
 
-- debug: var={{server_hardware_types | map(attribute='name') | list }}
+- ansible.builtin.debug:
+    var: "{{server_hardware_types | map(attribute='name') | list }}"
 
 - name: Gather facts about a Server Hardware Type by name
   oneview_server_hardware_type_facts:
@@ -34,7 +37,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "SY 480 Gen9 1"
   delegate_to: localhost
-- debug: var=server_hardware_types
+- ansible.builtin.debug:
+    var: server_hardware_types
 
 - name: Logout Session
   oneview_logout_session:

@@ -5,10 +5,9 @@
     name: "Test_Session"
   delegate_to: localhost
   register: session
-
-- debug: var=session
-
-- name: Ensure the Enclosure framelink with ipv6 '{{ contents.enclosure.enclosure_framelink_ipv6 }}' is present
+- ansible.builtin.debug:
+    var: session
+- name: Ensure the Enclosure framelink with ipv6 is present '{{ contents.enclosure.enclosure_framelink_ipv6 }}'
   oneview_enclosure:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -19,11 +18,17 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- wait_for: port=22 host="{{ ansible_host }}" delay=10
+- ansible.builtin.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 10
   # connection: local
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- wait_for: port=22 host="{{ ansible_host }}" delay=10
+- ansible.builtin.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 10
   connection: local
 
 - name: Update the name of the enclosure to "Test-Enclosure-Renamed"
@@ -31,14 +36,17 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       newName: 'Test-Enclosure-Renamed'
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- wait_for: port=22 host="{{ ansible_host }}" delay=10
+- ansible.builtin.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 10
   connection: local
 
 - name: Update the name of the rack to "Rack-Renamed" and rename the Enclosure again
@@ -46,7 +54,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    validate_etag: False
+    validate_etag: false
     data:
       name: 'Test-Enclosure-Renamed'
       newName: '{{ contents.enclosure.enclosure_name }}'
@@ -73,7 +81,10 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- wait_for: port=22 host="{{ ansible_host }}" delay=10
+- ansible.builtin.wait_for.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 10
   connection: local
 
 - name: Create certificate signing request for Synergy
@@ -103,11 +114,14 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- wait_for: port=22 host="{{ ansible_host }}" delay=10
+- ansible.builtin.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 10
   connection: local
 
 - name: Import certificate signing request
-  oneview_enclosure:
+  hpe.oneview.oneview_enclosure:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: import_certificate_request
@@ -116,7 +130,7 @@
       type: '{{ contents.enclosure.cert_data_type }}'
       base64Data: '{{ contents.enclosure.base64Data }}'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance bay power state on
@@ -124,14 +138,15 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: appliance_bays_powered_on
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -140,13 +155,14 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_off
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -155,13 +171,14 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_on
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -170,14 +187,15 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: manager_bays_uid_on
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -186,14 +204,15 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: manager_bays_uid_off
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -202,15 +221,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: manager_bays_power_state_e_fuse
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -219,15 +239,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: manager_bays_power_state_reset
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 2
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -236,15 +257,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: appliance_bays_power_state_e_fuse
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -253,15 +275,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: device_bays_power_state_e_fuse
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 10
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -270,15 +293,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: device_bays_power_state_reset
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 11
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -287,15 +311,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: interconnect_bays_power_state_e_fuse
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 3
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -304,15 +329,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: manager_bays_role_active
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 2
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
@@ -321,15 +347,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: device_bays_ipv4_removed
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ enclosure_name }}'
       bayNumber: 3
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy
@@ -338,15 +365,16 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: interconnect_bays_ipv4_removed
-    validate_etag: False
+    validate_etag: false
     data:
       name: '{{ contents.enclosure.enclosure_name }}'
       bayNumber: 6
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
 # - name: Remove the Enclosure

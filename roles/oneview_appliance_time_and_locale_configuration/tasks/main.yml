@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about the Appliance time and locale configuration
   oneview_appliance_time_and_locale_configuration_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=appliance_time_and_locale_configuration
+- ansible.builtin.debug:
+    var: appliance_time_and_locale_configuration
 
 - name: Add the Appliance time and locale configuration locale is ja_JP.UTF-8
   oneview_appliance_time_and_locale_configuration:
@@ -28,7 +30,8 @@
       type: TimeAndLocale
       dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
-- debug: var=appliance_time_and_locale_configuration
+- ansible.builtin.debug:
+    var: appliance_time_and_locale_configuration
 
 - name: Ensures the Appliance time and locale configuration locale is ja_JP.UTF-8 is already present
   oneview_appliance_time_and_locale_configuration:
@@ -42,7 +45,8 @@
       type: TimeAndLocale
       dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
-- debug: var=appliance_time_and_locale_configuration
+- ansible.builtin.debug:
+    var: appliance_time_and_locale_configuration
 
 - name: Change the Appliance time and locale configuration locale to en_US.UTF-8
   oneview_appliance_time_and_locale_configuration:
@@ -56,7 +60,8 @@
       type: TimeAndLocale
       dateTime: "{{ appliance_time_and_locale_configuration['dateTime'] }}"
   delegate_to: localhost
-- debug: var=appliance_time_and_locale_configuration
+- ansible.builtin.debug:
+    var: appliance_time_and_locale_configuration
 
 - name: Logout Session
   oneview_logout_session:

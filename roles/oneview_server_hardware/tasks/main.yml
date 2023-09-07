@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -20,14 +21,14 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-          hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
-          username: '{{ contents.server_hardware.server_hardware_username }}'
-          password: '{{ contents.server_hardware.server_hardware_password }}'
-          force: false
-          licensingIntent: "OneView"
-          configurationState: "Managed"
-          initialScopeUris: 
-          - "{{ scopes[0]['uri'] }}" #Supported only with OneView API version >= 600.
+      hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
+      username: '{{ contents.server_hardware.server_hardware_username }}'
+      password: '{{ contents.server_hardware.server_hardware_password }}'
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
+      initialScopeUris:
+        - "{{ scopes[0]['uri'] }}" # Supported only with OneView API version >= 600.
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -37,7 +38,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=server_hardwares[0]['name']
+- ansible.builtin.debug:
+    var: server_hardwares[0]['name']
 
 - name: Do nothing when the server hardware is already present
   oneview_server_hardware:
@@ -45,29 +47,29 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-          hostname: "{{ server_hardwares[0]['name'] }}"
-          username: '{{ contents.server_hardware.server_hardware_username }}'
-          password: '{{ contents.server_hardware.server_hardware_password }}'
-          force: false
-          licensingIntent: "OneView"
-          configurationState: "Managed"
+      hostname: "{{ server_hardwares[0]['name'] }}"
+      username: '{{ contents.server_hardware.server_hardware_username }}'
+      password: '{{ contents.server_hardware.server_hardware_password }}'
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
-#This task available only with OneView API version >= 600.
+# This task available only with OneView API version >= 600.
 - name: Add multiple rack-mount servers
   oneview_server_hardware:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: multiple_servers_added
     data:
-          mpHostsAndRanges: "{{ contents.server_hardware.multiple_hosts }}"
-          username: "{{ contents.server_hardware.server_hardware_username }}"
-          password: "{{ contents.server_hardware.server_hardware_password }}"
-          initialScopeUris: 
-          - "{{ scopes[0]['uri'] }}"
-          licensingIntent: "OneView"
-          configurationState: "Managed"
+      mpHostsAndRanges: "{{ contents.server_hardware.multiple_hosts }}"
+      username: "{{ contents.server_hardware.server_hardware_username }}"
+      password: "{{ contents.server_hardware.server_hardware_password }}"
+      initialScopeUris:
+        - "{{ scopes[0]['uri'] }}"
+      licensingIntent: "OneView"
+      configurationState: "Managed"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -77,10 +79,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
-        powerStateData:
-            powerState: "Off"
-            powerControl: "MomentaryPress"
+      name: "{{ server_hardwares[0]['name'] }}"
+      powerStateData:
+        powerState: "Off"
+        powerControl: "MomentaryPress"
   delegate_to: localhost
 
 - name: Power On the server hardware
@@ -89,10 +91,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
-        powerStateData:
-            powerState: "On"
-            powerControl: "MomentaryPress"
+      name: "{{ server_hardwares[0]['name'] }}"
+      powerStateData:
+        powerState: "On"
+        powerControl: "MomentaryPress"
   delegate_to: localhost
 
 - name: Refresh the server hardware
@@ -101,9 +103,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
-        refreshStateData:
-            refreshState: "RefreshPending"
+      name: "{{ server_hardwares[0]['name'] }}"
+      refreshStateData:
+        refreshState: "RefreshPending"
   delegate_to: localhost
 
 - name: Update the Server Hardware iLO firmware version
@@ -112,7 +114,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_firmware_version_updated
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Reset the Server Hardware iLO State
@@ -121,7 +123,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: ilo_state_reset
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server UID state off
@@ -130,7 +132,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_state_off
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server UID state on
@@ -139,7 +141,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_state_on
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Enable Server Maintenance Mode
@@ -148,7 +150,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: enable_maintenance_mode
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Disable Server Maintenance Mode
@@ -157,7 +159,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: disable_maintenance_mode
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to Network
@@ -166,7 +168,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_network
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the server one-time boot device to No one-time boot
@@ -175,7 +177,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: one_time_boot_normal
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Set the calibrated max power of a server hardware
@@ -184,11 +186,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: environmental_configuration_set
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
-        environmentalConfigurationData:
-            calibratedMaxPower: 500
+      name: "{{ server_hardwares[0]['name'] }}"
+      environmentalConfigurationData:
+        calibratedMaxPower: 500
   delegate_to: localhost
-  ignore_errors: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Remove the server hardware by its IP
   oneview_server_hardware:
@@ -196,7 +198,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -206,7 +208,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
+      name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 

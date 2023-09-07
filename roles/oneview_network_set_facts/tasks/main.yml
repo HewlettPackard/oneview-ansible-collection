@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Network Sets
   oneview_network_set_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=network_sets
+- ansible.builtin.debug:
+    var: network_sets
 
 - name: Gather paginated, filtered, and sorted facts about Network Sets
   oneview_network_set_facts:
@@ -26,17 +28,19 @@
       sort: 'name:descending'
       filter: name='netset001'
 
-- debug: var=network_sets
+- ansible.builtin.debug:
+    var: network_sets
 
 - name: Gather facts about all Network Sets, excluding Ethernet networks
   oneview_network_set_facts:
     config: '{{ config }}'
     sessionID: "{{ session.ansible_facts.session }}"
     options:
-        - withoutEthernet
+      - withoutEthernet
   delegate_to: localhost
 
-- debug: var=network_sets
+- ansible.builtin.debug:
+    var: network_sets
 
 
 - name: Gather facts about a Network Set by name
@@ -46,7 +50,8 @@
     name: '{{ contents.network_set.network_name }}'
   delegate_to: localhost
 
-- debug: var=network_sets
+- ansible.builtin.debug:
+    var: network_sets
 
 
 - name: Gather facts about a Network Set by name, excluding Ethernet networks
@@ -55,10 +60,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: '{{ contents.network_set.network_name }}'
     options:
-        - withoutEthernet
+      - withoutEthernet
   delegate_to: localhost
 
-- debug: var=network_sets
+- ansible.builtin.debug:
+    var: network_sets
 
 - name: Logout Session
   oneview_logout_session:

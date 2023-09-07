@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -20,12 +21,13 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: check_firmware_compliance
     data:
-        firmwareComplianceData:
-            firmwareBaselineId: "{{ contents.server_hardware.firmware_baseline_id }}"
-            serverUUID: "{{ server_hardwares[0]['uuid'] }}"
+      firmwareComplianceData:
+        firmwareBaselineId: "{{ contents.server_hardware.firmware_baseline_id }}"
+        serverUUID: "{{ server_hardwares[0]['uuid'] }}"
   delegate_to: localhost
 
-- debug: var=ansible_facts['server_hardware']['serverFirmwareUpdateRequired']
+- ansible.builtin.debug:
+    var: ansible_facts['server_hardware']['serverFirmwareUpdateRequired']
 
 - name: Update Firmware of the server hardware
   oneview_server_hardware:
@@ -33,12 +35,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: firmware_update
     data:
-        name: "{{ server_hardwares[0]['name'] }}"
-        firmwareUpdateData:
-            baselineUri: "/rest/firmware-drivers/{{ contents.server_hardware.firmware_baseline_id }}"
-            forceApplyFirmware: "false"
-            firmwareInstallType: "FirmwareOnlyOfflineMode"
-            installationPolicy: "LowerThanBaseline"
+      name: "{{ server_hardwares[0]['name'] }}"
+      firmwareUpdateData:
+        baselineUri: "/rest/firmware-drivers/{{ contents.server_hardware.firmware_baseline_id }}"
+        forceApplyFirmware: "false"
+        firmwareInstallType: "FirmwareOnlyOfflineMode"
+        installationPolicy: "LowerThanBaseline"
   delegate_to: localhost
   when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
 

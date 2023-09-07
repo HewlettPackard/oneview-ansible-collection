@@ -6,14 +6,16 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: var=enclosures[0]['uri']
+- ansible.builtin.debug:
+    var: enclosures[0]['uri']
 
 - name: Create Labels for enclosure resource
   oneview_label:
@@ -21,9 +23,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      resourceUri: "{{ enclosures[0]['uri']}}" 
+      resourceUri: "{{ enclosures[0]['uri']}}"
       labels:
-        - name: "{{ contents.labels.label_name_1  }}" 
+        - name: "{{ contents.labels.label_name_1  }}"
         - name: "{{ contents.labels.label_name_2 }}"
   delegate_to: localhost
 
@@ -36,7 +38,7 @@
       resourceUri: "{{ enclosures[0]['uri'] }}"
       labels:
         - name: "{{ contents.labels.label_rename_1 }}"
-          uri: "{{ labels['labels'][0]['uri'] }}" 
+          uri: "{{ labels['labels'][0]['uri'] }}"
         - name: "{{ contents.labels.label_rename_2 }}"
           uri: null
         - name: "{{ contents.labels.label_name_3 }}"
@@ -57,9 +59,9 @@
     config: "{{ config }}"
     state: present
     data:
-      resourceUri: "{{ enclosures[0]['uri']}}" 
+      resourceUri: "{{ enclosures[0]['uri']}}"
       labels:
-        - name: "{{ contents.labels.label_name_1  }}" 
+        - name: "{{ contents.labels.label_name_1  }}"
         - name: "{{ contents.labels.label_name_2 }}"
   delegate_to: localhost
 

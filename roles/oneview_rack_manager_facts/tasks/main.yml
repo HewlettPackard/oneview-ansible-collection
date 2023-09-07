@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
@@ -14,15 +15,17 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=rack_managers
+- ansible.builtin.debug:
+    var: rack_managers
 
-- set_fact:
+- ansible.builtin.set_fact:
     rack_manager_name: "{{ rack_managers[0]['name'] }}"
 
-- set_fact:
+- ansible.builtin.set_fact:
     rack_manager_uri: "{{ rack_managers[0]['uri'] }}"
 
-- debug: var=rack_manager_name
+- ansible.builtin.debug:
+    var: rack_manager_name
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
@@ -34,9 +37,12 @@
       - managers
   delegate_to: localhost
 
-- debug: var=all_chassis
-- debug: var=all_partitions
-- debug: var=all_managers
+- ansible.builtin.debug:
+    var: all_chassis
+- ansible.builtin.debug:
+    var: all_partitions
+- ansible.builtin.debug:
+    var: all_managers
 
 - name: Gather paginated, filtered and sorted facts about Rack Manager
   oneview_rack_manager_facts:
@@ -49,7 +55,8 @@
       filter: state='Monitored'
   delegate_to: localhost
 
-- debug: msg="{{rack_managers | map(attribute='name') | list }}"
+- ansible.builtin.debug:
+    msg: "{{rack_managers | map(attribute='name') | list }}"
 
 - name: Gather facts about a Rack Manager by name
   oneview_rack_manager_facts:
@@ -87,11 +94,16 @@
       - remote_support_settings       # optional
   delegate_to: localhost
 
-- debug: var=rack_manager_chassis
-- debug: var=rack_manager_partitions
-- debug: var=rack_manager_managers
-- debug: var=rack_manager_env_conf
-- debug: var=rack_manager_remote_support
+- ansible.builtin.debug:
+    var: rack_manager_chassis
+- ansible.builtin.debug:
+    var: rack_manager_partitions
+- ansible.builtin.debug:
+    var: rack_manager_managers
+- ansible.builtin.debug:
+    var: rack_manager_env_conf
+- ansible.builtin.debug:
+    var: rack_manager_remote_support
 
 - name: Logout Session
   oneview_logout_session:

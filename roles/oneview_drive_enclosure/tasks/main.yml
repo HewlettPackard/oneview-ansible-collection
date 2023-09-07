@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Refresh the drive enclosure
   oneview_drive_enclosure:
@@ -19,7 +20,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Power Off the drive enclosure
@@ -32,7 +34,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Do nothing when drive enclosure is already powered off
@@ -45,7 +48,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Power On the drive enclosure
@@ -58,7 +62,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Do nothing when drive enclosure is already powered on
@@ -71,7 +76,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Set the UID state of the drive enclosure to On
@@ -84,7 +90,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Do nothing when UID state is already set to On
@@ -97,7 +104,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Set the UID state of the drive enclosure to Off
@@ -110,7 +118,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Do nothing when UID state is already set to Off
@@ -123,7 +132,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Request a hard reset of the drive enclosure
@@ -136,7 +146,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
 - name: Logout Session

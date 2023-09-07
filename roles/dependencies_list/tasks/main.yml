@@ -5,5 +5,5 @@
 # If you don't want to run this file everytime, you can remove this role name under dependencies list specified in meta folder.
 ######################################################################################
 - name: Install dependencies
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ playbook_dir }}/../requirements.txt"

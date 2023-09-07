@@ -1,9 +1,9 @@
 {
-  "ip": "<oneview_ip>",
+  "ip": "172.27.2.226",
   "credentials": {
-    "userName": "<user_name>",
-    "password": "<password>",
-    "authLoginDomain": "<domain_directory>"
+    "userName": "Administrator",
+    "password": "admin123",
+    "authLoginDomain": "LOCAL"
 },
   "api_version": 5600,
   "variant": "Synergy"

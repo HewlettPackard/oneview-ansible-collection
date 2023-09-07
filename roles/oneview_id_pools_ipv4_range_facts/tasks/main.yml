@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get facts about the IPv4 Subnet
   oneview_id_pools_ipv4_subnet_facts:
@@ -15,12 +16,14 @@
     networkId: '{{ contents.id_pools_ipv4_range.networkId }}'
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_subnets
+- ansible.builtin.debug:
+    var: id_pools_ipv4_subnets
 
-- set_fact: subnet_uri="{{ id_pools_ipv4_subnets[0]['uri'] }}"
+- ansible.builtin.set_fact:
+    subnet_uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
   when: id_pools_ipv4_subnets|length != 0
 
-- name: Get ID Pools IPv4 Range Schema 
+- name: Get ID Pools IPv4 Range Schema
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -33,7 +36,8 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_ranges
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges
 
 - name: Get facts about all the ranges in in the '{{ contents.id_pools_ipv4_range.subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
@@ -42,7 +46,8 @@
     subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_ranges
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges
 
 - name: Get facts about the range '{{ contents.id_pools_ipv4_range.range_name }}' in the '{{ contents.id_pools_ipv4_range.subnet_name }}'
   oneview_id_pools_ipv4_range_facts:
@@ -52,9 +57,11 @@
     subnetUri: '{{ subnet_uri }}'
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_ranges
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges
 
-- set_fact: range_uri='{{ id_pools_ipv4_ranges[0]['uri'] }}'
+- ansible.builtin.set_fact:
+    range_uri: "{{ id_pools_ipv4_ranges[0]['uri'] }}"
 
 - name: Get facts about the range '{{ range_uri }}'
   oneview_id_pools_ipv4_range_facts:
@@ -64,9 +71,10 @@
   delegate_to: localhost
   when: range_uri is defined
 
-- debug: var=id_pools_ipv4_ranges
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges
 
-- name: Get facts about the range '{{ range_uri }}' free and allocated fragments
+- name: Get facts about the range free and allocated fragments '{{ range_uri }}'
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -77,9 +85,12 @@
   delegate_to: localhost
   when: range_uri is defined
 
-- debug: var=id_pools_ipv4_ranges
-- debug: var=id_pools_ipv4_ranges_free_fragments
-- debug: var=id_pools_ipv4_ranges_allocated_fragments
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges_free_fragments
+- ansible.builtin.debug:
+    var: id_pools_ipv4_ranges_allocated_fragments
 
 - name: Logout Session
   oneview_logout_session:

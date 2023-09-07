@@ -1,17 +1,17 @@
 codecov:
-  require_ci_to_pass: yes
-  max_report_age: off
+  require_ci_to_pass: true
+  max_report_age: false
 
 coverage:
   status:
     project:
       default:
         threshold: 1
-        target: 98% #overall project/ repo coverage
+        target: 98% # overall project/ repo coverage
     # Disable patch since it is noisy and not required
     patch:
       default:
-        enabled: no
+        enabled: false
         if_not_found: success
 
 comment: false

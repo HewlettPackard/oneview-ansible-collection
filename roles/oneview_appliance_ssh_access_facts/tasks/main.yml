@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about the Appliance SSH Access
   oneview_appliance_ssh_access_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=appliance_ssh_access
+- ansible.builtin.debug:
+    var: appliance_ssh_access
 
 - name: Logout Session
   oneview_logout_session:

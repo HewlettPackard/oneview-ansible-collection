@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Volumes
   oneview_volume_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=storage_volumes
+- ansible.builtin.debug:
+    var: storage_volumes
 
 - name: Gather paginated, filtered and sorted facts about Volumes
   oneview_volume_facts:
@@ -26,7 +28,8 @@
       sort: 'name:descending'
       filter: "provisioningType='Thin'"
 
-- debug: var=storage_volumes
+- ansible.builtin.debug:
+    var: storage_volumes
 
 - name: "Gather facts about all Volumes, the attachable volumes managed by the appliance and the extra managed
           storage volume paths"
@@ -34,17 +37,20 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     options:
-        - attachableVolumes:        # optional
-            connections:
-              - networkUri: '/rest/fc-networks/f61d2299-c6dd-4f81-bcd2-1f99dbae118a'
-                proxyName: '20:19:50:EB:1A:0F:0E:B6'
-                initiatorName: '10:00:62:01:F8:70:00:0E'
-        - extraManagedVolumePaths  # optional
+      - attachableVolumes:        # optional
+          connections:
+            - networkUri: '/rest/fc-networks/f61d2299-c6dd-4f81-bcd2-1f99dbae118a'
+              proxyName: '20:19:50:EB:1A:0F:0E:B6'
+              initiatorName: '10:00:62:01:F8:70:00:0E'
+      - extraManagedVolumePaths  # optional
   delegate_to: localhost
 
-- debug: var=storage_volumes
-- debug: var=attachable_volumes
-- debug: var=extra_managed_volume_paths
+- ansible.builtin.debug:
+    var: storage_volumes
+- ansible.builtin.debug:
+    var: attachable_volumes
+- ansible.builtin.debug:
+    var: extra_managed_volume_paths
 
 - name: Gather facts about a Volume by name with a list of all snapshots taken
   oneview_volume_facts:
@@ -52,11 +58,13 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.volume.storage_volume_name }}"
     options:
-        - snapshots  # optional
+      - snapshots  # optional
   delegate_to: localhost
 
-- debug: var=storage_volumes
-- debug: var=snapshots
+- ansible.builtin.debug:
+    var: storage_volumes
+- ansible.builtin.debug:
+    var: snapshots
 
 - name: "Gather facts about a Volume with one specific snapshot taken"
   oneview_volume_facts:
@@ -64,13 +72,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.volume.storage_volume_name }}"
     options:
-        - snapshots:  # optional
-                name: "{{ snapshots[0]['name'] }}"
+      - snapshots:  # optional
+          name: "{{ snapshots[0]['name'] }}"
   delegate_to: localhost
   when: (snapshots is none and snapshots is undefined)
 
-- debug: var=storage_volumes
-- debug: var=snapshots
+- ansible.builtin.debug:
+    var: storage_volumes
+- ansible.builtin.debug:
+    var: snapshots
 
 - name: Logout Session
   oneview_logout_session:

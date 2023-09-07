@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Ensure the ID Pools IPV4 Subnet exists
   oneview_id_pools_ipv4_subnet:
@@ -43,10 +44,11 @@
       domain: '{{ contents.id_pools_ipv4_subnet.newDomain }}'
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_subnet
+- ansible.builtin.debug:
+    var: id_pools_ipv4_subnet
 
 - name: Create an Ethernet Network
-  oneview_ethernet_network:
+  hpe.oneview.oneview_ethernet_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -59,11 +61,11 @@
       privateNetwork: false
       subnetUri: '{{ id_pools_ipv4_subnet["uri"] }}'
       bandwidth:
-          maximumBandwidth: 2000
-          typicalBandwidth: 1000
+        maximumBandwidth: 2000
+        typicalBandwidth: 1000
 
 
-- name: Create IPV4 Range 
+- name: Create IPV4 Range
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -97,7 +99,7 @@
   delegate_to: localhost
 
 - name: Delete the Ethernet Network
-  oneview_ethernet_network:
+  hpe.oneview.oneview_ethernet_network:
     config: "{{ config }}"
     state: absent
     data:

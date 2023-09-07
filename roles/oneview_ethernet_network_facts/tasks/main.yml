@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=ethernet_networks
+- ansible.builtin.debug:
+    var: ethernet_networks
 
 - name: Gather paginated, sorted and filtered facts about Ethernet Networks
   oneview_ethernet_network_facts:
@@ -26,7 +28,8 @@
       sort: 'name:descending'
       filter: "purpose=General"
 
-- debug: var=ethernet_networks
+- ansible.builtin.debug:
+    var: ethernet_networks
 
 - name: Gather facts about an Ethernet Network by name
   oneview_ethernet_network_facts:
@@ -35,7 +38,8 @@
     name: "{{ ethernet_networks[0]['name'] }}"
   delegate_to: localhost
 
-- debug: var=ethernet_networks
+- ansible.builtin.debug:
+    var: ethernet_networks
 
 - name: Gather facts about an Ethernet Network by name with options
   oneview_ethernet_network_facts:
@@ -47,8 +51,10 @@
       - associatedUplinkGroups
   delegate_to: localhost
 
-- debug: var=enet_associated_profiles
-- debug: var=enet_associated_uplink_groups
+- ansible.builtin.debug:
+    var: enet_associated_profiles
+- ansible.builtin.debug:
+    var: enet_associated_uplink_groups
 
 - name: Logout Session
   oneview_logout_session:

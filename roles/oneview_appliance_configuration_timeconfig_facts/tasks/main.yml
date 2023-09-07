@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather Facts about Oneview Appliance time configuration
   oneview_appliance_configuration_timeconfig_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=appliance_configuration_timeconfig
+- ansible.builtin.debug:
+    var: appliance_configuration_timeconfig
 
 - name: Logout Session
   oneview_logout_session:

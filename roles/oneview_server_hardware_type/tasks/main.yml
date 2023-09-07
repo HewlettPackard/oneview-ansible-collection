@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 # This is only supported on appliances which support rack mounted servers.
 - name: Add a Server Hardware to create a Server Hardware Type (Prerequisite)
@@ -15,19 +16,19 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
-        username: '{{ contents.server_hardware.server_hardware_username }}'
-        password: '{{ contents.server_hardware.server_hardware_password }}'
-        force: false
-        licensingIntent: "OneView"
-        configurationState: "Managed"
+      hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
+      username: '{{ contents.server_hardware.server_hardware_username }}'
+      password: '{{ contents.server_hardware.server_hardware_password }}'
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
   delegate_to: localhost
   when: contents.server_hardware_type.variant == 'C7000'
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
-      config: "{{ config }}"
-      sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Update the Server Hardware Type description
@@ -36,8 +37,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ server_hardware_types[0]['name'] }}"
-        description: "New Description"
+      name: "{{ server_hardware_types[0]['name'] }}"
+      description: "New Description"
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type
@@ -46,8 +47,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ server_hardware_types[0]['name'] }}"
-        newName: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
+      name: "{{ server_hardware_types[0]['name'] }}"
+      newName: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type to original
@@ -56,8 +57,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
-        newName: "{{ server_hardware_types[0]['name'] }}"
+      name: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
+      newName: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
 
 # This is only supported on appliances which support rack mounted servers.
@@ -67,7 +68,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: '{{ contents.server_hardware_type.server_hardware_hostname }}'
+      name: '{{ contents.server_hardware_type.server_hardware_hostname }}'
   delegate_to: localhost
   when: contents.server_hardware_type.variant == 'C7000'
 
@@ -78,7 +79,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-        name: "{{ server_hardware_types[0]['name'] }}"
+      name: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
   when: contents.server_hardware_type.variant == 'C7000'
 
