@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,17 +18,17 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
 - name: Create a FCoE Network
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -40,10 +41,11 @@
     - { name: '{{ contents.fcoe_network.network_name }}', vlanId: '201' }
     - { name: '{{ contents.fcoe_network.network_name }} (1)', vlanId: '202'}
 
-- debug: var=fcoe_network1
+- ansible.builtin.debug:
+    var: fcoe_network1
 
 - name: Do nothing with the FCoE Network when no changes are provided
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -53,7 +55,7 @@
   delegate_to: localhost
 
 - name: Update the FCoE Network changing the name attribute
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -65,7 +67,7 @@
 
 # Below task is supported only with OneView 3.10
 - name: Update the FCoE Network with two scopes
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -76,7 +78,7 @@
   delegate_to: localhost
 
 - name: Delete the FCoE Network
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
@@ -85,7 +87,7 @@
   delegate_to: localhost
 
 - name: Do nothing when FCoE Network is absent
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
@@ -95,12 +97,12 @@
 
 # This feature is available only from OneView 5.20
 - name: Delete FCoE Networks in bulk
-  oneview_fcoe_network:
+  hpe.oneview.oneview_fcoe_network:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      networkUris: 
+      networkUris:
         - "{{ fcoe_network1.results[1].ansible_facts.fcoe_network.uri }}"
   delegate_to: localhost
   when: currentVersion >= '1600'

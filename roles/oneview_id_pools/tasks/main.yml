@@ -1,4 +1,4 @@
---- 
+---
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Enables or disables the pool type
   oneview_id_pools:
@@ -15,7 +16,7 @@
     state: update_pool_type
     data:
       poolType: '{{ contents.id_pools.poolType }}'
-      enabled: True
+      enabled: true
   delegate_to: localhost
 
 - name: Allocates one or more IDs from a pool
@@ -27,7 +28,8 @@
       poolType: '{{ contents.id_pools.poolType }}'
       count: 2
   delegate_to: localhost
-- debug: var=id_pool
+- ansible.builtin.debug:
+    var: id_pool
 
 - name: Collects one or more IDs to be returned to a pool
   oneview_id_pools:
@@ -47,7 +49,8 @@
     data:
       poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
-- debug: var=id_pool
+- ansible.builtin.debug:
+    var: id_pool
 
 - name: Validates a set of IDs to reserve in the pool
   oneview_id_pools:
@@ -56,7 +59,7 @@
     state: validate
     data:
       poolType: '{{ contents.id_pools.poolType }}'
-      idList: ['{{ id_pool["startAddress"] }}', 
+      idList: ['{{ id_pool["startAddress"] }}',
                '{{ id_pool["endAddress"] }}']
   delegate_to: localhost
 

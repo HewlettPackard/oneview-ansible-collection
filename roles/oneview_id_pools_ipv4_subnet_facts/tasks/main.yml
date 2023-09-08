@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all ID Pools IPV4 Subnets
   oneview_id_pools_ipv4_subnet_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_subnets
+- ansible.builtin.debug:
+    var: id_pools_ipv4_subnets
 
 - name: Gather paginated, and sorted facts about ID Pools IPV4 Subnets
   oneview_id_pools_ipv4_subnet_facts:
@@ -25,7 +27,8 @@
       count: 3
       sort: 'name:descending'
 
-- debug: var=id_pools_ipv4_subnets
+- ansible.builtin.debug:
+    var: id_pools_ipv4_subnets
 
 - name: Gather facts about ID Pools IPV4 Subnets by networkId
   oneview_id_pools_ipv4_subnet_facts:
@@ -41,7 +44,8 @@
     name: "{{ id_pools_ipv4_subnets[0]['name'] }}"
   delegate_to: localhost
 
-- debug: var=id_pools_ipv4_subnets
+- ansible.builtin.debug:
+    var: id_pools_ipv4_subnets
 
 - name: Logout Session
   oneview_logout_session:
