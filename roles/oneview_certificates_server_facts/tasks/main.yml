@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
@@ -15,7 +16,8 @@
     remote: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
-- debug: var=remote_certificate['certificateDetails'][0]['base64Data']
+- ansible.builtin.debug:
+    var: remote_certificate['certificateDetails'][0]['base64Data']
 
 - name: Gather facts about a Server Certificate by alias_name
   oneview_certificates_server_facts:
@@ -24,7 +26,8 @@
     aliasName: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
-- debug: var=certificates_server
+- ansible.builtin.debug:
+    var: certificates_server
 
 - name: Logout Session
   oneview_logout_session:

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all connection templates
   oneview_connection_template_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- set_fact: ct_name={{ connection_templates[0]['name'] }}
+- ansible.builtin.set_fact:
+    ct_name: "{{ connection_templates[0]['name'] }}"
 
 - name: Update the Connection Template
   oneview_connection_template:
@@ -22,12 +24,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ ct_name }}"
-        type: "connection-template"
-        bandwidth:
-            maximumBandwidth: 10000
-            typicalBandwidth: 2000
-        newName: "{{ ct_name }}_updated"
+      name: "{{ ct_name }}"
+      type: "connection-template"
+      bandwidth:
+        maximumBandwidth: 10000
+        typicalBandwidth: 2000
+      newName: "{{ ct_name }}_updated"
   delegate_to: localhost
 
 - name: Update back the Connection Template
@@ -36,12 +38,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ ct_name }}_updated"
-        type: "connection-template"
-        bandwidth:
-            maximumBandwidth: 10000
-            typicalBandwidth: 2000
-        newName: "{{ ct_name }}"
+      name: "{{ ct_name }}_updated"
+      type: "connection-template"
+      bandwidth:
+        maximumBandwidth: 10000
+        typicalBandwidth: 2000
+      newName: "{{ ct_name }}"
   delegate_to: localhost
 
 - name: Logout Session
