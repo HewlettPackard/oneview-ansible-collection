@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Logical Interconnects
   oneview_logical_interconnect_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=logical_interconnects
+- ansible.builtin.debug:
+    var: logical_interconnects
 
 - name: Gather paginated and sorted facts about Logical Interconnects
   oneview_logical_interconnect_facts:
@@ -25,7 +27,8 @@
       count: 3
       sort: 'name:descending'
 
-- debug: var=logical_interconnects
+- ansible.builtin.debug:
+    var: logical_interconnects
 
 - name: Gather facts about a Logical Interconnect by name
   oneview_logical_interconnect_facts:
@@ -34,7 +37,8 @@
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
-- debug: var=logical_interconnects['uri']
+- ansible.builtin.debug:
+    var: logical_interconnects['uri']
 
 - name: Gather facts about a Logical Interconnect by name with QOS Configuration
   oneview_logical_interconnect_facts:
@@ -45,7 +49,8 @@
       - qos_aggregated_configuration
   delegate_to: localhost
 
-- debug: var=qos_aggregated_configuration
+- ansible.builtin.debug:
+    var: qos_aggregated_configuration
 
 - name: Gather facts about the SNMP configuration on the logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
@@ -56,7 +61,8 @@
       - snmp_configuration
   delegate_to: localhost
 
-- debug: var=snmp_configuration
+- ansible.builtin.debug:
+    var: snmp_configuration
 
 - name: Gather facts about the IGMP settings on the logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
@@ -67,7 +73,8 @@
       - igmp_settings
   delegate_to: localhost
 
-- debug: var=igmp_settings
+- ansible.builtin.debug:
+    var: igmp_settings
 
 - name: "Gather facts about the port monitor configuration on the logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
@@ -78,7 +85,8 @@
       - port_monitor
   delegate_to: localhost
 
-- debug: var=port_monitor
+- ansible.builtin.debug:
+    var: port_monitor
 
 - name: "Gather facts about an internal VLAN IDs for the provisioned networks on a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
@@ -89,7 +97,8 @@
       - internal_vlans
   delegate_to: localhost
 
-- debug: var=internal_vlans
+- ansible.builtin.debug:
+    var: internal_vlans
 
 - name: "Gather facts about a forwarding information base data for a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
@@ -100,7 +109,8 @@
       - forwarding_information_base
   delegate_to: localhost
 
-- debug: var=forwarding_information_base
+- ansible.builtin.debug:
+    var: forwarding_information_base
 
 - name: "Gather facts about an installed firmware for a logical interconnect that matches the specified name"
   oneview_logical_interconnect_facts:
@@ -111,7 +121,8 @@
       - firmware
   delegate_to: localhost
 
-- debug: var=firmware
+- ansible.builtin.debug:
+    var: firmware
 
 - name: "Gather facts about the collection of uplink ports from the member interconnects which are eligible for
           assignment to an analyzer port on the logical interconnect"
@@ -123,7 +134,8 @@
       - unassigned_uplink_ports
   delegate_to: localhost
 
-- debug: var=unassigned_uplink_ports
+- ansible.builtin.debug:
+    var: unassigned_uplink_ports
 
 - name: "Gather facts about the collection of ports from the member interconnects which are eligible for
           assignment to an analyzer port on the logical interconnect"
@@ -135,7 +147,8 @@
       - unassigned_ports
   delegate_to: localhost
 
-- debug: var=unassigned_ports
+- ansible.builtin.debug:
+    var: unassigned_ports
 
 - name: "Gather facts about the telemetry configuration of the logical interconnect"
   oneview_logical_interconnect_facts:
@@ -146,7 +159,8 @@
       - telemetry_configuration
   delegate_to: localhost
 
-- debug: var=telemetry_configuration
+- ansible.builtin.debug:
+    var: telemetry_configuration
 
 - name: "Gather the Ethernet interconnect settings for the logical interconnect"
   oneview_logical_interconnect_facts:
@@ -157,7 +171,8 @@
       - ethernet_settings
   delegate_to: localhost
 
-- debug: var=ethernet_settings
+- ansible.builtin.debug:
+    var: ethernet_settings
 
 - name: Logout Session
   oneview_logout_session:

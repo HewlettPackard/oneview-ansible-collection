@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,17 +18,17 @@
   register: version
 
 - name: Print currentVersion if api version is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
 - name: Add a San Manager Storage System
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -45,12 +46,13 @@
           value: true
   delegate_to: localhost
   register: san_manager1
-- debug:
+- ansible.builtin.debug:
     msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
-- debug: var=san_manager1
+- ansible.builtin.debug:
+    var: san_manager1
 
 - name: Do nothing when San Manager is already present
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -69,7 +71,7 @@
   delegate_to: localhost
 
 - name: Refresh the San Manager
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: refresh_state_set
@@ -79,7 +81,7 @@
   delegate_to: localhost
 
 - name: Update the San Manager
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -99,7 +101,7 @@
 # To update password of san manager, "updatePassword" field inside password element of connectionInfo
 # should be set to True
 - name: Update password of San Manager
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
@@ -112,13 +114,13 @@
           value: "{{ contents.san_manager.san_manager_username }}"
         - name: "Password"
           value: "{{ contents.san_manager.san_manager_password }}"
-          updatePassword: True
+          updatePassword: true
         - name: "UseHttps"
           value: true
   delegate_to: localhost
 
 - name: Remove the San Manager from OneView
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
@@ -128,7 +130,7 @@
   register: deleted
 
 - name: Do nothing when San Manager is absent
-  oneview_san_manager:
+  hpe.oneview.oneview_san_manager:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent

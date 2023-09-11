@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,12 +18,12 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
@@ -87,7 +88,8 @@
   delegate_to: localhost
   register: result
 
-- debug: msg="{{ result.msg }}"
+- ansible.builtin.debug:
+    msg: "{{ result.msg }}"
 
 - name: Update the QoS aggregated configuration for the logical interconnect
   oneview_logical_interconnect:
@@ -115,8 +117,8 @@
     data:
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       snmpConfiguration:
-        enabled: True
-        readCommunity: "public"    
+        enabled: true
+        readCommunity: "public"
   delegate_to: localhost
 
 - name: Update the IGMP settings for the logical interconnect
@@ -131,7 +133,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- debug: var=igmp_settings
+- ansible.builtin.debug:
+    var: igmp_settings
 
 - name: Update the port monitor configuration of the logical interconnect
   oneview_logical_interconnect:
@@ -141,7 +144,7 @@
     data:
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       portMonitor:
-        enablePortMonitor: False
+        enablePortMonitor: false
   delegate_to: localhost
 
 - name: Update the port flap settings of the logical interconnect
@@ -156,7 +159,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- debug: var=port_flap_settings
+- ansible.builtin.debug:
+    var: port_flap_settings
 
 - name: Gather facts about a Logical Interconnect by name to get uri
   oneview_logical_interconnect_facts:
@@ -165,7 +169,8 @@
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
-- set_fact: li_uri={{ logical_interconnects['uri'] }}
+- ansible.builtin.set_fact:
+    li_uri: "{{ logical_interconnects['uri'] }}"
 
 - name: Generate bulk inconsistency validation report for logical interconnect by name.
   oneview_logical_interconnect:
@@ -180,7 +185,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- debug: var=li_inconsistency_report
+- ansible.builtin.debug:
+    var: li_inconsistency_report
 
 - name: Update the configuration on the logical interconnect
   oneview_logical_interconnect:
@@ -200,11 +206,12 @@
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       telemetryConfiguration:
         sampleCount: 12
-        enableTelemetry: True
+        enableTelemetry: true
         sampleInterval: 300
   delegate_to: localhost
 
-- debug: var=telemetry_configuration
+- ansible.builtin.debug:
+    var: telemetry_configuration
 
 - name: Gather paginated, filtered and sorted facts about Firmware Drivers
   oneview_firmware_driver_facts:
@@ -215,9 +222,10 @@
       count: 3
       sort: 'name:descending'
 
-- debug: var=firmware_drivers
+- ansible.builtin.debug:
+    var: firmware_drivers
 
-#- name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
+# - name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
 #  oneview_logical_interconnect:
 #    config: "{{ config }}"
 #    sessionID: "{{ session.ansible_facts.session }}"

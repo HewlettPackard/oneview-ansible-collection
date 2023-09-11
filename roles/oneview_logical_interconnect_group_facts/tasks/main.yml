@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=logical_interconnect_groups
+- ansible.builtin.debug:
+    var: logical_interconnect_groups
 
 - name: Gather paginated, filtered, and sorted facts about Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
@@ -26,7 +28,8 @@
       sort: 'name:descending'
       filter: "\"'name'='e11-encl-group logical interconnect group'\""
 
-- debug: var=logical_interconnect_groups
+- ansible.builtin.debug:
+    var: logical_interconnect_groups
 
 - name: Gather facts about a Scope by name
   oneview_scope_facts:
@@ -34,7 +37,8 @@
     name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost
 
-- debug: var=scopes[0]['uri']
+- ansible.builtin.debug:
+    var: scopes[0]['uri']
 
 - name: Gather facts about Logical Interconnect Group by scope_uris
   oneview_logical_interconnect_group_facts:
@@ -43,7 +47,8 @@
     params:
       scope_uris: "{{ scopes[0]['uri'] }}"
 
-- debug: var=logical_interconnect_groups
+- ansible.builtin.debug:
+    var: logical_interconnect_groups
 
 - name: Gather facts about a Logical Interconnect Group by name
   oneview_logical_interconnect_group_facts:
@@ -52,7 +57,8 @@
     name: "LIG"
   delegate_to: localhost
 
-- debug: var=logical_interconnect_groups
+- ansible.builtin.debug:
+    var: logical_interconnect_groups
 
 - name: Logout Session
   oneview_logout_session:

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Drive Enclosures
   oneview_drive_enclosure_facts:
@@ -14,13 +15,16 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=drive_enclosures[0]['name']
-- debug: var=drive_enclosures[1]['name']
-- debug: var=drive_enclosures[2]['name']
+- ansible.builtin.debug:
+    var: drive_enclosures[0]['name']
+- ansible.builtin.debug:
+    var: drive_enclosures[1]['name']
+- ansible.builtin.debug:
+    var: drive_enclosures[2]['name']
 
-- set_fact:
+- ansible.builtin.set_fact:
     drive_enclosure_uri_list: ["{{ drive_enclosures[0]['uri'] }}"]
-- set_fact:
+- ansible.builtin.set_fact:
     drive_bay_uris: ["{{ drive_enclosures[1]['driveBays'][2]['uri'] }}", "{{ drive_enclosures[1]['driveBays'][3]['uri'] }}"]
 
 - name: Create a SAS Logical JBOD
@@ -41,7 +45,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Create a SAS logical JBOD by providing specific drive bay URIs
@@ -57,7 +62,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Do nothing when JBOD already exists
@@ -70,7 +76,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Change name of an existing JBOD
@@ -84,7 +91,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Do nothing when name is already the same
@@ -98,7 +106,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Change description of an existing JBOD
@@ -112,7 +121,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Do nothing when description is already the same
@@ -126,7 +136,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Disable drive sanitize option of an existing JBOD
@@ -139,7 +150,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Do nothing when drive sanitize option is already disabled
@@ -152,7 +164,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Clear metadata of an existing JBOD
@@ -165,7 +178,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Delete an existing JBOD
@@ -178,7 +192,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Do nothing if JBOD is already deleted
@@ -191,7 +206,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- debug: var=result.msg
+- ansible.builtin.debug:
+    var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
 - name: Logout Session
