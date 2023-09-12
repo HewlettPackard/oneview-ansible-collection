@@ -6,14 +6,16 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Users
   oneview_user_facts:
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: var=users
+- ansible.builtin.debug:
+    var: users
 
 - name: Gather paginated, filtered and sorted facts about Users
   oneview_user_facts:
@@ -25,7 +27,8 @@
       sort: 'emailAddress:descending'
       filter: 'enabled=true'
 
-- debug: var=users
+- ansible.builtin.debug:
+    var: users
 
 - name: Gather facts about a User by name
   oneview_user_facts:
@@ -34,7 +37,8 @@
     userName: "testUser"
   delegate_to: localhost
 
-- debug: var=users
+- ansible.builtin.debug:
+    var: users
 
 - name: Gather facts about the users who have permissions that use a specified role
   oneview_user_facts:
@@ -44,19 +48,22 @@
 
   delegate_to: localhost
 
-- debug: var=role
+- ansible.builtin.debug:
+    var: role
 
 - name: Gather facts about lists of user's roles
   oneview_user_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     userName: "testUser"
-    options: 
-        - getUserRoles
+    options:
+      - getUserRoles
   delegate_to: localhost
 
-- debug: var=users
-- debug: var=user_roles
+- ansible.builtin.debug:
+    var: users
+- ansible.builtin.debug:
+    var: user_roles
 
 - name: Logout Session
   oneview_logout_session:

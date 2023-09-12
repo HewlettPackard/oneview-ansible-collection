@@ -11,7 +11,8 @@
       smartLink: false
       privateNetwork: false
   delegate_to: localhost
-- debug: var=ethernet_network['uri']
+- ansible.builtin.debug:
+    var: ethernet_network['uri']
 
 - name: Gather facts about a Logical Interconnect by name
   oneview_logical_interconnect_facts:
@@ -25,7 +26,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
@@ -33,7 +35,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=logical_interconnects['uri']
+- ansible.builtin.debug:
+    var: logical_interconnects['uri']
 
 - name: Ensure that the Uplink Set is present
   oneview_uplink_set:
@@ -46,7 +49,7 @@
       # You can choose set the Logical Interconnect by logicalInterconnectUri or logicalInterconnectName
       logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"                                   # option 1
       # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
-      networkUris: 
+      networkUris:
         - "{{ ethernet_network['uri'] }}"
       fcNetworkUris: []
       fcoeNetworkUris: []

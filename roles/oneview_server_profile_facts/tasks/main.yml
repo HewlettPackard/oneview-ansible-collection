@@ -8,19 +8,19 @@
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: contents.api_version | string
   when: config_file.api_version != ""
 
@@ -29,8 +29,10 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- debug: msg="{{server_profiles | map(attribute='name') | list }}"
-- debug: var=server_profiles
+- ansible.builtin.debug:
+    msg: "{{server_profiles | map(attribute='name') | list }}"
+- ansible.builtin.debug:
+    var: server_profiles
 
 
 - name: Gather paginated, filtered and sorted facts about Server Profiles
@@ -44,7 +46,8 @@
       filter: macType='Virtual'
   delegate_to: localhost
 
-- debug: msg="{{server_profiles | map(attribute='name') | list }}"
+- ansible.builtin.debug:
+    msg: "{{server_profiles | map(attribute='name') | list }}"
 
 
 - name: Gather facts about a Server Profile by name
@@ -54,7 +57,8 @@
     name: "{{contents.server_profile.server_profile_name}}"
   delegate_to: localhost
 
-- debug: var=server_profiles
+- ansible.builtin.debug:
+    var: server_profiles
 
 - name: Gather facts about a Server Profile by uri
   oneview_server_profile_facts:
@@ -64,7 +68,8 @@
   delegate_to: localhost
   when: server_profiles|length != 0
 
-- debug: var=server_profiles
+- ansible.builtin.debug:
+    var: server_profiles
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
@@ -88,7 +93,8 @@
           enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
   delegate_to: localhost
 
-- debug: var=server_profile_available_targets
+- ansible.builtin.debug:
+    var: server_profile_available_targets
 
 - name: Gather all facts about a Server Profile works below API Version 1200
   oneview_server_profile_facts:
@@ -96,9 +102,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{contents.server_profile.server_profile_name}}"
     options:
-        - schema  # Supported only for API version <= 1200
-        - newProfileTemplate # Supported only for API version <= 1200
-        - availableServers # Supported only for API version <= 1200
+      - schema  # Supported only for API version <= 1200
+      - newProfileTemplate # Supported only for API version <= 1200
+      - availableServers # Supported only for API version <= 1200
   delegate_to: localhost
   when: currentVersion <= '1200'
 
@@ -108,31 +114,43 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{contents.server_profile.server_profile_name}}"
     options:
-        - compliancePreview
-        - profilePorts:
+      - compliancePreview
+      - profilePorts:
+        serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
+        enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
+      - transformation:
           serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
           enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
-        - transformation:
-            serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
-            enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
-        - availableNetworks:
-            serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
-            enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
-        - availableTargets
+      - availableNetworks:
+          serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
+          enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
+      - availableTargets
   delegate_to: localhost
 
-- debug: var=server_profiles
-- debug: var=server_profile_schema
-- debug: var=server_profile_compliance_preview
-- debug: var=server_profile_new_profile_template
-- debug: var=server_profile_profile_ports
-- debug: var=server_profile_messages
-- debug: var=server_profile_transformation
-- debug: var=server_profile_available_networks
-- debug: var=server_profile_available_servers
-- debug: var=server_profile_available_storage_system
-- debug: var=server_profile_available_storage_systems
-- debug: var=server_profile_available_targets
+- ansible.builtin.debug:
+    var: server_profiles
+- ansible.builtin.debug:
+    var: server_profile_schema
+- ansible.builtin.debug:
+    var: server_profile_compliance_preview
+- ansible.builtin.debug:
+    var: server_profile_new_profile_template
+- ansible.builtin.debug:
+    var: server_profile_profile_ports
+- ansible.builtin.debug:
+    var: server_profile_messages
+- ansible.builtin.debug:
+    var: server_profile_transformation
+- ansible.builtin.debug:
+    var: server_profile_available_networks
+- ansible.builtin.debug:
+    var: server_profile_available_servers
+- ansible.builtin.debug:
+    var: server_profile_available_storage_system
+- ansible.builtin.debug:
+    var: server_profile_available_storage_systems
+- ansible.builtin.debug:
+    var: server_profile_available_targets
 
 - name: Logout Session
   oneview_logout_session:

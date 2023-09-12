@@ -1,4 +1,4 @@
---- 
+---
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about the last 5 running tasks
   oneview_task_facts:
@@ -18,7 +19,8 @@
       filter: ["taskState='Running'", "isCancellable=true"]
   delegate_to: localhost
 
-- debug: var=tasks
+- ansible.builtin.debug:
+    var: tasks
 
 - name: Sets the state of task to 'Cancelling'
   oneview_task:

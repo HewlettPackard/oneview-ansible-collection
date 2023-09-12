@@ -26,17 +26,22 @@
       initialScopeUris:
         - "{{ scopes[0].uri }}"
     params: # Supported only in API version >= 600
-      force: True
+      force: true
   delegate_to: localhost
   register: result
 
-- debug: msg= "{{ result.msg }}"
-
-- debug: var=server_profile
-- debug: var=serial_number
-- debug: var=server_hardware
-- debug: var=compliance_preview
-- debug: var=created
+- ansible.builtin.debug:
+    msg: "{{ result.msg }}"
+- ansible.builtin.debug:
+    var: server_profile
+- ansible.builtin.debug:
+    var: serial_number
+- ansible.builtin.debug:
+    var: server_hardware
+- ansible.builtin.debug:
+    var: compliance_preview
+- ansible.builtin.debug:
+    var: created
 
 - name: Power Off the server hardware
   oneview_server_hardware:
@@ -44,10 +49,10 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_state_set
     data:
-        name: "{{ contents.server_profile.server_hardware_name }}"
-        powerStateData:
-            powerState: "Off"
-            powerControl: "MomentaryPress"
+      name: "{{ contents.server_profile.server_hardware_name }}"
+      powerStateData:
+        powerState: "Off"
+        powerControl: "MomentaryPress"
   delegate_to: localhost
 
 - name: Create a server profile with iLO/Bios configuration
@@ -125,7 +130,8 @@
             networkName: "{{ contents.server_profile.network_name }}"
   delegate_to: localhost
 
-- debug: msg=server_profile
+- ansible.builtin.debug:
+    msg: server_profile
 
 - name: Update Server Profile with boot configuration
   oneview_server_profile:
@@ -136,10 +142,10 @@
       name: "{{ contents.server_profile.inventory_hostname }}"
       # affinity: "BayAndServer"
       bootMode:
-        manageMode: True
+        manageMode: true
         mode: "UEFI"
         pxeBootPolicy: "Auto"
-      boot: 
+      boot:
         manageBoot: true
         order: ["HardDisk"]
   delegate_to: localhost
@@ -258,9 +264,11 @@
   delegate_to: localhost
   register: result
 
-- debug: msg=result.msg
+- ansible.builtin.debug:
+    msg: result.msg
 
-- debug: var=server_profile
+- ansible.builtin.debug:
+    var: server_profile
 
 - name: Remediate compliance issues
   oneview_server_profile:
@@ -272,7 +280,8 @@
   delegate_to: localhost
   register: result
 
-- debug: msg=result.msg
+- ansible.builtin.debug:
+    msg: result.msg
 
 - name: Delete the Server Profile created from a Server Profile Template
   oneview_server_profile:
@@ -284,7 +293,8 @@
   delegate_to: localhost
   register: result
 
-- debug: msg=result.msg
+- ansible.builtin.debug:
+    msg: result.msg
 
 - name: Delete the Server Profile created with connections
   oneview_server_profile:
@@ -295,7 +305,8 @@
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
   delegate_to: localhost
 
-- debug: msg=result.msg
+- ansible.builtin.debug:
+    msg: result.msg
 
 - name: Create Server Profile without specifying a template
   oneview_server_profile:
@@ -308,14 +319,15 @@
       description: "{{ contents.server_profile.server_profile_description }}"
   delegate_to: localhost
 
-- debug: var=server_profile
+- ansible.builtin.debug:
+    var: server_profile
 
 - name: Unassign Server Hardware from Server Profile
   oneview_server_profile:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     # This is required for unassigning a SH, or creating a SP and not auto-assigning a SH
-    auto_assign_server_hardware: False
+    auto_assign_server_hardware: false
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
       # Specify a blank serverHardwareName or serverHardwareUri when auto_assign_server_hardware is False to unassign a SH
@@ -330,7 +342,8 @@
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
-- debug: var=inventory_hostname
+- ansible.builtin.debug:
+    var: inventory_hostname
 
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
@@ -346,7 +359,7 @@
       initialScopeUris:
         - "{{ scopes[0].uri }}"
     params: # Supported only in API version >= 600
-      force: True
+      force: true
   delegate_to: localhost
   register: result
 

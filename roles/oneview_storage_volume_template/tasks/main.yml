@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Retrieve the Root Storage Volume Template
   oneview_storage_volume_template_facts:
@@ -19,8 +20,10 @@
       filter: isRoot='True'
   delegate_to: localhost
 
-- set_fact: svt_root_uri="{{ storage_volume_templates[0]['uri'] }}"
-- debug: var=svt_root_uri
+- ansible.builtin.set_fact:
+    svt_root_uri: "{{ storage_volume_templates[0]['uri'] }}"
+- ansible.builtin.debug:
+    var: svt_root_uri
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
@@ -99,9 +102,9 @@
           description: A URI reference to the common provisioning group used to create snapshots
         provisioningType:
           enum:
-          - Thin
-          - Full
-          - Thin Deduplication
+            - Thin
+            - Full
+            - Thin Deduplication
           meta:
             locked: true
             createOnly: true

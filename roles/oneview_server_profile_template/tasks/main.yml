@@ -47,7 +47,7 @@
         mode: UEFI
         pxeBootPolicy: Auto
     params:
-      force: True # Supprted only for API version >= 600
+      force: true # Supprted only for API version >= 600
   delegate_to: localhost
 
 - name: Rename Server Profile Template
@@ -69,7 +69,7 @@
     data:
       name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
     params:
-      force: True # Supported only for API version >= 600
+      force: true # Supported only for API version >= 600
   delegate_to: localhost
 
 - name: Do nothing when Server Profile Template is absent
