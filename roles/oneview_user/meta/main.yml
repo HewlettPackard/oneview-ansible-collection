@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: oneview_user
-  author: Shanmugam M 
+  author: Shanmugam M
   description: Ansible role to manage OneView User resources.
   company: Hewlett Packard Enterprise
   license: Apache
