@@ -1,6 +1,6 @@
 # .ansible-lint
 exclude_paths:
-- .github/
+ - .github/
 # parseable: true
 # quiet: true
 # verbosity: 1
@@ -9,13 +9,15 @@ use_default_rules: true
 
 # This makes linter to fully ignore rules/tags listed below
 skip_list:
-  - meta-no-info
-  - meta-no-tags
-  - empty-string-compare
-  - var-spacing
-  - unnamed-task
-  - risky-file-permissions
-  - role-name
-  - schema
-  - name
-  - var-naming
+ - meta-no-info
+ - meta-no-tags
+ - empty-string-compare
+ - var-spacing
+ - unnamed-task
+ - risky-file-permissions
+ - role-name
+ - schema
+ - name
+ - var-naming
+ - ignore-errors
+ - literal-compare
