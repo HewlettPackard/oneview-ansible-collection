@@ -7,7 +7,7 @@ coverage:
     project:
       default:
         threshold: 1
-        target: 98% # overall project/ repo coverage
+        target: 98% #overall project/ repo coverage
     # Disable patch since it is noisy and not required
     patch:
       default:
