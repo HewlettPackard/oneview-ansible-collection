@@ -190,7 +190,7 @@
       environmentalConfigurationData:
         calibratedMaxPower: 500
   delegate_to: localhost
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: true
 
 - name: Remove the server hardware by its IP
   oneview_server_hardware:

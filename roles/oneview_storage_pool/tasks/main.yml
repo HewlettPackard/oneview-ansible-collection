@@ -46,7 +46,7 @@
     data:
       storageSystemUri: "{{ storage_systems[0]['uri'] }}"
       name: '{{ contents.storage_pool.storage_pool_name }}'
-      isManaged: talse
+      isManaged: false
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
 
