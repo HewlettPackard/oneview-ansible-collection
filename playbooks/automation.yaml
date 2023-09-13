@@ -1,7 +1,5 @@
 ---
 - hosts: all
-  collections:
-    - hpe.oneview
   tasks:
     - block:
         - name: (id_pools_ipv4_range)
