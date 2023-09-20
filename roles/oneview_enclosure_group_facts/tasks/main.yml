@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=enclosure_groups
+- ansible.builtin.debug:
+    var: enclosure_groups
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -35,7 +37,8 @@
   delegate_to: localhost
   when: scopes is defined
 
-- debug: var=enclosure_groups
+- ansible.builtin.debug:
+    var: enclosure_groups
 
 - name: Gather facts about an Enclosure Group by name
   oneview_enclosure_group_facts:
@@ -44,7 +47,8 @@
     name: "{{ contents.enclosure_group.eg_name}}"
   delegate_to: localhost
 
-- debug: var=enclosure_groups
+- ansible.builtin.debug:
+    var: enclosure_groups
 
 - name: Gather facts about an Enclosure Group by name with configuration script
   oneview_enclosure_group_facts:
@@ -55,7 +59,8 @@
       - configuration_script
   delegate_to: localhost
 
-- debug: var=enclosure_group_script
+- ansible.builtin.debug:
+    var: enclosure_group_script
 
 - name: Logout Session
   oneview_logout_session:

@@ -7,7 +7,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Ensure that the SNMPv3 user is present using the default configuration
   oneview_appliance_device_snmp_v3_users:
@@ -16,14 +17,14 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
     data:
-        type: "{{ contents.appliance_device_snmp_v3_users.type }}"
-        userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
-        securityLevel: "{{ contents.appliance_device_snmp_v3_users.security_level }}"
-        authenticationProtocol: "{{ contents.appliance_device_snmp_v3_users.authentication_protocol }}"    
-        authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"            
+      type: "{{ contents.appliance_device_snmp_v3_users.type }}"
+      userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
+      securityLevel: "{{ contents.appliance_device_snmp_v3_users.security_level }}"
+      authenticationProtocol: "{{ contents.appliance_device_snmp_v3_users.authentication_protocol }}"
+      authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Set the password of specified SNMPv3 user
@@ -37,7 +38,7 @@
       authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Ensure that the SNMPv3 user is absent
@@ -47,7 +48,7 @@
     state: absent
     name: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
     data:
-        userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
+      userName: "{{ contents.appliance_device_snmp_v3_users.user_name }}"
   delegate_to: localhost
 
 - name: Creating the SNMPv3 user for automation
@@ -56,19 +57,19 @@
     state: present
     name: "user123456"
     data:
-        type: "Users"
-        userName: "user123456"
+      type: "Users"
+      userName: "user123456"
   delegate_to: localhost
 
-- name: Creating another SNMPv3 user for automation 
+- name: Creating another SNMPv3 user for automation
   oneview_appliance_device_snmp_v3_users:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     name: "test2"
     data:
-        type: "Users"
-        userName: "test2"
+      type: "Users"
+      userName: "test2"
   delegate_to: localhost
 
 - name: Logout Session

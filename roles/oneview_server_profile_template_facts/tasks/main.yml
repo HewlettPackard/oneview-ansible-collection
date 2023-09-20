@@ -8,19 +8,19 @@
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
@@ -30,7 +30,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=server_profile_templates
+- ansible.builtin.debug:
+    var: server_profile_templates
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -47,10 +48,11 @@
       count: 3
       sort: name:ascending
       filter: macType='Virtual'
-      scope_uris: "{{ scopes[0]['uri'] }}" #Supported only for OneView API version >= 600
+      scope_uris: "{{ scopes[0]['uri'] }}" # Supported only for OneView API version >= 600
   delegate_to: localhost
 
-- debug: var=server_profile_templates
+- ansible.builtin.debug:
+    var: server_profile_templates
 
 - name: Gather facts about a Server Profile Template by name
   oneview_server_profile_template_facts:
@@ -59,7 +61,8 @@
     name: "{{ contents.server_profile_template.server_profile_template_name }}"
   delegate_to: localhost
 
-- debug: var=server_profile_templates
+- ansible.builtin.debug:
+    var: server_profile_templates
 
 - name: Gather facts about a Server Profile Template by URI
   oneview_server_profile_template_facts:
@@ -78,8 +81,10 @@
       - new_profile
   delegate_to: localhost
 
-- debug: var=server_profile_templates
-- debug: var=new_profile
+- ansible.builtin.debug:
+    var: server_profile_templates
+- ansible.builtin.debug:
+    var: new_profile
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
@@ -106,7 +111,8 @@
   delegate_to: localhost
   when: currentVersion >= '300'
 
-- debug: var=transformation
+- ansible.builtin.debug:
+    var: transformation
 
 # This option is available only for API version >= 600.
 - name: Gather facts about available networks
@@ -121,7 +127,8 @@
   delegate_to: localhost
   when: currentVersion >= '600'
 
-- debug: var=server_profile_template_available_networks
+- ansible.builtin.debug:
+    var: server_profile_template_available_networks
 
 - name: Logout Session
   oneview_logout_session:

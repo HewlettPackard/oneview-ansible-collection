@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about logical interconnect group
   oneview_logical_interconnect_group_facts:
@@ -23,15 +24,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ item.name }}"
-        ipAddressingMode: "External"
-        ipv6AddressingMode: "External"
-        enclosureCount: 3
-        interconnectBayMappings:
-          - interconnectBay: 3
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
-          - interconnectBay: 6
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
+      name: "{{ item.name }}"
+      ipAddressingMode: "External"
+      ipv6AddressingMode: "External"
+      enclosureCount: 3
+      interconnectBayMappings:
+        - interconnectBay: 3
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
+        - interconnectBay: 6
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
   delegate_to: localhost
   with_items:
     - { name: 'EG' }
@@ -44,17 +45,17 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "EG_with_ip_range"
-        ipAddressingMode: "IpPool"
-        ipRangeUris:
-          - /rest/id-pools/ipv4/ranges/d4321a21-42b5-4a1e-9c44-9e8bf9339dfa
-        ipv6AddressingMode: "External"
-        enclosureCount: 3
-        interconnectBayMappings:
-          - interconnectBay: 3
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
-          - interconnectBay: 6
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
+      name: "EG_with_ip_range"
+      ipAddressingMode: "IpPool"
+      ipRangeUris:
+        - /rest/id-pools/ipv4/ranges/d4321a21-42b5-4a1e-9c44-9e8bf9339dfa
+      ipv6AddressingMode: "External"
+      enclosureCount: 3
+      interconnectBayMappings:
+        - interconnectBay: 3
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
+        - interconnectBay: 6
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
   delegate_to: localhost
   when: contents.enclosure_group.ip_range == 'True'
 
@@ -64,15 +65,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ contents.enclosure_group.enclosure_group_name }}"
-        ipAddressingMode: "External"
-        ipv6AddressingMode: "External"
-        enclosureCount: 3
-        interconnectBayMappings:
-          - interconnectBay: 3
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
-          - interconnectBay: 6
-            logicalInterconnectGroupUri: "{{ lig_uri }}"
+      name: "{{ contents.enclosure_group.enclosure_group_name }}"
+      ipAddressingMode: "External"
+      ipv6AddressingMode: "External"
+      enclosureCount: 3
+      interconnectBayMappings:
+        - interconnectBay: 3
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
+        - interconnectBay: 6
+          logicalInterconnectGroupUri: "{{ lig_uri }}"
   delegate_to: localhost
 
 - name: Update the Enclosure Group changing the name attribute
@@ -81,8 +82,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ contents.enclosure_group.enclosure_group_name }}"
-        newName: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      name: "{{ contents.enclosure_group.enclosure_group_name }}"
+      newName: "{{ contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 # This play is compatible with C7000 Enclosures
@@ -92,8 +93,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
-        configurationScript: "# script (updated)"
+      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      configurationScript: "# script (updated)"
   delegate_to: localhost
   when: contents.enclosure_group.variant == "C7000"
 

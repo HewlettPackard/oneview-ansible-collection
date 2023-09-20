@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,12 +18,12 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: contents.api_version | string
   when: config_file.api_version != ""
 
@@ -61,7 +62,7 @@
     state: present
     data:
       name: OneViewSDK Test Network Set
-      scopeUris: 
+      scopeUris:
         - "{{ scopes[0]['uri'] }}"
         - "{{ scopes[1]['uri'] }}"
   delegate_to: localhost

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about server profile templates
   oneview_server_profile_template_facts:
@@ -15,8 +16,9 @@
     name: "{{ contents.hypervisor_cluster_profile.server_profile_template_name }}"
   delegate_to: localhost
 
-- debug: var=server_profile_templates
-- set_fact:
+- ansible.builtin.debug:
+    var: server_profile_templates
+- ansible.builtin.set_fact:
     spt_uri: "{{ server_profile_templates[0]['uri'] }}"
 
 - name: Gather facts about hypervisor managers
@@ -25,7 +27,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.hypervisor_cluster_profile.hypervisor_manager_name }}"
   delegate_to: localhost
-- set_fact:
+- ansible.builtin.set_fact:
     hyp_mgr_uri: "{{ hypervisor_managers[0]['uri'] }}"
 
 - name: Create a basic Hypervisor Cluster Profile
@@ -52,15 +54,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     params:
-      create_vswitch_layout: True                          # If this is true, virtual switch layout will be created
+      create_vswitch_layout: true                          # If this is true, virtual switch layout will be created
     data:
       description: "test cluster"
       hypervisorType: "Vmware"
       hypervisorClusterSettings:
         type: "Vmware"
-        drsEnabled: True
-        haEnabled: False
-        multiNicVMotion: False
+        drsEnabled: true
+        haEnabled: false
+        multiNicVMotion: false
         virtualSwitchType: "Standard"
       hypervisorHostProfileTemplate:
         serverProfileTemplateUri: "{{ spt_uri }}"
@@ -70,11 +72,11 @@
           serverProfileTemplateUri: "{{ spt_uri }}"
           hypervisorManagerUri: "{{ hyp_mgr_uri }}"
         hostConfigPolicy:
-          leaveHostInMaintenance: False
-          useHostnameToRegister: False
+          leaveHostInMaintenance: false
+          useHostnameToRegister: false
         virtualSwitchConfigPolicy:
-          manageVirtualSwitches: True
-          configurePortGroups: True
+          manageVirtualSwitches: true
+          configurePortGroups: true
       name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}_with_vswitch"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
       path: "DC1"
@@ -113,8 +115,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     params:
-      force: True
-      soft_delete: False
+      force: true
+      soft_delete: false
     data:
       name: "HCP-renamed"
   delegate_to: localhost

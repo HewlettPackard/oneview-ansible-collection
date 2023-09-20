@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all SAS Logical Interconnects
   oneview_sas_logical_interconnect_facts:
@@ -14,11 +15,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=sas_logical_interconnects
+- ansible.builtin.debug:
+    var: sas_logical_interconnects
 
-- set_fact:
+- ansible.builtin.set_fact:
     sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
-- set_fact:
+- ansible.builtin.set_fact:
     sas_logical_interconnect_uri: "{{ sas_logical_interconnects[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical Interconnects
@@ -31,7 +33,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- debug: var=sas_logical_interconnects
+- ansible.builtin.debug:
+    var: sas_logical_interconnects
 
 - name: Gather facts about an SAS Logical interconnect by name
   oneview_sas_logical_interconnect_facts:
@@ -40,7 +43,8 @@
     name: "{{ sas_logical_interconnect_name }}"
   delegate_to: localhost
 
-- debug: var=sas_logical_interconnects
+- ansible.builtin.debug:
+    var: sas_logical_interconnects
 
 - name: Gather facts about an SAS Logical interconnect by uri
   oneview_sas_logical_interconnect_facts:
@@ -49,7 +53,8 @@
     uri: "{{ sas_logical_interconnect_uri }}"
   delegate_to: localhost
 
-- debug: var=sas_logical_interconnects
+- ansible.builtin.debug:
+    var: sas_logical_interconnects
 
 - name: Gather baseline firmware facts about a SAS Logical interconnect by name
   oneview_sas_logical_interconnect_facts:
@@ -60,7 +65,8 @@
       - firmware_facts
   delegate_to: localhost
 
-- debug: var=firmware_facts
+- ansible.builtin.debug:
+    var: firmware_facts
 
 - name: Logout Session
   oneview_logout_session:

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Hypervisor Managers
   oneview_hypervisor_manager_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=hypervisor_managers
+- ansible.builtin.debug:
+    var: hypervisor_managers
 
 - name: Gather paginated, filtered and sorted facts about Hypervisor Managers
   oneview_hypervisor_manager_facts:
@@ -25,7 +27,8 @@
       count: 3
       sort: 'name:descending'
       filter: 'hypervisorType=Vmware'
-- debug: var=hypervisor_managers
+- ansible.builtin.debug:
+    var: hypervisor_managers
 
 - name: Gather facts about a Hypervisor Manager by name
   oneview_hypervisor_manager_facts:
@@ -34,7 +37,8 @@
     name: "{{ name }}"
   delegate_to: localhost
 
-- debug: var=hypervisor_managers
+- ansible.builtin.debug:
+    var: hypervisor_managers
 
 - name: Logout Session
   oneview_logout_session:

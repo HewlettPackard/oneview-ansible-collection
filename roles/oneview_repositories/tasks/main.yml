@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
@@ -15,10 +16,10 @@
     remote: "{{ contents.repositories.remote_server }}"
   delegate_to: localhost
 
-- set_fact:
+- ansible.builtin.set_fact:
     certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
 
-#Server Certificate need to be added to appliance for using an Https web server
+# Server Certificate need to be added to appliance for using an Https web server
 - name: Create a Server Certificate
   oneview_certificates_server:
     config: "{{ config }}"
@@ -36,7 +37,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
-    validate_etag: False
+    validate_etag: false
     data:
       name: "{{ contents.repositories.repository_name }}"
       userName: "{{ contents.repositories.repository_username }}"
@@ -59,7 +60,10 @@
       repositoryType: "FirmwareExternalRepo"
   delegate_to: localhost
 
-- wait_for: port=22 host="{{ ansible_host }}" delay=60
+- ansible.builtin.wait_for:
+    port: 22
+    host: "{{ ansible_host }}"
+    delay: 60
 
 - name: Update the attributes of repository resource
   oneview_repositories:
@@ -79,7 +83,7 @@
     data:
       name: "{{ contents.repositories.repository_name }}"
     params:
-      force: True
+      force: true
   delegate_to: localhost
   register: deleted
 

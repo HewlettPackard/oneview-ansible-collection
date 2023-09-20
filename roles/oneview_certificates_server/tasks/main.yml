@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -23,7 +24,7 @@
     remote: "{{ contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
-- set_fact:
+- ansible.builtin.set_fact:
     certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
 
 - name: Create a Server Certificate

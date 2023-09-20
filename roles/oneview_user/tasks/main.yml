@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -106,7 +107,8 @@
 
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: Validates the existence of a user with the given user name
   oneview_user:
@@ -117,9 +119,10 @@
       userName: "testUser"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
-- name: Checks for the existence of a user with the specified full name 
+- name: Checks for the existence of a user with the specified full name
   oneview_user:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -128,7 +131,8 @@
       fullName: "testUser101"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: Add role to existing username
   oneview_user:
@@ -142,7 +146,8 @@
         - roleName: "Scope administrator"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: Update role to existing username
   oneview_user:
@@ -157,7 +162,8 @@
         - roleName: "Scope operator"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: remove role from existing username
   oneview_user:
@@ -166,12 +172,13 @@
     state: remove_role_from_username
     data:
       userName: "testUser"
-      role_list: 
+      role_list:
         - "Read only"
         - "Scope operator"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: Delete single user
   oneview_user:
@@ -180,9 +187,10 @@
     state: absent
     data:
       userName: "testUser"
-  delegate_to: localhost 
+  delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 
 - name: Delete multiple users
@@ -196,7 +204,8 @@
         - "testUser2"
   delegate_to: localhost
 
-- debug: var=user
+- ansible.builtin.debug:
+    var: user
 
 - name: Create a User for automation
   oneview_user:

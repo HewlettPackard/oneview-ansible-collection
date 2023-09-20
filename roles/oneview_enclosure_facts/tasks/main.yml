@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,12 +18,12 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
@@ -32,7 +33,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=enclosures
+- ansible.builtin.debug:
+    var: enclosures
 
 - name: Gather paginated, filtered and sorted facts about Enclosures
   oneview_enclosure_facts:
@@ -44,7 +46,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- debug: var=enclosures
+- ansible.builtin.debug:
+    var: enclosures
 
 - name: Gather facts about an Enclosure by name
   oneview_enclosure_facts:
@@ -53,7 +56,8 @@
     name: "{{ contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
-- debug: var=enclosures
+- ansible.builtin.debug:
+    var: enclosures
 
 # This block is compatible with C7000 Enclosures
 - name: Gather facts about an Enclosure by name with script
@@ -64,7 +68,7 @@
     options:
       - script
   when: contents.enclosure.variant == 'C7000' or currentVersion == '300'
-  delegate_to: localhost 
+  delegate_to: localhost
 
 - name: Gather facts about an Enclosure by name with options
   oneview_enclosure_facts:
@@ -79,12 +83,15 @@
             - "startDate=2016-07-01T14:29:42.000Z"
             - "endDate=2017-07-01T03:29:42.000Z"
           view: 'day'
-          refresh: False
+          refresh: false
   delegate_to: localhost
 
-- debug: var=enclosure_script
-- debug: var=enclosure_environmental_configuration
-- debug: var=enclosure_utilization
+- ansible.builtin.debug:
+    var: enclosure_script
+- ansible.builtin.debug:
+    var: enclosure_environmental_configuration
+- ansible.builtin.debug:
+    var: enclosure_utilization
 
 - name: Logout Session
   oneview_logout_session:

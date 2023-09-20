@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
@@ -21,15 +22,18 @@
     name: "{{ contents.logical_enclosure.eg_name }}"
   delegate_to: localhost
 
-#- name: Gather facts about all Firmware Drivers
+# - name: Gather facts about all Firmware Drivers
 #  oneview_firmware_driver_facts:
 #    config: "{{ config }}"
 #
-#- debug: var=firmware_drivers
+# - debug: var=firmware_drivers
 
-- debug: var=enclosures[0]['uri']
-- debug: var=enclosures[1]['uri']
-- debug: var=enclosures[2]['uri']
+- ansible.builtin.debug:
+    var: enclosures[0]['uri']
+- ansible.builtin.debug:
+    var: enclosures[1]['uri']
+- ansible.builtin.debug:
+    var: enclosures[2]['uri']
 
 
 # This operation is only available on HPE Synergy
@@ -39,18 +43,18 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        enclosureUris:
-          - "/rest/enclosures/0000000000A66101"
-          - "/rest/enclosures/0000000000A66102"
-          - "/rest/enclosures/0000000000A66103"
-        enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
-  ignore_errors: true
+      enclosureUris:
+        - "/rest/enclosures/0000000000A66101"
+        - "/rest/enclosures/0000000000A66102"
+        - "/rest/enclosures/0000000000A66103"
+      enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   delegate_to: localhost
-  when: (contents.logical_enclosure.variant == "Synergy" and enclosures is not none and enclosures is not undefined and 
+  when: (contents.logical_enclosure.variant == "Synergy" and enclosures is not none and enclosures is not undefined and
         enclosure_groups is not none and enclosure_groups is not undefined)
 
-#- name: Update the firmware for the Logical Enclosure
+# - name: Update the firmware for the Logical Enclosure
 #  oneview_logical_enclosure:
 #    config: "{{ config }}"
 #    state: firmware_updated
@@ -62,14 +66,14 @@
 #            forceInstallFirmware: "false"
 #        custom_headers:
 #            if-Match: '*'
-#  ignore_errors: true
+#  ignore_errors: "{{ ansible_check_mode }}"
 #  delegate_to: localhost
 #  when: (enclosures is not none and enclosures is not undefined and enclosure_groups is not none
 #          and enclosure_groups is not undefined and firmware_drivers is not none and firmware_drivers
 #          is not undefined)
 
 ## This play is compatible with Synergy Enclosures
-#- name: Update the firmware for the Logical Enclosure with the logical-interconnect validation set as true
+# - name: Update the firmware for the Logical Enclosure with the logical-interconnect validation set as true
 #  oneview_logical_enclosure:
 #    config: "{{ config }}"
 #    state: firmware_updated
@@ -84,7 +88,7 @@
 #            updateFirmwareOnUnmanagedInterconnect: "true"
 #        custom_headers:
 #            if-Match: '*'
-#  ignore_errors: true
+#  ignore_errors: "{{ ansible_check_mode }}"
 #  delegate_to: localhost
 #  when: (variant == "Synergy" and firmware_drivers is not none and firmware_drivers
 #          is not undefined)
@@ -95,9 +99,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: script_updated
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
-        configurationScript: "# script (updated)"
-  ignore_errors: true
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      configurationScript: "# script (updated)"
+  ignore_errors: "{{ ansible_check_mode }}"
   delegate_to: localhost
   when: contents.logical_enclosure.variant == "C7000"
 
@@ -107,13 +111,14 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: dumped
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
-        dump:
-          errorCode: "MyDump16"
-          encrypt: "true"
-          excludeApplianceDump: "false"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      dump:
+        errorCode: "MyDump16"
+        encrypt: "true"
+        excludeApplianceDump: "false"
   delegate_to: localhost
-- debug: var=generated_dump_uri
+- ansible.builtin.debug:
+    var: generated_dump_uri
 
 - name: Reconfigure all enclosures associated with logical enclosure
   oneview_logical_enclosure:
@@ -121,7 +126,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Makes the logical enclosure consistent with the enclosure group
@@ -130,7 +135,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: updated_from_group
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Update the Logical Enclosure changing the name attribute
@@ -139,8 +144,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
-        newName: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      newName: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
   delegate_to: localhost
 
 - name: Rename the Logical Enclosure to its initial name
@@ -149,8 +154,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
-        newName: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
+      newName: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 # This state is only available on HPE Synergy
@@ -160,7 +165,7 @@
 #     config: "{{ config }}"
 #     state: absent
 #     data: '{{ logical_enclosure }}'
-#   ignore_errors: true
+#   ignore_errors: "{{ ansible_check_mode }}"
 #   delegate_to: localhost
 #   when: variant == "Synergy"
 

@@ -1,21 +1,21 @@
 ---
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}" 
+    config: "{{ config }}"
   delegate_to: localhost
   when: config_file.api_version == ""
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: contents.api_version | string
   when: config_file.api_version != ""
-  
+
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
@@ -23,13 +23,15 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-- debug: var=storage_pools
+- ansible.builtin.debug:
+    var: storage_pools
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
@@ -41,7 +43,8 @@
       sort: 'name:descending'
       filter: status='OK'
 
-- debug: var=storage_pools
+- ansible.builtin.debug:
+    var: storage_pools
 
 - name: Gather facts about a Storage Pool by name
   oneview_storage_pool_facts:
@@ -57,7 +60,8 @@
     name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
-- debug: var=storage_systems
+- ansible.builtin.debug:
+    var: storage_systems
 
 # To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
 - name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is not managed
@@ -66,9 +70,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-        name: '{{ contents.storage_pool.storage_pool_name }}'
-        isManaged: False
+      storageSystemUri: "{{ storage_systems[0]['uri'] }}"
+      name: '{{ contents.storage_pool.storage_pool_name }}'
+      isManaged: false
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
 
@@ -78,9 +82,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-        storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-        name: '{{ contents.storage_pool.storage_pool_name }}'
-        isManaged: True
+      storageSystemUri: "{{ storage_systems[0]['uri'] }}"
+      name: '{{ contents.storage_pool.storage_pool_name }}'
+      isManaged: true
   delegate_to: localhost
   when: (storage_systems is not none and storage_systems is not undefined)
 

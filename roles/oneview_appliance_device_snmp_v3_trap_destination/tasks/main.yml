@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Ensure that the SNMPv3 Trap Destination is present
   oneview_appliance_device_snmp_v3_trap_destinations:
@@ -15,12 +16,12 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
-        port: 162
-        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      port: 162
+      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Ensure that the SNMPv3 Trap Destination is already present
@@ -30,9 +31,9 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
-        port: 162
-        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      port: 162
+      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - name: Update the userId of specified SNMPv3 Trap Destination
@@ -46,7 +47,7 @@
       userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username2 }}"
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Ensure that the SNMPv3 Trap Destination is absent
@@ -72,9 +73,9 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-        destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
-        port: 162
-        userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      port: 162
+      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - name: Logout Session

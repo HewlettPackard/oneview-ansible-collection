@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=scopes
+- ansible.builtin.debug:
+    var: scopes
 
 - name: Gather paginated, filtered and sorted facts about Scopes
   oneview_scope_facts:
@@ -27,7 +29,8 @@
       query: name eq 'SampleScope'
   delegate_to: localhost
 
-- debug: var=scopes
+- ansible.builtin.debug:
+    var: scopes
 
 - name: Gather facts about a Scope by name
   oneview_scope_facts:
@@ -36,7 +39,8 @@
     name: "{{ contents.scope.scope_name }}"
   delegate_to: localhost
 
-- debug: var=scopes
+- ansible.builtin.debug:
+    var: scopes
 
 - name: Logout Session
   oneview_logout_session:

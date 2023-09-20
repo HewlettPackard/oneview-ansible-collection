@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
@@ -17,12 +18,12 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact: 
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
@@ -32,7 +33,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=storage_volume_templates
+- ansible.builtin.debug:
+    var: storage_volume_templates
 
 - name: Gather paginated, filtered and sorted facts about Storage Volume Templates
   oneview_storage_volume_template_facts:
@@ -44,7 +46,8 @@
       sort: 'name:descending'
       filter: status='OK'
 
-- debug: var=storage_volume_templates
+- ansible.builtin.debug:
+    var: storage_volume_templates
 
 - name: Gather facts about a Storage Volume Template by name
   oneview_storage_volume_template_facts:
@@ -53,7 +56,8 @@
     name: "{{ contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
-- debug: var=storage_volume_templates
+- debug:
+    var: storage_volume_templates
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
@@ -61,7 +65,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=fc_networks
+- ansible.builtin.debug:
+    var: fc_networks
 
 # Only available after API500
 - name: Gather facts about the reachable Storage Volume Templates
@@ -84,7 +89,8 @@
       - compatibleSystems
   delegate_to: localhost
 
-- debug: var=compatible_systems
+- ansible.builtin.debug:
+    var: compatible_systems
 
 # Only available prior to API500
 - name: Gather facts about the connectable Storage Volume Templates
@@ -97,8 +103,10 @@
   delegate_to: localhost
   when: currentVersion <= '500'
 
-- debug: var=storage_volume_templates
-- debug: var=connectable_volume_templates
+- debug:
+    var: storage_volume_templates
+- ansible.builtin.debug:
+    var: connectable_volume_templates
 
 - name: Logout Session
   oneview_logout_session:

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: oneview_label
-  author: Asis Bagga 
+  author: Asis Bagga
   description: Ansible role to manage OneView Label resources.
   company: Hewlett Packard Enterprise
   license: Apache

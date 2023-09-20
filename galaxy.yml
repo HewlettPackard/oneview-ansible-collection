@@ -17,7 +17,7 @@ readme: README.md
 # A list of the collection's content authors. Can be just the name or in the format 'Full Name <email> (url)
 # @nicks:irc/im.site#channel'
 authors:
-- Nabhajit Ray <nabhajit.ray@hpe.com>
+ - Nabhajit Ray <nabhajit.ray@hpe.com>
 
 ### OPTIONAL but strongly recommended
 
@@ -58,8 +58,8 @@ issues: https://github.com/HewlettPackard/oneview-ansible-collection/issues
 
 # Ignore files and directories matching the following patterns
 build_ignore:
-  - Dockerfile
-  - ansible.cfg
-  - .gitignore
-  - .gitattributes
-  - CONTRIBUTING.md
+ - Dockerfile
+ - ansible.cfg
+ - .gitignore
+ - .gitattributes
+ - CONTRIBUTING.md

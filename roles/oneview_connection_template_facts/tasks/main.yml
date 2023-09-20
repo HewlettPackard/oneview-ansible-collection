@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- debug: var=session
+- ansible.builtin.debug:
+    var: session
 
 - name: Gather facts about all Connection Templates
   oneview_connection_template_facts:
@@ -14,7 +15,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- debug: var=connection_templates
+- ansible.builtin.debug:
+    var: connection_templates
 
 - name: Gather paginated, filtered and sorted facts about Connection Template
   oneview_connection_template_facts:
@@ -26,7 +28,8 @@
       sort: 'name:descending'
       filter: 'name=defaultConnectionTemplate'
 
-- debug: var=connection_templates
+- ansible.builtin.debug:
+    var: connection_templates
 
 - name: Gather facts about a Connection Template by name
   oneview_connection_template_facts:
@@ -35,7 +38,8 @@
     name: "{{ contents.connection_template.template_name }}"
   delegate_to: localhost
 
-- debug: var=connection_templates
+- ansible.builtin.debug:
+    var: connection_templates
 
 
 - name: Gather facts about the Default Connection Template
@@ -46,7 +50,8 @@
       - defaultConnectionTemplate
   delegate_to: localhost
 
-- debug: var=default_connection_template
+- ansible.builtin.debug:
+    var: default_connection_template
 
 - name: Logout Session
   oneview_logout_session:
