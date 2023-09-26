@@ -93,8 +93,7 @@ uplink_sets:
     returned: Always, but can be null.
     type: dict
 '''
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound
-
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
 class UplinkSetFactsModule(OneViewModule):
     def __init__(self):

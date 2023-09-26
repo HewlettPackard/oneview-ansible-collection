@@ -151,7 +151,7 @@ sas_logical_interconnect_group:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare_lig, LIGMerger
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound
 
 
 class SasLogicalInterconnectGroupModule(OneViewModule):

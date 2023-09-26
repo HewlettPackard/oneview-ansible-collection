@@ -114,8 +114,8 @@ appliance_device_snmp_v3_users:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (
-    OneViewModule, OneViewModuleException,
-    OneViewModuleValueError, OneViewModuleResourceNotFound
+    OneViewModule,
+    OneViewModuleValueError
 )
 
 

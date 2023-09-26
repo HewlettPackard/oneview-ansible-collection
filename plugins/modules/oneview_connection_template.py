@@ -83,8 +83,8 @@ connection_template:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleValueError,
-                                                                          OneViewModuleResourceNotFound, compare)
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule,
+                                                                          OneViewModuleResourceNotFound)
 
 
 class ConnectionTemplateModule(OneViewModule):
