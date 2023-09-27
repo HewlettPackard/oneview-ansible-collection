@@ -35,15 +35,12 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           OneViewModule,
                                                                           OneViewClient,
                                                                           OneViewModuleException,
-                                                                          OneViewModuleValueError,
                                                                           OneViewModuleResourceNotFound,
                                                                           SPKeys,
                                                                           ServerProfileMerger,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           LIGMerger,
-                                                                          sort_by_uplink_set_location,
                                                                           _sort_by_keys,
-                                                                          _str_sorted,
                                                                           merge_list_by_key,
                                                                           dict_merge,
                                                                           transform_list_to_dict,
@@ -128,7 +125,7 @@ class TestOneViewModule():
 
         error = {'message': 'Failure with data'}
 
-        OneViewModuleException(error)
+        raise OneViewModuleException(error)
 
     def test_should_call_exit_json_properly(self):
 
@@ -758,7 +755,7 @@ class TestOneViewModuleBase():
 
         error = {'message': 'Failure with data'}
 
-        OneViewModuleException(error)
+        raise OneViewModuleException(error)
 
     def test_should_call_exit_json_properly(self):
 
