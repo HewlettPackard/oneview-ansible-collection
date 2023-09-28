@@ -290,7 +290,7 @@ class TestOneViewModule():
             base_mod.execute_module = mock_run
             base_mod.run()
         except ValueError as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected ValueError was not raised')
 
@@ -305,7 +305,7 @@ class TestOneViewModule():
             base_mod.execute_module = mock_run
             base_mod.run()
         except Exception as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected Exception was not raised')
 
@@ -920,7 +920,7 @@ class TestOneViewModuleBase():
             base_mod.execute_module = mock_run
             base_mod.run()
         except ValueError as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected ValueError was not raised')
 
@@ -935,7 +935,7 @@ class TestOneViewModuleBase():
             base_mod.execute_module = mock_run
             base_mod.run()
         except Exception as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected Exception was not raised')
 

@@ -95,6 +95,7 @@ uplink_sets:
 '''
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 
+
 class UplinkSetFactsModule(OneViewModule):
     def __init__(self):
         argument_spec = dict(

@@ -1,0 +1,2 @@
+tests/unit/test_oneview_server_profile.py pylint!skip
+tests/unit/utils/oneview_module_loader.py pylint!skip
