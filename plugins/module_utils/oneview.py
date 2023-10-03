@@ -38,7 +38,6 @@ try:
     from ansible.module_utils import six
     from ansible.module_utils._text import to_native
 except ImportError:
-    import ansible.module_utils.six
     to_native = str
 
 from ansible.module_utils.basic import AnsibleModule

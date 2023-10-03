@@ -22,7 +22,6 @@ __metaclass__ = type
 import mock
 import pytest
 
-from copy import deepcopy
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import SasInterconnectModule
 

@@ -151,7 +151,7 @@ update_firmware:
 '''
 
 import time
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError, compare
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, OneViewModuleValueError
 
 
 class SasLogicalInterconnectModule(OneViewModule):

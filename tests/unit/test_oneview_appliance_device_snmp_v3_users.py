@@ -23,7 +23,7 @@ import mock
 import pytest
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
-from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule, OneViewModuleException
+from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ApplianceDeviceSnmpV3UsersModule
 
 ERROR_MSG = 'Fake message error'
 

@@ -203,7 +203,6 @@ san_manager:
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneViewModule, OneViewModuleResourceNotFound,
                                                                           OneViewModuleValueError, compare)
 from operator import itemgetter
-import itertools
 import copy
 
 

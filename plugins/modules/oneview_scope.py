@@ -120,7 +120,7 @@ scope:
     type: dict
 '''
 
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleResourceNotFound, compare, dict_merge
+from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, compare, dict_merge
 
 
 class ScopeModule(OneViewModule):

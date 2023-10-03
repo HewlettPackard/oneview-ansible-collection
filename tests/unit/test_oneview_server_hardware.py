@@ -25,7 +25,6 @@ import yaml
 
 from ansible_collections.hpe.oneview.tests.unit.utils.hpe_test_utils import OneViewBaseTest
 from ansible_collections.hpe.oneview.tests.unit.utils.oneview_module_loader import ServerHardwareModule
-from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModuleValueError
 
 FAKE_MSG_ERROR = 'Fake message error'
 
