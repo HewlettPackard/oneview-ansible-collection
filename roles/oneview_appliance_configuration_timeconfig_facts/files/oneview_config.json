@@ -1,7 +1,7 @@
 {
   "ip": "<oneview_ip>",
   "credentials": {
-    "userName": "<user_name>",
+    "userName": " <user_name>",
     "password": "<password>",
     "authLoginDomain": "<domain_directory>"
 },
