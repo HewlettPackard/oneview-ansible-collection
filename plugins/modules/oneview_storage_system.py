@@ -151,7 +151,6 @@ storage_system:
 '''
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule, OneViewModuleValueError, compare, dict_merge
 from copy import deepcopy
-import collections
 __metaclass__ = type
 
 

@@ -35,15 +35,12 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import (OneVie
                                                                           OneViewModule,
                                                                           OneViewClient,
                                                                           OneViewModuleException,
-                                                                          OneViewModuleValueError,
                                                                           OneViewModuleResourceNotFound,
                                                                           SPKeys,
                                                                           ServerProfileMerger,
                                                                           ServerProfileReplaceNamesByUris,
                                                                           LIGMerger,
-                                                                          sort_by_uplink_set_location,
                                                                           _sort_by_keys,
-                                                                          _str_sorted,
                                                                           merge_list_by_key,
                                                                           dict_merge,
                                                                           transform_list_to_dict,
@@ -127,8 +124,6 @@ class TestOneViewModule():
     def test_should_call_ov_exception_with_a_data(self):
 
         error = {'message': 'Failure with data'}
-
-        OneViewModuleException(error)
 
     def test_should_call_exit_json_properly(self):
 
@@ -293,7 +288,7 @@ class TestOneViewModule():
             base_mod.execute_module = mock_run
             base_mod.run()
         except ValueError as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected ValueError was not raised')
 
@@ -308,7 +303,7 @@ class TestOneViewModule():
             base_mod.execute_module = mock_run
             base_mod.run()
         except Exception as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected Exception was not raised')
 
@@ -758,8 +753,6 @@ class TestOneViewModuleBase():
 
         error = {'message': 'Failure with data'}
 
-        OneViewModuleException(error)
-
     def test_should_call_exit_json_properly(self):
 
         self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
@@ -923,7 +916,7 @@ class TestOneViewModuleBase():
             base_mod.execute_module = mock_run
             base_mod.run()
         except ValueError as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected ValueError was not raised')
 
@@ -938,7 +931,7 @@ class TestOneViewModuleBase():
             base_mod.execute_module = mock_run
             base_mod.run()
         except Exception as e:
-            assert(e.args[0] == MSG_GENERIC_ERROR)
+            assert (e.args[0] == MSG_GENERIC_ERROR)
         else:
             self.fail('Expected Exception was not raised')
 
