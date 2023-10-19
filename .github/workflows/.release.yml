@@ -11,10 +11,10 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v1
 
-    - name: Set up Python 3.6
+    - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
-        python-version: '3.6'
+        python-version: '3.7'
 
     - name: Install dependencies
       run: |
@@ -31,10 +31,10 @@ jobs:
       run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
     - name: Build the tagged Docker image
-      run: docker build . --file Dockerfile --tag hewlettpackardenterprise/hpe-oneview-sdk-for-ansible-collection:${{ env.GITHUB_REF }}-OV8.5
+      run: docker build . --file Dockerfile --tag hewlettpackardenterprise/hpe-oneview-sdk-for-ansible-collection:${{ env.GITHUB_REF }}-OV8.6
 
     - name: Push the tagged Docker image
-      run: docker push hewlettpackardenterprise/hpe-oneview-sdk-for-ansible-collection:${{ env.GITHUB_REF }}-OV8.5
+      run: docker push hewlettpackardenterprise/hpe-oneview-sdk-for-ansible-collection:${{ env.GITHUB_REF }}-OV8.6
 
     - name: Build and publish
       run: |
