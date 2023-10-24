@@ -208,7 +208,7 @@ This option allows the parameters `hostname`, `auth_login_domain`, `username`, `
     username: <username>
     password: <password>
     auth_login_domain: <domain_directory>
-    api_version: 5600
+    api_version: 5800
     state: present
     data:
       name: "{{ network_name }}"
@@ -230,12 +230,12 @@ The current `default` HPE OneView version will pick the OneView appliance versio
 To use a different API, you must set the API version together with your credentials, either using the JSON configuration:
 
 ```json
-"api_version": 5600
+"api_version": 5800
 ```
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='5600'
+export ONEVIEWSDK_API_VERSION='5800'
 ```
 
 If this property is not specified, it will fall back to default value.
