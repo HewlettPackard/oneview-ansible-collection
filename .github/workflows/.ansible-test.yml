@@ -57,7 +57,7 @@ jobs:
       matrix:
         python_version:
           - 3.9
-          - 3.10
+          - '3.10'
         ansible:
           - stable-2.14
 
