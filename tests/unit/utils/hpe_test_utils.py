@@ -55,7 +55,7 @@ class OneViewBaseTest(object):
             self.EXAMPLES = yaml.load(testing_module.EXAMPLES, yaml.SafeLoader)
 
         except yaml.scanner.ScannerError:
-            message = "Something went wrong while parsing yaml from {}.EXAMPLES".format(self.testing_class.__module__)
+            message = "Something went wrong while parsing yaml from {0}.EXAMPLES".format(self.testing_class.__module__)
             raise Exception(message)
         return testing_module
 

@@ -18,12 +18,12 @@
   register: version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
-  set_fact:
+  ansible.builtin.set_fact:
     currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
-  set_fact:
+  ansible.builtin.set_fact:
     currentVersion: config_file.api_version | string
   when: config_file.api_version != ""
 
