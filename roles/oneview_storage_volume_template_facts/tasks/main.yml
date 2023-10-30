@@ -56,7 +56,7 @@
     name: "{{ contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
-- debug:
+- ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather facts about all Fibre Channel Networks
@@ -103,7 +103,7 @@
   delegate_to: localhost
   when: currentVersion <= '500'
 
-- debug:
+- ansible.builtin.debug:
     var: storage_volume_templates
 - ansible.builtin.debug:
     var: connectable_volume_templates

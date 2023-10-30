@@ -15,7 +15,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.enclosure_group.lig_name }}"
   delegate_to: localhost
-- set_fact:
+- ansible.builtin.set_fact:
     lig_uri: "{{ logical_interconnect_groups[0]['uri'] }}"
 
 - name: Create an Enclosure Group

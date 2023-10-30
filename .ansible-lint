@@ -21,3 +21,4 @@ skip_list:
  - name
  - ignore-errors
  - literal-compare
+ - fqcn

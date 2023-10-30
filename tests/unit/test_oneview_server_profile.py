@@ -16,7 +16,6 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import logging
 import mock
 import pytest
 
@@ -857,7 +856,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, i = self.resource.create.call_args
         assert (args[0].get('enclosureGroupUri') == uri)
         assert not args[0].get('enclosureGroupName')
 
@@ -900,7 +899,7 @@ class TestServerProfileModule(OneViewBaseTest):
                                 dict(name="connection-4", networkUri='/rest/network-sets/15'),
                                 dict(name="connection-5", networkUri='/rest/ethernet-networks/18')]
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0].get(SPKeys.CONNECTIONS) == expected_connections)
 
     def test_should_fail_when_network_not_found_on_creation(self):
@@ -934,7 +933,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0].get('serverHardwareTypeUri') == SERVER_HARDWARE_TEMPLATE_URI)
         assert (args[0].get('serverHardwareTypeName') is None)
 
@@ -973,7 +972,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
 
     def test_should_not_replace_when_inform_volume_uri(self):
@@ -992,7 +991,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, i = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.volumes.get_by.assert_not_called()
 
@@ -1009,7 +1008,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.volumes.get_by.assert_not_called()
 
@@ -1024,7 +1023,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.volumes.get_by.assert_not_called()
 
@@ -1050,7 +1049,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
 
     def test_should_not_replace_network_uri_in_storage_paths(self):
@@ -1071,7 +1070,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.fc_networks.get_by.assert_not_called()
 
@@ -1092,7 +1091,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.fc_networks.get_by.assert_not_called()
 
@@ -1120,7 +1119,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
 
     def test_should_not_replace_when_inform_storage_pool_uri(self):
@@ -1139,7 +1138,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_pools.get_by.assert_not_called()
 
@@ -1156,7 +1155,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_pools.get_by.assert_not_called()
 
@@ -1171,7 +1170,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_pools.get_by.assert_not_called()
 
@@ -1217,7 +1216,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected)
 
     def test_should_not_replace_when_inform_storage_system_uri(self):
@@ -1236,7 +1235,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_systems.get_by.assert_not_called()
 
@@ -1253,7 +1252,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_systems.get_by.assert_not_called()
 
@@ -1268,7 +1267,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.storage_systems.get_by.assert_not_called()
 
@@ -1304,7 +1303,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0].get('enclosureUri') == uri)
         assert (args[0].get('enclosureName') is None)
 
@@ -1342,7 +1341,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected)
 
     def test_should_not_replace_when_inform_interconnect_uri(self):
@@ -1360,7 +1359,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.interconnects.get_by.assert_not_called()
 
@@ -1375,7 +1374,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.interconnects.get_by.assert_not_called()
 
@@ -1408,7 +1407,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected)
 
     def test_should_not_replace_when_inform_firmware_baseline_uri(self):
@@ -1423,7 +1422,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.firmware_drivers.get_by.assert_not_called()
 
@@ -1438,7 +1437,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.firmware_drivers.get_by.assert_not_called()
 
@@ -1477,7 +1476,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected)
 
     def test_should_not_replace_when_inform_sas_logical_jbod_uris(self):
@@ -1496,7 +1495,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.sas_logical_jbods.get_by.assert_not_called()
 
@@ -1513,7 +1512,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.sas_logical_jbods.get_by.assert_not_called()
 
@@ -1528,7 +1527,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0] == expected_dict)
         self.mock_ov_client.sas_logical_jbods.get_by.assert_not_called()
 
@@ -1564,7 +1563,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_connections[0].pop(SPKeys.MAC)
         expected_connections[1].pop(SPKeys.MAC)
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     def test_should_remove_mac_from_connections_before_create_when_mac_is_physical(self):
@@ -1582,7 +1581,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_connections[0].pop(SPKeys.MAC)
         expected_connections[1].pop(SPKeys.MAC)
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     def test_should_remove_serial_number_before_create_when_serial_number_type_is_virtual(self):
@@ -1597,7 +1596,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (SPKeys.UUID not in args[0])
         assert (SPKeys.SERIAL_NUMBER not in args[0])
 
@@ -1613,7 +1612,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (SPKeys.UUID not in args[0])
         assert (SPKeys.SERIAL_NUMBER not in args[0])
 
@@ -1632,7 +1631,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_connections[1].pop(SPKeys.WWNN)
         expected_connections[1].pop(SPKeys.WWPN)
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     def test_should_remove_drive_number_from_controller_drives_before_create(self):
@@ -1649,7 +1648,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_drives[0].pop(SPKeys.DRIVE_NUMBER)
         expected_drives[1].pop(SPKeys.DRIVE_NUMBER)
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert (args[0][SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][0][SPKeys.LOGICAL_DRIVES] == expected_drives)
 
     def test_should_remove_lun_from_san_volumes_before_create_when_luntype_is_auto(self):
@@ -1666,7 +1665,7 @@ class TestServerProfileModule(OneViewBaseTest):
         expected_volumes[0].pop(SPKeys.LUN)
         expected_volumes[1].pop(SPKeys.LUN)
 
-        args, _ = self.resource.create.call_args
+        args, placeholder = self.resource.create.call_args
         assert not args[0][SPKeys.SAN][SPKeys.VOLUMES][0].get(SPKeys.LUN)
         assert not args[0][SPKeys.SAN][SPKeys.VOLUMES][1].get(SPKeys.LUN)
 
@@ -1880,7 +1879,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0].get('enclosureGroupUri') == uri)
         assert not args[0].get('enclosureGroupName')
 
@@ -1924,7 +1923,7 @@ class TestServerProfileModule(OneViewBaseTest):
                                 dict(name="connection-4", networkUri='/rest/network-sets/20'),
                                 dict(name="connection-5", networkUri='/rest/ethernet-networks/18')]
 
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0].get(SPKeys.CONNECTIONS) == expected_connections)
 
     def test_should_fail_when_network_not_found_on_update(self):
@@ -1960,7 +1959,7 @@ class TestServerProfileModule(OneViewBaseTest):
         ServerProfileModule().run()
 
         expected_connections = [CONNECTION_1, CONNECTION_2]
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
@@ -1979,7 +1978,7 @@ class TestServerProfileModule(OneViewBaseTest):
         ServerProfileModule().run()
 
         expected_connections = [CONNECTION_1, CONNECTION_2]
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
@@ -1997,7 +1996,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert (args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
@@ -2016,7 +2015,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.UUID] == 'eb0e2fac-bbe5-4ad1-84d3-3e38481c9806')
         assert (args[0][SPKeys.SERIAL_NUMBER] == 'VCGNC3V000')
 
@@ -2033,7 +2032,7 @@ class TestServerProfileModule(OneViewBaseTest):
         ServerProfileModule().run()
 
         expected_connections = [CONNECTION_1_WITH_WWPN]
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
@@ -2049,7 +2048,7 @@ class TestServerProfileModule(OneViewBaseTest):
         ServerProfileModule().run()
 
         expected_connections = [CONNECTION_2_WITH_WWPN]
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.CONNECTIONS] == expected_connections)
 
     @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
@@ -2065,7 +2064,7 @@ class TestServerProfileModule(OneViewBaseTest):
         ServerProfileModule().run()
 
         expected_drives = DRIVES_CONTROLLER_EMBEDDED
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][0][SPKeys.LOGICAL_DRIVES] == expected_drives)
 
     @mock.patch('ansible_collections.hpe.oneview.plugins.modules.oneview_server_profile.compare')
@@ -2081,7 +2080,7 @@ class TestServerProfileModule(OneViewBaseTest):
 
         ServerProfileModule().run()
 
-        args, _ = self.resource.update.call_args
+        args, placeholder = self.resource.update.call_args
         assert (args[0][SPKeys.SAN][SPKeys.VOLUMES][0] == VOLUME_1)
         assert (args[0][SPKeys.SAN][SPKeys.VOLUMES][1] == VOLUME_2)
 

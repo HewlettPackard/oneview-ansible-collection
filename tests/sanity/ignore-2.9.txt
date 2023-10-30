@@ -82,13 +82,6 @@ plugins/modules/oneview_task.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_task_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_user.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_user_facts.py validate-modules:missing-gplv3-license
-tests/unit/utils/hpe_test_utils.py pylint!skip
-tests/unit/test_oneview_server_profile.py pylint!skip
-tests/unit/test_oneview.py pep8!skip
-tests/unit/test_oneview_fc_network.py pep8!skip
-tests/unit/test_oneview_logical_interconnect.py pep8!skip
-tests/unit/test_oneview_logical_interconnect_group.py pep8!skip
-tests/unit/test_oneview_server_profile.py pep8!skip
 plugins/modules/oneview_repositories_facts.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_repositories.py validate-modules:missing-gplv3-license
 plugins/modules/oneview_get_session_id.py validate-modules:missing-gplv3-license
