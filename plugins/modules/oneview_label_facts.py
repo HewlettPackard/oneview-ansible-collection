@@ -101,7 +101,7 @@ EXAMPLES = '''
     password: my_password
     api_version: 2600
     name: "{{ labels[0]['name'] }}"
-    get_resources: True
+    get_resources: true
   delegate_to: localhost
 
 - debug: var=labels

@@ -123,7 +123,6 @@ EXAMPLES = '''
           serverHardwareTypeUri: "/rest/server-hardware-types/253F1D49-0FEE-4DCD-B14C-B26234E9D414"
           enclosureGroupUri: "/rest/enclosure-groups/293e8efe-c6b1-4783-bf88-2d35a8e49071"
   delegate_to: localhost
-
 '''
 
 RETURN = '''

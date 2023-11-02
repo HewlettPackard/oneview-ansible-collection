@@ -74,8 +74,8 @@ EXAMPLES = '''
     api_version: 4600
     state: present
     data:
-        providerDisplayName: "<san_manager_provider_display_name>"
-        connectionInfo:
+      providerDisplayName: "<san_manager_provider_display_name>"
+      connectionInfo:
         - name: "Host"
           value: "<san_manager_hostname>"
         - name: "Username"
@@ -125,8 +125,8 @@ EXAMPLES = '''
     api_version: 4600
     state: refresh_state_set
     data:
-        name: "{{ san_manager_name }}"
-        refreshState: "RefreshPending"
+      name: "{{ san_manager_name }}"
+      refreshState: "RefreshPending"
   delegate_to: localhost
 
 - name: Update the San Manager
@@ -165,7 +165,7 @@ EXAMPLES = '''
           value: "<san_manager_username>"
         - name: "Password"
           value: "<san_manager_password>"
-          updatePassword: True
+          updatePassword: true
         - name: "UseHttps"
           value: true
   delegate_to: localhost
@@ -178,7 +178,7 @@ EXAMPLES = '''
     api_version: 4600
     state: absent
     data:
-        name: "{{ san_manager_name }}"
+      name: "{{ san_manager_name }}"
   delegate_to: localhost
 
 - name: Do nothing when the san manager is already removed
@@ -189,7 +189,7 @@ EXAMPLES = '''
     api_version: 4600
     state: absent
     data:
-        name: "{{ san_manager_name }}"
+      name: "{{ san_manager_name }}"
   delegate_to: localhost
 '''
 

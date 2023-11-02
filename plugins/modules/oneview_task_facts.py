@@ -79,12 +79,12 @@ EXAMPLES = '''
 
 - name: Gather facts about aggregate tree of tasks with specified filter
   oneview_task_facts:
-     config: "{{ config }}"
-     params:
-       childLimit: 40
-       topCount: 2
-       view: "aggregatedTree"
-       filter: "taskState='Completed'"
+    config: "{{ config }}"
+    params:
+      childLimit: 40
+      topCount: 2
+      view: "aggregatedTree"
+      filter: "taskState='Completed'"
 
 - name: Gather facts about the last 5 tasks with state 'Completed'
   oneview_task_facts:

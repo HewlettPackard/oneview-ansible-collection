@@ -106,7 +106,6 @@ EXAMPLES = '''
   when: repositories | default('', True)
 
 - debug: var=repositories
-
 '''
 
 RETURN = '''

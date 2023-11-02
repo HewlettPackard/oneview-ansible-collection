@@ -70,10 +70,10 @@ EXAMPLES = '''
     api_version: 4400
     state: present
     data:
-        hostname : "5.6.7.8"
-        username : "username"
-        password : "password"
-        force: false
+      hostname: "5.6.7.8"
+      username: "username"
+      password: "password"
+      force: false
   delegate_to: localhost
 
 - name: Gather facts about all Rack Managers
@@ -96,10 +96,10 @@ EXAMPLES = '''
     api_version: 4400
     state: present
     data:
-          hostname: "{{ rack_manager_name }}"
-          username: 'username'
-          password: 'password'
-          force: false
+      hostname: "{{ rack_manager_name }}"
+      username: 'username'
+      password: 'password'
+      force: false
   delegate_to: localhost
 
 - name: Refresh the rack manager
@@ -110,7 +110,7 @@ EXAMPLES = '''
     api_version: 4400
     state: refresh_state_set
     data:
-        name: "{{ rack_manager_name }}"
+      name: "{{ rack_manager_name }}"
   delegate_to: localhost
 
 - name: Remove the rack manager by its name
@@ -121,7 +121,7 @@ EXAMPLES = '''
     api_version: 4400
     state: absent
     data:
-        name: "{{ rack_manager_name }}"
+      name: "{{ rack_manager_name }}"
   delegate_to: localhost
 
 - name: Do nothing when the rack manager is already removed
@@ -132,7 +132,7 @@ EXAMPLES = '''
     api_version: 4400
     state: absent
     data:
-        name: "{{ rack_manager_name }}"
+      name: "{{ rack_manager_name }}"
   delegate_to: localhost
 '''
 

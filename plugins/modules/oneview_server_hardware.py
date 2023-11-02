@@ -90,12 +90,12 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-         hostname : "172.18.6.15"
-         username : "username"
-         password : "password"
-         force : false
-         licensingIntent: "OneView"
-         configurationState: "Managed"
+      hostname: "172.18.6.15"
+      username: "username"
+      password: "password"
+      force: false
+      licensingIntent: "OneView"
+      configurationState: "Managed"
   delegate_to: localhost
 
 - name: Ensure that the Server Hardware is present and is inserted in the desired scopes
@@ -106,10 +106,10 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-         name : "172.18.6.15"
-         scopeUris:
-           - '/rest/scopes/00SC123456'
-           - '/rest/scopes/01SC123456'
+      name: "172.18.6.15"
+      scopeUris:
+        - '/rest/scopes/00SC123456'
+        - '/rest/scopes/01SC123456'
   delegate_to: localhost
 
 - name: Add multiple rack-mount servers
@@ -120,14 +120,14 @@ EXAMPLES = '''
     api_version: 1200
     state: multiple_servers_added
     data:
-        mpHostsAndRanges :
-          - '172.18.6.15'
-        username : 'username'
-        password : 'password'
-        initialScopeUris:
-          - "/rest/scopes/01SC123456"
-        licensingIntent: "OneView"
-        configurationState: "Managed"
+      mpHostsAndRanges:
+        - '172.18.6.15'
+      username: 'username'
+      password: 'password'
+      initialScopeUris:
+        - "/rest/scopes/01SC123456"
+      licensingIntent: "OneView"
+      configurationState: "Managed"
   delegate_to: localhost
 
 - name: Power Off the server hardware
@@ -138,10 +138,10 @@ EXAMPLES = '''
     api_version: 1200
     state: power_state_set
     data:
-        name : "172.18.6.15"
-        powerStateData:
-            powerState: "Off"
-            powerControl: "MomentaryPress"
+      name: "172.18.6.15"
+      powerStateData:
+        powerState: "Off"
+        powerControl: "MomentaryPress"
   delegate_to: localhost
 
 - name: Check for Firmware Compliance
@@ -152,9 +152,9 @@ EXAMPLES = '''
     api_version: 1200
     state: check_firmware_compliance
     data:
-        firmwareComplianceData:
-            firmwareBaselineId: "abc-123-def-456-baseline-id"
-            serverUUID: "abc-123-def-456"
+      firmwareComplianceData:
+        firmwareBaselineId: "abc-123-def-456-baseline-id"
+        serverUUID: "abc-123-def-456"
   delegate_to: localhost
 
 - name: Update Firmware of the server hardware
@@ -165,12 +165,12 @@ EXAMPLES = '''
     api_version: 1200
     state: firmware_update
     data:
-        name: "172.18.6.15"
-        firmwareUpdateData:
-            baselineUri: "/rest/firmware-drivers/abc-123"
-            forceApplyFirmware: "false"
-            firmwareInstallType: "FirmwareOnlyOfflineMode"
-            installationPolicy: "LowerThanBaseline"
+      name: "172.18.6.15"
+      firmwareUpdateData:
+        baselineUri: "/rest/firmware-drivers/abc-123"
+        forceApplyFirmware: "false"
+        firmwareInstallType: "FirmwareOnlyOfflineMode"
+        installationPolicy: "LowerThanBaseline"
   delegate_to: localhost
   when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
 
@@ -182,9 +182,9 @@ EXAMPLES = '''
     api_version: 1200
     state: refresh_state_set
     data:
-        name : "172.18.6.15"
-        refreshStateData:
-            refreshState : "RefreshPending"
+      name: "172.18.6.15"
+      refreshStateData:
+        refreshState: "RefreshPending"
   delegate_to: localhost
 
 - name: Update the Server Hardware iLO firmware version
@@ -195,7 +195,7 @@ EXAMPLES = '''
     api_version: 1200
     state: ilo_firmware_version_updated
     data:
-        name : "172.18.6.15"
+      name: "172.18.6.15"
   delegate_to: localhost
 
 - name: Set the calibrated max power of a server hardware
@@ -206,9 +206,9 @@ EXAMPLES = '''
     api_version: 1200
     state: environmental_configuration_set
     data:
-        name : "172.18.6.15"
-        environmentalConfigurationData:
-            calibratedMaxPower: 2500
+      name: "172.18.6.15"
+      environmentalConfigurationData:
+        calibratedMaxPower: 2500
   delegate_to: localhost
 
 - name: Remove the server hardware by its IP
@@ -219,7 +219,7 @@ EXAMPLES = '''
     api_version: 1200
     state: absent
     data:
-        name : "172.18.6.15"
+      name: "172.18.6.15"
   delegate_to: localhost
 
 - name: Set the server UID state off
@@ -230,7 +230,7 @@ EXAMPLES = '''
     api_version: 1200
     state: uid_state_off
     data:
-        name : '0000A66102, bay 12'
+      name: '0000A66102, bay 12'
   delegate_to: localhost
 
 - name: Set the server one-time boot device to Network
@@ -241,7 +241,7 @@ EXAMPLES = '''
     api_version: 1200
     state: one_time_boot_network
     data:
-        name : '0000A66102, bay 12'
+      name: '0000A66102, bay 12'
   delegate_to: localhost
 
 - name: Set the server one-time boot device to No one-time boot
@@ -252,7 +252,7 @@ EXAMPLES = '''
     api_version: 1200
     state: one_time_boot_normal
     data:
-        name : '0000A66102, bay 12'
+      name: '0000A66102, bay 12'
   delegate_to: localhost
 '''
 

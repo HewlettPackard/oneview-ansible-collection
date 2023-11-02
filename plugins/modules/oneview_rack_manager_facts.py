@@ -76,10 +76,10 @@ EXAMPLES = '''
 - debug: var=rack_managers
 
 - set_fact:
-    rack_manager_name : "{{ rack_managers[0]['name'] }}"
+    rack_manager_name: "{{ rack_managers[0]['name'] }}"
 
 - set_fact:
-    rack_manager_uri : "{{ rack_managers[0]['uri'] }}"
+    rack_manager_uri: "{{ rack_managers[0]['uri'] }}"
 
 - debug: var=rack_manager_name
 
@@ -163,7 +163,6 @@ EXAMPLES = '''
 - debug: var=rack_manager_managers
 - debug: var=rack_manager_env_conf
 - debug: var=rack_manager_remote_support
-
 '''
 
 RETURN = '''

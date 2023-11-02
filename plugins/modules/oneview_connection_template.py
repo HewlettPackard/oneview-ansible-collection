@@ -67,12 +67,12 @@ EXAMPLES = '''
     api_version: 2000
     state: present
     data:
-        name: 'name1304244267-1467656930023'
-        type : "connection-template"
-        bandwidth :
-            maximumBandwidth : 10000
-            typicalBandwidth : 2000
-        newName : "CT-23"
+      name: 'name1304244267-1467656930023'
+      type: "connection-template"
+      bandwidth:
+        maximumBandwidth: 10000
+        typicalBandwidth: 2000
+      newName: "CT-23"
   delegate_to: localhost
 '''
 

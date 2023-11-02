@@ -80,7 +80,7 @@ EXAMPLES = '''
   delegate_to: localhost
 
 - set_fact:
-    sas_logical_interconnect_name : "{{ sas_logical_interconnects[0]['name'] }}"
+    sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
 
 - name: Return the SAS Logical Interconnect to a consistent state
   oneview_sas_logical_interconnect:

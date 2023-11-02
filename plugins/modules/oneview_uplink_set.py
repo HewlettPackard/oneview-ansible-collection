@@ -80,8 +80,8 @@ EXAMPLES = '''
       logicalInterconnectName: "Name of the Logical Interconnect"                                   # option 1
       # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
       networkUris: [
-         '/rest/ethernet-networks/9e8472ad-5ad1-4cbd-aab1-566b67ffc6a4',
-         '/rest/ethernet-networks/28ea7c1a-4930-4432-854b-30cf239226a2'
+        '/rest/ethernet-networks/9e8472ad-5ad1-4cbd-aab1-566b67ffc6a4',
+        '/rest/ethernet-networks/28ea7c1a-4930-4432-854b-30cf239226a2'
       ]
       fcNetworkUris: []
       fcoeNetworkUris: []

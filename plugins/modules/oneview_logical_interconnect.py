@@ -172,7 +172,7 @@ EXAMPLES = '''
     data:
       name: "Name of the Logical Interconnect"
       snmpConfiguration:
-        enabled: True
+        enabled: true
 
 - name: Update the IGMP settings for the logical interconnect
   oneview_logical_interconnect:
@@ -196,7 +196,7 @@ EXAMPLES = '''
     data:
       name: "Name of the Logical Interconnect"
       portMonitor:
-        enablePortMonitor: False
+        enablePortMonitor: false
 
 - name: Update the port flap settings of the logical interconnect
   oneview_logical_interconnect:
@@ -257,7 +257,7 @@ EXAMPLES = '''
       name: "Name of the Logical Interconnect"
       telemetryConfiguration:
         sampleCount: 12
-        enableTelemetry: True
+        enableTelemetry: true
         sampleInterval: 300
 
 - debug: var=telemetry_configuration

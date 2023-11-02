@@ -108,7 +108,7 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - nameServers
+      - nameServers
 
 - debug: var=interconnects
 - debug: var=interconnect_name_servers
@@ -121,7 +121,7 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - statistics
+      - statistics
 
 - debug: var=interconnects
 - debug: var=interconnect_statistics
@@ -134,7 +134,7 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - portStatistics: 'd3'
+      - portStatistics: 'd3'
 
 - debug: var=interconnects
 - debug: var=interconnect_port_statistics
@@ -147,9 +147,9 @@ EXAMPLES = '''
     api_version: 1200
     name: 'Enc2, interconnect 2'
     options:
-        - subPortStatistics:
-            portName: 'd4'
-            subportNumber: 1
+      - subPortStatistics:
+          portName: 'd4'
+          subportNumber: 1
 
 - debug: var=interconnects
 - debug: var=interconnect_subport_statistics
@@ -162,7 +162,7 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - ports
+      - ports
 
 - debug: var=interconnects
 - debug: var=interconnect_ports
@@ -175,7 +175,7 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - port: d1
+      - port: d1
 
 - debug: var=interconnects
 - debug: var=interconnect_port
@@ -188,11 +188,10 @@ EXAMPLES = '''
     api_version: 1200
     name: '0000A66102, interconnect 2'
     options:
-        - pluggableModuleInformation
+      - pluggableModuleInformation
 
 - debug: var=interconnects
 - debug: var=interconnect_pluggable_module_information
-
 '''
 
 RETURN = '''

@@ -102,44 +102,44 @@ EXAMPLES = '''
     api_version: 1600
     state: present
     data:
-        name: Web-Server-L2
-        # You can choose either server_template or serverProfileTemplateUri to inform the Server Profile Template
-        # serverProfileTemplateUri: "/rest/server-profile-templates/31ade62c-2112-40a0-935c-2f9450a75198"
-        server_template: Compute-node-template
-        # You can inform a server_hardware or a serverHardwareUri. If any hardware was informed, it will try
-        # get one available automatically
-        # server_hardware: Encl1, bay 12
-        # serverHardwareUri: /rest/server-hardware/30303437-3933-4753-4831-30335835524E
+      name: Web-Server-L2
+      # You can choose either server_template or serverProfileTemplateUri to inform the Server Profile Template
+      # serverProfileTemplateUri: "/rest/server-profile-templates/31ade62c-2112-40a0-935c-2f9450a75198"
+      server_template: Compute-node-template
+      # You can inform a server_hardware or a serverHardwareUri. If any hardware was informed, it will try
+      # get one available automatically
+      # server_hardware: Encl1, bay 12
+      # serverHardwareUri: /rest/server-hardware/30303437-3933-4753-4831-30335835524E
 
-        # You can choose either serverHardwareTypeUri or serverHardwareTypeName to inform the Server Hardware Type
-        # serverHardwareTypeUri: /rest/server-hardware-types/BCAB376E-DA2E-450D-B053-0A9AE7E5114C
-        # serverHardwareTypeName: SY 480 Gen9 1
-        # You can choose either enclosureName or enclosureUri to inform the Enclosure
-        # enclosureUri: /rest/enclosures/09SGH100Z6J1
-        enclosureName: 0000A66102
-        sanStorage:
-          hostOSType: Windows 2012 / WS2012 R2
-          manageSanStorage: true
-          volumeAttachments:
-            - id: 1
-              # You can choose either volumeName or volumeUri to inform the Volumes
-              # volumeName: DemoVolume001
-              volumeUri: /rest/storage-volumes/BCAB376E-DA2E-450D-B053-0A9AE7E5114C
-              # You can choose either volumeStoragePoolUri or volumeStoragePoolName to inform the Volume Storage Pool
-              # volumeStoragePoolName: FST_CPG2
-              volumeStoragePoolUri: /rest/storage-pools/30303437-3933-4753-4831-30335835524E
-              # You can choose either volumeStorageSystemUri or volumeStorageSystemName to inform the Volume Storage
-              # System
-              # volumeStorageSystemName: ThreePAR7200-2127
-              volumeStorageSystemUri: /rest/storage-systems/TXQ1000307
-              lunType: 'Auto'
-              storagePaths:
-                - isEnabled: true
-                  connectionId: 1
-                  storageTargetType: Auto
-                - isEnabled: true
-                  connectionId: 2
-                  storageTargetType: Auto
+      # You can choose either serverHardwareTypeUri or serverHardwareTypeName to inform the Server Hardware Type
+      # serverHardwareTypeUri: /rest/server-hardware-types/BCAB376E-DA2E-450D-B053-0A9AE7E5114C
+      # serverHardwareTypeName: SY 480 Gen9 1
+      # You can choose either enclosureName or enclosureUri to inform the Enclosure
+      # enclosureUri: /rest/enclosures/09SGH100Z6J1
+      enclosureName: 0000A66102
+      sanStorage:
+        hostOSType: Windows 2012 / WS2012 R2
+        manageSanStorage: true
+        volumeAttachments:
+          - id: 1
+            # You can choose either volumeName or volumeUri to inform the Volumes
+            # volumeName: DemoVolume001
+            volumeUri: /rest/storage-volumes/BCAB376E-DA2E-450D-B053-0A9AE7E5114C
+            # You can choose either volumeStoragePoolUri or volumeStoragePoolName to inform the Volume Storage Pool
+            # volumeStoragePoolName: FST_CPG2
+            volumeStoragePoolUri: /rest/storage-pools/30303437-3933-4753-4831-30335835524E
+            # You can choose either volumeStorageSystemUri or volumeStorageSystemName to inform the Volume Storage
+            # System
+            # volumeStorageSystemName: ThreePAR7200-2127
+            volumeStorageSystemUri: /rest/storage-systems/TXQ1000307
+            lunType: 'Auto'
+            storagePaths:
+              - isEnabled: true
+                connectionId: 1
+                storageTargetType: Auto
+              - isEnabled: true
+                connectionId: 2
+                storageTargetType: Auto
   delegate_to: localhost
 - debug: var=server_profile
 - debug: var=serial_number
@@ -172,14 +172,14 @@ EXAMPLES = '''
     password: my_password
     api_version: 1600
     # This is required for unassigning a SH, or creating a SP and not auto-assigning a SH
-    auto_assign_server_hardware: False
+    auto_assign_server_hardware: false
     data:
       name: server-profile-with-sh
       # Specify a blank serverHardwareName or serverHardwareUri when auto_assign_server_hardware is False to unassign a SH
       serverHardwareName:
   delegate_to: localhost
 
-- name : Remediate compliance issues
+- name: Remediate compliance issues
   oneview_server_profile:
     hostname: 172.16.101.48
     username: administrator
@@ -187,10 +187,10 @@ EXAMPLES = '''
     api_version: 1600
     state: compliant
     data:
-        name: Web-Server-L2
+      name: Web-Server-L2
   delegate_to: localhost
 
-- name : Remove the server profile
+- name: Remove the server profile
   oneview_server_profile:
     hostname: 172.16.101.48
     username: administrator
@@ -198,7 +198,7 @@ EXAMPLES = '''
     api_version: 1600
     state: absent
     data:
-        name: Web-Server-L2
+      name: Web-Server-L2
   delegate_to: localhost
 '''
 

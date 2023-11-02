@@ -52,25 +52,25 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 tasks:
-    - name: Gather facts about the last 5 running tasks
-      oneview_task_facts:
-        config: "{{ config }}"
-        params:
-          count: 5
-          view: "tree"
-          filter: ["taskState='Running'", "isCancellable=true"]
-      delegate_to: localhost
+  - name: Gather facts about the last 5 running tasks
+    oneview_task_facts:
+    config: "{{ config }}"
+    params:
+      count: 5
+      view: "tree"
+      filter: ["taskState='Running'", "isCancellable=true"]
+    delegate_to: localhost
 
-    - debug: var=tasks
+  - debug: var=tasks
 
-    - name: Sets the state of task to 'Cancelling'
-      oneview_task:
-        config: "{{ config }}"
-        data:
-          name: "{{ tasks[0]['name'] }}"
-          uri: "{{ tasks[0]['uri'] }}"
-      delegate_to: localhost
-      when: contents.api_version >= 1200 and ( tasks | length > 0 )
+  - name: Sets the state of task to 'Cancelling'
+    oneview_task:
+    config: "{{ config }}"
+    data:
+      name: "{{ tasks[0]['name'] }}"
+      uri: "{{ tasks[0]['uri'] }}"
+    delegate_to: localhost
+    when: contents.api_version >= 1200 and ( tasks | length > 0 )
 '''
 
 RETURN = '''

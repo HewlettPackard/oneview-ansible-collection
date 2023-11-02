@@ -72,10 +72,10 @@ EXAMPLES = '''
     api_version: 800
     state: present
     data:
-        type: "Users"
-        userName: "testUser"
-        securityLevel: "Authentication"
-        authenticationProtocol: "SHA512"
+      type: "Users"
+      userName: "testUser"
+      securityLevel: "Authentication"
+      authenticationProtocol: "SHA512"
   delegate_to: localhost
 
 - debug:
@@ -83,13 +83,13 @@ EXAMPLES = '''
 
 - name: Set the password of specified SNMPv3 user
   oneview_appliance_device_snmp_v3_users:
-   config: "{{ config }}"
-   state: present
-   name: "testUser"
-   data:
-    userName: "testUser"
-    authenticationPassphrase: "NewPass1234"
-    delegate_to: localhost
+    config: "{{ config }}"
+    state: present
+    name: "testUser"
+    data:
+      userName: "testUser"
+      authenticationPassphrase: "NewPass1234"
+      delegate_to: localhost
 
 - debug:
     var: appliance_device_snmp_v3_users
@@ -102,7 +102,7 @@ EXAMPLES = '''
     api_version: 800
     state: absent
     data:
-        userName: "testUser"
+      userName: "testUser"
   delegate_to: localhost
 '''
 

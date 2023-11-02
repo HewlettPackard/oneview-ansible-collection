@@ -94,7 +94,7 @@ EXAMPLES = '''
     api_version: 600
     state: absent
     data:
-        name: 'OneViewSDK Test Network Set - Renamed'
+      name: 'OneViewSDK Test Network Set - Renamed'
 
 # This feature is only available for V300 and V500
 - name: Update the Network set with two scopes

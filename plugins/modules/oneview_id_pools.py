@@ -68,7 +68,7 @@ EXAMPLES = '''
     data:
       poolType: '{{ poolType }}'
       rangeUris: '{{ id_pool["rangeUris"] }}'
-      enabled: True
+      enabled: true
   delegate_to: localhost
 
 - name: Allocates one or more IDs from a pool

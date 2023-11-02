@@ -161,7 +161,7 @@ EXAMPLES = '''
       storageSystemUri: '/rest/storage-systems/TXQ1000307'
       wwn: 'DC:32:13:72:47:00:10:00:30:71:47:16:33:58:47:95'
       provisioningParameters:
-          shareable: True
+        shareable: true
   when: wwn is defined
 
 - name: Update the name of the volume to 'Volume with Storage Pool - Renamed' and shareable to false
@@ -174,7 +174,7 @@ EXAMPLES = '''
     data:
       name: 'Volume with Storage Pool'
       newName: 'Volume with Storage Pool - Renamed'
-      isShareable: False
+      isShareable: false
     delegate_to: localhost
 
 - name: Remove extra presentations from the specified volume on the storage system
@@ -241,7 +241,7 @@ EXAMPLES = '''
     state: absent
     data:
       name: 'Volume added with a specific WWN'
-    export_only: True
+    export_only: true
 '''
 
 RETURN = '''

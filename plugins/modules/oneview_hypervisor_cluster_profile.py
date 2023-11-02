@@ -95,7 +95,7 @@ EXAMPLES = '''
           hypervisorManagerUri: '/rest/hypervisor-managers/ee73af7a-1775-44ba-8a66-d0479ec85678'
         hostprefix: 'Test-cluster-host'
     params:
-      create_vswitch_layout: True
+      create_vswitch_layout: true
 - name: Update the Hypervisor Cluster Profile name to 'hcp Renamed'
   oneview_hypervisor_cluster_profile:
     hostname: 172.16.101.48
@@ -109,7 +109,7 @@ EXAMPLES = '''
       hypervisorType: 'Vmware'
       hypervisorManagerUri: '/rest/hypervisor-manager/rdy-dfdf12'
     params:
-      force: True
+      force: true
 - name: Ensure that the Hypervisor Cluster Profile is absent
   oneview_hypervisor_cluster_profile:
     hostname: 172.16.101.48

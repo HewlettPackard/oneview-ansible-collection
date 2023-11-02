@@ -125,10 +125,10 @@ EXAMPLES = '''
     api_version: 1200
     options:
       - extraUnmanagedStorageVolumes:
-            start: 0     # optional
-            count: '-1'  # optional
-            filter: ''   # optional
-            sort: ''     # optional
+          start: 0     # optional
+          count: '-1'  # optional
+          filter: ''   # optional
+          sort: ''     # optional
   delegate_to: localhost
 
 - debug: var=storage_volume_attachments
@@ -159,9 +159,9 @@ EXAMPLES = '''
     storageVolumeUri: "/rest/storage-volumes/12345-AAA-BBBB-CCCC-121212AA"
     options:
       - paths:
-            # You could inform either the path id or the path uri
-            pathId: '9DFC8953-15A4-4EA9-AB65-23AB12AB23' # optional
-            # pathUri: '/rest/storage-volume-attachments/123-123-123/paths/123-123-123'
+          # You could inform either the path id or the path uri
+          pathId: '9DFC8953-15A4-4EA9-AB65-23AB12AB23' # optional
+          # pathUri: '/rest/storage-volume-attachments/123-123-123/paths/123-123-123'
   delegate_to: localhost
 
 - debug: var=storage_volume_attachments
