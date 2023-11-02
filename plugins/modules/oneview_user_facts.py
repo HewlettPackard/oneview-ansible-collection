@@ -104,7 +104,7 @@ EXAMPLES = '''
     config: "{{ config }}"
     userName: "testUser"
     options:
-        - getUserRoles
+      - getUserRoles
   delegate_to: localhost
 
 - debug: var=users

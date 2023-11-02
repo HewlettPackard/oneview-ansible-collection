@@ -65,16 +65,16 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-        credentials:
-            ip_hostname: '{{ storage_system_ip_hostname }}'
-            username: '{{ storage_system_username }}'
-            password: '{{ storage_system_password }}'
-        managedDomain: TestDomain
-        managedPools:
-          - domain: TestDomain
-            type: StoragePoolV2
-            name: CPG_FC-AO
-            deviceType: FC
+      credentials:
+        ip_hostname: '{{ storage_system_ip_hostname }}'
+        username: '{{ storage_system_username }}'
+        password: '{{ storage_system_password }}'
+      managedDomain: TestDomain
+      managedPools:
+        - domain: TestDomain
+          type: StoragePoolV2
+          name: CPG_FC-AO
+          deviceType: FC
 
   delegate_to: localhost
 
@@ -87,17 +87,17 @@ EXAMPLES = '''
     state: present
     data:
       credentials:
-          username: '{{ storage_system_username }}'
-          password: '{{ storage_system_password }}'
+        username: '{{ storage_system_username }}'
+        password: '{{ storage_system_password }}'
       hostname: '{{ storage_system_ip }}'
       family: StoreServ
       deviceSpecificAttributes:
-          managedDomain: TestDomain
-          managedPools:
-              - domain: TestDomain
-                type: StoragePoolV2
-                name: CPG_FC-AO
-                deviceType: FC
+        managedDomain: TestDomain
+        managedPools:
+          - domain: TestDomain
+            type: StoragePoolV2
+            name: CPG_FC-AO
+            deviceType: FC
 
   delegate_to: localhost
 
@@ -126,8 +126,8 @@ EXAMPLES = '''
     api_version: 1200
     state: absent
     data:
-        credentials:
-            ip_hostname: 172.18.11.12
+      credentials:
+        ip_hostname: 172.18.11.12
   delegate_to: localhost
 
 - name: Remove the storage system by its IP (API500 onwards)
@@ -138,8 +138,8 @@ EXAMPLES = '''
     api_version: 1200
     state: absent
     data:
-        credentials:
-            hostname: 172.18.11.12
+      credentials:
+        hostname: 172.18.11.12
   delegate_to: localhost
 '''
 

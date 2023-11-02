@@ -116,12 +116,12 @@ EXAMPLES = '''
     api_version: 1600
     state: present
     data:
-      enclosureGroupUri : '{{ enclosure_group_uri }}'
-      hostname : '{{ enclosure_hostname }}'
-      username : '{{ enclosure_username }}'
-      password : '{{ enclosure_password }}'
+      enclosureGroupUri: '{{ enclosure_group_uri }}'
+      hostname: '{{ enclosure_hostname }}'
+      username: '{{ enclosure_username }}'
+      password: '{{ enclosure_password }}'
       name: 'Test-Enclosure'
-      licensingIntent : 'OneView'
+      licensingIntent: 'OneView'
 
 - name: Updates the enclosure to have a name of "Test-Enclosure-Renamed".
   oneview_enclosure:
@@ -132,7 +132,7 @@ EXAMPLES = '''
     state: present
     data:
       name: 'Test-Enclosure'
-      newName : 'Test-Enclosure-Renamed'
+      newName: 'Test-Enclosure-Renamed'
 
 - name: Reconfigure the enclosure "Test-Enclosure"
   oneview_enclosure:

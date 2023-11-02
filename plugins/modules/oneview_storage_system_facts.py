@@ -132,8 +132,8 @@ EXAMPLES = '''
     api_version: 1200
     name: "ThreePAR7200-4555"
     options:
-        - hostTypes
-        - storagePools
+      - hostTypes
+      - storagePools
   delegate_to: localhost
 
 - debug: var=storage_systems
@@ -147,7 +147,7 @@ EXAMPLES = '''
     password: my_password
     api_version: 1200
     options:
-        - reachablePorts
+      - reachablePorts
     params:
       networks:
         - /rest/fc-networks/01FC123456

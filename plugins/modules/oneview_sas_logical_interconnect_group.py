@@ -83,19 +83,19 @@ EXAMPLES = '''
         interconnectMapEntryTemplates:
           - enclosureIndex: 1
             logicalLocation:
-                locationEntries:
-                    - relativeValue: 1
-                      type: "Enclosure"
-                    - relativeValue: 4
-                      type: "Bay"
+              locationEntries:
+                - relativeValue: 1
+                  type: "Enclosure"
+                - relativeValue: 4
+                  type: "Bay"
             permittedInterconnectTypeName: "{{ contents.sas_logical_interconnect_group.permitted_interconnect_type_name }}"
           - enclosureIndex: 1
             logicalLocation:
-                locationEntries:
-                    - relativeValue: 1
-                      type: "Enclosure"
-                    - relativeValue: 1
-                      type: "Bay"
+              locationEntries:
+                - relativeValue: 1
+                  type: "Enclosure"
+                - relativeValue: 1
+                  type: "Bay"
             permittedInterconnectTypeName: "{{ contents.sas_logical_interconnect_group.permitted_interconnect_type_name }}"
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost

@@ -74,7 +74,7 @@ EXAMPLES = '''
   oneview_repositories:
     config: "{{ config }}"
     state: present
-    validate_etag: False
+    validate_etag: false
     data:
       repositoryName: "{{ repository_name }}"
       userName: "{{ repository_username }}"
@@ -112,7 +112,7 @@ EXAMPLES = '''
     data:
       name: "{{ repository_name }}"
     params:
-      force: True
+      force: true
   delegate_to: localhost
   register: deleted
 

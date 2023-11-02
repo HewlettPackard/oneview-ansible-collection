@@ -82,8 +82,8 @@ EXAMPLES = '''
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config_file_path }}"
     options:
-        - schema
--  debug: var=id_pools_ipv4_ranges
+      - schema
+- debug: var=id_pools_ipv4_ranges
 
 - name: Gather paginated, filtered and sorted facts about ID Pools IPV4 Ranges
   oneview_id_pools_ipv4_range_facts:

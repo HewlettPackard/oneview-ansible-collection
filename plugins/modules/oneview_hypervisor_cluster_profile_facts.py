@@ -107,9 +107,9 @@ EXAMPLES = '''
     username: administrator
     password: my_password
     api_version: 1200
-    name : "ClusterProfile-1"
+    name: "ClusterProfile-1"
     options:
-        - compliancePreview
+      - compliancePreview
   delegate_to: localhost
 - debug: var=hypervisor_cluster_profiles
 - debug: var=hypervisor_cluster_profile_compliance_preview

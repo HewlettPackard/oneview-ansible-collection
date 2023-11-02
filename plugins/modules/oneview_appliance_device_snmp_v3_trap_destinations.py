@@ -76,9 +76,9 @@ EXAMPLES = '''
     state: present
     name: 172.0.0.1
     data:
-        destinationAddress: "172.0.0.1"
-        port: 162
-        userName: "test1"
+      destinationAddress: "172.0.0.1"
+      port: 162
+      userName: "test1"
   delegate_to: localhost
 
 - name: Update the userId of specified SNMPv3 Trap Destination

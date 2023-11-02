@@ -68,29 +68,29 @@ EXAMPLES = '''
     api_version: 2000
     state: present
     data:
-        name: "Enclosure Group 1"
-        stackingMode: "Enclosure" # Not supported in V600
-        interconnectBayMappings:
-            - interconnectBay: 1
-            - interconnectBay: 2
-            - interconnectBay: 3
-            - interconnectBay: 4
-            - interconnectBay: 5
-            - interconnectBay: 6
-            - interconnectBay: 7
-            - interconnectBay: 8
+      name: "Enclosure Group 1"
+      stackingMode: "Enclosure" # Not supported in V600
+      interconnectBayMappings:
+        - interconnectBay: 1
+        - interconnectBay: 2
+        - interconnectBay: 3
+        - interconnectBay: 4
+        - interconnectBay: 5
+        - interconnectBay: 6
+        - interconnectBay: 7
+        - interconnectBay: 8
   delegate_to: localhost
 
 - name: Update the Enclosure Group changing the name attribute
   oneview_enclosure_group:
-        hostname: 172.16.101.48
-        username: administrator
-        password: my_password
-        api_version: 2000
-        state: present
-        data:
-            name: "Enclosure Group 1"
-            newName: "Enclosure Group 1 (renamed)"
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2000
+    state: present
+    data:
+      name: "Enclosure Group 1"
+      newName: "Enclosure Group 1 (renamed)"
   delegate_to: localhost
 
 - name: Ensure that Enclosure Group is absent

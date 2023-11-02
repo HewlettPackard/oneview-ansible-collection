@@ -75,11 +75,11 @@ EXAMPLES = '''
         interconnectMapEntryTemplates:
           - logicalDownlinkUri: ~
             logicalLocation:
-                locationEntries:
-                    - relativeValue: "1"
-                      type: "Bay"
-                    - relativeValue: 1
-                      type: "Enclosure"
+              locationEntries:
+                - relativeValue: "1"
+                  type: "Bay"
+                - relativeValue: 1
+                  type: "Enclosure"
             permittedInterconnectTypeName: 'HP VC Flex-10/10D Module'
             # Alternatively you can inform permittedInterconnectTypeUri
 
@@ -117,13 +117,13 @@ EXAMPLES = '''
           logicalPortConfigInfos:
             - desiredSpeed: 'Auto'
               logicalLocation:
-                  locationEntries:
-                    - relativeValue: 1
-                      type: "Bay"
-                    - relativeValue: 'Q1' #This port value can be either Port Number or Port Name
-                      type: "Port"
-                    - relativeValue: 1
-                      type: "Enclosure"
+                locationEntries:
+                  - relativeValue: 1
+                    type: "Bay"
+                  - relativeValue: 'Q1' # This port value can be either Port Number or Port Name
+                    type: "Port"
+                  - relativeValue: 1
+                    type: "Enclosure"
 
 - name: Ensure that the Logical Interconnect Group is present with name 'Test'
   oneview_logical_interconnect_group:

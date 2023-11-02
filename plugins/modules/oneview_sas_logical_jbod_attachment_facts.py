@@ -67,9 +67,9 @@ EXAMPLES = '''
 - debug: var=sas_logical_jbod_attachments
 
 - set_fact:
-    jbod_attachment_name : "{{ sas_logical_jbod_attachments[0]['name'] }}"
+    jbod_attachment_name: "{{ sas_logical_jbod_attachments[0]['name'] }}"
 - set_fact:
-    jbod_attachment_uri : "{{ sas_logical_jbod_attachments[0]['uri'] }}"
+    jbod_attachment_uri: "{{ sas_logical_jbod_attachments[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBOD attachments
   oneview_sas_logical_jbod_attachment_facts:

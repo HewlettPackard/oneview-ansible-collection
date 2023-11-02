@@ -134,23 +134,23 @@ EXAMPLES = '''
 
 - name: Gather all facts about a Server Hardware
   oneview_server_hardware_facts:
-   hostname: 172.16.101.48
-   username: administrator
-   password: my_password
-   api_version: 1200
-   name : "Encl1, bay 1"
-   options:
-       - bios                   # optional
-       - javaRemoteConsoleUrl   # optional
-       - physicalServerHardware   # optional
-       - environmentalConfig    # optional
-       - iloSsoUrl              # optional
-       - remoteConsoleUrl       # optional
-       - utilization:           # optional
-                fields : 'AveragePower'
-                filter : ['startDate=2016-05-30T03:29:42.000Z']
-                view : 'day'
-       - firmware               # optional
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    name: "Encl1, bay 1"
+    options:
+      - bios                   # optional
+      - javaRemoteConsoleUrl   # optional
+      - physicalServerHardware   # optional
+      - environmentalConfig    # optional
+      - iloSsoUrl              # optional
+      - remoteConsoleUrl       # optional
+      - utilization:           # optional
+          fields: 'AveragePower'
+          filter: ['startDate=2016-05-30T03:29:42.000Z']
+          view: 'day'
+      - firmware               # optional
   delegate_to: localhost
 
 - debug: var=server_hardwares
@@ -165,13 +165,13 @@ EXAMPLES = '''
 
 - name: Gather facts about the Server Hardware firmware
   oneview_server_hardware_facts:
-   hostname: 172.16.101.48
-   username: administrator
-   password: my_password
-   api_version: 1200
-   name : "0000A66102, bay 12"
-   options:
-       - firmware
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 1200
+    name: "0000A66102, bay 12"
+    options:
+      - firmware
   delegate_to: localhost
 
 - debug: var=server_hardware_firmware

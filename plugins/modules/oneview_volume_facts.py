@@ -91,8 +91,8 @@ EXAMPLES = '''
     password: my_password
     api_version: 1200
     options:
-        - attachableVolumes        # optional
-        - extraManagedVolumePaths  # optional
+      - attachableVolumes        # optional
+      - extraManagedVolumePaths  # optional
 - debug: var=storage_volumes
 - debug: var=attachable_volumes
 - debug: var=extra_managed_volume_paths
@@ -106,7 +106,7 @@ EXAMPLES = '''
     api_version: 1200
     name: "{{ volume_name }}"
     options:
-        - snapshots  # optional
+      - snapshots  # optional
 - debug: var=storage_volumes
 - debug: var=snapshots
 
@@ -119,8 +119,8 @@ EXAMPLES = '''
     api_version: 1200
     name: "{{ volume_name }}"
     options:
-       - snapshots:  # optional
-           name: "{{ snapshot_name }}"
+      - snapshots:  # optional
+          name: "{{ snapshot_name }}"
 - debug: var=storage_volumes
 - debug: var=snapshots
 '''

@@ -61,9 +61,9 @@ EXAMPLES = '''
   delegate_to: localhost
 - debug: var=san_managers
 - set_fact:
-    san_manager_name : "{{ san_managers[0]['name'] }}"
+    san_manager_name: "{{ san_managers[0]['name'] }}"
 - set_fact:
-    san_manager_uri : "{{ san_managers[0]['uri'] }}"
+    san_manager_uri: "{{ san_managers[0]['uri'] }}"
 - debug: var=san_manager_name
 - name: Gather paginated, filtered and sorted facts about san Manager
   oneview_san_manager_facts:

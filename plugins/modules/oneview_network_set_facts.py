@@ -96,7 +96,7 @@ EXAMPLES = '''
     password: my_password
     api_version: 1200
     options:
-        - withoutEthernet
+      - withoutEthernet
   no_log: true
   delegate_to: localhost
 
@@ -124,7 +124,7 @@ EXAMPLES = '''
     api_version: 1200
     name: Name of the Network Set
     options:
-        - withoutEthernet
+      - withoutEthernet
   no_log: true
   delegate_to: localhost
 

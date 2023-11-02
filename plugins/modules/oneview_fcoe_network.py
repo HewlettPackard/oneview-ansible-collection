@@ -107,7 +107,7 @@ EXAMPLES = '''
     state: absent
     data:
       networkUris:
-        -  "/rest/fcoe-networks/e2f0031b-52bd-4223-9ac1-d91cb519d548"
+        - "/rest/fcoe-networks/e2f0031b-52bd-4223-9ac1-d91cb519d548"
   delegate_to: localhost
 '''
 

@@ -81,10 +81,10 @@ EXAMPLES = '''
     api_version: 2000
     state: present
     data:
-        enclosureUris:
-          - "/rest/enclosures/0000000000A66101"
-        enclosureGroupUri: "/rest/enclosure-groups/9fafc382-bbef-4a94-a9d1-05f77042f3ac"
-        name: "Encl1"
+      enclosureUris:
+        - "/rest/enclosures/0000000000A66101"
+      enclosureGroupUri: "/rest/enclosure-groups/9fafc382-bbef-4a94-a9d1-05f77042f3ac"
+      name: "Encl1"
   ignore_errors: true
   delegate_to: localhost
 
@@ -96,13 +96,13 @@ EXAMPLES = '''
     api_version: 2000
     state: firmware_updated
     data:
-        name: "Encl1"
-        firmware:
-            firmwareBaselineUri: "/rest/firmware-drivers/SPPGen9Snap3_2015_0221_71"
-            firmwareUpdateOn: "EnclosureOnly"
-            forceInstallFirmware: "false"
-        custom_headers:
-            if-Match: '*'
+      name: "Encl1"
+      firmware:
+        firmwareBaselineUri: "/rest/firmware-drivers/SPPGen9Snap3_2015_0221_71"
+        firmwareUpdateOn: "EnclosureOnly"
+        forceInstallFirmware: "false"
+      custom_headers:
+        if-Match: '*'
   delegate_to: localhost
 
 # This play is compatible with Synergy Enclosures
@@ -114,16 +114,16 @@ EXAMPLES = '''
     api_version: 2000
     state: firmware_updated
     data:
-        name: "Encl1"
-        firmware:
-            firmwareBaselineUri: "/rest/firmware-drivers/SPPGen9Snap3_2015_0221_71"
-            firmwareUpdateOn: "EnclosureOnly"
-            forceInstallFirmware: "false"
-            validateIfLIFirmwareUpdateIsNonDisruptive: "true"
-            logicalInterconnectUpdateMode: "Orchestrated"
-            updateFirmwareOnUnmanagedInterconnect: "true"
-        custom_headers:
-            if-Match: '*'
+      name: "Encl1"
+      firmware:
+        firmwareBaselineUri: "/rest/firmware-drivers/SPPGen9Snap3_2015_0221_71"
+        firmwareUpdateOn: "EnclosureOnly"
+        forceInstallFirmware: "false"
+        validateIfLIFirmwareUpdateIsNonDisruptive: "true"
+        logicalInterconnectUpdateMode: "Orchestrated"
+        updateFirmwareOnUnmanagedInterconnect: "true"
+      custom_headers:
+        if-Match: '*'
   delegate_to: localhost
 
 - name: Update the Logical Enclosure configuration script
@@ -134,8 +134,8 @@ EXAMPLES = '''
     api_version: 2000
     state: script_updated
     data:
-        name: "Encl1"
-        configurationScript: "# script (updated)"
+      name: "Encl1"
+      configurationScript: "# script (updated)"
   delegate_to: localhost
 
 - name: Generates a support dump for the Logical Enclosure
@@ -146,11 +146,11 @@ EXAMPLES = '''
     api_version: 2000
     state: dumped
     data:
-        name: "Encl1"
-        dump:
-          errorCode: "MyDump16"
-          encrypt: "true"
-          excludeApplianceDump: "false"
+      name: "Encl1"
+      dump:
+        errorCode: "MyDump16"
+        encrypt: "true"
+        excludeApplianceDump: "false"
   delegate_to: localhost
 - debug: var=generated_dump_uri
 
@@ -162,7 +162,7 @@ EXAMPLES = '''
     api_version: 2000
     state: reconfigured
     data:
-        name: "Encl1"
+      name: "Encl1"
   delegate_to: localhost
 
 - name: Makes the logical enclosure consistent with the enclosure group
@@ -173,7 +173,7 @@ EXAMPLES = '''
     api_version: 2000
     state: updated_from_group
     data:
-        name: "Encl1"
+      name: "Encl1"
   delegate_to: localhost
 
 - name: Update the Logical Enclosure changing the name attribute
@@ -184,19 +184,19 @@ EXAMPLES = '''
     api_version: 2000
     state: present
     data:
-        name: "Encl1"
-        newName: "Encl1 (renamed)"
+      name: "Encl1"
+      newName: "Encl1 (renamed)"
   delegate_to: localhost
 
 - name: Delete a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
-      hostname: 172.16.101.48
-      username: administrator
-      password: my_password
-      api_version: 2000
-      state: absent
-      data:
-          name: 'Encl1'
+    hostname: 172.16.101.48
+    username: administrator
+    password: my_password
+    api_version: 2000
+    state: absent
+    data:
+      name: 'Encl1'
   delegate_to: localhost
 '''
 

@@ -70,8 +70,8 @@ EXAMPLES = '''
     api_version: 300
     state: present
     data:
-       storageSystemUri: "/rest/storage-systems/TXQ1010307"
-       poolName: "FST_CPG2"
+      storageSystemUri: "/rest/storage-systems/TXQ1010307"
+      poolName: "FST_CPG2"
   delegate_to: localhost
 - name: Delete the Storage Pool (prior to API500)
   oneview_storage_pool:
@@ -81,7 +81,7 @@ EXAMPLES = '''
     api_version: 300
     state: absent
     data:
-       poolName: "FST_CPG2"
+      poolName: "FST_CPG2"
   delegate_to: localhost
 - name: Ensure the storage pool 'FST_CPG2' is managed by the appliance (API500 onwards)
   oneview_storage_pool:
@@ -91,9 +91,9 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-       storageSystemUri: "/rest/storage-systems/TXQ1010307"
-       poolName: FST_CPG2
-       isManaged: True
+      storageSystemUri: "/rest/storage-systems/TXQ1010307"
+      poolName: FST_CPG2
+      isManaged: true
   delegate_to: localhost
 - name: Ensure the storage pool 'FST_CPG2' is unmanaged (API500 onwards)
   oneview_storage_pool:
@@ -103,9 +103,9 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-       storageSystemUri: "/rest/storage-systems/TXQ1010307"
-       poolName: FST_CPG2
-       isManaged: False
+      storageSystemUri: "/rest/storage-systems/TXQ1010307"
+      poolName: FST_CPG2
+      isManaged: false
   delegate_to: localhost
 '''
 

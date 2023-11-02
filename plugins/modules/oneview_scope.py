@@ -108,8 +108,8 @@ EXAMPLES = '''
       name: 'SampleScopeRenamed'
       resourceAssignments:
         removedResourceUris:
-            - '{{ fc_network_1.uri }}'
-            - '{{ fc_network_2.uri }}'
+          - '{{ fc_network_1.uri }}'
+          - '{{ fc_network_2.uri }}'
   delegate_to: localhost
 '''
 

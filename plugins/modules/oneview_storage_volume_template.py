@@ -68,10 +68,10 @@ EXAMPLES = '''
     api_version: 1200
     state: present
     data:
-        name: "Volume Template Name"
-        description: "Example Template"
-        rootTemplateUri: "/rest/storage-volume-templates/5dbaf127-053b-4988-82fe-a80800eef1f3"
-        properties: {}
+      name: "Volume Template Name"
+      description: "Example Template"
+      rootTemplateUri: "/rest/storage-volume-templates/5dbaf127-053b-4988-82fe-a80800eef1f3"
+      properties: {}
 
   delegate_to: localhost
 
@@ -83,7 +83,7 @@ EXAMPLES = '''
     api_version: 1200
     state: absent
     data:
-        name: 'Volume Template Name'
+      name: 'Volume Template Name'
   delegate_to: localhost
 '''
 

@@ -77,8 +77,8 @@ EXAMPLES = '''
       ipv4Subnet: "{{ ipv4_subnet }}"
       ipv4Gateway: "{{ gateway }}"
       ipv4NameServers:
-         - "{{ dnsServer1 }}"
-         - "{{ dnsServer2 }}"
+        - "{{ dnsServer1 }}"
+        - "{{ dnsServer2 }}"
   delegate_to: localhost
 - debug: var=appliance_network_interfaces
 '''

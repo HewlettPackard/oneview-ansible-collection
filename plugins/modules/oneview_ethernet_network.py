@@ -84,8 +84,8 @@ EXAMPLES = '''
       name: 'Test Ethernet Network'
       purpose: Management
       bandwidth:
-          maximumBandwidth: 3000
-          typicalBandwidth: 2000
+        maximumBandwidth: 3000
+        typicalBandwidth: 2000
   delegate_to: localhost
 
 - name: Ensure that the Ethernet Network is present with name 'Renamed Ethernet Network'
@@ -160,7 +160,7 @@ EXAMPLES = '''
     state: absent
     data:
       networkUris:
-        -  "/rest/ethernet-networks/e2f0031b-52bd-4223-9ac1-d91cb519d548"
+        - "/rest/ethernet-networks/e2f0031b-52bd-4223-9ac1-d91cb519d548"
   delegate_to: localhost
 '''
 
