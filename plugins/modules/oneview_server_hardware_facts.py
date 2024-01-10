@@ -230,6 +230,7 @@ server_hardware_physical_server_hardware:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+import ast
 
 
 class ServerHardwareFactsModule(OneViewModule):
@@ -281,10 +282,16 @@ class ServerHardwareFactsModule(OneViewModule):
             ansible_facts['server_hardware_physical_server_hardware'] = self.current_resource.get_physical_server_hardware()
         if self.options.get('remoteConsoleUrl'):
             ansible_facts['server_hardware_remote_console_url'] = self.current_resource.get_remote_console_url()
-        if self.options.get('utilization'):
-            ansible_facts['server_hardware_utilization'] = self.get_utilization()
         if self.options.get('firmware'):
             ansible_facts['server_hardware_firmware'] = self.current_resource.get_firmware()
+        if self.options.get('utilization'):
+            ansible_facts['server_hardware_utilization'] = self.get_utilization()
+        else:
+            keys_list = list(self.options.keys())
+            for item in keys_list:
+                if 'utilization' in item:
+                    ansible_facts['server_hardware_utilization'] = self.get_utilization(ast.literal_eval(item))
+                    break
 
         return ansible_facts
 
@@ -296,16 +303,15 @@ class ServerHardwareFactsModule(OneViewModule):
 
         return self.resource_client.get_all_firmwares(**params)
 
-    def get_utilization(self):
+    def get_utilization(self, util_params=None):
 
         fields = view = refresh = filter = ''
-        data = self.options['utilization']
 
-        if isinstance(data, dict):
-            fields = data.get('fields')
-            view = data.get('view')
-            refresh = data.get('refresh')
-            filter = data.get('filter')
+        if isinstance(util_params, dict):
+            fields = util_params.get('utilization').get('fields')
+            view = util_params.get('utilization').get('view')
+            refresh = util_params.get('utilization').get('refresh')
+            filter = util_params.get('utilization').get('filter')
 
         return self.current_resource.get_utilization(fields=fields,
                                                      filter=filter,
