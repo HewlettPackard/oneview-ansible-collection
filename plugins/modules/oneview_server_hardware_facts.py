@@ -291,6 +291,7 @@ class ServerHardwareFactsModule(OneViewModule):
             for item in keys_list:
                 if 'utilization' in item:
                     ansible_facts['server_hardware_utilization'] = self.get_utilization(ast.literal_eval(item))
+                    break
 
         return ansible_facts
 
