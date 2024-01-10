@@ -307,10 +307,7 @@ class ServerHardwareFactsModule(OneViewModule):
 
         fields = view = refresh = filter = ''
 
-        if 'utilization' in self.options:
-          data = self.options['utilization']
-
-        elif isinstance(util_params, dict):
+        if isinstance(util_params, dict):
             fields = util_params.get('utilization').get('fields')
             view = util_params.get('utilization').get('view')
             refresh = util_params.get('utilization').get('refresh')
