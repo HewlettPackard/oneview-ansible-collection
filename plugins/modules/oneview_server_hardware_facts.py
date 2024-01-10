@@ -19,7 +19,6 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
                     'metadata_version': '1.1'}
@@ -290,7 +289,7 @@ class ServerHardwareFactsModule(OneViewModule):
         else:
             keys_list = list(self.options.keys())
             for item in keys_list:
-                if "utilization" in item:
+                if 'utilization' in item:
                     ansible_facts['server_hardware_utilization'] = self.get_utilization(ast.literal_eval(item))
 
         return ansible_facts
