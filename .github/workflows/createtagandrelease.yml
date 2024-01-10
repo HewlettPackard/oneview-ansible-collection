@@ -15,7 +15,7 @@ jobs:
         id: tag_and_prepare_release
         uses: anothrNick/github-tag-action@1.61.0
         env:
-          GITHUB_TOKEN:  ${{ secrets.CD_TOKEN }}
+          GITHUB_TOKEN:  ${{ secrets.GH_TOKEN }}
           WITH_V: true
           CUSTOM_TAG: "v8.7.0"
       - name: Display
@@ -26,4 +26,4 @@ jobs:
           name:  ${{ steps.tag_and_prepare_release.outputs.new_tag }}
           tag: ${{ steps.tag_and_prepare_release.outputs.new_tag }}
           body: See the <a href="https://github.com/HewlettPackard/oneview-python/blob/master/CHANGELOG.md">CHANGELOG.md</a> for details.
-          token:  ${{ secrets.CD_TOKEN }}
+          token:  ${{ secrets.GH_TOKEN }}
