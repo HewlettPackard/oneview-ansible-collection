@@ -223,7 +223,7 @@ Setting `no_log: true` is highly recommended in this case, as the credentials ar
 
 ### Setting your OneView version
 
-The Ansible collections for HPE OneView support the API endpoints for HPE OneView  6.00, 6.10, 6.20, 6.30, 6.40, 6.50, 6.60, 7.00, 7.10, 7.20, 8.00, 8.10, 8.20, 8.30, 8.40, 8.50, 8.60. 8.70
+The Ansible collections for HPE OneView support the API endpoints for HPE OneView  6.00, 6.10, 6.20, 6.30, 6.40, 6.50, 6.60, 7.00, 7.10, 7.20, 8.00, 8.10, 8.20, 8.30, 8.40, 8.50, 8.60, 8.70
 
 The current `default` HPE OneView version will pick the OneView appliance version.
 
