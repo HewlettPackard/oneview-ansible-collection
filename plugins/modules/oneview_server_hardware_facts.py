@@ -315,7 +315,7 @@ class ServerHardwareFactsModule(OneViewModule):
             view = util_params.get('utilization').get('view')
             refresh = util_params.get('utilization').get('refresh')
             filter = util_params.get('utilization').get('filter')
-        
+
         return self.current_resource.get_utilization(fields=fields,
                                                      filter=filter,
                                                      refresh=refresh,
