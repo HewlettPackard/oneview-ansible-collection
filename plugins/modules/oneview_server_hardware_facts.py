@@ -19,7 +19,6 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import ast
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'community',
@@ -232,6 +231,7 @@ server_hardware_physical_server_hardware:
 '''
 
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+import ast
 
 
 class ServerHardwareFactsModule(OneViewModule):
