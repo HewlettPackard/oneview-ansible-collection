@@ -288,10 +288,10 @@ class ServerHardwareFactsModule(OneViewModule):
         if self.options.get('utilization'):
             ansible_facts['server_hardware_utilization'] = self.get_utilization()
         else:
-          keys_list = list(self.options.keys())
-          for item in keys_list:
-            if "utilization" in item:
-              ansible_facts['server_hardware_utilization'] = self.get_utilization(ast.literal_eval(item))
+            keys_list = list(self.options.keys())
+            for item in keys_list:
+                if "utilization" in item:
+                    ansible_facts['server_hardware_utilization'] = self.get_utilization(ast.literal_eval(item))
 
         return ansible_facts
 
