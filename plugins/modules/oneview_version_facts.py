@@ -1,6 +1,6 @@
 #!/usr/bin/python
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class VersionFactsModule(OneViewModuleBase):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')), supports_check_mode=True)
 
     def execute_module(self):
         version = self.oneview_client.versions.get_version()
