@@ -862,7 +862,6 @@ class OneViewModule(object):
             return {"changed": True, "msg": self.MSG_DELETED}
         else:
             return {"changed": False, "msg": self.MSG_ALREADY_ABSENT}
-            
 
     def check_resource_scopes_set(self, state, fact_name, scope_uris):
         """

@@ -120,8 +120,7 @@ class TaskFactsModule(OneViewModule):
     )
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True,
-        supports_check_mode=True)
+        super().__init__(additional_arg_spec=self.argument_spec, validate_etag_support=True, supports_check_mode=True)
 
         self.set_resource_object(self.oneview_client.tasks)
 

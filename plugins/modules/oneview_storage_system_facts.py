@@ -210,8 +210,7 @@ class StorageSystemFactsModule(OneViewModule):
             storage_hostname=dict(type='str')
         )
 
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True,
-        supports_check_mode=True)
+        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.storage_systems)
 
     def execute_module(self):

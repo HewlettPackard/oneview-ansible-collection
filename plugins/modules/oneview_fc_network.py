@@ -132,8 +132,7 @@ class FcNetworkModule(OneViewModule):
                                        required=True,
                                        choices=['present', 'absent']))
 
-        super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True,
-        supports_check_mode=True)
+        super().__init__(additional_arg_spec=additional_arg_spec, validate_etag_support=True, supports_check_mode=True)
 
         self.set_resource_object(self.oneview_client.fc_networks)
         self.connection_templates = self.oneview_client.connection_templates
