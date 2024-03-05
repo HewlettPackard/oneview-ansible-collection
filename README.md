@@ -208,7 +208,7 @@ This option allows the parameters `hostname`, `auth_login_domain`, `username`, `
     username: <username>
     password: <password>
     auth_login_domain: <domain_directory>
-    api_version: 6000
+    api_version: 6200
     state: present
     data:
       name: "{{ network_name }}"
@@ -235,7 +235,7 @@ To use a different API, you must set the API version together with your credenti
 OR using the Environment variable:
 
 ```bash
-export ONEVIEWSDK_API_VERSION='6000'
+export ONEVIEWSDK_API_VERSION='6200'
 ```
 
 If this property is not specified, it will fall back to default value.
