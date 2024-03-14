@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -137,7 +137,7 @@ class LabelFactsModule(OneViewModule):
             params=dict(required=False, type='dict'),
             get_resources=dict(required=False, type='bool')
         )
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
         self.resource_client = self.oneview_client.labels
 
     def execute_module(self):

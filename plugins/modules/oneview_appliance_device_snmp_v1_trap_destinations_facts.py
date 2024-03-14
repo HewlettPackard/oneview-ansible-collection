@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2021) Hewlett Packard Enterprise Development LP
+# Copyright (2021-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@ class ApplianceDeviceSnmpV1TrapDestinationsFactsModule(OneViewModule):
     )
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.appliance_device_snmp_v1_trap_destinations)
 
     def execute_module(self):

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2021) Hewlett Packard Enterprise Development LP
+# Copyright (2021-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneView
 
 class ApplianceProxyConfigurationFactsModule(OneViewModule):
     def __init__(self):
-        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')))
+        super().__init__(additional_arg_spec=dict(sessionID=dict(required=False, type='str')), supports_check_mode=True)
         self.set_resource_object(self.oneview_client.appliance_proxy_configuration)
 
     def execute_module(self):

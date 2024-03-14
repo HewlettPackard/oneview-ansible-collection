@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2022) Hewlett Packard Enterprise Development LP
+# Copyright (2022-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -105,7 +105,7 @@ class SanManagerFactsModule(OneViewModule):
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
         )
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.san_managers)
         self.san_providers = self.oneview_client.san_providers
 
