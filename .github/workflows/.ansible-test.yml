@@ -93,6 +93,6 @@ jobs:
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4.3.0
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: alisha-k-kalladassery/oneview-ansible-collection
           fail_ci_if_error: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
