@@ -91,6 +91,8 @@ jobs:
         run: pytest --cov-report xml --cov=plugins/modules tests/unit/
 
       - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v4.3.0
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: alisha-k-kalladassery/oneview-ansible-collection
           fail_ci_if_error: true
