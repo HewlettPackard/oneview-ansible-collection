@@ -1,6 +1,6 @@
 #!/usr/bin/python
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -210,7 +210,7 @@ class StorageSystemFactsModule(OneViewModule):
             storage_hostname=dict(type='str')
         )
 
-        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True)
+        super().__init__(additional_arg_spec=argument_spec, validate_etag_support=True, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.storage_systems)
 
     def execute_module(self):

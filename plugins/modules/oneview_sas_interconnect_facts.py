@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2023) Hewlett Packard Enterprise Development LP
+# Copyright (2023-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -124,7 +124,7 @@ class SasInterconnectFactsModule(OneViewModule):
     argument_spec = dict(name=dict(type='str'), uri=dict(required=False, type='str'), sessionID=dict(required=False, type='str'), params=dict(type='dict'))
 
     def __init__(self):
-        super().__init__(additional_arg_spec=self.argument_spec)
+        super().__init__(additional_arg_spec=self.argument_spec, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.sas_interconnects)
 
     def execute_module(self):

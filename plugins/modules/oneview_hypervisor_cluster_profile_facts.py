@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2020) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -140,7 +140,7 @@ class HypervisorClusterProfileFactsModule(OneViewModule):
             options=dict(type='list', elements='str'),
             params=dict(type='dict')
         )
-        super().__init__(additional_arg_spec=argument_spec)
+        super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
         self.set_resource_object(self.oneview_client.hypervisor_cluster_profiles)
 
     def execute_module(self):

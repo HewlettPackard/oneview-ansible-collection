@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ###
-# Copyright (2016-2021) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2024) Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -576,7 +576,7 @@ class OneViewModule(object):
     ONEVIEW_VALIDATE_ETAG_ARGS = dict(
         validate_etag=dict(type='bool', default=True))
 
-    def __init__(self, additional_arg_spec=None, validate_etag_support=False):
+    def __init__(self, additional_arg_spec=None, validate_etag_support=False, supports_check_mode=False):
         """
         OneViewModuleBase constructor.
 
@@ -587,7 +587,7 @@ class OneViewModule(object):
             additional_arg_spec, validate_etag_support)
 
         self.module = AnsibleModule(
-            argument_spec=argument_spec, supports_check_mode=True)
+            argument_spec=argument_spec, supports_check_mode=supports_check_mode)
 
         self.resource_client = None
         self.current_resource = None
@@ -742,7 +742,6 @@ class OneViewModule(object):
         Generic implementation of the present state for the OneView resources.
 
         It checks if the resource needs to be created or updated.
-
         :arg str fact_name: Name of the fact returned to the Ansible.
         :arg str create_method: Function of the OneView client that will be called for resource creation.
             Usually create or add.
@@ -912,7 +911,7 @@ class OneViewModuleBase(object):
     ONEVIEW_VALIDATE_ETAG_ARGS = dict(
         validate_etag=dict(type='bool', default=True))
 
-    def __init__(self, additional_arg_spec=None, validate_etag_support=False):
+    def __init__(self, additional_arg_spec=None, validate_etag_support=False, supports_check_mode=False):
         """
         OneViewModuleBase constructor.
 
@@ -923,7 +922,7 @@ class OneViewModuleBase(object):
             additional_arg_spec, validate_etag_support)
 
         self.module = AnsibleModule(
-            argument_spec=argument_spec, supports_check_mode=True)
+            argument_spec=argument_spec, supports_check_mode=supports_check_mode)
 
         self._check_hpe_oneview_sdk()
         self._create_oneview_client()
