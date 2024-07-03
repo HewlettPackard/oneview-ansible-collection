@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         python_version: ["3.9", "3.10"]
-        ansible_version: ["stable-2.14", "stable-2.15"]
+        ansible_version: ["stable-2.15"]
     runs-on: ubuntu-20.04
     steps:
 
@@ -59,7 +59,6 @@ jobs:
           - 3.9
           - '3.10'
         ansible:
-          - stable-2.14
           - stable-2.15
 
     steps:
