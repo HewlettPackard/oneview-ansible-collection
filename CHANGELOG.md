@@ -1,8 +1,11 @@
 # Ansible Collections for HPE OneView Change Log
 
 ## v9.0.0
-
 This release extends the planned support of the collections to OneView REST API version 6600(OneView v9.0).
+
+#### Major Changes
+ 1. Added support for indicating which module supports check_mode and which does not.
+
 ### Modules supported in this release
 - oneview_appliance_configuration_timeconfig_facts
 - oneview_appliance_device_snmp_v1_trap_destination
