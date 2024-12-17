@@ -325,8 +325,8 @@ Latest stable release: 9.30
 For support requests or additional assistance, you can:
 
 **Submit an Issue**
-Report bugs, feature requests, or questions through the [issues_page]https://github.com/HewlettPackard/oneview-ansible-collection/issues.
-Documentation: Refer to the [HPE_OneView]https://www.hpe.com/psnow/product-documentation?oid=5410258&cc=ae&lc=en for detailed usage instructions and troubleshooting tips.
+Report bugs, feature requests, or questions through the [issues_page](https://github.com/HewlettPackard/oneview-ansible-collection/issues).
+Documentation: Refer to the [HPE_OneView](https://www.hpe.com/psnow/product-documentation?oid=5410258&cc=ae&lc=en) for detailed usage instructions and troubleshooting tips.
 
 
 ## Copyright
