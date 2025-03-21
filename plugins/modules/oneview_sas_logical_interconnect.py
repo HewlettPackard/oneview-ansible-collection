@@ -187,7 +187,7 @@ class SasLogicalInterconnectModule(OneViewModule):
             changed, msg, ansible_facts = self.__compliance()
         elif self.state == 'apply_configuration':
             changed, msg, ansible_facts = self.__apply_configuration()
-        elif self.state == 'install_firmware':
+        elif self.state == 'update_firmware':
             changed, msg, ansible_facts = self.__install_firmware()
         elif self.state == 'replace_drive_enclosure':
             changed, msg, ansible_facts = self.__replace_drive_enclosure()
