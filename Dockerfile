@@ -1,4 +1,4 @@
-FROM python:3.7-slim-buster
+FROM python:3.9-slim-buster
 LABEL maintainer "Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 WORKDIR /root
 
