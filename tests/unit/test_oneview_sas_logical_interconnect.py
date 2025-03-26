@@ -43,7 +43,7 @@ PARAMS_FOR_APPLY_CONFIGURATION = dict(
 )
 PARAMS_FOR_FIRMWARE_INSTALL = dict(
     config='config.json',
-    state='install_firmware',
+    state='update_firmware',
     data=dict(name='SAS_LI',
               firmware=dict(command="Stage",
                             force="false",
@@ -60,7 +60,7 @@ PARAMS_FOR_REPLACE_DR_ENCL = dict(
 )
 PARAMS_WITH_NO_CONFIG_FIRMWARE = dict(
     config='config.json',
-    state='install_firmware',
+    state='update_firmware',
     data=dict(name='SAS_LI')
 )
 PARAMS_WITH_NO_CONFIG_REPLACE_DR_ENC = dict(
