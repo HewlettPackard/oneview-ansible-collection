@@ -1,4 +1,3 @@
-#!/usr/bin/python
 ###
 # Copyright (2016-2021) Hewlett Packard Enterprise Development LP
 #

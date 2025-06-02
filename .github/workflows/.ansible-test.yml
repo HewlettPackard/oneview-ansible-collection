@@ -8,7 +8,7 @@ jobs:
       matrix:
         python_version: ["3.9", "3.10"]
         ansible_version: ["stable-2.15"]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Check out code
@@ -50,7 +50,7 @@ jobs:
           path: "./"         
   
   units:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       # As soon as the first unit test fails, cancel the others to free up the CI queue
       fail-fast: true
