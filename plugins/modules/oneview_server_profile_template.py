@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###
 # Copyright (2016-2019) Hewlett Packard Enterprise Development LP
