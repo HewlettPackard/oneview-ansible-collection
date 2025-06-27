@@ -1,31 +1,28 @@
 FROM python:3.9-slim-buster
-LABEL maintainer "Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
+
+ARG http_proxy
+ARG https_proxy
+ARG no_proxy
+
+ENV http_proxy=${http_proxy}
+ENV https_proxy=${https_proxy}
+ENV no_proxy=${no_proxy}
+
 WORKDIR /root
 
-# Some optional but recommended packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get update -y \
-    && apt-get install --no-install-recommends -y \
-    vim \
-    curl \
-    && pip install ansible hpeOneView hpICsp
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
+    apt-get install --no-install-recommends -y vim curl git && \
+    pip install --no-cache-dir ansible hpeOneView hpICsp && \
+    apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache/pip
 
-# Adding hosts for convenience
-RUN mkdir -p /etc/ansible
-RUN echo [localhost] >> /etc/ansible/hosts
-RUN echo localhost ansible_python_interpreter=python3 ansible_connection=local >> /etc/ansible/hosts
+RUN mkdir -p /etc/ansible && \
+    echo -e "[localhost]\nlocalhost ansible_python_interpreter=python3 ansible_connection=local" > /etc/ansible/hosts
+
 ADD . oneview-ansible-collection/
 WORKDIR /root/oneview-ansible-collection
 
-# Building and Installing hpe.oneview collection
-RUN ansible-galaxy collection build --force .
-RUN ansible-galaxy collection install *.tar.gz
+RUN ansible-galaxy collection build --force . && ansible-galaxy collection install *.tar.gz
+
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
-# Clean and remove not required packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
- 
 CMD ["ansible-playbook", "--version"]
