@@ -47,7 +47,7 @@ jobs:
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint@main
         with:
-          working_directory: "./"         
+          working_directory: ""         
   
   units:
     runs-on: ubuntu-latest
