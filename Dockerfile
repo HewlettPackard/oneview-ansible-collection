@@ -4,13 +4,15 @@ ARG http_proxy
 ARG https_proxy
 ARG no_proxy
 
-ENV http_proxy=${http_proxy}
-ENV https_proxy=${https_proxy}
-ENV no_proxy=${no_proxy}
+ENV http_proxy=$http_proxy
+ENV https_proxy=$https_proxy
+ENV no_proxy=$no_proxy
+
+
+WORKDIR /root
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /root
 
 RUN apt-get update -y && \
     apt-get install --no-install-recommends -y vim curl git && \
