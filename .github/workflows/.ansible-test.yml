@@ -44,10 +44,14 @@ jobs:
         with:
           path: ansible_collections/hpe/oneview
 
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint@main
-        with:
-          working_directory: ""         
+      - name: Install ansible-lint
+        run: |
+          pip install ansible ansible-lint
+
+      - name: Run ansible-lint
+        run: |
+          cd ansible_collections/hpe/oneview
+          ansible-lint
   
   units:
     runs-on: ubuntu-latest
