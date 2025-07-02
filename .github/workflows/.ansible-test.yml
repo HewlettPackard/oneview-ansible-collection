@@ -40,14 +40,19 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           path: ansible_collections/hpe/oneview
 
-      - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@main
-        with:
-          path: "./"         
+      - name: Install ansible-lint
+        run: |
+          pip install ansible ansible-lint
+
+      - name: Run ansible-lint
+        run: |
+          cd ansible_collections/hpe/oneview
+          ansible-lint
+         
   
   units:
     runs-on: ubuntu-latest
