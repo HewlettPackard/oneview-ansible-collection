@@ -6,7 +6,7 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.9", "3.10"]
+        python_version: ["3.9","3.10"]
         ansible_version: ["stable-2.15"]
     runs-on: ubuntu-latest
     steps:
