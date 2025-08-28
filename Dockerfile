@@ -1,14 +1,13 @@
-FROM python:3.9-slim-buster
-LABEL maintainer "Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
+FROM python:3.9-slim-bullseye
+LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
+
 WORKDIR /root
 
-# Some optional but recommended packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get update -y \
-    && apt-get install --no-install-recommends -y \
-    vim \
-    curl \
-    && pip install ansible hpeOneView hpICsp
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
+    apt-get install --no-install-recommends -y vim curl && \
+    pip install --no-cache-dir ansible hpeOneView hpICsp && \
+    apt-get autoremove -y && apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
 
 # Adding hosts for convenience
 RUN mkdir -p /etc/ansible
