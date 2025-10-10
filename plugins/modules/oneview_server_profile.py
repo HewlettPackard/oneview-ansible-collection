@@ -435,9 +435,13 @@ class ServerProfileModule(OneViewModule):
                     # This waiting time was chosen empirically and it could differ according to the hardware.
                     time.sleep(10)
                 else:
-                    raise task_error
+                    self.module.fail_json(msg=f"HPEOneViewTaskError during server profile creation: {task_error.msg}",error_code=task_error.error_code)
 
-        raise OneViewModuleException(self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
+            except Exception as unexpected_error:
+                self.module.fail_json(msg=f"Unexpected error during server profile creation: {str(unexpected_error)}")
+
+        self.module.fail_json(msg=self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
+
 
     def __build_new_profile_data(self, server_hardware_uri):
         server_profile_data = deepcopy(self.data)
