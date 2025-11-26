@@ -6,8 +6,8 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.10"]
-        ansible_version: ["2.16.0"]
+        python_version: ["3.9","3.10"]
+        ansible_version: ["2.15.0"]
     runs-on: ubuntu-latest
     steps:
 
@@ -29,7 +29,9 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Install ansible ${{ matrix.ansible_version }}
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
+        run: |
+          pip install ansible==2.15.0
+          pip install ansible-core==2.15.0
 
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
@@ -61,9 +63,10 @@ jobs:
       fail-fast: true
       matrix:
         python_version:
+          - 3.9
           - '3.10'
         ansible:
-          - stable-2.16
+          - 2.15.0
 
     steps:
       - name: Check out code
