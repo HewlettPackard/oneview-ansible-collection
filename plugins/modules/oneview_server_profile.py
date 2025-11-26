@@ -442,7 +442,7 @@ class ServerProfileModule(OneViewModule):
 
             except Exception as unexpected_error:
                 self.module.fail_json(
-                    msg=f"Unexpected error during server profile creation: {str(unexpected_error)}",
+                    msg=str(unexpected_error),
                     exception=unexpected_error
                 )
                 return
