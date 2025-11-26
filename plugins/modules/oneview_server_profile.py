@@ -441,9 +441,16 @@ class ServerProfileModule(OneViewModule):
                     self.module.fail_json(msg=f"HPEOneViewTaskError during server profile creation: {task_error.msg}",error_code=task_error.error_code)
 
             except Exception as unexpected_error:
-                self.module.fail_json(msg=f"Unexpected error during server profile creation: {str(unexpected_error)}")
+                self.module.fail_json(
+                    msg=f"Unexpected error during server profile creation: {str(unexpected_error)}",
+                    exception=unexpected_error
+                )
+                return
 
-        self.module.fail_json(msg=self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
+        self.module.fail_json(
+            msg=self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE,
+            exception=None
+        )
 
 
     def __build_new_profile_data(self, server_hardware_uri):
