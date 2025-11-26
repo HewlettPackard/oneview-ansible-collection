@@ -30,7 +30,6 @@ jobs:
 
       - name: Install ansible ${{ matrix.ansible_version }}
         run: |
-          pip install ansible==2.15.0
           pip install ansible-core==2.15.0
 
       - name: Install ansible_collections.hpe.oneview
