@@ -29,7 +29,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Install ansible ${{ matrix.ansible_version }}
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
+        run: pip install https://github.com/ansible/ansible/archive/v2.15.12.tar.gz
 
       - name: Install ansible_collections.hpe.oneview
         run: ansible-galaxy collection install hpe.oneview -p ../../
