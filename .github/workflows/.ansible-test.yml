@@ -6,18 +6,18 @@ jobs:
   sanity:
     strategy:
       matrix:
-        python_version: ["3.9","3.10"]
+        python_version: ["3.9", "3.10"]
         ansible_version: ["stable-2.15"]
     runs-on: ubuntu-latest
     steps:
 
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           path: ansible_collections/hpe/oneview
 
       - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
 
@@ -25,17 +25,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install future
+          cd ansible_collections/hpe/oneview
           if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Install ansible ${{ matrix.ansible_version }}
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible_version }}.tar.gz --disable-pip-version-check
-
-      - name: Install ansible_collections.hpe.oneview
-        run: ansible-galaxy collection install hpe.oneview -p ../../
+        run: pip install ansible~=8.5.0
 
       - name: Run sanity tests
-        run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+        run: |
+          cd ansible_collections/hpe/oneview
+          ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
         
   lint:
     runs-on: ubuntu-latest
@@ -68,12 +68,12 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           path: ansible_collections/hpe/oneview
 
       - name: Set up Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
 
@@ -81,18 +81,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip3 install future pytest-cov
+          cd ansible_collections/hpe/oneview
           if [ -f tests/requirements.txt ]; then pip3 install -r tests/requirements.txt; fi
           if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
 
       - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+        run: pip install ansible~=8.5.0 --disable-pip-version-check
 
       - name: Setting Python env path
         run: |
-         echo "PYTHONPATH=/home/runner/work/oneview-ansible-collection:$PYTHONPATH" >> $GITHUB_ENV
+         echo "PYTHONPATH=/home/runner/work/oneview-ansible-collection/oneview-ansible-collection:$PYTHONPATH" >> $GITHUB_ENV
 
       - name: Generating coverage report
-        run: pytest --cov-report xml --cov=plugins/modules tests/unit/
+        run: |
+          cd ansible_collections/hpe/oneview
+          pytest --cov-report xml --cov=plugins/modules tests/unit/
 
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4.3.0
