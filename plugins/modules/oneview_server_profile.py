@@ -337,6 +337,8 @@ class ServerProfileModule(OneViewModule):
         elif self.data.get('serverProfileTemplateUri'):
             self.server_template = self.server_profile_templates.get_by_uri(self.data['serverProfileTemplateUri'])
 
+        current_data = getattr(self.current_resource, 'data', {}) or {}
+
         if not self.current_resource:
             self.current_resource = self.__create_profile()
             changed = True
@@ -355,25 +357,26 @@ class ServerProfileModule(OneViewModule):
                     self.data['serverHardwareUri'] = None
 
             # Auto assigns a Server Hardware to Server Profile if auto_assign_server_hardware is True and no SH uris/enclosure uri and bay exist
-            if not self.current_resource.data.get('serverHardwareUri') and not self.data.get('serverHardwareUri') and self.auto_assign_server_hardware \
-                and not self.current_resource.data.get('enclosureUri') and not self.current_resource.data.get('enclosureBay') \
+            if not current_data.get('serverHardwareUri') and not self.data.get('serverHardwareUri') and self.auto_assign_server_hardware \
+                and not current_data.get('enclosureUri') and not current_data.get('enclosureBay') \
                     and not self.data.get('enclosureUri') and not self.data.get('enclosureBay'):
                 self.data['serverHardwareUri'] = self._auto_assign_server_profile()
 
-            merged_data = ServerProfileMerger().merge_data(self.current_resource.data, self.data)
+            merged_data = ServerProfileMerger().merge_data(current_data, self.data)
 
             # removed the below fields as part of idempotency checks
             updated_data = deepcopy(merged_data)
             updated_data.pop('initialScopeUris', None)
 
-            if not compare(self.current_resource.data, updated_data):
+            if not compare(current_data, updated_data):
                 self.__update_server_profile(merged_data)
                 changed = True
                 msg = self.MSG_UPDATED
             else:
                 msg = self.MSG_ALREADY_PRESENT
 
-        return created, changed, msg, self.current_resource.data
+        returned_profile_data = getattr(self.current_resource, 'data', {}) or current_data
+        return created, changed, msg, returned_profile_data
 
     def __update_server_profile(self, profile_with_updates):
         self.module.log(msg="Updating Server Profile")
@@ -435,9 +438,19 @@ class ServerProfileModule(OneViewModule):
                     # This waiting time was chosen empirically and it could differ according to the hardware.
                     time.sleep(10)
                 else:
-                    raise task_error
+                    self.module.fail_json(msg=f"HPEOneViewTaskError during server profile creation: {task_error.msg}", error_code=task_error.error_code)
 
-        raise OneViewModuleException(self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
+            except Exception as unexpected_error:
+                self.module.fail_json(
+                    msg=str(unexpected_error),
+                    exception=unexpected_error
+                )
+                return
+
+        self.module.fail_json(
+            msg=self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE,
+            exception=None
+        )
 
     def __build_new_profile_data(self, server_hardware_uri):
         server_profile_data = deepcopy(self.data)
@@ -610,19 +623,24 @@ class ServerProfileModule(OneViewModule):
     def __gather_facts(self):
 
         server_hardware = None
-        if self.current_resource.data.get('serverHardwareUri'):
+        current_data = getattr(self.current_resource, 'data', {}) or {}
+
+        if current_data.get('serverHardwareUri'):
             server_hardware_by_uri = self.server_hardware.get_by_uri(
-                self.current_resource.data['serverHardwareUri'])
+                current_data.get('serverHardwareUri'))
             if server_hardware_by_uri:
                 server_hardware = server_hardware_by_uri.data
 
         compliance_preview = None
-        if self.current_resource.data.get('serverProfileTemplateUri'):
-            compliance_preview = self.current_resource.get_compliance_preview()
+        if current_data.get('serverProfileTemplateUri'):
+            try:
+                compliance_preview = self.current_resource.get_compliance_preview()
+            except Exception:
+                compliance_preview = None
 
         facts = {
-            'serial_number': self.current_resource.data.get('serialNumber'),
-            'server_profile': self.current_resource.data,
+            'serial_number': current_data.get('serialNumber'),
+            'server_profile': current_data,
             'server_hardware': server_hardware,
             'compliance_preview': compliance_preview,
             'created': False
