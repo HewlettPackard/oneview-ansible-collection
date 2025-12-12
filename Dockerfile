@@ -1,37 +1,62 @@
 FROM python:3.9-slim-bullseye
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
-WORKDIR /root
-
+# ----------------------------------------------------
+# System dependencies + pip deps required by Ansible and sdkAutomator
+# ----------------------------------------------------
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-    apt-get install --no-install-recommends -y vim curl && \
-    pip install --no-cache-dir ansible hpeOneView hpICsp && \
+    apt-get install --no-install-recommends -y \
+        vim curl git && \
+    pip install --no-cache-dir \
+        ansible \
+        hpeOneView \
+        hpICsp \
+        gitpython \
+        requests \
+        pyvmomi \
+        docker \
+        beautifulsoup4 \
+        jmespath && \
     apt-get autoremove -y && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
 
-# Adding hosts
-RUN mkdir -p /etc/ansible
-RUN echo "[localhost]" >> /etc/ansible/hosts
-RUN echo "localhost ansible_python_interpreter=python3 ansible_connection=local" >> /etc/ansible/hosts
+# ----------------------------------------------------
+# Configure Ansible localhost
+# ----------------------------------------------------
+RUN mkdir -p /etc/ansible && \
+    echo "[localhost]" >> /etc/ansible/hosts && \
+    echo "localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3" >> /etc/ansible/hosts
 
-# Copy repo
-ADD . oneview-ansible-collection/
+# ----------------------------------------------------
+# Copy the entire repo into container
+# ----------------------------------------------------
+WORKDIR /root
+ADD . /root/oneview-ansible-collection/
+
 WORKDIR /root/oneview-ansible-collection
 
-# 🔥 IMPORTANT: Install all required python modules for sdkAutomator
-RUN pip install --no-cache-dir -r requirements.txt
+# ----------------------------------------------------
+# Install requirements.txt for sdkAutomator
+# ----------------------------------------------------
+RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
 
-# Build and install collection
-RUN ansible-galaxy collection build --force .
-RUN ansible-galaxy collection install *.tar.gz
+# ----------------------------------------------------
+# Build & Install Ansible Collection into the CORRECT PATH
+# ----------------------------------------------------
+RUN ansible-galaxy collection build --force . && \
+    mkdir -p /root/.ansible/collections && \
+    ansible-galaxy collection install hpe-oneview-*.tar.gz -p /root/.ansible/collections
 
+# ----------------------------------------------------
+# Switch to installed Ansible Collection directory
+# sdkAutomator will run from here
+# ----------------------------------------------------
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
-# Cleanup
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
+# ----------------------------------------------------
+# Clean final unnecessary cache
+# ----------------------------------------------------
+RUN DEBIAN_FRONTEND=noninteractive apt-get autoremove -y && apt-get clean -y && \
+    rm -rf /var/cache/apt/* /tmp/* /root/.cache
 
-# Keep container alive for sdkAutomator
-CMD ["bash"]
+CMD ["ansible-playbook", "--version"]
