@@ -1,30 +1,44 @@
 FROM python:3.9-slim-bullseye
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
+# Set working directory
 WORKDIR /root
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-    apt-get install --no-install-recommends -y vim curl && \
+# Install system packages and Python packages
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update -y && \
+    apt-get install --no-install-recommends -y vim curl git && \
     pip install --no-cache-dir ansible hpeOneView hpICsp && \
     apt-get autoremove -y && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
 
-# Adding hosts for convenience
-RUN mkdir -p /etc/ansible
-RUN echo [localhost] >> /etc/ansible/hosts
-RUN echo localhost ansible_python_interpreter=python3 ansible_connection=local >> /etc/ansible/hosts
+# Configure Ansible for localhost execution
+RUN mkdir -p /etc/ansible && \
+    echo "[localhost]" >> /etc/ansible/hosts && \
+    echo "localhost ansible_python_interpreter=python3 ansible_connection=local" >> /etc/ansible/hosts
+
+# Add the OneView Ansible Collection source code to the image
 ADD . oneview-ansible-collection/
 WORKDIR /root/oneview-ansible-collection
 
-# Building and Installing hpe.oneview collection
+# Install collection dependencies
+RUN pip3 install -r requirements.txt
+
+# Build the collection
 RUN ansible-galaxy collection build --force .
-RUN ansible-galaxy collection install *.tar.gz
+
+# Install the collection into the correct Ansible default path
+RUN mkdir -p /root/.ansible/collections && \
+    ansible-galaxy collection install hpe-oneview-*.tar.gz -p /root/.ansible/collections
+
+# Switch to the installed collection directory
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
-# Clean and remove not required packages
-RUN DEBAIN_FRONTEND=noninteractive \
+# Cleanup
+RUN DEBIAN_FRONTEND=noninteractive \
     apt-get autoremove -y && \
     apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
- 
+    rm -rf /var/cache/apt/* /tmp/* /root/.cache
+
+# Default command
 CMD ["ansible-playbook", "--version"]
