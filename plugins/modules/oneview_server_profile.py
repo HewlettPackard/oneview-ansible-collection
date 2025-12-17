@@ -438,7 +438,7 @@ class ServerProfileModule(OneViewModule):
                     # This waiting time was chosen empirically and it could differ according to the hardware.
                     time.sleep(10)
                 else:
-                    self.module.fail_json(msg=f"HPEOneViewTaskError during server profile creation: {task_error.msg}", error_code=task_error.error_code)
+                    self.module.fail_json(msg="HPEOneViewTaskError during server profile creation: {}".format(task_error.msg), error_code=task_error.error_code)
 
             except Exception as unexpected_error:
                 self.module.fail_json(
