@@ -595,6 +595,7 @@ class OneViewModule(object):
         self.state = self.module.params.get('state')
         self.data = self.module.params.get('data')
 
+        self.validate_etag_support = validate_etag_support
         self._check_hpe_oneview_sdk()
         self._create_oneview_client()
 
@@ -605,7 +606,7 @@ class OneViewModule(object):
         self.options = transform_list_to_dict(
             self.module.params.get('options'))
 
-        self.validate_etag_support = validate_etag_support
+        #self.validate_etag_support = validate_etag_support
 
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
 
@@ -924,6 +925,7 @@ class OneViewModuleBase(object):
         self.module = AnsibleModule(
             argument_spec=argument_spec, supports_check_mode=supports_check_mode)
 
+        self.validate_etag_support = validate_etag_support
         self._check_hpe_oneview_sdk()
         self._create_oneview_client()
 
@@ -937,7 +939,7 @@ class OneViewModuleBase(object):
         self.options = transform_list_to_dict(
             self.module.params.get('options'))
 
-        self.validate_etag_support = validate_etag_support
+        #self.validate_etag_support = validate_etag_support
 
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
 
