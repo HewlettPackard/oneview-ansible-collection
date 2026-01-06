@@ -80,6 +80,7 @@ try:
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
+    HPEOneViewException = Exception
 
 
 class GetSessionIDModule(OneViewModule):
