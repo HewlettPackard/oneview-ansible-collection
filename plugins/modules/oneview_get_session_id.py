@@ -75,7 +75,7 @@ import json
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
 import traceback
 try:
-    from hpeOneView.connection import connection
+    # from hpeOneView.connection import connection
     from hpeOneView.exceptions import HPEOneViewException
     HAS_HPE_ONEVIEW = True
 except ImportError:
@@ -91,15 +91,14 @@ class GetSessionIDModule(OneViewModule):
     def __init__(self):
         additional_arg_spec = dict(name=dict(required=False, type='str'))
         try:
-           super().__init__(additional_arg_spec=additional_arg_spec,
-                            validate_etag_support=True)
-           self.login_failed = False
+            super().__init__(additional_arg_spec=additional_arg_spec)
+            self.login_failed = False
         except HPEOneViewException as e:
             self.login_failed = True
             self.exp = str(e)
         except Exception as e:
-           self.login_failed = True
-           self.exp = traceback.format_exc()
+            self.login_failed = True
+            self.exp = traceback.format_exc()
 
     def execute_module(self):
 
