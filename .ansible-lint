@@ -8,17 +8,17 @@ exclude_paths:
 use_default_rules: true
 
 # This makes linter to fully ignore rules/tags listed below
-skip_list:
- - meta-no-info
- - meta-no-tags
- - empty-string-compare
- - var-spacing
- - unnamed-task
- - risky-file-permissions
- - role-name
- - var-naming
- - schema
- - name
- - ignore-errors
- - literal-compare
- - fqcn
+# skip_list:
+#  - meta-no-info
+#  - meta-no-tags
+#  - empty-string-compare
+#  - var-spacing
+#  - unnamed-task
+#  - risky-file-permissions
+#  - role-name
+#  - var-naming
+#  - schema
+#  - name
+#  - ignore-errors
+#  - literal-compare
+#  - fqcn
