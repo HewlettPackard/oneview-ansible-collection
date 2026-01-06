@@ -80,7 +80,8 @@ try:
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
-    HPEOneViewException = Exception
+    class HPEOneViewException(Exception):
+        pass
 
 
 class GetSessionIDModule(OneViewModule):
@@ -95,7 +96,7 @@ class GetSessionIDModule(OneViewModule):
            self.login_failed = False
         except HPEOneViewException as e:
             self.login_failed = True
-            self.exp = e.msg
+            self.exp = str(e)
         except Exception as e:
            self.login_failed = True
            self.exp = traceback.format_exc()
