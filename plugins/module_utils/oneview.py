@@ -608,7 +608,6 @@ class OneViewModule(object):
 
 
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
-
         merged_arg_spec = dict()
         merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
 
@@ -940,7 +939,6 @@ class OneViewModuleBase(object):
 
 
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
-
         merged_arg_spec = dict()
         merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
 
