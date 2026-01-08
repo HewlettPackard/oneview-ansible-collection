@@ -73,8 +73,9 @@ oneview_get_session_id:
 
 import json
 from ansible_collections.hpe.oneview.plugins.module_utils.oneview import OneViewModule
+import traceback
 try:
-    from hpeOneView.connection import connection
+    from hpeOneView.exceptions import HPEOneViewException
     HAS_HPE_ONEVIEW = True
 except ImportError:
     HAS_HPE_ONEVIEW = False
@@ -86,20 +87,26 @@ class GetSessionIDModule(OneViewModule):
 
     def __init__(self):
         additional_arg_spec = dict(name=dict(required=False, type='str'))
-
-        super().__init__(additional_arg_spec=additional_arg_spec,
-                         validate_etag_support=True)
+        try:
+            super().__init__(additional_arg_spec=additional_arg_spec)
+            self.login_failed = False
+        except HPEOneViewException as e:
+            self.login_failed = True
+            self.exp = str(e)
+        except Exception as e:
+            self.login_failed = True
+            self.exp = traceback.format_exc()
 
     def execute_module(self):
 
         if not HAS_HPE_ONEVIEW:
             self.module.fail_json(msg=self.HPE_ONEVIEW_SDK_REQUIRED)
         oneview_config = self.get_config()
-        if oneview_config:
-            conn = connection(oneview_config.get('ip'), oneview_config.get('api_version'),
-                              oneview_config.get('ssl_certificate', False), oneview_config.get('timeout'))
-            task, body = conn.post('/rest/login-sessions', oneview_config.get('credentials'))
-            auth = body['sessionID']
+        if self.login_failed:
+            self.module.fail_json(msg=self.MSG_NOT_CREATED)
+
+        if oneview_config and self.oneview_client.connection.get_session():
+            auth = self.oneview_client.connection.get_session_id()
             return dict(changed=True, msg=self.MSG_CREATED, ansible_facts={"session": auth})
         else:
             return dict(changed=False, msg=self.MSG_NOT_CREATED, ansible_facts=None)
