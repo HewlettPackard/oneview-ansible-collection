@@ -4,3 +4,4 @@ flake8
 mock
 pytest
 six
+hpeOneView
