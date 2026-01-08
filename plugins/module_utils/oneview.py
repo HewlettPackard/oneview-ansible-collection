@@ -606,7 +606,6 @@ class OneViewModule(object):
         self.options = transform_list_to_dict(
             self.module.params.get('options'))
 
-
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
         merged_arg_spec = dict()
         merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
@@ -936,7 +935,6 @@ class OneViewModuleBase(object):
         # Preload options as dict - used by facts
         self.options = transform_list_to_dict(
             self.module.params.get('options'))
-
 
     def _build_argument_spec(self, additional_arg_spec, validate_etag_support):
         merged_arg_spec = dict()
