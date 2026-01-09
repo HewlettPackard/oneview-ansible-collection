@@ -52,7 +52,7 @@ class TestLoginSessionModule:
     @patch.object(connection, 'post')
     def test_login_session(self, mock_post, mock_get_config, mock_from_json_file):
         self.mock_ansible_module.params = PARAMS_FOR_PRESENT
-        mock_post.return_value = None, {'sessionID': 'testauth'}
+        mock_from_json_file.return_value.connection.get_session_id.return_value = 'testauth'
 
         GetSessionIDModule().run()
 
