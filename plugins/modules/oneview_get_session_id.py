@@ -93,7 +93,7 @@ class GetSessionIDModule(OneViewModule):
 
         oneview_config = self.get_config()
         if oneview_config and self.oneview_client.connection.get_session():
-            auth=self.oneview_client.connection.get_session_id()
+            auth = self.oneview_client.connection.get_session_id()
             return dict(changed=True, msg=self.MSG_CREATED, ansible_facts={"session": auth})
         else:
             return dict(changed=False, msg=self.MSG_NOT_CREATED, ansible_facts=None)
