@@ -191,20 +191,27 @@ class ServerProfileTemplateModule(OneViewModule):
         return result
 
     def __present(self):
-        ServerProfileReplaceNamesByUris().replace(self.oneview_client, self.data)
+        try:
+            ServerProfileReplaceNamesByUris().replace(self.oneview_client, self.data)
 
-        data = self.__spt_from_sp() or self.data
+            data = self.__spt_from_sp() or self.data
 
-        if not self.current_resource:
-            changed, msg, resource = self.__create(data)
-        else:
-            changed, msg, resource = self.__update(data)
+            if not self.current_resource:
+                changed, msg, resource = self.__create(data)
+            else:
+                changed, msg, resource = self.__update(data)
 
-        return dict(
-            changed=changed,
-            msg=msg,
-            ansible_facts=dict(server_profile_template=resource)
-        )
+            return dict(
+                changed=changed,
+                msg=msg,
+                ansible_facts=dict(server_profile_template=resource)
+            )
+
+        except Exception as e:
+            if not self.module.params.get("sessionID"):
+                self.oneview_client.connection.logout()
+
+            raise
 
     def __spt_from_sp(self):
         if self.data.get('serverProfileName'):

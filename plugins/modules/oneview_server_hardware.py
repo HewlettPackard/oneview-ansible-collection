@@ -399,7 +399,14 @@ class ServerHardwareModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-            self.current_resource = self.resource_client.add(self.data)
+            try:
+                self.current_resource = self.resource_client.add(self.data)
+            except Exception as e:
+                if not self.module.params.get("sessionID"):
+                    self.oneview_client.connection.logout()
+
+                self.module.fail_json(msg="Failed to add server hardware", error=str(e), data=self.data)
+
             result = dict(
                 changed=True,
                 msg=self.MSG_ADDED,
