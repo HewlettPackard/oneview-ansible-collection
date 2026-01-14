@@ -244,9 +244,12 @@ class ServerHardwareFactsModule(OneViewModule):
         try:
             super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
             self.set_resource_object(self.oneview_client.server_hardware)
-        except Exception as e:
-            if not self.module.params.get("sessionID"):
-              self.oneview_client.connection.logout()
+        except Exception:
+            try:
+                if not self.module.params.get("sessionID"):
+                    self.oneview_client.connection.logout()
+            except Exception:
+                pass
 
             raise
 
