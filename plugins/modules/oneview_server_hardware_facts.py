@@ -245,13 +245,10 @@ class ServerHardwareFactsModule(OneViewModule):
             super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
             self.set_resource_object(self.oneview_client.server_hardware)
         except Exception as e:
-            try:
-                if not self.module.params.get("sessionID"):
-                    self.oneview_client.connection.logout()
-            except Exception:
-                pass
-            
-            self.module.fail_json(msg=str(e),uri=argument_spec.get('uri'))
+            if not self.module.params.get("sessionID"):
+              self.oneview_client.connection.logout()
+
+            raise
 
     def execute_module(self):
         ansible_facts = {}
