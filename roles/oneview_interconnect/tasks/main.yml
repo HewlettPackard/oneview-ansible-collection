@@ -74,7 +74,8 @@
       }
     ]
   delegate_to: localhost
-  ignore_errors: true
+  register: update_ports_result
+  failed_when: false
 
 - name: Triggers a reset of port protection
   oneview_interconnect:
