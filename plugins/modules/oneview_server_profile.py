@@ -438,6 +438,8 @@ class ServerProfileModule(OneViewModule):
                 return self.resource_client.create(server_profile, **self.params)
 
             except HPEOneViewTaskError as task_error:
+                if not self.module.params.get("sessionID"):
+                    self.oneview_client.connection.logout()
                 self.module.log("Error code: {0} Message: {1}".format(str(task_error.error_code), str(task_error.msg)))
                 if task_error.error_code in self.ASSIGN_HARDWARE_ERROR_CODES:
                     # if this is because the server is already assigned, someone grabbed it before we assigned,
