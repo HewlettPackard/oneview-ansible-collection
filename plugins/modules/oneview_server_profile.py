@@ -314,7 +314,7 @@ class ServerProfileModule(OneViewModule):
         except Exception as e:
             if not self.module.params.get("sessionID"):
                 self.oneview_client.connection.logout()
-            
+
             raise
 
     def __present(self):
