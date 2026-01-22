@@ -1,7 +1,6 @@
 ---
-- hosts: all
-  collections:
-    - hpe.oneview
+- name: HPE OneView Ansible Collection Automation
+  hosts: all
   tasks:
     - block:
         - name: (id_pools_ipv4_range)

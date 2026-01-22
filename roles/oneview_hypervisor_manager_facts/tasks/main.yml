@@ -34,7 +34,7 @@
   oneview_hypervisor_manager_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ name }}"
+    name: "{{ hypervisor_manager_name }}"
   delegate_to: localhost
 
 - ansible.builtin.debug:
