@@ -19,6 +19,4 @@ skip_list:
  - var-naming
  - schema
  - name
- - ignore-errors
  - literal-compare
- - fqcn
