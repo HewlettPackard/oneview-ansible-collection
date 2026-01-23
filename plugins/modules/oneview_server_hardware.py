@@ -351,41 +351,44 @@ class ServerHardwareModule(OneViewModule):
         self.set_resource_object(self.oneview_client.server_hardware)
 
     def execute_module(self):
-
-        result = {}
-        if self.state == 'present':
-            result = self.__present()
-        elif self.state == 'multiple_servers_added':
-            changed, msg, ansible_facts = self.__add_multiple_rack_mount_servers()
-        elif self.state == 'check_firmware_compliance':
-            changed, msg, ansible_facts = self.__check_firmware_compliance()
-        else:
-            if not self.data.get('name'):
-                raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
-
-            if self.state == 'absent':
-                result = self.resource_absent(method='remove')
+        try:
+            result = {}
+            if self.state == 'present':
+                result = self.__present()
+            elif self.state == 'multiple_servers_added':
+                changed, msg, ansible_facts = self.__add_multiple_rack_mount_servers()
+            elif self.state == 'check_firmware_compliance':
+                changed, msg, ansible_facts = self.__check_firmware_compliance()
             else:
-                if not self.current_resource:
-                    raise OneViewModuleResourceNotFound(self.MSG_SERVER_HARDWARE_NOT_FOUND)
+                if not self.data.get('name'):
+                    raise OneViewModuleValueError(self.MSG_MANDATORY_FIELD_MISSING.format("data.name"))
 
-                if self.state == 'power_state_set':
-                    changed, msg, ansible_facts = self.__set_power_state()
-                elif self.state == 'refresh_state_set':
-                    changed, msg, ansible_facts = self.__set_refresh_state()
-                elif self.state == 'ilo_firmware_version_updated':
-                    changed, msg, ansible_facts = self.__update_mp_firmware_version()
-                elif self.state == 'environmental_configuration_set':
-                    changed, msg, ansible_facts = self.__set_environmental_configuration()
-                elif self.state == 'firmware_update':
-                    changed, msg, ansible_facts = self.__update_firmware()
+                if self.state == 'absent':
+                    result = self.resource_absent(method='remove')
                 else:
-                    changed, msg, ansible_facts = self.__patch()
-        if result:
-            return result
-        return dict(changed=changed,
-                    msg=msg,
-                    ansible_facts=ansible_facts)
+                    if not self.current_resource:
+                        raise OneViewModuleResourceNotFound(self.MSG_SERVER_HARDWARE_NOT_FOUND)
+
+                    if self.state == 'power_state_set':
+                        changed, msg, ansible_facts = self.__set_power_state()
+                    elif self.state == 'refresh_state_set':
+                        changed, msg, ansible_facts = self.__set_refresh_state()
+                    elif self.state == 'ilo_firmware_version_updated':
+                        changed, msg, ansible_facts = self.__update_mp_firmware_version()
+                    elif self.state == 'environmental_configuration_set':
+                        changed, msg, ansible_facts = self.__set_environmental_configuration()
+                    elif self.state == 'firmware_update':
+                        changed, msg, ansible_facts = self.__update_firmware()
+                    else:
+                        changed, msg, ansible_facts = self.__patch()
+            if result:
+                return result
+            return dict(changed=changed,
+                        msg=msg,
+                        ansible_facts=ansible_facts)
+        finally:
+            if not self.module.params.get("sessionID"):
+                self.oneview_client.connection.logout()
 
     def __present(self):
 
@@ -399,7 +402,14 @@ class ServerHardwareModule(OneViewModule):
         result = dict()
 
         if not self.current_resource:
-            self.current_resource = self.resource_client.add(self.data)
+            try:
+                self.current_resource = self.resource_client.add(self.data)
+            except Exception as e:
+                if not self.module.params.get("sessionID"):
+                    self.oneview_client.connection.logout()
+
+                self.module.fail_json(msg="Failed to add server hardware", error=str(e), data=self.data)
+
             result = dict(
                 changed=True,
                 msg=self.MSG_ADDED,

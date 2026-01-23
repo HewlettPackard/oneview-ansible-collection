@@ -241,8 +241,17 @@ class ServerHardwareFactsModule(OneViewModule):
             params=dict(required=False, type='dict'),
             sessionID=dict(required=False, type='str'),
         )
-        super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
-        self.set_resource_object(self.oneview_client.server_hardware)
+        try:
+            super().__init__(additional_arg_spec=argument_spec, supports_check_mode=True)
+            self.set_resource_object(self.oneview_client.server_hardware)
+        except Exception:
+            try:
+                if not self.module.params.get("sessionID"):
+                    self.oneview_client.connection.logout()
+            except Exception:
+                pass
+
+            raise
 
     def execute_module(self):
         ansible_facts = {}
