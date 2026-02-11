@@ -17,6 +17,5 @@ skip_list:
  - risky-file-permissions
  - role-name
  - var-naming
- - schema
  - name
  - literal-compare
