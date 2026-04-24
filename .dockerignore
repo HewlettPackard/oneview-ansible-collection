@@ -1,26 +1,29 @@
-# Ignore everything by default
+# Ignore EVERYTHING first
 **
 
-# Allow only required files
+# Allow only what Docker actually needs
+!Dockerfile
+!.dockerignore
+!requirements.txt
 !ansible.cfg
 !galaxy.yml
+
 !roles/**
 !playbooks/**
 !plugins/**
 !sdkAutomator/**
 !auto_config.json
-!requirements.txt
 
-# Ignore junk
-.git
-.gitignore
-node_modules
-__pycache__
-*.pyc
-*.log
-*.tar.gz
-*.zip
-*.md
+# Explicit junk exclusions (inside allowed dirs)
+**/__pycache__/
+**/*.pyc
+**/*.log
+**/*.tmp
+**/.git
+**/.gitignore
 tests/
 docs/
 firmware/
+*.tar.gz
+*.zip
+*.md
