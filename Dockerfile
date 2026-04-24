@@ -12,23 +12,22 @@ RUN apt-get update -y && \
     && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Install ansible explicitly (critical)
+# Install ansible explicitly
 RUN pip install --no-cache-dir ansible
 
 # Install project dependencies
 COPY requirements.txt /root/requirements.txt
 RUN pip install --no-cache-dir -r /root/requirements.txt
 
-# Verify ansible installation (fail fast if broken)
+# Sanity check (fail fast)
 RUN ansible --version && ansible-galaxy --version
 
-# Setup ansible localhost inventory
+# Setup localhost inventory
 RUN mkdir -p /etc/ansible && \
     echo "[localhost]" > /etc/ansible/hosts && \
     echo "localhost ansible_connection=local ansible_python_interpreter=python3" >> /etc/ansible/hosts
 
-# Copy only required repo files
-COPY ansible.cfg ./oneview-ansible-collection/
+# Copy repo content (no ansible.cfg anymore)
 COPY galaxy.yml ./oneview-ansible-collection/
 COPY roles ./oneview-ansible-collection/roles
 COPY playbooks ./oneview-ansible-collection/playbooks
@@ -38,9 +37,8 @@ COPY auto_config.json ./oneview-ansible-collection/
 
 WORKDIR /root/oneview-ansible-collection
 
-# Build and install collection in default ansible path (IMPORTANT FIX)
+# Build + install collection into default ansible path
 RUN ansible-galaxy collection build --force . && \
     ansible-galaxy collection install *.tar.gz
 
-# Keep container ready for execution
 CMD ["bash"]
