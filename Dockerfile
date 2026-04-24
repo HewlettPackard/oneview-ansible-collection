@@ -1,30 +1,40 @@
 FROM python:3.9-slim-bullseye
+
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
 WORKDIR /root
 
+# Install system dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
     apt-get install --no-install-recommends -y vim curl && \
-    pip install --no-cache-dir ansible hpeOneView hpICsp && \
-    apt-get autoremove -y && apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
-# Adding hosts for convenience
-RUN mkdir -p /etc/ansible
-RUN echo [localhost] >> /etc/ansible/hosts
-RUN echo localhost ansible_python_interpreter=python3 ansible_connection=local >> /etc/ansible/hosts
-ADD . oneview-ansible-collection/
+# Copy requirements first (for better caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Setup Ansible hosts
+RUN mkdir -p /etc/ansible && \
+    echo "[localhost]" >> /etc/ansible/hosts && \
+    echo "localhost ansible_python_interpreter=python3 ansible_connection=local" >> /etc/ansible/hosts
+
+# Copy project
+COPY . oneview-ansible-collection/
+
 WORKDIR /root/oneview-ansible-collection
 
-# Building and Installing hpe.oneview collection
-RUN ansible-galaxy collection build --force .
-RUN ansible-galaxy collection install *.tar.gz
+# Build and install Ansible collection
+RUN ansible-galaxy collection build --force . && \
+    ansible-galaxy collection install *.tar.gz
+
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
-# Clean and remove not required packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get autoremove -y && \
+# Final cleanup
+RUN apt-get autoremove -y && \
     apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
- 
+    rm -rf /var/cache/apt/archives/* /tmp/* /root/.cache
+
 CMD ["ansible-playbook", "--version"]
