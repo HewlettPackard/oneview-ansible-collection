@@ -1,2 +1,8 @@
-hpICsp
+ansible
 hpeOneView
+hpICsp
+requests
+beautifulsoup4
+jmespath
+gitpython
+docker
