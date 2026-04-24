@@ -1,0 +1,26 @@
+# Ignore everything by default
+**
+
+# Allow only required files
+!ansible.cfg
+!galaxy.yml
+!roles/**
+!playbooks/**
+!plugins/**
+!sdkAutomator/**
+!auto_config.json
+!requirements.txt
+
+# Ignore junk
+.git
+.gitignore
+node_modules
+__pycache__
+*.pyc
+*.log
+*.tar.gz
+*.zip
+*.md
+tests/
+docs/
+firmware/
