@@ -1,30 +1,46 @@
 FROM python:3.9-slim-bullseye
-LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
+LABEL maintainer="HPE SDK Automation"
+
+# Avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set working directory
 WORKDIR /root
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-    apt-get install --no-install-recommends -y vim curl && \
-    pip install --no-cache-dir ansible hpeOneView hpICsp && \
-    apt-get autoremove -y && apt-get clean -y && \
+# Install minimal dependencies
+RUN apt-get update -y && \
+    apt-get install --no-install-recommends -y \
+        curl \
+        git \
+    && pip install --no-cache-dir \
+        ansible \
+        hpeOneView \
+        hpICsp \
+    && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
 
-# Adding hosts for convenience
-RUN mkdir -p /etc/ansible
-RUN echo [localhost] >> /etc/ansible/hosts
-RUN echo localhost ansible_python_interpreter=python3 ansible_connection=local >> /etc/ansible/hosts
-ADD . oneview-ansible-collection/
+# Setup ansible localhost
+RUN mkdir -p /etc/ansible && \
+    echo "[localhost]" > /etc/ansible/hosts && \
+    echo "localhost ansible_connection=local ansible_python_interpreter=python3" >> /etc/ansible/hosts
+
+# Copy ONLY required files (critical for speed)
+COPY ansible.cfg ./oneview-ansible-collection/
+COPY galaxy.yml ./oneview-ansible-collection/
+COPY roles ./oneview-ansible-collection/roles
+COPY playbooks ./oneview-ansible-collection/playbooks
+COPY plugins ./oneview-ansible-collection/plugins
+COPY sdkAutomator ./oneview-ansible-collection/sdkAutomator
+COPY auto_config.json ./oneview-ansible-collection/
+
 WORKDIR /root/oneview-ansible-collection
 
-# Building and Installing hpe.oneview collection
-RUN ansible-galaxy collection build --force .
-RUN ansible-galaxy collection install *.tar.gz
-WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
+# Build and install collection locally
+RUN ansible-galaxy collection build --force . && \
+    ansible-galaxy collection install *.tar.gz -p ./ansible_collections
 
-# Clean and remove not required packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
- 
-CMD ["ansible-playbook", "--version"]
+# Final working directory (important fix)
+WORKDIR /root/oneview-ansible-collection
+
+CMD ["bash"]
