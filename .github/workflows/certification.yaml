@@ -47,3 +47,4 @@ jobs:
     # This requires setting a repository secret called 'AH_TOKEN' which value contains a Red Hat Ansible Automation Hub token.
     # secrets:
     #   AH_TOKEN: ${{ secrets.AH_TOKEN }}
+    
