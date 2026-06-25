@@ -12,7 +12,7 @@ Build Status |[![Build status](https://github.com/HewlettPackard/oneview-ansible
 
 ## Requirements
 
- - Ansible >= 2.15
+ - Ansible >= 2.16
  - python >= 3.8
  - [HPE OneView Python SDK](https://pypi.org/project/hpeOneView/)
 
