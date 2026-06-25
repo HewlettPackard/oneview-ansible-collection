@@ -303,13 +303,17 @@ Run the above created playbooks as shown below.
 ansible-playbook example_collection.yml
 ```
 
+## Release Notes
+
+See the [CHANGELOG](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/CHANGELOG.md) for details on each release.
+
 ## License
 
-This project is licensed under the Apache 2.0 license. Please see the [LICENSE](LICENSE) for more information.
+This project is licensed under the Apache 2.0 license. Please see the [LICENSE](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/LICENSE) for more information.
 
 ## Contributing and feature requests
 
-**Contributing:** We welcome your contributions to the Ansible Modules for HPE OneView. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+**Contributing:** We welcome your contributions to the Ansible Modules for HPE OneView. See [CONTRIBUTING.md](https://github.com/HewlettPackard/oneview-ansible-collection/blob/master/CONTRIBUTING.md) for more details.
 
 **Feature Requests:** If you have a need that is not met by the current implementation, please let us know (via a new issue).
 This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
@@ -324,15 +328,13 @@ The HPE.Oneview collection includes
 
 ## Support
 
-This collection is actively maintained and supports the following versions:
+This collection is actively maintained and supports the latest stable release.
 
-Latest stable release: 11.20
+As Red Hat Ansible Certified Content, this collection is entitled to support through the Ansible Automation Platform (AAP) using the **Create issue** button on the top right corner in Automation Hub.
 
-For support requests or additional assistance, you can:
+If a support case cannot be opened with Red Hat and the collection has been obtained either from Galaxy or GitHub, there may be community help available on the [Ansible Forum](https://forum.ansible.com/).
 
-**Submit an Issue**
-Report bugs, feature requests, or questions through the [issues_page](https://github.com/HewlettPackard/oneview-ansible-collection/issues).
-Documentation: Refer to the [HPE_OneView](https://www.hpe.com/psnow/product-documentation?oid=5410258&cc=ae&lc=en) for detailed usage instructions and troubleshooting tips.
+Documentation: Refer to the [HPE OneView documentation](https://www.hpe.com/psnow/product-documentation?oid=5410258&cc=ae&lc=en) for detailed usage instructions and troubleshooting tips.
 
 
 ## Copyright
