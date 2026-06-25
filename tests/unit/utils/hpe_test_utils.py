@@ -25,7 +25,7 @@ import re
 import yaml
 
 from mock import mock
-from distutils.version import StrictVersion
+from packaging.version import parse as parse_version
 
 
 class OneViewBaseTest(object):
@@ -34,7 +34,7 @@ class OneViewBaseTest(object):
     @pytest.fixture(autouse=True)
     def setUp(self, mock_ansible_module, mock_ov_client, request, testing_module):
         class_name = type(self).__name__
-        if StrictVersion(pytest.__version__) < StrictVersion("3.6"):
+        if parse_version(pytest.__version__) < parse_version("3.6"):
             marker = request.node.get_marker('resource')
         else:
             marker = request.node.get_closest_marker('resource')
