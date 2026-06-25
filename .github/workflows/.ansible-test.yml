@@ -30,7 +30,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Install ansible ${{ matrix.ansible_version }}
-        run: pip install ansible~=8.5.0
+        run: pip install ansible~=9.0.0
 
       - name: Run sanity tests
         run: |
@@ -86,7 +86,7 @@ jobs:
           if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
 
       - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install ansible~=8.5.0 --disable-pip-version-check
+        run: pip install ansible~=9.0.0 --disable-pip-version-check
 
       - name: Setting Python env path
         run: |
