@@ -48,10 +48,10 @@ dependencies: {}
 repository: https://github.com/HewlettPackard/oneview-ansible-collection
 
 # The URL to any online docs
-documentation: http://docs.example.com
+documentation: https://www.hpe.com/psnow/product-documentation?oid=5410258&cc=ae&lc=en
 
 # The URL to the homepage of the collection/project
-homepage: http://example.com
+homepage: https://console.redhat.com/ansible/automation-hub/collections/published/hpe/oneview/details
 
 # The URL to the collection issue tracker
 issues: https://github.com/HewlettPackard/oneview-ansible-collection/issues

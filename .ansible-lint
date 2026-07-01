@@ -13,8 +13,6 @@ skip_list:
  - meta-no-tags
  - empty-string-compare
  - var-spacing
- - unnamed-task
- - risky-file-permissions
  - role-name
  - var-naming
  - name
