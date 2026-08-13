@@ -13,3 +13,6 @@ galaxy_info:
     - ansible-modules
     - sdk
 dependencies: []
+
+collections:
+  - hpe.oneview
