@@ -1,17 +1,13 @@
-FROM ubuntu:24.04
+FROM rockylinux:9
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
 WORKDIR /root
 
-# Ubuntu 24.04 ships OpenSSL 3.5, which natively supports PQC hybrid key
-# exchange (ML-KEM) without requiring the OQS provider (PQC checklist Section 1.1).
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-    apt-get install --no-install-recommends -y vim curl python3 python3-pip python3-venv && \
-    # pip install --no-cache-dir ansible hpeOneView hpICsp && \
-    # pip install --no-cache-dir --break-system-packages ansible "hpeOneView>=12.0.0" && \
-    pip install --no-cache-dir --break-system-packages ansible hpeOneView hpICsp && \
-    apt-get autoremove -y && apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
+# RockyLinux 9.4+ ships OpenSSL 3.2.2, which supports PQC hybrid key exchange
+# once the OQS provider is installed and active (PQC checklist Section 1.1).
+RUN dnf install -y vim curl python3 python3-pip oqsprovider && \
+    pip3 install --no-cache-dir ansible hpeOneView hpICsp && \
+    dnf clean all && rm -rf /var/cache/dnf
 
 # Adding hosts for convenience
 RUN mkdir -p /etc/ansible
@@ -26,9 +22,6 @@ RUN ansible-galaxy collection install *.tar.gz
 WORKDIR /root/.ansible/collections/ansible_collections/hpe/oneview
 
 # Clean and remove not required packages
-RUN DEBAIN_FRONTEND=noninteractive \
-    apt-get autoremove -y && \
-    apt-get clean -y && \
-    rm -rf /var/cache/apt/archives/* /var/cache/apt/lists* /tmp/* /root/cache/.
+RUN dnf clean all && rm -rf /var/cache/dnf /tmp/* /root/cache/.
  
 CMD ["ansible-playbook", "--version"]
