@@ -5,7 +5,9 @@ WORKDIR /root
 
 # RockyLinux 9.4+ ships OpenSSL 3.2.2, which supports PQC hybrid key exchange
 # once the OQS provider is installed and active (PQC checklist Section 1.1).
-RUN dnf install -y vim curl python3 python3-pip oqsprovider && \
+# oqsprovider is distributed via EPEL, not the default BaseOS/AppStream repos.
+RUN dnf install -y epel-release && \
+    dnf install -y vim curl python3 python3-pip oqsprovider && \
     pip3 install --no-cache-dir ansible hpeOneView hpICsp && \
     dnf clean all && rm -rf /var/cache/dnf
 
