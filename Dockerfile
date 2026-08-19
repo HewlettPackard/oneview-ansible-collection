@@ -1,14 +1,15 @@
-FROM python:3.12-slim-bookworm
+FROM ubuntu:24.04
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
 WORKDIR /root
 
-# Install OQS provider for OpenSSL 3.0 (Bookworm) to enable PQC hybrid key exchange.
-# For full native PQC without an extra provider, switch to an Ubuntu 24.04-based image
-# that ships OpenSSL 3.5+.
+# Ubuntu 24.04 ships OpenSSL 3.5, which natively supports PQC hybrid key
+# exchange (ML-KEM) without requiring the OQS provider (PQC checklist Section 1.1).
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-    apt-get install --no-install-recommends -y vim curl liboqs-dev && \
-    pip install --no-cache-dir ansible "hpeOneView>=12.0.0" && \
+    apt-get install --no-install-recommends -y vim curl python3 python3-pip python3-venv && \
+    # pip install --no-cache-dir ansible hpeOneView hpICsp && \
+    # pip install --no-cache-dir --break-system-packages ansible "hpeOneView>=12.0.0" && \
+    pip install --no-cache-dir --break-system-packages ansible hpeOneView hpICsp && \
     apt-get autoremove -y && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
 
