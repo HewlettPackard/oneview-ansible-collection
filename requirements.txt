@@ -1,2 +1,2 @@
-hpICsp
-hpeOneView
+# hpeOneView>=12.0.0 is the first PQC-capable release (TLS 1.3, OpenSSL 3.2+)
+hpeOneView>=12.0.0
