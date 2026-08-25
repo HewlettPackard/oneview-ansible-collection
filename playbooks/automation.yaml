@@ -10,7 +10,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (id_pools_ipv4_range_facts)
           ansible.builtin.include_role:
@@ -19,7 +19,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (id_pools_ipv4_subnet)
           ansible.builtin.include_role:
@@ -28,7 +28,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (id_pools_ipv4_subnet_facts)
           ansible.builtin.include_role:
@@ -37,7 +37,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (ethernet_network)
           ansible.builtin.include_role:
@@ -46,7 +46,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (ethernet_network_facts)
           ansible.builtin.include_role:
@@ -55,7 +55,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (scope)
           ansible.builtin.include_role:
@@ -64,7 +64,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (scope_facts)
           ansible.builtin.include_role:
@@ -73,7 +73,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (fc_network)
           ansible.builtin.include_role:
@@ -82,7 +82,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (fc_network_facts)
           ansible.builtin.include_role:
@@ -91,7 +91,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (fcoe_network)
           ansible.builtin.include_role:
@@ -100,7 +100,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (fcoe_network_facts)
           ansible.builtin.include_role:
@@ -109,7 +109,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (connection_template)
           ansible.builtin.include_role:
@@ -118,7 +118,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (connection_template_facts)
           ansible.builtin.include_role:
@@ -127,7 +127,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (network_set)
           ansible.builtin.include_role:
@@ -136,7 +136,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (network_set_facts)
           ansible.builtin.include_role:
@@ -145,7 +145,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (hypervisor_manager)
           ansible.builtin.include_role:
@@ -154,7 +154,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (hypervisor_manager_facts)
           ansible.builtin.include_role:
@@ -163,7 +163,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (task)
           ansible.builtin.include_role:
@@ -172,7 +172,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (task_facts)
           ansible.builtin.include_role:
@@ -181,7 +181,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_interconnect_group)
           ansible.builtin.include_role:
@@ -190,7 +190,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_interconnect_group_facts)
           ansible.builtin.include_role:
@@ -199,7 +199,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (enclosure_group)
           ansible.builtin.include_role:
@@ -208,7 +208,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (enclosure_group_facts)
           ansible.builtin.include_role:
@@ -217,7 +217,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (enclosure)
           ansible.builtin.include_role:
@@ -226,7 +226,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (enclosure_facts)
           ansible.builtin.include_role:
@@ -235,7 +235,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (interconnect_type_facts)
           ansible.builtin.include_role:
@@ -244,7 +244,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (interconnect)
           ansible.builtin.include_role:
@@ -253,7 +253,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (interconnect_facts)
           ansible.builtin.include_role:
@@ -262,7 +262,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_enclosure)
           ansible.builtin.include_role:
@@ -271,7 +271,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_enclosure_facts)
           ansible.builtin.include_role:
@@ -280,7 +280,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_interconnect)
           ansible.builtin.include_role:
@@ -289,7 +289,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (logical_interconnect_facts)
           ansible.builtin.include_role:
@@ -298,7 +298,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (drive_enclosure)
           ansible.builtin.include_role:
@@ -307,7 +307,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (drive_enclosure_facts)
           ansible.builtin.include_role:
@@ -316,7 +316,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (sas_logical_jbod)
           ansible.builtin.include_role:
@@ -325,7 +325,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (sas_logical_jbod_facts)
           ansible.builtin.include_role:
@@ -334,7 +334,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (sas_logical_jbod_attachment_facts)
           ansible.builtin.include_role:
@@ -343,7 +343,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (uplink_set)
           ansible.builtin.include_role:
@@ -352,7 +352,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (uplink_set_facts)
           ansible.builtin.include_role:
@@ -361,7 +361,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_hardware_type)
           ansible.builtin.include_role:
@@ -370,7 +370,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_hardware_type_facts)
           ansible.builtin.include_role:
@@ -379,7 +379,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_hardware)
           ansible.builtin.include_role:
@@ -388,7 +388,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_hardware_facts)
           ansible.builtin.include_role:
@@ -397,7 +397,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_system)
           ansible.builtin.include_role:
@@ -406,7 +406,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_system_facts)
           ansible.builtin.include_role:
@@ -415,7 +415,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_pool)
           ansible.builtin.include_role:
@@ -424,7 +424,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_pool_facts)
           ansible.builtin.include_role:
@@ -433,7 +433,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_volume_template)
           ansible.builtin.include_role:
@@ -442,7 +442,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_volume_template_facts)
           ansible.builtin.include_role:
@@ -451,7 +451,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (volume)
           ansible.builtin.include_role:
@@ -460,7 +460,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (volume_facts)
           ansible.builtin.include_role:
@@ -469,7 +469,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_profile_template)
           ansible.builtin.include_role:
@@ -478,7 +478,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_profile_template_facts)
           ansible.builtin.include_role:
@@ -487,7 +487,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_profile)
           ansible.builtin.include_role:
@@ -496,7 +496,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (server_profile_facts)
           ansible.builtin.include_role:
@@ -505,7 +505,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     # - block:
     #     - name: (storage_volume_attachment)
     #       include_role:
@@ -514,7 +514,7 @@
     #   rescue:
     #     - name: (Display)
     #       debug:
-    #         msg: "{{ msg.include_args.name }}"
+    #         msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (storage_volume_attachment_facts)
           ansible.builtin.include_role:
@@ -523,7 +523,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_configuration_timeconfig_facts)
           ansible.builtin.include_role:
@@ -532,7 +532,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_proxy_configuration)
           ansible.builtin.include_role:
@@ -541,7 +541,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_proxy_configuration_facts)
           ansible.builtin.include_role:
@@ -550,7 +550,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_network_interface_facts)
           ansible.builtin.include_role:
@@ -559,7 +559,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     # - block:
     #     - name: (appliance_network_interfaces)
     #       include_role:
@@ -568,7 +568,7 @@
     #   rescue:
     #     - name: (Display)
     #       debug:
-    #         msg: "{{ msg.include_args.name }}"
+    #         msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v1_trap_destination)
           ansible.builtin.include_role:
@@ -577,7 +577,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v1_trap_destination_facts)
           ansible.builtin.include_role:
@@ -586,7 +586,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v3_users)
           ansible.builtin.include_role:
@@ -595,7 +595,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v3_users_facts)
           ansible.builtin.include_role:
@@ -604,7 +604,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v3_trap_destination)
           ansible.builtin.include_role:
@@ -613,7 +613,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_device_snmp_v3_trap_destination_facts)
           ansible.builtin.include_role:
@@ -622,7 +622,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_ssh_access_facts)
           ansible.builtin.include_role:
@@ -631,7 +631,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_ssh_access)
           ansible.builtin.include_role:
@@ -640,7 +640,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_time_and_locale_configuration)
           ansible.builtin.include_role:
@@ -649,7 +649,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (appliance_time_and_locale_configuration_facts)
           ansible.builtin.include_role:
@@ -658,7 +658,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (certificates_server)
           ansible.builtin.include_role:
@@ -667,7 +667,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (certificates_server_facts)
           ansible.builtin.include_role:
@@ -676,7 +676,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (firmware_bundle)
           ansible.builtin.include_role:
@@ -685,7 +685,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (firmware_driver)
           ansible.builtin.include_role:
@@ -694,7 +694,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (firmware_driver_facts)
           ansible.builtin.include_role:
@@ -703,7 +703,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (id_pools)
           ansible.builtin.include_role:
@@ -712,7 +712,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (id_pools_facts)
           ansible.builtin.include_role:
@@ -721,7 +721,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (label)
           ansible.builtin.include_role:
@@ -730,7 +730,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (label_facts)
           ansible.builtin.include_role:
@@ -739,7 +739,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (user)
           ansible.builtin.include_role:
@@ -748,7 +748,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (user_facts)
           ansible.builtin.include_role:
@@ -757,7 +757,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (version_facts)
           ansible.builtin.include_role:
@@ -766,7 +766,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (dynamic_role)
           ansible.builtin.include_role:
@@ -775,7 +775,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
     - block:
         - name: (repositories)
           ansible.builtin.include_role:
@@ -784,4 +784,4 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ msg.msg | default(msg) }}"
