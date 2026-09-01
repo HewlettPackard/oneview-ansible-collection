@@ -10,7 +10,6 @@ use_default_rules: true
 # This makes linter to fully ignore rules/tags listed below
 skip_list:
  - meta-no-tags
- - empty-string-compare
  - var-spacing
  - role-name
  - var-naming
