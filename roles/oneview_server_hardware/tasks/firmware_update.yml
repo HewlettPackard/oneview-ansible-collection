@@ -42,7 +42,7 @@
         firmwareInstallType: "FirmwareOnlyOfflineMode"
         installationPolicy: "LowerThanBaseline"
   delegate_to: localhost
-  when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] == true
+  when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] | bool
 
 - name: Logout Session
   oneview_logout_session:
