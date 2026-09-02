@@ -11,6 +11,5 @@ use_default_rules: true
 skip_list:
  - meta-no-tags
  - var-spacing
- - role-name
  - var-naming
  - name
