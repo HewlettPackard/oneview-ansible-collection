@@ -9,7 +9,6 @@ use_default_rules: true
 
 # This makes linter to fully ignore rules/tags listed below
 skip_list:
- - meta-no-tags
  - var-spacing
  - var-naming
  - name
