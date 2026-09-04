@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -20,7 +20,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -62,7 +62,7 @@
     data:
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       internalNetworks:
-        - name: "{{ contents.logical_interconnect.network_name }}"  # could also be a URI. e.g.: - uri: '/rest/ethernet-network/<id>'
+        - name: "{{ contents.logical_interconnect.network_name }}" # could also be a URI. e.g.: - uri: '/rest/ethernet-network/<id>'
   when: network_name is defined
   delegate_to: localhost
 
@@ -102,12 +102,12 @@
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       qosConfiguration:
         activeQosConfig:
-          category: 'qos-aggregated-configuration'
-          configType: 'Passthrough'
-          downlinkClassificationType: ~
-          uplinkClassificationType: ~
+          category: qos-aggregated-configuration
+          configType: Passthrough
+          downlinkClassificationType:
+          uplinkClassificationType:
           qosTrafficClassifiers: []
-          type: 'QosConfiguration'
+          type: QosConfiguration
   delegate_to: localhost
   register: result
 
@@ -120,7 +120,7 @@
       name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
       snmpConfiguration:
         enabled: true
-        readCommunity: "public"
+        readCommunity: public
   delegate_to: localhost
 
 - name: Update the IGMP settings for the logical interconnect
@@ -227,7 +227,7 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:

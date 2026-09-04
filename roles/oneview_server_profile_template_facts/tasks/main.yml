@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -16,7 +16,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -71,9 +71,9 @@
   oneview_server_profile_template_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{server_profile_templates[0]['uri']}}"
+    uri: "{{ server_profile_templates[0]['uri'] }}"
   delegate_to: localhost
-  when: server_profile_templates|length != 0
+  when: server_profile_templates| length != 0
 
 - name: Gather facts about a template and a profile with the configuration based on this template
   oneview_server_profile_template_facts:
@@ -127,8 +127,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     options:
       - available_networks:
-          serverHardwareTypeUri: "{{server_hardware_types[0]['uri']}}"
-          enclosureGroupUri: "{{enclosure_groups[0]['uri'] }}"
+          serverHardwareTypeUri: "{{ server_hardware_types[0]['uri'] }}"
+          enclosureGroupUri: "{{ enclosure_groups[0]['uri'] }}"
 
   delegate_to: localhost
   when: currentVersion >= '600'

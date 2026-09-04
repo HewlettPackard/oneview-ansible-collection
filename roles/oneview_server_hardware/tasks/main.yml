@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -22,12 +22,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
-      username: '{{ contents.server_hardware.server_hardware_username }}'
-      password: '{{ contents.server_hardware.server_hardware_password }}'
+      hostname: "{{ contents.server_hardware.server_hardware_hostname }}"
+      username: "{{ contents.server_hardware.server_hardware_username }}"
+      password: "{{ contents.server_hardware.server_hardware_password }}"
       force: false
-      licensingIntent: "OneView"
-      configurationState: "Managed"
+      licensingIntent: OneView
+      configurationState: Managed
       initialScopeUris:
         - "{{ scopes[0]['uri'] }}" # Supported only with OneView API version >= 600.
   delegate_to: localhost
@@ -50,11 +50,11 @@
     state: present
     data:
       hostname: "{{ server_hardwares[0]['name'] }}"
-      username: '{{ contents.server_hardware.server_hardware_username }}'
-      password: '{{ contents.server_hardware.server_hardware_password }}'
+      username: "{{ contents.server_hardware.server_hardware_username }}"
+      password: "{{ contents.server_hardware.server_hardware_password }}"
       force: false
-      licensingIntent: "OneView"
-      configurationState: "Managed"
+      licensingIntent: OneView
+      configurationState: Managed
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -70,8 +70,8 @@
       password: "{{ contents.server_hardware.server_hardware_password }}"
       initialScopeUris:
         - "{{ scopes[0]['uri'] }}"
-      licensingIntent: "OneView"
-      configurationState: "Managed"
+      licensingIntent: OneView
+      configurationState: Managed
   delegate_to: localhost
   when: contents.server_hardware.variant == 'C7000'
 
@@ -84,7 +84,7 @@
       name: "{{ server_hardwares[0]['name'] }}"
       powerStateData:
         powerState: "Off"
-        powerControl: "MomentaryPress"
+        powerControl: MomentaryPress
   delegate_to: localhost
 
 - name: Power On the server hardware
@@ -96,7 +96,7 @@
       name: "{{ server_hardwares[0]['name'] }}"
       powerStateData:
         powerState: "On"
-        powerControl: "MomentaryPress"
+        powerControl: MomentaryPress
   delegate_to: localhost
 
 - name: Refresh the server hardware
@@ -107,7 +107,7 @@
     data:
       name: "{{ server_hardwares[0]['name'] }}"
       refreshStateData:
-        refreshState: "RefreshPending"
+        refreshState: RefreshPending
   delegate_to: localhost
 
 - name: Update the Server Hardware iLO firmware version

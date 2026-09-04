@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -20,7 +20,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -36,14 +36,14 @@
 
 - name: Create a Network Set
   oneview_network_set:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'OneViewSDK Test Network Set'
+      name: OneViewSDK Test Network Set
       networkUris:
-        - "{{ contents.network_set.ethernet_network_1_name }}"  # can be a name
-        - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
+        - "{{ contents.network_set.ethernet_network_1_name }}" # can be a name
+        - "{{ ethernet_networks[0]['uri'] }}" # or a URI
       bandwidth:
         maximumBandwidth: 15000
         typicalBandwidth: 3000
@@ -71,35 +71,35 @@
 
 - name: Update the Network Set name to 'OneViewSDK Test Network Set - Renamed' and change the associated networks
   oneview_network_set:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'OneViewSDK Test Network Set'
-      newName: 'OneViewSDK Test Network Set - Renamed'
+      name: OneViewSDK Test Network Set
+      newName: OneViewSDK Test Network Set - Renamed
       networkUris:
-        - '{{ contents.network_set.ethernet_network_1_name }}'
+        - "{{ contents.network_set.ethernet_network_1_name }}"
   delegate_to: localhost
 
 - name: Delete the Network Set
   oneview_network_set:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'OneViewSDK Test Network Set - Renamed'
+      name: OneViewSDK Test Network Set - Renamed
   delegate_to: localhost
 
 - name: Create a Network Set to ensure continuity for automation script
   oneview_network_set:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'OneViewSDK Test Network Set'
+      name: OneViewSDK Test Network Set
       networkUris:
-        - "{{ contents.network_set.ethernet_network_1_name }}"  # can be a name
-        - "{{ ethernet_networks[0]['uri'] }}"   # or a URI
+        - "{{ contents.network_set.ethernet_network_1_name }}" # can be a name
+        - "{{ ethernet_networks[0]['uri'] }}" # or a URI
       bandwidth:
         maximumBandwidth: 15000
         typicalBandwidth: 3000

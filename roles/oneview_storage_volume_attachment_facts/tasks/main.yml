@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -20,7 +20,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -37,7 +37,7 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    volume: "{{storage_volumes[0]}}"
+    volume: "{{ storage_volumes[0] }}"
 
 - name: Gather facts about all Storage Volume Attachments
   oneview_storage_volume_attachment_facts:
@@ -56,8 +56,8 @@
     params:
       start: 0
       count: 2
-      sort: 'name:descending'
-      filter: "storageVolumeUri='{{ volume['uri'] }}'"
+      sort: name:descending
+      filter: storageVolumeUri='{{ volume['uri'] }}'
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -75,7 +75,6 @@
   ansible.builtin.debug:
     var: storage_volume_attachments
 
-
 - name: Gather facts about extra unmanaged storage volumes
   oneview_storage_volume_attachment_facts:
     config: "{{ config }}"
@@ -92,7 +91,6 @@
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: extra_unmanaged_storage_volumes
-
 
 # NOTE: This is only compatible with API200 and API300
 - name: Gather facts about volume attachment paths

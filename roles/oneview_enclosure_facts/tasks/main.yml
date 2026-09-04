@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -20,7 +20,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -45,8 +45,8 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -80,13 +80,13 @@
     name: "{{ contents.enclosure.enclosure_name }}"
     sessionID: "{{ session.ansible_facts.session }}"
     options:
-      - environmentalConfiguration   # optional
-      - utilization:                 # optional
-          fields: 'AmbientTemperature'
+      - environmentalConfiguration # optional
+      - utilization: # optional
+          fields: AmbientTemperature
           filter:
-            - "startDate=2016-07-01T14:29:42.000Z"
-            - "endDate=2017-07-01T03:29:42.000Z"
-          view: 'day'
+            - startDate=2016-07-01T14:29:42.000Z
+            - endDate=2017-07-01T03:29:42.000Z
+          view: day
           refresh: false
   delegate_to: localhost
 

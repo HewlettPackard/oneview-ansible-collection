@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,8 +27,8 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'hypervisorType=Vmware'
+      sort: name:descending
+      filter: hypervisorType=Vmware
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     msg: "{{ hypervisor_cluster_profiles | map(attribute='name') | list }}"
@@ -37,7 +37,7 @@
   oneview_hypervisor_cluster_profile_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "hcp"
+    name: hcp
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -48,7 +48,7 @@
   oneview_hypervisor_cluster_profile_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{hypervisor_cluster_profiles[0]['uri']}}"
+    uri: "{{ hypervisor_cluster_profiles[0]['uri'] }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -59,7 +59,7 @@
   oneview_hypervisor_cluster_profile_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "ClusterProfile"
+    name: ClusterProfile
     options:
       - compliancePreview
   delegate_to: localhost

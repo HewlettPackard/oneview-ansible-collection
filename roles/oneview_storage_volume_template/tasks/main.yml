@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -17,7 +17,7 @@
     params:
       start: 0
       count: 1
-      sort: 'name:descending'
+      sort: name:descending
       filter: isRoot='True'
   delegate_to: localhost
 
@@ -35,7 +35,7 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
       filter: status='OK'
 
 - name: Create a Storage Volume Template
@@ -72,7 +72,7 @@
             locked: false
           type: string
           title: Description
-          default: ''
+          default: ""
           maxLength: 2000
           minLength: 0
           description: A description for the volume
@@ -115,7 +115,7 @@
           title: Provisioning Type
           default: Full
           description: The provisioning type for the volume
-      description: ''
+      description: ""
   delegate_to: localhost
 
 - name: Update a Storage Volume Template provisioning type
@@ -150,7 +150,7 @@
 #     config: "{{ config }}"
 #     state: absent
 #     data:
-#         name: '{{contents.storage_volume.volume_template_name}}'
+#         name: '{{ contents.storage_volume.volume_template_name }}'
 #   delegate_to: localhost
 
 - name: Logout Session

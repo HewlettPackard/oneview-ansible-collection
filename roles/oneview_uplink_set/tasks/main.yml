@@ -4,7 +4,7 @@
     config: "{{ config }}"
     state: present
     data:
-      name: 'OneViewSDK Test Ethernet Network on Logical Interconnect'
+      name: OneViewSDK Test Ethernet Network on Logical Interconnect
       vlanId: 200
       ethernetNetworkType: Tagged
       purpose: General
@@ -18,12 +18,12 @@
 - name: Gather facts about a Logical Interconnect by name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
-    name: "LE-LIG"
+    name: LE-LIG
 
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -47,19 +47,19 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Uplink Set'
-      status: "OK"
+      name: Test Uplink Set
+      status: OK
       # You can choose set the Logical Interconnect by logicalInterconnectUri or logicalInterconnectName
-      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"                                   # option 1
+      logicalInterconnectUri: "{{ logical_interconnects['uri'] }}" # option 1
       # logicalInterconnectUri: "/rest/logical-interconnects/461a9cef-beef-4916-8be1-926078ffb948"  # option 2
       networkUris:
         - "{{ ethernet_network['uri'] }}"
       fcNetworkUris: []
       fcoeNetworkUris: []
       portConfigInfos: []
-      connectionMode: "Auto"
-      networkType: "Ethernet"
-      manualLoginRedistributionState: "NotSupported"
+      connectionMode: Auto
+      networkType: Ethernet
+      manualLoginRedistributionState: NotSupported
   delegate_to: localhost
   when: (ethernet_networks is not none or ethernet_networks is not undefined)
 
@@ -69,9 +69,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Uplink Set'
+      name: Test Uplink Set
       logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
-      description: 'New Description'
+      description: New Description
   delegate_to: localhost
 
 - name: Rename the Uplink Set to 'Updated Uplink Set'
@@ -80,11 +80,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Uplink Set'
+      name: Test Uplink Set
       logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
-      newName: 'Updated Uplink Set'
-      connectionMode: "Auto"
-      networkType: "Ethernet"
+      newName: Updated Uplink Set
+      connectionMode: Auto
+      networkType: Ethernet
   delegate_to: localhost
 
 - name: Delete the Uplink Set
@@ -93,7 +93,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Updated Uplink Set'
+      name: Updated Uplink Set
       logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
   delegate_to: localhost
   register: deleted

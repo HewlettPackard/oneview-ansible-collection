@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -25,9 +25,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      resourceUri: "{{ enclosures[0]['uri']}}"
+      resourceUri: "{{ enclosures[0]['uri'] }}"
       labels:
-        - name: "{{ contents.labels.label_name_1  }}"
+        - name: "{{ contents.labels.label_name_1 }}"
         - name: "{{ contents.labels.label_name_2 }}"
   delegate_to: localhost
 
@@ -42,9 +42,9 @@
         - name: "{{ contents.labels.label_rename_1 }}"
           uri: "{{ labels['labels'][0]['uri'] }}"
         - name: "{{ contents.labels.label_rename_2 }}"
-          uri: null
+          uri:
         - name: "{{ contents.labels.label_name_3 }}"
-          uri: null
+          uri:
   delegate_to: localhost
 
 - name: Delete Labels for enclosure resource
@@ -61,9 +61,9 @@
     config: "{{ config }}"
     state: present
     data:
-      resourceUri: "{{ enclosures[0]['uri']}}"
+      resourceUri: "{{ enclosures[0]['uri'] }}"
       labels:
-        - name: "{{ contents.labels.label_name_1  }}"
+        - name: "{{ contents.labels.label_name_1 }}"
         - name: "{{ contents.labels.label_name_2 }}"
   delegate_to: localhost
 

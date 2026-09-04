@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,7 +27,7 @@
     state: present
     data:
       name: "{{ ct_name }}"
-      type: "connection-template"
+      type: connection-template
       bandwidth:
         maximumBandwidth: 10000
         typicalBandwidth: 2000
@@ -41,7 +41,7 @@
     state: present
     data:
       name: "{{ ct_name }}_updated"
-      type: "connection-template"
+      type: connection-template
       bandwidth:
         maximumBandwidth: 10000
         typicalBandwidth: 2000

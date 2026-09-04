@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,7 +27,7 @@
     params:
       start: 0
       count: 3
-      filter: "port='162'"
+      filter: port='162'
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -38,7 +38,7 @@
   oneview_appliance_device_snmp_v1_trap_destinations_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "2.2.2.2"
+    name: 2.2.2.2
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug

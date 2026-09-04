@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -17,7 +17,7 @@
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: "{{server_hardware_types | map(attribute='name') | list }}"
+    var: "{{ server_hardware_types | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Server Hardware Types
   oneview_server_hardware_type_facts:
@@ -32,13 +32,13 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: "{{server_hardware_types | map(attribute='name') | list }}"
+    var: "{{ server_hardware_types | map(attribute='name') | list }}"
 
 - name: Gather facts about a Server Hardware Type by name
   oneview_server_hardware_type_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "SY 480 Gen9 1"
+    name: SY 480 Gen9 1
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:

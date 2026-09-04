@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -17,8 +17,8 @@
     params:
       start: 0
       count: 5
-      sort: 'name:descending'
-      filter: "enclosureName='0000A66101'"
+      sort: name:descending
+      filter: enclosureName='0000A66101'
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -32,7 +32,7 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'powered_on'
+    state: powered_on
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
@@ -40,7 +40,7 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'uid_on'
+    state: uid_on
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
@@ -48,7 +48,7 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'device_reset'
+    state: device_reset
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
@@ -56,7 +56,7 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'powered_off'
+    state: powered_off
     ip: "{{ contents.interconnect.interconnect_ip }}"
   delegate_to: localhost
 
@@ -64,18 +64,15 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'update_ports'
+    state: update_ports
     ip: "{{ contents.interconnect.interconnect_ip_for_update }}"
-    ports: [
-      {
-        "type": "portV6",
-        "portType": "Uplink",
-        "portName": "d1",
-        "bayNumber": 1,
-        "enabled": false,
-        "portId": "{{ contents.interconnect.port_id }}"
-      }
-    ]
+    ports:
+      - type: portV6
+        portType: Uplink
+        portName: d1
+        bayNumber: 1
+        enabled: false
+        portId: "{{ contents.interconnect.port_id }}"
   delegate_to: localhost
   register: update_ports_result
   failed_when: false
@@ -84,7 +81,7 @@
   oneview_interconnect:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: 'reset_port_protection'
+    state: reset_port_protection
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 

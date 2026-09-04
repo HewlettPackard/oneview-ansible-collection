@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -32,7 +32,6 @@
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
     drive_bay_uris: ["{{ drive_enclosures[1]['driveBays'][2]['uri'] }}", "{{ drive_enclosures[1]['driveBays'][3]['uri'] }}"]
-
 - name: Create a SAS Logical JBOD
   oneview_sas_logical_jbod:
     config: "{{ config }}"
@@ -40,13 +39,13 @@
     state: present
     data:
       name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}"
-      description: "Sas logical Jbod description"
+      description: Sas logical Jbod description
       minSizeGB: 200
       maxSizeGB: 600
       numPhysicalDrives: 1
       driveTechnology:
-        deviceInterface: "SAS"
-        driveMedia: "HDD"
+        deviceInterface: SAS
+        driveMedia: HDD
       driveEnclosureUris: "{{ drive_enclosure_uri_list }}"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
@@ -63,7 +62,7 @@
     state: present
     data:
       name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-1"
-      description: "Sas logical Jbod description"
+      description: Sas logical Jbod description
       eraseData: true
       driveBayUris: "{{ drive_bay_uris }}"
   when: contents.sas_logical_jbod.variant == 'Synergy'
@@ -95,8 +94,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: change_name
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}'
-      newName: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}"
+      newName: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -111,8 +110,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: change_name
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
-      newName: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
+      newName: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -127,8 +126,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: change_description
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
-      newDescription: 'New Description to JBOD'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
+      newDescription: New Description to JBOD
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -143,8 +142,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: change_description
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
-      newDescription: 'New Description to JBOD'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
+      newDescription: New Description to JBOD
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -159,7 +158,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: erase_data
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -174,7 +173,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: erase_data
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -189,7 +188,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: clear_metadata
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -204,7 +203,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -219,7 +218,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: '{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed'
+      name: "{{ contents.sas_logical_jbod.sas_logical_jbod_name }}-renamed"
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result

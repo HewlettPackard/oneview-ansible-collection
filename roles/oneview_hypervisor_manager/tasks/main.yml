@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -49,10 +49,10 @@
     state: present
     data:
       name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
-      displayName: 'vcenter'
-      hypervisorType: 'Vmware'
-      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
-      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
+      displayName: vcenter
+      hypervisorType: Vmware
+      username: "{{ contents.hypervisor_manager.hypervisor_manager_username }}"
+      password: "{{ contents.hypervisor_manager.hypervisor_manager_password }}"
   delegate_to: localhost
   register: hyp_mgr_1
 
@@ -63,8 +63,8 @@
     state: present
     data:
       name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
-      displayName: 'vcenter'
-      hypervisorType: 'Vmware'
+      displayName: vcenter
+      hypervisorType: Vmware
   delegate_to: localhost
 
 - name: Update the Hypervisor Manager changing the attribute displayName
@@ -74,10 +74,10 @@
     state: present
     data:
       name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
-      displayName: 'vcenter renamed'
-      hypervisorType: 'Vmware'
-      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
-      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
+      displayName: vcenter renamed
+      hypervisorType: Vmware
+      username: "{{ contents.hypervisor_manager.hypervisor_manager_username }}"
+      password: "{{ contents.hypervisor_manager.hypervisor_manager_password }}"
   delegate_to: localhost
 
 - name: Delete the Hypervisor Manager
@@ -128,10 +128,10 @@
     state: present
     data:
       name: "{{ contents.hypervisor_manager.hypervisor_manager_name }}"
-      displayName: 'vcenter'
-      hypervisorType: 'Vmware'
-      username: '{{ contents.hypervisor_manager.hypervisor_manager_username }}'
-      password: '{{ contents.hypervisor_manager.hypervisor_manager_password }}'
+      displayName: vcenter
+      hypervisorType: Vmware
+      username: "{{ contents.hypervisor_manager.hypervisor_manager_username }}"
+      password: "{{ contents.hypervisor_manager.hypervisor_manager_password }}"
   delegate_to: localhost
 
 - name: Logout Session

@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -37,9 +37,9 @@
     state: present
     data:
       credentials:
-        username: '{{ contents.storage_system.storage_system_username }}'
-        password: '{{ contents.storage_system.storage_system_password }}'
-      hostname: '{{ contents.storage_system.storage_system_ip }}'
+        username: "{{ contents.storage_system.storage_system_username }}"
+        password: "{{ contents.storage_system.storage_system_password }}"
+      hostname: "{{ contents.storage_system.storage_system_ip }}"
       family: StoreServ
   delegate_to: localhost
 
@@ -52,13 +52,13 @@
     state: present
     data:
       credentials:
-        username: '{{ contents.storage_system.storage_system_username }}'
-        password: '{{ contents.storage_system.storage_system_password }}'
-      name: '{{ contents.storage_system.storage_system_name }}'
+        username: "{{ contents.storage_system.storage_system_username }}"
+        password: "{{ contents.storage_system.storage_system_password }}"
+      name: "{{ contents.storage_system.storage_system_name }}"
       family: StoreServ
-      hostname: '{{ contents.storage_system.storage_system_ip }}'
+      hostname: "{{ contents.storage_system.storage_system_ip }}"
       deviceSpecificAttributes:
-        managedDomain: '{{ contents.storage_system.storage_domain }}'
+        managedDomain: "{{ contents.storage_system.storage_domain }}"
         managedPools:
           - name: CPG-SSD
             deviceType: SSD
@@ -98,7 +98,7 @@
     validate_etag: false
     data:
       credentials:
-        hostname: '{{ contents.storage_system.storage_system_ip }}'
+        hostname: "{{ contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
   when: currentVersion < '500'
 

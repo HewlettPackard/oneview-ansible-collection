@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -18,7 +18,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{interconnects | map(attribute='name') | list }}"
+    msg: "{{ interconnects | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Interconnects
   oneview_interconnect_facts:
@@ -27,8 +27,8 @@
     params:
       start: 0
       count: 5
-      sort: 'name:descending'
-      filter: "enclosureName='0000A66101'"
+      sort: name:descending
+      filter: enclosureName='0000A66101'
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -60,7 +60,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_name_servers
@@ -75,7 +75,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_statistics
@@ -91,7 +91,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_port_statistics
@@ -108,7 +108,7 @@
   when: interconnects[0]['state'] != "Monitored"
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_subport_statistics
@@ -123,7 +123,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_ports
@@ -138,7 +138,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_port
@@ -153,7 +153,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: interconnect_pluggable_module_information

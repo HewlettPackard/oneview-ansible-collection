@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -59,7 +59,7 @@
       name: "{{ contents.server_profile.server_hardware_name }}"
       powerStateData:
         powerState: "Off"
-        powerControl: "MomentaryPress"
+        powerControl: MomentaryPress
   delegate_to: localhost
 
 - name: Create a server profile with iLO/Bios configuration
@@ -77,12 +77,12 @@
       managementProcessor:
         manageMp: true
         mpSettings:
-          - settingType: "LocalAccounts"
+          - settingType: LocalAccounts
             args:
               localAccounts:
-                - userName: "user1"
-                  displayName: "One"
-                  password: "asdfghjkl"
+                - userName: user1
+                  displayName: One
+                  password: asdfghjkl
                   iLOConfigPriv: false
                   userConfigPriv: false
                   remoteConsolePriv: false
@@ -101,21 +101,21 @@
       description: "{{ contents.server_profile.server_profile_description }}"
       localStorage:
         controllers:
-          - deviceSlot: "Embedded"
-            driveWriteCache: "Unmanaged"
+          - deviceSlot: Embedded
+            driveWriteCache: Unmanaged
             importConfiguration: false
-            mode: "RAID"
+            mode: RAID
             initialize: true
             logicalDrives:
-              - accelerator: "Unmanaged"
+              - accelerator: Unmanaged
                 bootable: false
-                driveTechnology: null
-                name: "logicaldrive1"
+                driveTechnology:
+                name: logicaldrive1
                 numPhysicalDrives: 2
-                raidLevel: "RAID1"
-                readCachePolicy: "Unmanaged"
-                sasLogicalJBODId: null
-                writeCachePolicy: "Unmanaged"
+                raidLevel: RAID1
+                readCachePolicy: Unmanaged
+                sasLogicalJBODId:
+                writeCachePolicy: Unmanaged
         sasLogicalJBODs: []
   delegate_to: localhost
 
@@ -127,7 +127,7 @@
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
       serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
       enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
-      connectionSettings:  # Supported only in API version >= 600.
+      connectionSettings: # Supported only in API version >= 600.
         connections:
           - id: 1
             name: connection1
@@ -144,18 +144,18 @@
 - name: Update Server Profile with boot configuration
   oneview_server_profile:
     config: "{{ config }}"
-    state: "present"
+    state: present
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
       # affinity: "BayAndServer"
       bootMode:
         manageMode: true
-        mode: "UEFI"
-        pxeBootPolicy: "Auto"
+        mode: UEFI
+        pxeBootPolicy: Auto
       boot:
         manageBoot: true
-        order: ["HardDisk"]
+        order: [HardDisk]
   delegate_to: localhost
   register: result
 
@@ -264,7 +264,7 @@
 - name: Rename Server Profile
   oneview_server_profile:
     config: "{{ config }}"
-    state: "present"
+    state: present
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       newName: "{{ contents.server_profile.inventory_hostname }}-updated"
@@ -283,7 +283,7 @@
 - name: Remediate compliance issues
   oneview_server_profile:
     config: "{{ config }}"
-    state: "compliant"
+    state: compliant
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-updated"
@@ -297,7 +297,7 @@
 - name: Delete the Server Profile created from a Server Profile Template
   oneview_server_profile:
     config: "{{ config }}"
-    state: "absent"
+    state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-updated"
@@ -311,7 +311,7 @@
 - name: Delete the Server Profile created with connections
   oneview_server_profile:
     config: "{{ config }}"
-    state: "absent"
+    state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
@@ -351,7 +351,7 @@
 - name: Delete the Server Profile
   oneview_server_profile:
     config: "{{ config }}"
-    state: "absent"
+    state: absent
     sessionID: "{{ session.ansible_facts.session }}"
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"

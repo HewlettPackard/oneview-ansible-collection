@@ -8,7 +8,7 @@
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion|int }}"
+    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
   when: config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
@@ -19,7 +19,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -42,7 +42,7 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
       filter: status='OK'
 
 - name: Run ansible.builtin.debug
@@ -75,7 +75,7 @@
     state: present
     data:
       storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-      name: '{{ contents.storage_pool.storage_pool_name }}'
+      name: "{{ contents.storage_pool.storage_pool_name }}"
       isManaged: false
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
@@ -87,7 +87,7 @@
     state: present
     data:
       storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-      name: '{{ contents.storage_pool.storage_pool_name }}'
+      name: "{{ contents.storage_pool.storage_pool_name }}"
       isManaged: true
   delegate_to: localhost
   when: (storage_systems is not none and storage_systems is not undefined)

@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -17,12 +17,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      hostname: '{{ contents.server_hardware.server_hardware_hostname }}'
-      username: '{{ contents.server_hardware.server_hardware_username }}'
-      password: '{{ contents.server_hardware.server_hardware_password }}'
+      hostname: "{{ contents.server_hardware.server_hardware_hostname }}"
+      username: "{{ contents.server_hardware.server_hardware_username }}"
+      password: "{{ contents.server_hardware.server_hardware_password }}"
       force: false
-      licensingIntent: "OneView"
-      configurationState: "Managed"
+      licensingIntent: OneView
+      configurationState: Managed
   delegate_to: localhost
   when: contents.server_hardware_type.variant == 'C7000'
 
@@ -39,7 +39,7 @@
     state: present
     data:
       name: "{{ server_hardware_types[0]['name'] }}"
-      description: "New Description"
+      description: New Description
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type
@@ -49,7 +49,7 @@
     state: present
     data:
       name: "{{ server_hardware_types[0]['name'] }}"
-      newName: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
+      newName: "{{ contents.server_hardware_type.server_hardware_type_name_renamed }}"
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type to original
@@ -58,7 +58,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.server_hardware_type.server_hardware_type_name_renamed }}'
+      name: "{{ contents.server_hardware_type.server_hardware_type_name_renamed }}"
       newName: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
 
@@ -69,7 +69,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: '{{ contents.server_hardware_type.server_hardware_hostname }}'
+      name: "{{ contents.server_hardware_type.server_hardware_hostname }}"
   delegate_to: localhost
   when: contents.server_hardware_type.variant == 'C7000'
 

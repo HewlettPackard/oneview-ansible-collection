@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -18,7 +18,7 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    variant: "Synergy"
+    variant: Synergy
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
     sas_interconnect_name: "{{ sas_interconnects[0]['name'] }}"
@@ -32,8 +32,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: '{{ sas_interconnect_name }}'
-      refreshState: 'RefreshPending'
+      name: "{{ sas_interconnect_name }}"
+      refreshState: RefreshPending
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -48,7 +48,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_off
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -63,7 +63,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_off
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -78,7 +78,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_on
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -93,7 +93,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: power_on
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -108,7 +108,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -123,7 +123,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -138,7 +138,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -153,7 +153,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: '{{ sas_interconnect_name }}'
+      name: "{{ sas_interconnect_name }}"
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result

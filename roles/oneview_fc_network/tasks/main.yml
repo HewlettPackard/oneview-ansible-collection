@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -36,10 +36,10 @@
     validate_etag: false
     data:
       name: "{{ item }}"
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
       autoLoginRedistribution: true
-      type: "fc-networkV4"
+      type: fc-networkV4
   delegate_to: localhost
   register: fc_network_1
   with_items:
@@ -54,8 +54,8 @@
     state: present
     data:
       name: "{{ contents.fc_network.network_name }}"
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
       autoLoginRedistribution: true
   delegate_to: localhost
 
@@ -67,8 +67,8 @@
     data:
       name: "{{ contents.fc_network.network_name }}"
       autoLoginRedistribution: false
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
   delegate_to: localhost
 
 # This feature is available only till OneView 3.10

@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,7 +27,7 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -83,7 +83,7 @@
   ansible.builtin.debug:
     var: igmp_settings
 
-- name: "Gather facts about the port monitor configuration on the logical interconnect that matches the specified name"
+- name: Gather facts about the port monitor configuration on the logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -96,7 +96,7 @@
   ansible.builtin.debug:
     var: port_monitor
 
-- name: "Gather facts about an internal VLAN IDs for the provisioned networks on a logical interconnect that matches the specified name"
+- name: Gather facts about an internal VLAN IDs for the provisioned networks on a logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -109,7 +109,7 @@
   ansible.builtin.debug:
     var: internal_vlans
 
-- name: "Gather facts about a forwarding information base data for a logical interconnect that matches the specified name"
+- name: Gather facts about a forwarding information base data for a logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -122,7 +122,7 @@
   ansible.builtin.debug:
     var: forwarding_information_base
 
-- name: "Gather facts about an installed firmware for a logical interconnect that matches the specified name"
+- name: Gather facts about an installed firmware for a logical interconnect that matches the specified name
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -135,8 +135,10 @@
   ansible.builtin.debug:
     var: firmware
 
-- name: "Gather facts about the collection of uplink ports from the member interconnects which are eligible for
-          assignment to an analyzer port on the logical interconnect"
+- name: >-
+    Gather facts about the collection of uplink ports from the member
+    interconnects which are eligible for assignment to an analyzer port on the
+    logical interconnect
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -149,8 +151,10 @@
   ansible.builtin.debug:
     var: unassigned_uplink_ports
 
-- name: "Gather facts about the collection of ports from the member interconnects which are eligible for
-          assignment to an analyzer port on the logical interconnect"
+- name: >-
+    Gather facts about the collection of ports from the member interconnects
+    which are eligible for assignment to an analyzer port on the logical
+    interconnect
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -163,7 +167,7 @@
   ansible.builtin.debug:
     var: unassigned_ports
 
-- name: "Gather facts about the telemetry configuration of the logical interconnect"
+- name: Gather facts about the telemetry configuration of the logical interconnect
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -176,7 +180,7 @@
   ansible.builtin.debug:
     var: telemetry_configuration
 
-- name: "Gather the Ethernet interconnect settings for the logical interconnect"
+- name: Gather the Ethernet interconnect settings for the logical interconnect
   oneview_logical_interconnect_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"

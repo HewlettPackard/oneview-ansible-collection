@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -39,10 +39,10 @@
     data:
       name: "{{ server_hardwares[0]['name'] }}"
       firmwareUpdateData:
-        baselineUri: "/rest/firmware-drivers/{{ contents.server_hardware.firmware_baseline_id }}"
+        baselineUri: /rest/firmware-drivers/{{ contents.server_hardware.firmware_baseline_id }}
         forceApplyFirmware: "false"
-        firmwareInstallType: "FirmwareOnlyOfflineMode"
-        installationPolicy: "LowerThanBaseline"
+        firmwareInstallType: FirmwareOnlyOfflineMode
+        installationPolicy: LowerThanBaseline
   delegate_to: localhost
   when: ansible_facts['server_hardware']['serverFirmwareUpdateRequired'] | bool
 

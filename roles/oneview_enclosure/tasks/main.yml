@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 - name: Run ansible.builtin.debug
@@ -24,7 +24,7 @@
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
-  # connection: local
+# connection: local
 
 # Waiting for 10 seconds before attempting operations on enclosure
 - name: Run ansible.builtin.wait_for
@@ -41,8 +41,8 @@
     state: present
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
-      newName: 'Test-Enclosure-Renamed'
+      name: "{{ contents.enclosure.enclosure_name }}"
+      newName: Test-Enclosure-Renamed
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -60,9 +60,9 @@
     state: present
     validate_etag: false
     data:
-      name: 'Test-Enclosure-Renamed'
-      newName: '{{ contents.enclosure.enclosure_name }}'
-      rackName: 'Rack-Renamed'
+      name: Test-Enclosure-Renamed
+      newName: "{{ contents.enclosure.enclosure_name }}"
+      rackName: Rack-Renamed
   delegate_to: localhost
 
 - name: Reconfigure the enclosure
@@ -71,7 +71,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: reconfigured
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 - name: Refresh the enclosure along with all of its components
@@ -80,8 +80,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
-      refreshState: 'RefreshPending'
+      name: "{{ contents.enclosure.enclosure_name }}"
+      refreshState: RefreshPending
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -98,14 +98,14 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: create_certificate_request
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
-      type: '{{ contents.enclosure.csr_data_type }}'
-      organization: '{{ contents.enclosure.organization }}'
-      organizationalUnit: '{{ contents.enclosure.organizationalUnit }}'
-      locality: '{{ contents.enclosure.locality }}'
-      state: '{{ contents.enclosure.state }}'
-      country: '{{ contents.enclosure.country }}'
-      commonName: '{{ contents.enclosure.commonName }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
+      type: "{{ contents.enclosure.csr_data_type }}"
+      organization: "{{ contents.enclosure.organization }}"
+      organizationalUnit: "{{ contents.enclosure.organizationalUnit }}"
+      locality: "{{ contents.enclosure.locality }}"
+      state: "{{ contents.enclosure.state }}"
+      country: "{{ contents.enclosure.country }}"
+      commonName: "{{ contents.enclosure.commonName }}"
   delegate_to: localhost
   when: contents.enclosure.variant == 'Synergy'
 
@@ -115,7 +115,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: get_certificate_request
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -132,9 +132,9 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: import_certificate_request
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
-      type: '{{ contents.enclosure.cert_data_type }}'
-      base64Data: '{{ contents.enclosure.base64Data }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
+      type: "{{ contents.enclosure.cert_data_type }}"
+      base64Data: "{{ contents.enclosure.base64Data }}"
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -146,7 +146,7 @@
     state: appliance_bays_powered_on
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -164,7 +164,7 @@
     state: uid_off
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -181,7 +181,7 @@
     state: uid_on
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
@@ -198,7 +198,7 @@
     state: manager_bays_uid_on
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -216,7 +216,7 @@
     state: manager_bays_uid_off
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -234,7 +234,7 @@
     state: manager_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -253,7 +253,7 @@
     state: manager_bays_power_state_reset
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 2
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -272,7 +272,7 @@
     state: appliance_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 1
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -291,7 +291,7 @@
     state: device_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 10
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -310,7 +310,7 @@
     state: device_bays_power_state_reset
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 11
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -329,7 +329,7 @@
     state: interconnect_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 3
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -348,7 +348,7 @@
     state: manager_bays_role_active
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 2
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -367,7 +367,7 @@
     state: device_bays_ipv4_removed
     validate_etag: false
     data:
-      name: '{{ enclosure_name }}'
+      name: "{{ enclosure_name }}"
       bayNumber: 3
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
@@ -386,7 +386,7 @@
     state: interconnect_bays_ipv4_removed
     validate_etag: false
     data:
-      name: '{{ contents.enclosure.enclosure_name }}'
+      name: "{{ contents.enclosure.enclosure_name }}"
       bayNumber: 6
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost

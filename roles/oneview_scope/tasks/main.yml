@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -40,7 +40,7 @@
 
 - name: Create a scope
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
@@ -54,7 +54,7 @@
 
 - name: Create a scope when exists
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
@@ -68,7 +68,7 @@
 
 - name: Update the scope name
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
@@ -83,7 +83,7 @@
 # This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, adding a resource
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
@@ -96,7 +96,7 @@
 # This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, removing two resources
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
@@ -110,7 +110,7 @@
 
 - name: Delete the Scope
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
@@ -119,7 +119,7 @@
 
 - name: Create a scope to ensure continuity for an automation script
   oneview_scope:
-    config: '{{ config }}'
+    config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:

@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -35,138 +35,138 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ item.name }}'
-      enclosureType: 'SY12000'
+      name: "{{ item.name }}"
+      enclosureType: SY12000
       internalNetworkNames:
-        - 'TestNetwork_3'
+        - TestNetwork_3
       uplinkSets:
-        - name: 'e23 uplink set'
-          mode: 'Auto'
-          networkType: 'Ethernet'
-          ethernetNetworkType: 'Tagged'
+        - name: e23 uplink set
+          mode: Auto
+          networkType: Ethernet
+          ethernetNetworkType: Tagged
           networkNames:
-            - 'TestNetwork_1'
-            - 'TestNetwork_2'
+            - TestNetwork_1
+            - TestNetwork_2
           logicalPortConfigInfos:
-            - desiredSpeed: 'Auto'
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 1
-                    type: 'Enclosure'
+                    type: Enclosure
                   - relativeValue: 82 # This value can be either Port Number or Port Name
-                    type: 'Port'
+                    type: Port
                   - relativeValue: 3
-                    type: 'Bay'
-            - desiredSpeed: 'Auto'
+                    type: Bay
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 2
-                    type: 'Enclosure'
-                  - relativeValue: 'Q5:1'
-                    type: 'Port'
+                    type: Enclosure
+                  - relativeValue: Q5:1
+                    type: Port
                   - relativeValue: 6
-                    type: 'Bay'
-            - desiredSpeed: 'Auto'
+                    type: Bay
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 1
-                    type: 'Enclosure'
-                  - relativeValue: 'Q6:1'
-                    type: 'Port'
+                    type: Enclosure
+                  - relativeValue: Q6:1
+                    type: Port
                   - relativeValue: 3
-                    type: 'Bay'
-            - desiredSpeed: 'Auto'
+                    type: Bay
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 2
-                    type: 'Enclosure'
-                  - relativeValue: 'Q6:1'
-                    type: 'Port'
+                    type: Enclosure
+                  - relativeValue: Q6:1
+                    type: Port
                   - relativeValue: 6
-                    type: 'Bay'
-        - name: 'e23 uplink set1'
-          mode: 'Auto'
-          networkType: 'Ethernet'
-          ethernetNetworkType: 'Tagged'
+                    type: Bay
+        - name: e23 uplink set1
+          mode: Auto
+          networkType: Ethernet
+          ethernetNetworkType: Tagged
           networkNames:
-            - 'ovsdk_mgmt_nw'
+            - ovsdk_mgmt_nw
           logicalPortConfigInfos:
-            - desiredSpeed: 'Auto'
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 1
-                    type: 'Enclosure'
-                  - relativeValue: 'Q1:1'
-                    type: 'Port'
+                    type: Enclosure
+                  - relativeValue: Q1:1
+                    type: Port
                   - relativeValue: 3
-                    type: 'Bay'
-            - desiredSpeed: 'Auto'
+                    type: Bay
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 2
-                    type: 'Enclosure'
-                  - relativeValue: 'Q1:1'
-                    type: 'Port'
+                    type: Enclosure
+                  - relativeValue: Q1:1
+                    type: Port
                   - relativeValue: 6
-                    type: 'Bay'
+                    type: Bay
       interconnectBaySet: 3
       enclosureIndexes: [1, 2, 3]
-      redundancyType: "HighlyAvailable"
+      redundancyType: HighlyAvailable
       interconnectMapTemplate:
         interconnectMapEntryTemplates:
           - enclosureIndex: 3
             logicalLocation:
               locationEntries:
                 - relativeValue: 3
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 6
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 2
             logicalLocation:
               locationEntries:
                 - relativeValue: 2
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 6
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
           - enclosureIndex: 2
             logicalLocation:
               locationEntries:
                 - relativeValue: 2
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 3
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 3
             logicalLocation:
               locationEntries:
                 - relativeValue: 3
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 3
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
               locationEntries:
                 - relativeValue: 1
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 6
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
               locationEntries:
                 - relativeValue: 1
-                  type: "Enclosure"
+                  type: Enclosure
                 - relativeValue: 3
-                  type: "Bay"
+                  type: Bay
             permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
-    - { name: 'LIG' }
-    - { name: 'Test Logical Interconnect Group' }
+    - { name: LIG }
+    - { name: Test Logical Interconnect Group }
 
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
   hpe.oneview.oneview_logical_interconnect_group:
@@ -174,8 +174,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Logical Interconnect Group'
-      enclosureType: 'SY12000'
+      name: Test Logical Interconnect Group
+      enclosureType: SY12000
   delegate_to: localhost
 
 - name: Update the Logical Interconnect Group by adding an uplink set "e23 uplink set2" with an Ethernet network
@@ -184,24 +184,24 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Logical Interconnect Group'
-      enclosureType: 'SY12000'
+      name: Test Logical Interconnect Group
+      enclosureType: SY12000
       uplinkSets:
-        - name: 'e23 uplink set2'
-          mode: 'Auto'
-          networkType: 'Ethernet'
+        - name: e23 uplink set2
+          mode: Auto
+          networkType: Ethernet
           networkNames:
-            - 'TestNetwork_7'
+            - TestNetwork_7
           logicalPortConfigInfos:
-            - desiredSpeed: 'Auto'
+            - desiredSpeed: Auto
               logicalLocation:
                 locationEntries:
                   - relativeValue: 3
-                    type: "Bay"
-                  - relativeValue: 'Q2:1'
-                    type: "Port"
+                    type: Bay
+                  - relativeValue: Q2:1
+                    type: Port
                   - relativeValue: 1
-                    type: "Enclosure"
+                    type: Enclosure
   delegate_to: localhost
 
 # Below task is supported only with OneView 3.10
@@ -211,7 +211,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Logical Interconnect Group'
+      name: Test Logical Interconnect Group
       scopeUris: "{{ scope_uris }}"
   delegate_to: localhost
   when: currentVersion >= '300' and currentVersion <= '500'
@@ -222,8 +222,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test Logical Interconnect Group'
-      newName: 'Updated Logical Interconnect Group'
+      name: Test Logical Interconnect Group
+      newName: Updated Logical Interconnect Group
   delegate_to: localhost
 
 - name: Delete the Logical Interconnect Group
@@ -232,7 +232,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Updated Logical Interconnect Group'
+      name: Updated Logical Interconnect Group
   delegate_to: localhost
   register: deleted
 
@@ -242,7 +242,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Updated Logical Interconnect Group'
+      name: Updated Logical Interconnect Group
   delegate_to: localhost
   register: deleted
 

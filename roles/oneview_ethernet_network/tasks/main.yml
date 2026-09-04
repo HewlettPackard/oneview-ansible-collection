@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -34,8 +34,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ item.name }}'
-      vlanId: '{{ item.vlanId }}'
+      name: "{{ item.name }}"
+      vlanId: "{{ item.vlanId }}"
       ethernetNetworkType: Tagged
       purpose: General
       smartLink: false
@@ -45,8 +45,8 @@
         typicalBandwidth: 1000
   delegate_to: localhost
   with_items:
-    - { name: '{{ contents.ethernet_network.network_name }}', vlanId: '201' }
-    - { name: 'ovsdk_mgmt_nw', vlanId: '202'}
+    - { name: "{{ contents.ethernet_network.network_name }}", vlanId: "201" }
+    - { name: ovsdk_mgmt_nw, vlanId: "202" }
 
 - name: Update the Ethernet Network changing bandwidth and purpose
   hpe.oneview.oneview_ethernet_network:
@@ -54,7 +54,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
+      name: "{{ contents.ethernet_network.network_name }}"
       purpose: Management
       bandwidth:
         maximumBandwidth: 3000
@@ -67,7 +67,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: default_bandwidth_reset
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
+      name: "{{ contents.ethernet_network.network_name }}"
   delegate_to: localhost
 
 - name: Ensure ethernet network has no scopes
@@ -87,8 +87,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
-      newName: 'Updated Ethernet Network'
+      name: "{{ contents.ethernet_network.network_name }}"
+      newName: Updated Ethernet Network
   delegate_to: localhost
 
 - name: Delete the Ethernet Network
@@ -97,7 +97,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Updated Ethernet Network'
+      name: Updated Ethernet Network
   delegate_to: localhost
   register: deleted
 
@@ -107,7 +107,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      vlanIdRange: '1-3,5,7'
+      vlanIdRange: 1-3,5,7
       purpose: General
       namePrefix: TestNetwork
       smartLink: false
@@ -119,7 +119,7 @@
   register: bulk_ethernet_create
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
+    msg: "{{ ethernet_network_bulk | map(attribute='name') | list }}"
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"
@@ -145,7 +145,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      vlanIdRange: '1-3,5,7'
+      vlanIdRange: 1-3,5,7
       purpose: General
       namePrefix: TestNetwork
       smartLink: false
@@ -157,7 +157,7 @@
   register: bulk_ethernet_create
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
+    msg: "{{ ethernet_network_bulk | map(attribute='name') | list }}"
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"

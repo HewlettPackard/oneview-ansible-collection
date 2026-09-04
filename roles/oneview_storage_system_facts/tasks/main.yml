@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,7 +27,7 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -83,8 +83,7 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.storage_system.storage_system_name }}"
-    options:
-      storagePools
+    options: storagePools
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -111,7 +110,7 @@
           networks:
             - fc_networks[0]['uri']
     params:
-      sort: 'name:descending'
+      sort: name:descending
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -125,7 +124,7 @@
     options:
       - templates
     params:
-      sort: 'name:descending'
+      sort: name:descending
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:

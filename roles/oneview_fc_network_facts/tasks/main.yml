@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,8 +27,8 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'fabricType=FabricAttach'
+      sort: name:descending
+      filter: fabricType=FabricAttach
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:

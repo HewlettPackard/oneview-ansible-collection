@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -42,12 +42,12 @@
     data:
       name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
-      path: 'DC1'
-      hypervisorType: 'Vmware'
+      path: DC1
+      hypervisorType: Vmware
       hypervisorHostProfileTemplate:
         serverProfileTemplateUri: "{{ spt_uri }}"
-        hostprefix: 'Test-cluster-host'
-        deploymentManagerType: "UserManaged"
+        hostprefix: Test-cluster-host
+        deploymentManagerType: UserManaged
   delegate_to: localhost
   register: hyp_cp
 
@@ -58,21 +58,21 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     params:
-      create_vswitch_layout: true                          # If this is true, virtual switch layout will be created
+      create_vswitch_layout: true # If this is true, virtual switch layout will be created
     data:
-      description: "test cluster"
-      hypervisorType: "Vmware"
+      description: test cluster
+      hypervisorType: Vmware
       hypervisorClusterSettings:
-        type: "Vmware"
+        type: Vmware
         drsEnabled: true
         haEnabled: false
         multiNicVMotion: false
-        virtualSwitchType: "Standard"
+        virtualSwitchType: Standard
       hypervisorHostProfileTemplate:
         serverProfileTemplateUri: "{{ spt_uri }}"
-        deploymentManagerType: "UserManaged"
-        hostprefix: "Test_cluster_profile_with_vswitch"
-        virtualSwitches:                                 # this is the json body used to create vswitch
+        deploymentManagerType: UserManaged
+        hostprefix: Test_cluster_profile_with_vswitch
+        virtualSwitches: # this is the json body used to create vswitch
           serverProfileTemplateUri: "{{ spt_uri }}"
           hypervisorManagerUri: "{{ hyp_mgr_uri }}"
         hostConfigPolicy:
@@ -83,7 +83,7 @@
           configurePortGroups: true
       name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}_with_vswitch"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
-      path: "DC1"
+      path: DC1
   delegate_to: localhost
   register: hyp_cp_vswitch
 
@@ -95,8 +95,8 @@
     data:
       name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
-      path: 'DC1'
-      hypervisorType: 'Vmware'
+      path: DC1
+      hypervisorType: Vmware
   delegate_to: localhost
 
 - name: Update the Hypervisor Cluster Profile changing the attribute name
@@ -106,10 +106,10 @@
     state: present
     data:
       name: "{{ contents.hypervisor_cluster_profile.hypervisor_cluster_profile_name }}"
-      newName: "HCP-renamed"
+      newName: HCP-renamed
       hypervisorManagerUri: "{{ hyp_mgr_uri }}"
-      path: 'DC1'
-      hypervisorType: 'Vmware'
+      path: DC1
+      hypervisorType: Vmware
   delegate_to: localhost
   register: hyp_cp
 
@@ -122,7 +122,7 @@
       force: true
       soft_delete: false
     data:
-      name: "HCP-renamed"
+      name: HCP-renamed
   delegate_to: localhost
 
 #    - name: Delete the Hypervisor Cluster Profile with vswitch
@@ -142,7 +142,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: absent
     data:
-      name: "HCP-renamed"
+      name: HCP-renamed
   delegate_to: localhost
 
 - name: Logout Session

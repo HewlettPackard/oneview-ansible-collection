@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -65,7 +65,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{rack_managers | map(attribute='name') | list }}"
+    msg: "{{ rack_managers | map(attribute='name') | list }}"
 
 - name: Gather facts about a Rack Manager by name
   oneview_rack_manager_facts:
@@ -96,11 +96,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ rack_manager_name }}"
     options:
-      - chassis                       # optional
-      - partitions                    # optional
-      - managers                      # optional
-      - environmental_configuration   # optional
-      - remote_support_settings       # optional
+      - chassis # optional
+      - partitions # optional
+      - managers # optional
+      - environmental_configuration # optional
+      - remote_support_settings # optional
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug

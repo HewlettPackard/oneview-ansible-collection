@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -27,8 +27,8 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'name=defaultConnectionTemplate'
+      sort: name:descending
+      filter: name=defaultConnectionTemplate
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -44,7 +44,6 @@
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: connection_templates
-
 
 - name: Gather facts about the Default Connection Template
   oneview_connection_template_facts:

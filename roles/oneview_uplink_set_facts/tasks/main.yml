@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -18,7 +18,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{uplink_sets | map(attribute='name') | list }}"
+    msg: "{{ uplink_sets | map(attribute='name') | list }}"
 
 - name: Gather facts about all Logical Interconnects
   oneview_logical_interconnect_facts:
@@ -37,8 +37,8 @@
     params:
       start: 0
       count: 2
-      sort: 'name:descending'
-      filter: "logicalInterconnectUri='{{ logical_interconnects[0]['uri'] }}'"
+      sort: name:descending
+      filter: logicalInterconnectUri='{{ logical_interconnects[0]['uri'] }}'
   when: (logical_interconnects is not none and logical_interconnects is not undefined)
 
 - name: Run ansible.builtin.debug
@@ -49,7 +49,7 @@
   oneview_uplink_set_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "ULS-2"
+    name: ULS-2
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug

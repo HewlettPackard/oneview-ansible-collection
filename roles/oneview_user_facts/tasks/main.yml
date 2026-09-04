@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -26,8 +26,8 @@
     params:
       start: 0
       count: 3
-      sort: 'emailAddress:descending'
-      filter: 'enabled=true'
+      sort: emailAddress:descending
+      filter: enabled=true
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -37,7 +37,7 @@
   oneview_user_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    userName: "testUser"
+    userName: testUser
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -60,7 +60,7 @@
   oneview_user_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    userName: "testUser"
+    userName: testUser
     options:
       - getUserRoles
   delegate_to: localhost

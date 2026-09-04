@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -18,7 +18,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{interconnect_types | map(attribute='name') | list }}"
+    msg: "{{ interconnect_types | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Interconnect Types
   oneview_interconnect_type_facts:
@@ -27,12 +27,12 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: "maximumFirmwareVersion='4000.99'"
+      sort: name:descending
+      filter: maximumFirmwareVersion='4000.99'
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{interconnect_types | map(attribute='name') | list }}"
+    msg: "{{ interconnect_types | map(attribute='name') | list }}"
 
 - name: Gather facts about an Interconnect Type by name {{ interconnect_types.0.name }}
   oneview_interconnect_type_facts:
@@ -43,7 +43,7 @@
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "Found an interconnect type named {{interconnect_types.0.name}} and with uri {{interconnect_types.0.uri}}"
+    msg: Found an interconnect type named {{ interconnect_types.0.name }} and with uri {{ interconnect_types.0.uri }}
 
 - name: Logout Session
   oneview_logout_session:

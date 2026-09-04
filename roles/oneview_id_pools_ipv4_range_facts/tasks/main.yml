@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -14,7 +14,7 @@
   oneview_id_pools_ipv4_subnet_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    networkId: '{{ contents.id_pools_ipv4_range.networkId }}'
+    networkId: "{{ contents.id_pools_ipv4_range.networkId }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -24,7 +24,7 @@
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
     subnet_uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
-  when: id_pools_ipv4_subnets|length != 0
+  when: id_pools_ipv4_subnets| length != 0
 
 - name: Get ID Pools IPv4 Range Schema
   oneview_id_pools_ipv4_range_facts:
@@ -47,7 +47,7 @@
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    subnetUri: '{{ subnet_uri }}'
+    subnetUri: "{{ subnet_uri }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -58,8 +58,8 @@
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ contents.id_pools_ipv4_range.range_name }}'
-    subnetUri: '{{ subnet_uri }}'
+    name: "{{ contents.id_pools_ipv4_range.range_name }}"
+    subnetUri: "{{ subnet_uri }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -74,7 +74,7 @@
   oneview_id_pools_ipv4_range_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    uri: '{{ range_uri }}'
+    uri: "{{ range_uri }}"
   delegate_to: localhost
   when: range_uri is defined
 
@@ -89,7 +89,7 @@
     options:
       - freeFragments
       - allocatedFragments
-    uri: '{{ range_uri }}'
+    uri: "{{ range_uri }}"
   delegate_to: localhost
   when: range_uri is defined
 

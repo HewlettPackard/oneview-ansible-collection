@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -16,8 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     params:
       count: 5
-      view: "tree"
-      filter: ["taskState='Running'", "isCancellable=true"]
+      view: tree
+      filter: [taskState='Running', isCancellable=true]
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug

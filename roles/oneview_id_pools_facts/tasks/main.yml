@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -16,7 +16,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: schema
     data:
-      description: 'ID pool schema'
+      description: ID pool schema
   delegate_to: localhost
 
 - name: Generates a random range
@@ -25,7 +25,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: generate
     data:
-      poolType: '{{ contents.id_pools.poolType }}'
+      poolType: "{{ contents.id_pools.poolType }}"
   delegate_to: localhost
 
 - name: Get the ID Pools type
@@ -34,7 +34,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: get_pool_type
     data:
-      poolType: '{{ contents.id_pools.poolType }}'
+      poolType: "{{ contents.id_pools.poolType }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -46,8 +46,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: check_range_availability
     data:
-      poolType: '{{ contents.id_pools.poolType }}'
-      idList: ["42:CE:78:00:00:00", "42:CE:78:8F:FF:FF"]
+      poolType: "{{ contents.id_pools.poolType }}"
+      idList: [42:CE:78:00:00:00, 42:CE:78:8F:FF:FF]
   delegate_to: localhost
 
 - name: Validates the list of ID's from IPv4 Subnet
@@ -56,8 +56,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: validate_id_pool
     data:
-      poolType: 'ipv4'
-      idList: ['172.18.9.11']
+      poolType: ipv4
+      idList: [172.18.9.11]
   delegate_to: localhost
 
 - name: Logout Session

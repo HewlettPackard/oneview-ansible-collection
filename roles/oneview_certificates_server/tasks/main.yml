@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -59,7 +59,7 @@
     state: present
     name: "{{ contents.certificates_server.remote_server }}"
     data:
-      name: "test"
+      name: test
       certificateDetails:
         - aliasName: "{{ contents.certificates_server.remote_server }}"
           base64Data: "{{ certificate }}"

@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -39,7 +39,6 @@
   ansible.builtin.debug:
     var: enclosures[2]['uri']
 
-
 # This operation is only available on HPE Synergy
 - name: Create a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
@@ -48,15 +47,17 @@
     state: present
     data:
       enclosureUris:
-        - "/rest/enclosures/0000000000A66101"
-        - "/rest/enclosures/0000000000A66102"
-        - "/rest/enclosures/0000000000A66103"
+        - /rest/enclosures/0000000000A66101
+        - /rest/enclosures/0000000000A66102
+        - /rest/enclosures/0000000000A66103
       enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
       name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
   ignore_errors: "{{ ansible_check_mode }}"
   delegate_to: localhost
-  when: (contents.logical_enclosure.variant == "Synergy" and enclosures is not none and enclosures is not undefined and
-        enclosure_groups is not none and enclosure_groups is not undefined)
+  when: >-
+    (contents.logical_enclosure.variant == "Synergy" and enclosures is not none
+    and enclosures is not undefined and enclosure_groups is not none and
+    enclosure_groups is not undefined)
 
 # - name: Update the firmware for the Logical Enclosure
 #  oneview_logical_enclosure:
@@ -117,7 +118,7 @@
     data:
       name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
       dump:
-        errorCode: "MyDump16"
+        errorCode: MyDump16
         encrypt: "true"
         excludeApplianceDump: "false"
   delegate_to: localhost

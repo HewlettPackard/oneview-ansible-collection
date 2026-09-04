@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_label
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_label/files/oneview_config.json"
-contents: "{{lookup('file','../config/config.json')|from_json}}"
+config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_label/files/oneview_config.json
+contents: "{{ lookup('file', '../config/config.json') | from_json }}"

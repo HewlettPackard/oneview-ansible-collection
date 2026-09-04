@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -14,7 +14,7 @@
   oneview_storage_volume_attachment:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    state: "extra_presentations_removed"
+    state: extra_presentations_removed
     server_profile: "{{ server_profile_name }}"
   delegate_to: localhost
 

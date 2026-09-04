@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -16,12 +16,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{mac_address}}"
-      ipv4Type: "STATIC"
-      ipv6Type: "UNCONFIGURE"
-      hostname: "{{hostname}}"
-      app1Ipv4Addr: "{{app1_ipv4_address}}"
-      app2Ipv4Addr: "{{app2_ipv4_address}}"
+      macAddress: "{{ mac_address }}"
+      ipv4Type: STATIC
+      ipv6Type: UNCONFIGURE
+      hostname: "{{ hostname }}"
+      app1Ipv4Addr: "{{ app1_ipv4_address }}"
+      app2Ipv4Addr: "{{ app2_ipv4_address }}"
       virtIpv4Addr: "{{ ipv4_address }}"
       ipv4Subnet: "{{ ipv4_subnet }}"
       ipv4Gateway: "{{ gateway }}"
@@ -41,12 +41,12 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{mac_address}}"
-      ipv4Type: "STATIC"
-      ipv6Type: "UNCONFIGURE"
-      hostname: "{{hostname}}"
-      app1Ipv4Addr: "{{app1_ipv4_address}}"
-      app2Ipv4Addr: "{{app2_ipv4_address}}"
+      macAddress: "{{ mac_address }}"
+      ipv4Type: STATIC
+      ipv6Type: UNCONFIGURE
+      hostname: "{{ hostname }}"
+      app1Ipv4Addr: "{{ app1_ipv4_address }}"
+      app2Ipv4Addr: "{{ app2_ipv4_address }}"
       virtIpv4Addr: "{{ ipv4_address }}"
       ipv4Subnet: "{{ ipv4_subnet }}"
       ipv4Gateway: "{{ gateway }}"
@@ -64,7 +64,7 @@
     sessionID: "{{ session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{mac_address}}"
+      macAddress: "{{ mac_address }}"
       ipv4NameServers:
         - "{{ dns_server_1 }}"
         - "{{ dns_server_3 }}"

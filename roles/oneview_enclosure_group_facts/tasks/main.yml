@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -33,8 +33,8 @@
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
       scope_uris: "{{ scopes[0]['uri'] }}"
   delegate_to: localhost
   when: scopes is defined
@@ -47,7 +47,7 @@
   oneview_enclosure_group_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure_group.eg_name}}"
+    name: "{{ contents.enclosure_group.eg_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -58,7 +58,7 @@
   oneview_enclosure_group_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure_group.eg_name}}"
+    name: "{{ contents.enclosure_group.eg_name }}"
     options:
       - configuration_script
   delegate_to: localhost

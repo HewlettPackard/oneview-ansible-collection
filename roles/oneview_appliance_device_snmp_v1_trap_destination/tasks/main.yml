@@ -2,7 +2,7 @@
 - name: Fetch Session Id
   oneview_get_session_id:
     config: "{{ config }}"
-    name: "Test_Session"
+    name: Test_Session
   delegate_to: localhost
   register: session
 
@@ -17,7 +17,7 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
-      communityString: "public"
+      communityString: public
       destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost
@@ -33,7 +33,7 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
-      communityString: "public"
+      communityString: public
       destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost
@@ -45,7 +45,7 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
-      communityString: "public"
+      communityString: public
       destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 165
   delegate_to: localhost
@@ -73,7 +73,7 @@
     state: present
     name: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
     data:
-      communityString: "public"
+      communityString: public
       destination: "{{ contents.appliance_device_snmp_v1_trap_destinations.destination_address }}"
       port: 162
   delegate_to: localhost
