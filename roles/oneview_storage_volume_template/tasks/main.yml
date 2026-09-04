@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_storage_volume_template_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_volume_template_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_storage_volume_template_session
 
 - name: Retrieve the Root Storage Volume Template
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
     params:
       start: 0
       count: 1
@@ -23,15 +23,15 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    svt_root_uri: "{{ storage_volume_templates[0]['uri'] }}"
+    oneview_storage_volume_template_svt_root_uri: "{{ storage_volume_templates[0]['uri'] }}"
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: svt_root_uri
+    var: oneview_storage_volume_template_svt_root_uri
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
   oneview_storage_pool_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -40,12 +40,12 @@
 
 - name: Create a Storage Volume Template
   oneview_storage_volume_template:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.storage_volume.volume_template_name }}"
-      rootTemplateUri: "{{ svt_root_uri }}"
+      name: "{{ oneview_storage_volume_template_contents.storage_volume.volume_template_name }}"
+      rootTemplateUri: "{{ oneview_storage_volume_template_svt_root_uri }}"
       properties:
         name:
           meta:
@@ -120,12 +120,12 @@
 
 - name: Update a Storage Volume Template provisioning type
   oneview_storage_volume_template:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.storage_volume.volume_template_name }}"
-      rootTemplateUri: "{{ svt_root_uri }}"
+      name: "{{ oneview_storage_volume_template_contents.storage_volume.volume_template_name }}"
+      rootTemplateUri: "{{ oneview_storage_volume_template_svt_root_uri }}"
       properties:
         provisioningType:
           default: Thin
@@ -133,12 +133,12 @@
 
 - name: Does not update when Storage Volume Template already as expected
   oneview_storage_volume_template:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.storage_volume.volume_template_name }}"
-      rootTemplateUri: "{{ svt_root_uri }}"
+      name: "{{ oneview_storage_volume_template_contents.storage_volume.volume_template_name }}"
+      rootTemplateUri: "{{ oneview_storage_volume_template_svt_root_uri }}"
       properties:
         provisioningType:
           default: Thin
@@ -147,14 +147,14 @@
 # Commenting it to ensure continuity with automation script
 # - name: Delete the Storage Volume Template
 #   oneview_storage_volume_template:
-#     config: "{{ config }}"
+#     config: "{{ oneview_storage_volume_template_config }}"
 #     state: absent
 #     data:
-#         name: '{{ contents.storage_volume.volume_template_name }}'
+#         name: '{{ oneview_storage_volume_template_contents.storage_volume.volume_template_name }}'
 #   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_config }}"
+    sessionID: "{{ oneview_storage_volume_template_session.ansible_facts.session }}"
   delegate_to: localhost

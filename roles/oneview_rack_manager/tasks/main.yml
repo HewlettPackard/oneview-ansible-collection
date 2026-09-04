@@ -1,31 +1,31 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_rack_manager_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_rack_manager_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_rack_manager_session
 
 - name: Add a Rack Manager
   oneview_rack_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
     state: present
     data:
-      hostname: "{{ contents.rack_manager.rack_manager_hostname }}"
-      username: "{{ contents.rack_manager.rack_manager_username }}"
-      password: "{{ contents.rack_manager.rack_manager_password }}"
+      hostname: "{{ oneview_rack_manager_contents.rack_manager.rack_manager_hostname }}"
+      username: "{{ oneview_rack_manager_contents.rack_manager.rack_manager_username }}"
+      password: "{{ oneview_rack_manager_contents.rack_manager.rack_manager_password }}"
       force: false
   delegate_to: localhost
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -33,49 +33,49 @@
     var: rack_managers
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    rack_manager_name: "{{ rack_managers[0]['name'] }}"
+    oneview_rack_manager_rack_manager_name: "{{ rack_managers[0]['name'] }}"
 
 - name: Do nothing when the rack manager is already present
   oneview_rack_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
     state: present
     data:
-      hostname: "{{ rack_manager_name }}"
-      username: "{{ contents.rack_manager.rack_manager_username }}"
-      password: "{{ contents.rack_manager.rack_manager_password }}"
+      hostname: "{{ oneview_rack_manager_rack_manager_name }}"
+      username: "{{ oneview_rack_manager_contents.rack_manager.rack_manager_username }}"
+      password: "{{ oneview_rack_manager_contents.rack_manager.rack_manager_password }}"
       force: false
   delegate_to: localhost
 
 - name: Refresh the rack manager
   oneview_rack_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-      name: "{{ rack_manager_name }}"
+      name: "{{ oneview_rack_manager_rack_manager_name }}"
   delegate_to: localhost
 
 - name: Remove the rack manager by its name
   oneview_rack_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ rack_manager_name }}"
+      name: "{{ oneview_rack_manager_rack_manager_name }}"
   delegate_to: localhost
 
 - name: Do nothing when the rack manager is already removed
   oneview_rack_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ rack_manager_name }}"
+      name: "{{ oneview_rack_manager_rack_manager_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_config }}"
+    sessionID: "{{ oneview_rack_manager_session.ansible_facts.session }}"
   delegate_to: localhost

@@ -1,38 +1,38 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_logical_interconnect_group_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_logical_interconnect_group_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_logical_interconnect_group_config_file.api_version == ""
+  register: oneview_logical_interconnect_group_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_logical_interconnect_group_current_version: "{{ oneview_logical_interconnect_group_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_logical_interconnect_group_config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   ansible.builtin.set_fact:
-    current_version: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_logical_interconnect_group_current_version: oneview_logical_interconnect_group_config_file.api_version | string
+  when: oneview_logical_interconnect_group_config_file.api_version != ""
 
 # Below task creates a Logical Interconnect Group with Interconnects, InternalNetworks, upLinkPorts, uplinkSets containing EthernetNetworks
 - name: Create a Logical Interconnect Group
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ item.name }}"
@@ -121,7 +121,7 @@
                   type: Enclosure
                 - relativeValue: 6
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 2
             logicalLocation:
               locationEntries:
@@ -129,7 +129,7 @@
                   type: Enclosure
                 - relativeValue: 6
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
           - enclosureIndex: 2
             logicalLocation:
               locationEntries:
@@ -137,7 +137,7 @@
                   type: Enclosure
                 - relativeValue: 3
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 3
             logicalLocation:
               locationEntries:
@@ -145,7 +145,7 @@
                   type: Enclosure
                 - relativeValue: 3
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
               locationEntries:
@@ -153,7 +153,7 @@
                   type: Enclosure
                 - relativeValue: 6
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_2 }}"
           - enclosureIndex: 1
             logicalLocation:
               locationEntries:
@@ -161,7 +161,7 @@
                   type: Enclosure
                 - relativeValue: 3
                   type: Bay
-            permittedInterconnectTypeName: "{{ contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
+            permittedInterconnectTypeName: "{{ oneview_logical_interconnect_group_contents.logical_interconnect_group.permitted_interconnect_type_name_1 }}"
             # Alternatively you can inform permittedInterconnectTypeUri
   delegate_to: localhost
   with_items:
@@ -170,8 +170,8 @@
 
 - name: Do nothing with the Logical Interconnect Group when no changes are provided
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Logical Interconnect Group
@@ -180,8 +180,8 @@
 
 - name: Update the Logical Interconnect Group by adding an uplink set "e23 uplink set2" with an Ethernet network
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Logical Interconnect Group
@@ -207,8 +207,8 @@
 # Below task is supported only with OneView 3.10
 - name: Update the Logical Interconnect Group with two scopes
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Logical Interconnect Group
@@ -218,8 +218,8 @@
 
 - name: Rename the Logical Interconnect Group to 'Updated Logical Interconnect Group'
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Logical Interconnect Group
@@ -228,26 +228,26 @@
 
 - name: Delete the Logical Interconnect Group
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: absent
     data:
       name: Updated Logical Interconnect Group
   delegate_to: localhost
-  register: deleted
+  register: oneview_logical_interconnect_group_deleted
 
 - name: Do nothing when the Logical Interconnect Group is absent
   hpe.oneview.oneview_logical_interconnect_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
     state: absent
     data:
       name: Updated Logical Interconnect Group
   delegate_to: localhost
-  register: deleted
+  register: oneview_logical_interconnect_group_deleted
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_session.ansible_facts.session }}"
   delegate_to: localhost

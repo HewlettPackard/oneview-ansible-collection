@@ -1,105 +1,105 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_certificates_server_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_certificates_server_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_certificates_server_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_certificates_server_config_file.api_version == ""
+  register: oneview_certificates_server_version
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    remote: "{{ contents.certificates_server.remote_server }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
+    remote: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+    oneview_certificates_server_certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
 
 - name: Create a Server Certificate
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.certificates_server.remote_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ contents.certificates_server.remote_server }}"
-          base64Data: "{{ certificate }}"
+        - aliasName: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
+          base64Data: "{{ oneview_certificates_server_certificate }}"
   delegate_to: localhost
-  register: svr_cert
+  register: oneview_certificates_server_svr_cert
 
 - name: Do nothing with the Server Certificate when no changes are provided
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.certificates_server.remote_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
     data:
       category: certificates
   delegate_to: localhost
 
 - name: Update the Server Certificate changing the attribute name
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.certificates_server.remote_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
     data:
       name: test
       certificateDetails:
-        - aliasName: "{{ contents.certificates_server.remote_server }}"
-          base64Data: "{{ certificate }}"
+        - aliasName: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
+          base64Data: "{{ oneview_certificates_server_certificate }}"
   delegate_to: localhost
 
 - name: Delete the Server Certificate
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.certificates_server.remote_server }}"
-    data: "{{ svr_cert.ansible_facts.certificate_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
+    data: "{{ oneview_certificates_server_svr_cert.ansible_facts.certificate_server }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_certificates_server_deleted
 
 - name: Do nothing when Server Certificate is absent
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.certificates_server.remote_server }}"
-    data: "{{ svr_cert.ansible_facts.certificate_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
+    data: "{{ oneview_certificates_server_svr_cert.ansible_facts.certificate_server }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_certificates_server_deleted
 
 - name: Re-create a Server Certificate to support automation
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.certificates_server.remote_server }}"
+    name: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ contents.certificates_server.remote_server }}"
-          base64Data: "{{ certificate }}"
+        - aliasName: "{{ oneview_certificates_server_contents.certificates_server.remote_server }}"
+          base64Data: "{{ oneview_certificates_server_certificate }}"
   delegate_to: localhost
-  register: svr_cert
+  register: oneview_certificates_server_svr_cert
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_config }}"
+    sessionID: "{{ oneview_certificates_server_session.ansible_facts.session }}"
   delegate_to: localhost

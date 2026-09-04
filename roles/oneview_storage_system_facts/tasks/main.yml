@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_storage_system_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_system_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_storage_system_facts_session
 
 - name: Gather facts about all Storage Systems
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,8 +22,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Storage Systems
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -35,9 +35,9 @@
 
 - name: Gather facts about a Storage System by IP (storage_hostname)
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    storage_hostname: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -46,9 +46,9 @@
 
 - name: Gather facts about a Storage System by IP (hostname)
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    storage_hostname: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -57,9 +57,9 @@
 
 - name: Gather facts about a Storage System by name
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_system.storage_system_name }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -68,8 +68,8 @@
 
 - name: Gather facts about Storage System - Host Types
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
     options:
       - hostTypes
   delegate_to: localhost
@@ -80,9 +80,9 @@
 
 - name: Gather facts about Storage Pools of a Storage System by name
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_system.storage_system_name }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_name }}"
     options: storagePools
   delegate_to: localhost
 
@@ -92,8 +92,8 @@
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -102,9 +102,9 @@
 
 - name: Gather queried facts about Storage System reachable ports
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    storage_hostname: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_ip }}"
     options:
       - reachablePorts:
           networks:
@@ -118,9 +118,9 @@
 
 - name: Gather facts about the Storage System storage templates
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
+    storage_hostname: "{{ oneview_storage_system_facts_contents.storage_system.storage_system_ip }}"
     options:
       - templates
     params:
@@ -132,6 +132,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_system_facts_config }}"
+    sessionID: "{{ oneview_storage_system_facts_session.ansible_facts.session }}"
   delegate_to: localhost

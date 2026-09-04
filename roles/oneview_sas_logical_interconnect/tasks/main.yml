@@ -1,55 +1,55 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_logical_interconnect_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_sas_logical_interconnect_session
 
 - name: Gather facts about all SAS Logical Interconnects
   oneview_sas_logical_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
+    oneview_sas_logical_interconnect_sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
 
 - name: Return the SAS Logical Interconnect to a consistent state
   oneview_sas_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
     state: compliance
     data:
-      name: "{{ sas_logical_interconnect_name }}"
+      name: "{{ oneview_sas_logical_interconnect_sas_logical_interconnect_name }}"
   delegate_to: localhost
-  register: result
+  register: oneview_sas_logical_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
+    var: oneview_sas_logical_interconnect_result.msg
 
 - name: Update the configuration on the logical interconnect
   oneview_sas_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
     state: apply_configuration
     data:
-      name: "{{ sas_logical_interconnect_name }}"
+      name: "{{ oneview_sas_logical_interconnect_sas_logical_interconnect_name }}"
   delegate_to: localhost
-  register: result
+  register: oneview_sas_logical_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
+    var: oneview_sas_logical_interconnect_result.msg
 
 - name: Gather facts about all Firmware Drivers
   oneview_firmware_driver_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -58,11 +58,11 @@
 
 # - name: Installs firmware to the member interconnects of a logical interconnect
 #   oneview_sas_logical_interconnect:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_sas_logical_interconnect_config }}"
+#     sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
 #     state: update_firmware
 #     data:
-#       name: "{{ sas_logical_interconnect_name }}"
+#       name: "{{ oneview_sas_logical_interconnect_sas_logical_interconnect_name }}"
 #       firmware:
 #         command: "Stage"
 #         force: false
@@ -72,17 +72,17 @@
 
 # - name: Replace Drive Enclosure
 #   oneview_sas_logical_interconnect:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_sas_logical_interconnect_config }}"
+#     sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
 #     state: replace_drive_enclosure
 #     data:
-#       name: "{{ sas_logical_interconnect_name }}"
+#       name: "{{ oneview_sas_logical_interconnect_sas_logical_interconnect_name }}"
 #       driveReplaceConfig:
 #         oldSerialNumber: "SN1100"
 #         newSerialNumber: "SN1101"
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost

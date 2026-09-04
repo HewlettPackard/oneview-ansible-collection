@@ -1,48 +1,48 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_id_pools_ipv4_subnet_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_id_pools_ipv4_subnet_session
 
 - name: Ensure the ID Pools IPV4 Subnet exists
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.id_pools_ipv4_subnet.subnet_name }}"
-      type: "{{ contents.id_pools_ipv4_subnet.type }}"
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
-      subnetmask: "{{ contents.id_pools_ipv4_subnet.subnetmask }}"
-      gateway: "{{ contents.id_pools_ipv4_subnet.gateway }}"
-      domain: "{{ contents.id_pools_ipv4_subnet.domain }}"
-      dnsServers: "{{ contents.id_pools_ipv4_subnet.dnsServers }}"
+      name: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.subnet_name }}"
+      type: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.type }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
+      subnetmask: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.subnetmask }}"
+      gateway: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.gateway }}"
+      domain: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.domain }}"
+      dnsServers: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.dnsServers }}"
   delegate_to: localhost
 
 - name: Do nothing with the ID Pools IPV4 Subnet when no changes are provided
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
-      type: "{{ contents.id_pools_ipv4_subnet.type }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
+      type: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.type }}"
   delegate_to: localhost
 
 - name: Update the ID Pools IPV4 Subnet with awesome.com domain
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
-      domain: "{{ contents.id_pools_ipv4_subnet.newDomain }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
+      domain: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.newDomain }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -51,8 +51,8 @@
 
 - name: Create an Ethernet Network
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
       name: SubnetNet
@@ -68,79 +68,79 @@
 
 - name: Create IPV4 Range
   oneview_id_pools_ipv4_range:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
       name: SubnetRange
       subnetUri: '{{ id_pools_ipv4_subnet["uri"] }}'
       rangeCategory: Custom
       startStopFragments:
-        - startAddress: "{{ contents.id_pools_ipv4_subnet.start_address }}"
-          endAddress: "{{ contents.id_pools_ipv4_subnet.end_address }}"
+        - startAddress: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.start_address }}"
+          endAddress: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.end_address }}"
 
 - name: Allocate the no of IPv4 ID's
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: allocate
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
-      count: "{{ contents.id_pools_ipv4_subnet.count }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
+      count: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.count }}"
   delegate_to: localhost
 
 - name: Get the allocated ID's List
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: collect
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
       idList: '{{ id_pools_ipv4_subnet["idList"] }}'
   delegate_to: localhost
 
 - name: Delete the Ethernet Network
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
     state: absent
     data:
       name: SubnetNet
 
 - name: Delete the ID Pools IPV4 Subnet
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: absent
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
   delegate_to: localhost
 
 - name: Do nothing when ID Pools IPV4 Subnet is absent
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: absent
     data:
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
   delegate_to: localhost
 
 - name: Create the ID Pools IPV4 Subnet for automation
   oneview_id_pools_ipv4_subnet:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.id_pools_ipv4_subnet.subnet_name }}"
-      type: "{{ contents.id_pools_ipv4_subnet.type }}"
-      networkId: "{{ contents.id_pools_ipv4_subnet.network_id }}"
-      subnetmask: "{{ contents.id_pools_ipv4_subnet.subnetmask }}"
-      gateway: "{{ contents.id_pools_ipv4_subnet.gateway }}"
-      domain: "{{ contents.id_pools_ipv4_subnet.domain }}"
-      dnsServers: "{{ contents.id_pools_ipv4_subnet.dnsServers }}"
+      name: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.subnet_name }}"
+      type: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.type }}"
+      networkId: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.network_id }}"
+      subnetmask: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.subnetmask }}"
+      gateway: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.gateway }}"
+      domain: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.domain }}"
+      dnsServers: "{{ oneview_id_pools_ipv4_subnet_contents.id_pools_ipv4_subnet.dnsServers }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_ipv4_subnet_config }}"
+    sessionID: "{{ oneview_id_pools_ipv4_subnet_session.ansible_facts.session }}"
   delegate_to: localhost

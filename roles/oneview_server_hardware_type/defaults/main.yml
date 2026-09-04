@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_server_hardware_type
-config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_server_hardware_type/files/oneview_config.json
-contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_server_hardware_type_config: "{{ role_path }}/files/oneview_config.json"
+oneview_server_hardware_type_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_rack_manager_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_rack_manager_facts_session
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,20 +22,20 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    rack_manager_name: "{{ rack_managers[0]['name'] }}"
+    oneview_rack_manager_facts_rack_manager_name: "{{ rack_managers[0]['name'] }}"
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    rack_manager_uri: "{{ rack_managers[0]['uri'] }}"
+    oneview_rack_manager_facts_rack_manager_uri: "{{ rack_managers[0]['uri'] }}"
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: rack_manager_name
+    var: oneview_rack_manager_facts_rack_manager_name
 
 - name: Gather facts about all Rack Managers
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
     options:
       - chassis
       - partitions
@@ -54,8 +54,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Rack Manager
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 2
@@ -69,32 +69,32 @@
 
 - name: Gather facts about a Rack Manager by name
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ rack_manager_name }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_rack_manager_facts_rack_manager_name }}"
   delegate_to: localhost
 
 - name: Gather facts about a rack manager by uri
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ rack_manager_uri }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_rack_manager_facts_rack_manager_uri }}"
   delegate_to: localhost
 
 - name: Gather chassis facts about a rack manager
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ rack_manager_name }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_rack_manager_facts_rack_manager_name }}"
     options:
       - chassis
   delegate_to: localhost
 
 - name: Gather all facts about a Rack Manager
   oneview_rack_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ rack_manager_name }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_rack_manager_facts_rack_manager_name }}"
     options:
       - chassis # optional
       - partitions # optional
@@ -121,6 +121,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_rack_manager_facts_config }}"
+    sessionID: "{{ oneview_rack_manager_facts_session.ansible_facts.session }}"
   delegate_to: localhost

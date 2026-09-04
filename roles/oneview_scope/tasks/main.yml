@@ -1,37 +1,37 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_scope_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_scope_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_scope_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_scope_config_file.api_version == ""
+  register: oneview_scope_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_scope_current_version: "{{ oneview_scope_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_scope_config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   ansible.builtin.set_fact:
-    current_version: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_scope_current_version: oneview_scope_config_file.api_version | string
+  when: oneview_scope_config_file.api_version != ""
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -40,11 +40,11 @@
 
 - name: Create a scope
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.scope.scope_name }}"
+      name: "{{ oneview_scope_contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -54,11 +54,11 @@
 
 - name: Create a scope when exists
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.scope.scope_name }}"
+      name: "{{ oneview_scope_contents.scope.scope_name }}"
       addedResourceUris:
         - "{{ ethernet_networks[0]['uri'] }}"
         - "{{ ethernet_networks[1]['uri'] }}"
@@ -68,12 +68,12 @@
 
 - name: Update the scope name
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.scope.scope_name }}"
-      newName: "{{ contents.scope.scope_name }}_Renamed"
+      name: "{{ oneview_scope_contents.scope.scope_name }}"
+      newName: "{{ oneview_scope_contents.scope.scope_name }}_Renamed"
       addedResourceUris:
         - "{{ ethernet_networks[2]['uri'] }}"
       removedResourceUris:
@@ -83,11 +83,11 @@
 # This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, adding a resource
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
-      name: "{{ contents.scope.scope_name }}_Renamed"
+      name: "{{ oneview_scope_contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         addedResourceUris: "{{ ethernet_networks[0]['uri'] }}"
   delegate_to: localhost
@@ -96,11 +96,11 @@
 # This method is available only for api versin 300 and is non-idempotent
 - name: Update the scope resource assignments, removing two resources
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: resource_assignments_updated
     data:
-      name: "{{ contents.scope.scope_name }}_Renamed"
+      name: "{{ oneview_scope_contents.scope.scope_name }}_Renamed"
       resourceAssignments:
         removedResourceUris:
           - "{{ ethernet_networks[0]['uri'] }}"
@@ -110,24 +110,24 @@
 
 - name: Delete the Scope
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.scope.scope_name }}_Renamed"
+      name: "{{ oneview_scope_contents.scope.scope_name }}_Renamed"
   delegate_to: localhost
 
 - name: Create a scope to ensure continuity for an automation script
   oneview_scope:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.scope.scope_name }}"
+      name: "{{ oneview_scope_contents.scope.scope_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_config }}"
+    sessionID: "{{ oneview_scope_session.ansible_facts.session }}"
   delegate_to: localhost

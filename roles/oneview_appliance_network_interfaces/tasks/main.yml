@@ -1,34 +1,34 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_appliance_network_interfaces_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_network_interfaces_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_appliance_network_interfaces_session
 
 - name: Creates Network Interface if doesn't exist
   oneview_appliance_network_interfaces:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interfaces_config }}"
+    sessionID: "{{ oneview_appliance_network_interfaces_session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{ mac_address }}"
+      macAddress: "{{ oneview_appliance_network_interfaces_mac_address }}"
       ipv4Type: STATIC
       ipv6Type: UNCONFIGURE
-      hostname: "{{ hostname }}"
-      app1Ipv4Addr: "{{ app1_ipv4_address }}"
-      app2Ipv4Addr: "{{ app2_ipv4_address }}"
-      virtIpv4Addr: "{{ ipv4_address }}"
-      ipv4Subnet: "{{ ipv4_subnet }}"
-      ipv4Gateway: "{{ gateway }}"
+      hostname: "{{ oneview_appliance_network_interfaces_hostname }}"
+      app1Ipv4Addr: "{{ oneview_appliance_network_interfaces_app1_ipv4_address }}"
+      app2Ipv4Addr: "{{ oneview_appliance_network_interfaces_app2_ipv4_address }}"
+      virtIpv4Addr: "{{ oneview_appliance_network_interfaces_ipv4_address }}"
+      ipv4Subnet: "{{ oneview_appliance_network_interfaces_ipv4_subnet }}"
+      ipv4Gateway: "{{ oneview_appliance_network_interfaces_gateway }}"
       ipv4NameServers:
-        - "{{ dns_server_1 }}"
-        - "{{ dns_server_2 }}"
-        - "{{ dns_server_3 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_1 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_2 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_3 }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -37,22 +37,22 @@
 
 - name: Do nothing when network interface exists
   oneview_appliance_network_interfaces:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interfaces_config }}"
+    sessionID: "{{ oneview_appliance_network_interfaces_session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{ mac_address }}"
+      macAddress: "{{ oneview_appliance_network_interfaces_mac_address }}"
       ipv4Type: STATIC
       ipv6Type: UNCONFIGURE
-      hostname: "{{ hostname }}"
-      app1Ipv4Addr: "{{ app1_ipv4_address }}"
-      app2Ipv4Addr: "{{ app2_ipv4_address }}"
-      virtIpv4Addr: "{{ ipv4_address }}"
-      ipv4Subnet: "{{ ipv4_subnet }}"
-      ipv4Gateway: "{{ gateway }}"
+      hostname: "{{ oneview_appliance_network_interfaces_hostname }}"
+      app1Ipv4Addr: "{{ oneview_appliance_network_interfaces_app1_ipv4_address }}"
+      app2Ipv4Addr: "{{ oneview_appliance_network_interfaces_app2_ipv4_address }}"
+      virtIpv4Addr: "{{ oneview_appliance_network_interfaces_ipv4_address }}"
+      ipv4Subnet: "{{ oneview_appliance_network_interfaces_ipv4_subnet }}"
+      ipv4Gateway: "{{ oneview_appliance_network_interfaces_gateway }}"
       ipv4NameServers:
-        - "{{ dns_server_1 }}"
-        - "{{ dns_server_2 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_1 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_2 }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -60,14 +60,14 @@
 
 - name: Updates dns servers of the network interface
   oneview_appliance_network_interfaces:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interfaces_config }}"
+    sessionID: "{{ oneview_appliance_network_interfaces_session.ansible_facts.session }}"
     state: present
     data:
-      macAddress: "{{ mac_address }}"
+      macAddress: "{{ oneview_appliance_network_interfaces_mac_address }}"
       ipv4NameServers:
-        - "{{ dns_server_1 }}"
-        - "{{ dns_server_3 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_1 }}"
+        - "{{ oneview_appliance_network_interfaces_dns_server_3 }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -75,6 +75,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interfaces_config }}"
+    sessionID: "{{ oneview_appliance_network_interfaces_session.ansible_facts.session }}"
   delegate_to: localhost

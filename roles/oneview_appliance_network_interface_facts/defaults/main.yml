@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_appliance_network_interface_facts
-config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_network_interface_facts/files/oneview_config.json
-contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_appliance_network_interface_facts_config: "{{ role_path }}/files/oneview_config.json"
+oneview_appliance_network_interface_facts_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

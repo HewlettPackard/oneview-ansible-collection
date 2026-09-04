@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_interconnect
-config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_interconnect/files/oneview_config.json
-config_file: "{{ lookup('file', config) }}"
-contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_interconnect_config: "{{ role_path }}/files/oneview_config.json"
+oneview_interconnect_config_file: "{{ lookup('file', oneview_interconnect_config) }}"
+oneview_interconnect_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

@@ -1,55 +1,55 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_firmware_driver_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_firmware_driver_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_firmware_driver_session
 
 - name: Create the Firmware Driver
   oneview_firmware_driver:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_driver_config }}"
+    sessionID: "{{ oneview_firmware_driver_session.ansible_facts.session }}"
     state: present
     data:
-      customBaselineName: "{{ contents.firmware_driver.firmware_name }}"
-      baselineName: "{{ contents.firmware_driver.baseline_firmware_name }}"
-      hotfixNames: "{{ contents.firmware_driver.hotfix_firmware_list }}"
+      customBaselineName: "{{ oneview_firmware_driver_contents.firmware_driver.firmware_name }}"
+      baselineName: "{{ oneview_firmware_driver_contents.firmware_driver.baseline_firmware_name }}"
+      hotfixNames: "{{ oneview_firmware_driver_contents.firmware_driver.hotfix_firmware_list }}"
   delegate_to: localhost
 
 - name: Create the Firmware Driver if already present
   oneview_firmware_driver:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_driver_config }}"
+    sessionID: "{{ oneview_firmware_driver_session.ansible_facts.session }}"
     state: present
     data:
-      customBaselineName: "{{ contents.firmware_driver.firmware_name }}"
-      baselineName: "{{ contents.firmware_driver.baseline_firmware_name }}"
-      hotfixNames: "{{ contents.firmware_driver.hotfix_firmware_list }}"
+      customBaselineName: "{{ oneview_firmware_driver_contents.firmware_driver.firmware_name }}"
+      baselineName: "{{ oneview_firmware_driver_contents.firmware_driver.baseline_firmware_name }}"
+      hotfixNames: "{{ oneview_firmware_driver_contents.firmware_driver.hotfix_firmware_list }}"
   delegate_to: localhost
 
 - name: Delete the Firmware Driver
   oneview_firmware_driver:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_driver_config }}"
+    sessionID: "{{ oneview_firmware_driver_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.firmware_driver.firmware_name }}"
+    name: "{{ oneview_firmware_driver_contents.firmware_driver.firmware_name }}"
   delegate_to: localhost
 
 - name: Do nothing when Firmware Driver is absent
   oneview_firmware_driver:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_driver_config }}"
+    sessionID: "{{ oneview_firmware_driver_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.firmware_driver.firmware_name }}"
+    name: "{{ oneview_firmware_driver_contents.firmware_driver.firmware_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_driver_config }}"
+    sessionID: "{{ oneview_firmware_driver_session.ansible_facts.session }}"
   delegate_to: localhost

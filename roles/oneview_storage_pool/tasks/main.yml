@@ -1,38 +1,38 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_storage_pool_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_pool_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_storage_pool_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_pool_config }}"
+    sessionID: "{{ oneview_storage_pool_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_storage_pool_config_file.api_version == ""
+  register: oneview_storage_pool_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_storage_pool_current_version: "{{ oneview_storage_pool_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_storage_pool_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    current_version: contents.api_version | string
-  when: config_file.api_version != ""
+    oneview_storage_pool_current_version: contents.api_version | string
+  when: oneview_storage_pool_config_file.api_version != ""
 
 - name: Gather facts about a Storage System by name
   oneview_storage_system_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_system.storage_system_name }}"
+    config: "{{ oneview_storage_pool_config }}"
+    sessionID: "{{ oneview_storage_pool_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_pool_contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -40,32 +40,32 @@
     var: storage_systems
 
 # To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
-- name: Ensure the Storage Pool is not managed '{{ contents.storage_pool.storage_pool_name }}'
+- name: Ensure the Storage Pool is not managed '{{ oneview_storage_pool_contents.storage_pool.storage_pool_name }}'
   oneview_storage_pool:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_pool_config }}"
+    sessionID: "{{ oneview_storage_pool_session.ansible_facts.session }}"
     state: present
     data:
       storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-      name: "{{ contents.storage_pool.storage_pool_name }}"
+      name: "{{ oneview_storage_pool_contents.storage_pool.storage_pool_name }}"
       isManaged: false
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
 
-- name: Ensure the Storage Pool is managed '{{ contents.storage_pool.storage_pool_name }}'
+- name: Ensure the Storage Pool is managed '{{ oneview_storage_pool_contents.storage_pool.storage_pool_name }}'
   oneview_storage_pool:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_pool_config }}"
+    sessionID: "{{ oneview_storage_pool_session.ansible_facts.session }}"
     state: present
     data:
       storageSystemUri: "{{ storage_systems[0]['uri'] }}"
-      name: "{{ contents.storage_pool.storage_pool_name }}"
+      name: "{{ oneview_storage_pool_contents.storage_pool.storage_pool_name }}"
       isManaged: true
   delegate_to: localhost
   when: (storage_systems is not none and storage_systems is not undefined)
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_pool_config }}"
+    sessionID: "{{ oneview_storage_pool_session.ansible_facts.session }}"
   delegate_to: localhost

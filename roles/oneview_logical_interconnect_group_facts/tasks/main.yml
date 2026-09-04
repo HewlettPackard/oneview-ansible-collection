@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_logical_interconnect_group_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_logical_interconnect_group_facts_session
 
 - name: Gather facts about all Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,8 +22,8 @@
 
 - name: Gather paginated, filtered, and sorted facts about Logical Interconnect Groups
   oneview_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -36,8 +36,8 @@
 
 - name: Gather facts about a Scope by name
   oneview_scope_facts:
-    config: "{{ config }}"
-    name: "{{ contents.scope.scope_name }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    name: "{{ oneview_logical_interconnect_group_facts_contents.scope.scope_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -46,8 +46,8 @@
 
 - name: Gather facts about Logical Interconnect Group by scope_uris
   oneview_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_facts_session.ansible_facts.session }}"
     params:
       scope_uris: "{{ scopes[0]['uri'] }}"
 
@@ -57,8 +57,8 @@
 
 - name: Gather facts about a Logical Interconnect Group by name
   oneview_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_facts_session.ansible_facts.session }}"
     name: LIG
   delegate_to: localhost
 
@@ -68,6 +68,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_logical_interconnect_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost

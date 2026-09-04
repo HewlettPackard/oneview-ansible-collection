@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_fc_network_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_fc_network_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_fc_network_facts_session
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,8 +22,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -36,8 +36,8 @@
 
 - name: Gather facts about a Fibre Channel Network by name
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
     name: "{{ fc_networks[0]['name'] }}"
   delegate_to: localhost
   when: fc_networks | default('', True)
@@ -48,6 +48,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
   delegate_to: localhost

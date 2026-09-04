@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_appliance_configuration_timeconfig_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_configuration_timeconfig_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_appliance_configuration_timeconfig_facts_session
 
 - name: Gather Facts about Oneview Appliance time configuration
   oneview_appliance_configuration_timeconfig_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_configuration_timeconfig_facts_config }}"
+    sessionID: "{{ oneview_appliance_configuration_timeconfig_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,6 +22,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_configuration_timeconfig_facts_config }}"
+    sessionID: "{{ oneview_appliance_configuration_timeconfig_facts_session.ansible_facts.session }}"
   delegate_to: localhost

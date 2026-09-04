@@ -1,21 +1,21 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_enclosure_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_enclosure_session
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
-- name: Ensure the Enclosure framelink with ipv6 is present '{{ contents.enclosure.enclosure_framelink_ipv6 }}'
+    var: oneview_enclosure_session
+- name: Ensure the Enclosure framelink with ipv6 is present '{{ oneview_enclosure_contents.enclosure.enclosure_framelink_ipv6 }}'
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: present
     data:
-      hostname: "{{ contents.enclosure.enclosure_framelink_ipv6 }}"
-  when: contents.enclosure.variant == 'Synergy' and contents.enclosure.enclosure_framelink_ipv6 is defined
+      hostname: "{{ oneview_enclosure_contents.enclosure.enclosure_framelink_ipv6 }}"
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy' and contents.enclosure.enclosure_framelink_ipv6 is defined
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -36,12 +36,12 @@
 
 - name: Update the name of the enclosure to "Test-Enclosure-Renamed"
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: present
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       newName: Test-Enclosure-Renamed
   delegate_to: localhost
 
@@ -55,32 +55,32 @@
 
 - name: Update the name of the rack to "Rack-Renamed" and rename the Enclosure again
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: present
     validate_etag: false
     data:
       name: Test-Enclosure-Renamed
-      newName: "{{ contents.enclosure.enclosure_name }}"
+      newName: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       rackName: Rack-Renamed
   delegate_to: localhost
 
 - name: Reconfigure the enclosure
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: reconfigured
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 - name: Refresh the enclosure along with all of its components
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       refreshState: RefreshPending
   delegate_to: localhost
 
@@ -94,28 +94,28 @@
 
 - name: Create certificate signing request for Synergy
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: create_certificate_request
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
-      type: "{{ contents.enclosure.csr_data_type }}"
-      organization: "{{ contents.enclosure.organization }}"
-      organizationalUnit: "{{ contents.enclosure.organizationalUnit }}"
-      locality: "{{ contents.enclosure.locality }}"
-      state: "{{ contents.enclosure.state }}"
-      country: "{{ contents.enclosure.country }}"
-      commonName: "{{ contents.enclosure.commonName }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
+      type: "{{ oneview_enclosure_contents.enclosure.csr_data_type }}"
+      organization: "{{ oneview_enclosure_contents.enclosure.organization }}"
+      organizationalUnit: "{{ oneview_enclosure_contents.enclosure.organizationalUnit }}"
+      locality: "{{ oneview_enclosure_contents.enclosure.locality }}"
+      state: "{{ oneview_enclosure_contents.enclosure.state }}"
+      country: "{{ oneview_enclosure_contents.enclosure.country }}"
+      commonName: "{{ oneview_enclosure_contents.enclosure.commonName }}"
   delegate_to: localhost
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 - name: Get certificate signing request for Synergy
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: get_certificate_request
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
@@ -128,279 +128,279 @@
 
 - name: Import certificate signing request
   hpe.oneview.oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: import_certificate_request
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
-      type: "{{ contents.enclosure.cert_data_type }}"
-      base64Data: "{{ contents.enclosure.base64Data }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
+      type: "{{ oneview_enclosure_contents.enclosure.cert_data_type }}"
+      base64Data: "{{ oneview_enclosure_contents.enclosure.base64Data }}"
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance bay power state on
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: appliance_bays_powered_on
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 1
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance UID state off
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: uid_off
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
-  when: contents.enclosure.variant == 'Synergy'
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the appliance UID state on
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: uid_on
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
-  when: contents.enclosure.variant == 'Synergy'
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the UID for the Synergy Frame Link Module state on
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: manager_bays_uid_on
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 1
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the UID for the Synergy Frame Link Module state off
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: manager_bays_uid_off
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 1
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the Synergy Frame Link Module bay 1
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: manager_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 1
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Reset the Synergy Frame Link Module bay 2
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: manager_bays_power_state_reset
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 2
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the appliance bay 1
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: appliance_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 1
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the device bay 10
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: device_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 10
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Reset the device bay 11
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: device_bays_power_state_reset
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 11
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: E-Fuse the IC bay 3
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: interconnect_bays_power_state_e_fuse
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 3
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Set the active Synergy Frame Link Module on bay 2
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: manager_bays_role_active
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 2
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy.
 - name: Release IPv4 address in the device bay 3
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: device_bays_ipv4_removed
     validate_etag: false
     data:
       name: "{{ enclosure_name }}"
       bayNumber: 3
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # This state is only available on HPE Synergy
 - name: Release IPv4 address in the interconnect bay 6
   oneview_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
     state: interconnect_bays_ipv4_removed
     validate_etag: false
     data:
-      name: "{{ contents.enclosure.enclosure_name }}"
+      name: "{{ oneview_enclosure_contents.enclosure.enclosure_name }}"
       bayNumber: 6
-  when: contents.enclosure.variant == 'Synergy'
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
-  register: result
+  register: oneview_enclosure_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: contents.enclosure.variant == 'Synergy'
+    var: oneview_enclosure_result.msg
+  when: oneview_enclosure_contents.enclosure.variant == 'Synergy'
 
 # - name: Remove the Enclosure
 #   oneview_enclosure:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_enclosure_config }}"
+#     sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
 #     state: absent
 #     data:
 #       name: '{{ enclosure_name }}'
@@ -408,8 +408,8 @@
 
 # - name: Do nothing when Enclosure is absent
 #   oneview_enclosure:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_enclosure_config }}"
+#     sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
 #     state: absent
 #     data:
 #       name: '{{ enclosure_name }}'
@@ -417,6 +417,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_config }}"
+    sessionID: "{{ oneview_enclosure_session.ansible_facts.session }}"
   delegate_to: localhost

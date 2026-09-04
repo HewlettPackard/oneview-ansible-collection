@@ -1,13 +1,13 @@
 ---
 # defaults file for oneview_appliance_network_interfaces
-config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_network_interfaces/files/oneview_config.json
-mac_address: <mac_address>
-hostname: ci-00505698f13e.com
-app1_ipv4_address: <ip1>
-app2_ipv4_address: <ip2>
-ipv4_address: <ip_address>
-ipv4_subnet: <subnet_id>
-gateway: <gateway>
-dns_server_1: <dns1>
-dns_server_2: <dns2>
-dns_server_3: <dns3>
+oneview_appliance_network_interfaces_config: "{{ role_path }}/files/oneview_config.json"
+oneview_appliance_network_interfaces_mac_address: <mac_address>
+oneview_appliance_network_interfaces_hostname: ci-00505698f13e.com
+oneview_appliance_network_interfaces_app1_ipv4_address: <ip1>
+oneview_appliance_network_interfaces_app2_ipv4_address: <ip2>
+oneview_appliance_network_interfaces_ipv4_address: <ip_address>
+oneview_appliance_network_interfaces_ipv4_subnet: <subnet_id>
+oneview_appliance_network_interfaces_gateway: <gateway>
+oneview_appliance_network_interfaces_dns_server_1: <dns1>
+oneview_appliance_network_interfaces_dns_server_2: <dns2>
+oneview_appliance_network_interfaces_dns_server_3: <dns3>

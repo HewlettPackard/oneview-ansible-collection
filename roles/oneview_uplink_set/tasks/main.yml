@@ -1,7 +1,7 @@
 ---
 - name: Create an Ethernet Network
   oneview_ethernet_network:
-    config: "{{ config }}"
+    config: "{{ oneview_uplink_set_config }}"
     state: present
     data:
       name: OneViewSDK Test Ethernet Network on Logical Interconnect
@@ -17,24 +17,24 @@
 
 - name: Gather facts about a Logical Interconnect by name
   oneview_logical_interconnect_facts:
-    config: "{{ config }}"
+    config: "{{ oneview_uplink_set_config }}"
     name: LE-LIG
 
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_uplink_set_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_uplink_set_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_uplink_set_session
 
 - name: Gather facts about all Ethernet Networks
   oneview_ethernet_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -43,8 +43,8 @@
 
 - name: Ensure that the Uplink Set is present
   oneview_uplink_set:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Uplink Set
@@ -65,8 +65,8 @@
 
 - name: Update the Uplink Set changing the value of the attribute description to 'New Description'
   oneview_uplink_set:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Uplink Set
@@ -76,8 +76,8 @@
 
 - name: Rename the Uplink Set to 'Updated Uplink Set'
   oneview_uplink_set:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
     state: present
     data:
       name: Test Uplink Set
@@ -89,17 +89,17 @@
 
 - name: Delete the Uplink Set
   oneview_uplink_set:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
     state: absent
     data:
       name: Updated Uplink Set
       logicalInterconnectUri: "{{ logical_interconnects['uri'] }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_uplink_set_deleted
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_uplink_set_config }}"
+    sessionID: "{{ oneview_uplink_set_session.ansible_facts.session }}"
   delegate_to: localhost

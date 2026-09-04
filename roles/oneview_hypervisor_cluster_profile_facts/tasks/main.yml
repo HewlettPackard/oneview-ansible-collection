@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_hypervisor_cluster_profile_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_hypervisor_cluster_profile_facts_session
 
 - name: Gather facts about all Hypervisor Cluster Profiles
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,8 +22,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Hypervisor Cluster Profiles
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -35,8 +35,8 @@
 
 - name: Gather facts about a Hypervisor Cluster Profile by name
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
     name: hcp
   delegate_to: localhost
 
@@ -46,8 +46,8 @@
 
 - name: Gather facts about a Hypervisor Cluster Profile by uri
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
     uri: "{{ hypervisor_cluster_profiles[0]['uri'] }}"
   delegate_to: localhost
 
@@ -57,8 +57,8 @@
 
 - name: Gather all facts about a Hypervisor Cluster Profile
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
     name: ClusterProfile
     options:
       - compliancePreview
@@ -73,6 +73,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
   delegate_to: localhost

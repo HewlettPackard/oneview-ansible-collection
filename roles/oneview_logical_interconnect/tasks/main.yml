@@ -1,79 +1,80 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_logical_interconnect_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_logical_interconnect_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_logical_interconnect_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_logical_interconnect_config_file.api_version == ""
+  register: oneview_logical_interconnect_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_logical_interconnect_current_version: "{{ oneview_logical_interconnect_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_logical_interconnect_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    current_version: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_logical_interconnect_current_version: oneview_logical_interconnect_config_file.api_version | string
+  when: oneview_logical_interconnect_config_file.api_version != ""
 
 # Below task is supported only with C7000 Hardware
 - name: Update the Ethernet interconnect settings for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: ethernet_settings_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         macRefreshInterval: 11
   delegate_to: localhost
-  when: contents.logical_interconnect.variant == 'C7000'
+  when: oneview_logical_interconnect_contents.logical_interconnect.variant == 'C7000'
 
 # Below task is supported only with Synergy Hardware
 - name: Update the Ethernet interconnect settings for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: ethernet_settings_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         stormControlThreshold: 15
   delegate_to: localhost
-  when: contents.logical_interconnect.variant == 'Synergy'
+  when: oneview_logical_interconnect_contents.logical_interconnect.variant == 'Synergy'
 
 - name: Update the Internal Networks on the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: internal_networks_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       internalNetworks:
-        - name: "{{ contents.logical_interconnect.network_name }}" # could also be a URI. e.g.: - uri: '/rest/ethernet-network/<id>'
+        # Could also be a URI, for example: - uri: '/rest/ethernet-network/<id>'
+        - name: "{{ oneview_logical_interconnect_contents.logical_interconnect.network_name }}"
   when: network_name is defined
   delegate_to: localhost
 
 # Below task is supported only with OneView 3.10
 - name: Update the Interconnect Settings
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: settings_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       ethernetSettings:
         macRefreshInterval: 12
   delegate_to: localhost
@@ -81,25 +82,25 @@
 
 - name: Generate the forwarding information base dump file for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: forwarding_information_base_generated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
-  register: result
+  register: oneview_logical_interconnect_result
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{ result.msg }}"
+    msg: "{{ oneview_logical_interconnect_result.msg }}"
 
 - name: Update the QoS aggregated configuration for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: qos_aggregated_configuration_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       qosConfiguration:
         activeQosConfig:
           category: qos-aggregated-configuration
@@ -109,15 +110,15 @@
           qosTrafficClassifiers: []
           type: QosConfiguration
   delegate_to: localhost
-  register: result
+  register: oneview_logical_interconnect_result
 
 - name: Update the SNMP configuration for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: snmp_configuration_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       snmpConfiguration:
         enabled: true
         readCommunity: public
@@ -125,11 +126,11 @@
 
 - name: Update the IGMP settings for the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: igmp_settings_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       igmpSettings:
         igmpIdleTimeoutInterval: 200
   delegate_to: localhost
@@ -141,22 +142,22 @@
 
 - name: Update the port monitor configuration of the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: port_monitor_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       portMonitor:
         enablePortMonitor: false
   delegate_to: localhost
 
 - name: Update the port flap settings of the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: port_flap_settings_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       portFlapProtection:
         portFlapThresholdPerInterval: 10
   delegate_to: localhost
@@ -168,25 +169,25 @@
 
 - name: Gather facts about a Logical Interconnect by name to get uri
   oneview_logical_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
+    name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    li_uri: "{{ logical_interconnects['uri'] }}"
+    oneview_logical_interconnect_li_uri: "{{ logical_interconnects['uri'] }}"
 
 - name: Generate bulk inconsistency validation report for logical interconnect by name.
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: bulk_inconsistency_validated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       bulk_update:
         logicalInterconnectUris:
-          - "{{ li_uri }}"
+          - "{{ oneview_logical_interconnect_li_uri }}"
   delegate_to: localhost
   when: currentVersion >= '2400'
 
@@ -196,20 +197,20 @@
 
 - name: Update the configuration on the logical interconnect
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: configuration_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
 - name: Updates the telemetry configuration of a logical interconnect.
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: telemetry_configuration_updated
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
       telemetryConfiguration:
         sampleCount: 12
         enableTelemetry: true
@@ -222,8 +223,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Firmware Drivers
   oneview_firmware_driver_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -235,8 +236,8 @@
 
 # - name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware
 #  oneview_logical_interconnect:
-#    config: "{{ config }}"
-#    sessionID: "{{ session.ansible_facts.session }}"
+#    config: "{{ oneview_logical_interconnect_config }}"
+#    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
 #    state: firmware_installed
 #    data:
 #      name: "{{ logical_interconnect_name }}"
@@ -248,15 +249,15 @@
 
 - name: Return the Logical Interconnect to a consistent state
   oneview_logical_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
     state: compliant
     data:
-      name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
+      name: "{{ oneview_logical_interconnect_contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_interconnect_config }}"
+    sessionID: "{{ oneview_logical_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost

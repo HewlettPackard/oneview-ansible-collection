@@ -1,42 +1,42 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_server_hardware_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_server_hardware_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_server_hardware_session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Add a Server Hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: present
     data:
-      hostname: "{{ contents.server_hardware.server_hardware_hostname }}"
-      username: "{{ contents.server_hardware.server_hardware_username }}"
-      password: "{{ contents.server_hardware.server_hardware_password }}"
+      hostname: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_hostname }}"
+      username: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_username }}"
+      password: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_password }}"
       force: false
       licensingIntent: OneView
       configurationState: Managed
       initialScopeUris:
         - "{{ scopes[0]['uri'] }}" # Supported only with OneView API version >= 600.
   delegate_to: localhost
-  when: contents.server_hardware.variant == 'C7000'
+  when: oneview_server_hardware_contents.server_hardware.variant == 'C7000'
 
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -45,40 +45,40 @@
 
 - name: Do nothing when the server hardware is already present
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: present
     data:
       hostname: "{{ server_hardwares[0]['name'] }}"
-      username: "{{ contents.server_hardware.server_hardware_username }}"
-      password: "{{ contents.server_hardware.server_hardware_password }}"
+      username: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_username }}"
+      password: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_password }}"
       force: false
       licensingIntent: OneView
       configurationState: Managed
   delegate_to: localhost
-  when: contents.server_hardware.variant == 'C7000'
+  when: oneview_server_hardware_contents.server_hardware.variant == 'C7000'
 
 # This task available only with OneView API version >= 600.
 - name: Add multiple rack-mount servers
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: multiple_servers_added
     data:
-      mpHostsAndRanges: "{{ contents.server_hardware.multiple_hosts }}"
-      username: "{{ contents.server_hardware.server_hardware_username }}"
-      password: "{{ contents.server_hardware.server_hardware_password }}"
+      mpHostsAndRanges: "{{ oneview_server_hardware_contents.server_hardware.multiple_hosts }}"
+      username: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_username }}"
+      password: "{{ oneview_server_hardware_contents.server_hardware.server_hardware_password }}"
       initialScopeUris:
         - "{{ scopes[0]['uri'] }}"
       licensingIntent: OneView
       configurationState: Managed
   delegate_to: localhost
-  when: contents.server_hardware.variant == 'C7000'
+  when: oneview_server_hardware_contents.server_hardware.variant == 'C7000'
 
 - name: Power Off the server hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: power_state_set
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -89,8 +89,8 @@
 
 - name: Power On the server hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: power_state_set
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -101,8 +101,8 @@
 
 - name: Refresh the server hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: refresh_state_set
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -112,8 +112,8 @@
 
 - name: Update the Server Hardware iLO firmware version
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: ilo_firmware_version_updated
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -121,8 +121,8 @@
 
 - name: Reset the Server Hardware iLO State
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: ilo_state_reset
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -130,8 +130,8 @@
 
 - name: Set the server UID state off
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: uid_state_off
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -139,8 +139,8 @@
 
 - name: Set the server UID state on
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: uid_state_on
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -148,8 +148,8 @@
 
 - name: Enable Server Maintenance Mode
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: enable_maintenance_mode
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -157,8 +157,8 @@
 
 - name: Disable Server Maintenance Mode
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: disable_maintenance_mode
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -166,8 +166,8 @@
 
 - name: Set the server one-time boot device to Network
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: one_time_boot_network
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -175,8 +175,8 @@
 
 - name: Set the server one-time boot device to No one-time boot
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: one_time_boot_normal
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -184,8 +184,8 @@
 
 - name: Set the calibrated max power of a server hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: environmental_configuration_set
     data:
       name: "{{ server_hardwares[0]['name'] }}"
@@ -196,26 +196,26 @@
 
 - name: Remove the server hardware by its IP
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
-  when: contents.server_hardware.variant == 'C7000'
+  when: oneview_server_hardware_contents.server_hardware.variant == 'C7000'
 
 - name: Do nothing when the server hardware is already removed
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
-  when: contents.server_hardware.variant == 'C7000'
+  when: oneview_server_hardware_contents.server_hardware.variant == 'C7000'
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_config }}"
+    sessionID: "{{ oneview_server_hardware_session.ansible_facts.session }}"
   delegate_to: localhost

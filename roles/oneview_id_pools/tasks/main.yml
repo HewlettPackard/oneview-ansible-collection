@@ -1,32 +1,32 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_id_pools_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_id_pools_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_id_pools_session
 
 - name: Enables or disables the pool type
   oneview_id_pools:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
     state: update_pool_type
     data:
-      poolType: "{{ contents.id_pools.poolType }}"
+      poolType: "{{ oneview_id_pools_contents.id_pools.poolType }}"
       enabled: true
   delegate_to: localhost
 
 - name: Allocates one or more IDs from a pool
   oneview_id_pools:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
     state: allocate
     data:
-      poolType: "{{ contents.id_pools.poolType }}"
+      poolType: "{{ oneview_id_pools_contents.id_pools.poolType }}"
       count: 2
   delegate_to: localhost
 - name: Run ansible.builtin.debug
@@ -35,21 +35,21 @@
 
 - name: Collects one or more IDs to be returned to a pool
   oneview_id_pools:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
     state: collect
     data:
-      poolType: "{{ contents.id_pools.poolType }}"
+      poolType: "{{ oneview_id_pools_contents.id_pools.poolType }}"
       idList: '{{ id_pool["idList"] }}'
   delegate_to: localhost
 
 - name: Generates a random range
   oneview_id_pools_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
     state: generate
     data:
-      poolType: "{{ contents.id_pools.poolType }}"
+      poolType: "{{ oneview_id_pools_contents.id_pools.poolType }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -57,16 +57,16 @@
 
 - name: Validates a set of IDs to reserve in the pool
   oneview_id_pools:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
     state: validate
     data:
-      poolType: "{{ contents.id_pools.poolType }}"
+      poolType: "{{ oneview_id_pools_contents.id_pools.poolType }}"
       idList: ['{{ id_pool["startAddress"] }}', '{{ id_pool["endAddress"] }}']
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_id_pools_config }}"
+    sessionID: "{{ oneview_id_pools_session.ansible_facts.session }}"
   delegate_to: localhost

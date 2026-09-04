@@ -1,65 +1,65 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_firmware_bundle_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_firmware_bundle_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_firmware_bundle_session
 
 - name: Upload the firmware bundle
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: present
-    file_path: "{{ contents.firmware_bundle.spp_bundle_path }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.spp_bundle_path }}"
   delegate_to: localhost
 
 - name: Ensure the firmware bundle is present
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: present
-    file_path: "{{ contents.firmware_bundle.spp_bundle_path }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.spp_bundle_path }}"
   delegate_to: localhost
 
 - name: Upload the hotfix
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: present
-    file_path: "{{ contents.firmware_bundle.hotfix_path }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.hotfix_path }}"
   delegate_to: localhost
 
 - name: Ensure the hotfix is present
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: present
-    file_path: "{{ contents.firmware_bundle.hotfix_path }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.hotfix_path }}"
   delegate_to: localhost
 
 - name: Upload the compsig file
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: add_signature
-    file_path: "{{ contents.firmware_bundle.compsig_file }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.compsig_file }}"
   delegate_to: localhost
 
 - name: Ensure the compsig file is already present
   oneview_firmware_bundle:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
     state: add_signature
-    file_path: "{{ contents.firmware_bundle.compsig_file }}"
+    file_path: "{{ oneview_firmware_bundle_contents.firmware_bundle.compsig_file }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_firmware_bundle_config }}"
+    sessionID: "{{ oneview_firmware_bundle_session.ansible_facts.session }}"
   delegate_to: localhost

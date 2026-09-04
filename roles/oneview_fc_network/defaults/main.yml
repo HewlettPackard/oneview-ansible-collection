@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_fc_network
-config: ~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_fc_network/files/oneview_config.json
-contents: "{{ lookup('file', '../config/config.json') | from_json }}"
-config_file: "{{ lookup('file', config) }}"
+oneview_fc_network_config: "{{ role_path }}/files/oneview_config.json"
+oneview_fc_network_contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_fc_network_config_file: "{{ lookup('file', oneview_fc_network_config) }}"

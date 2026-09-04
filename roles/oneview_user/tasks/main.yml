@@ -1,30 +1,30 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_user_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_user_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_user_session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Create a User
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: present
     data:
-      userName: "{{ contents.users.user_name }}"
+      userName: "{{ oneview_user_contents.users.user_name }}"
       password: myPass1234
-      emailAddress: "{{ contents.users.email }}"
+      emailAddress: "{{ oneview_user_contents.users.email }}"
       enabled: true
       fullName: testUser101
       mobilePhone: 555-2121
@@ -35,16 +35,16 @@
         - roleName: Infrastructure administrator
           scopeUri: "{{ scopes[0].uri }}"
   delegate_to: localhost
-  register: user_1
+  register: oneview_user_user_1
 
 - name: Do nothing with the User when no changes are provided
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: present
     data:
-      userName: "{{ contents.users.user_name }}"
-      emailAddress: "{{ contents.users.email }}"
+      userName: "{{ oneview_user_contents.users.user_name }}"
+      emailAddress: "{{ oneview_user_contents.users.email }}"
       enabled: true
       fullName: testUser101
       mobilePhone: 555-2121
@@ -55,39 +55,39 @@
         - roleName: Infrastructure administrator
           scopeUri: "{{ scopes[0].uri }}"
   delegate_to: localhost
-  register: user_1
+  register: oneview_user_user_1
 
 - name: Update the User changing the attribute enabled to False
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: present
     data:
-      userName: "{{ contents.users.user_name }}"
+      userName: "{{ oneview_user_contents.users.user_name }}"
       enabled: false
   delegate_to: localhost
 
 - name: Update the User's password
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: present
     data:
-      userName: "{{ contents.users.user_name }}"
+      userName: "{{ oneview_user_contents.users.user_name }}"
       currentPassword: myPass1234
-      newPassword: "{{ contents.users.newpassword }}"
+      newPassword: "{{ oneview_user_contents.users.newpassword }}"
   delegate_to: localhost
 
 - name: Adds multiple new local users to the appliance
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: add_multiple_users
     data:
       users_list:
-        - userName: "{{ contents.users.user_name }}1"
+        - userName: "{{ oneview_user_contents.users.user_name }}1"
           password: myPass1234
-          emailAddress: "{{ contents.users.email }}"
+          emailAddress: "{{ oneview_user_contents.users.email }}"
           enabled: true
           fullName: testUser101
           mobilePhone: 555-2121
@@ -95,9 +95,9 @@
           permissions:
             - roleName: Read only
             - roleName: Infrastructure administrator
-        - userName: "{{ contents.users.user_name }}2"
+        - userName: "{{ oneview_user_contents.users.user_name }}2"
           password: myPass1234
-          emailAddress: "{{ contents.users.email }}"
+          emailAddress: "{{ oneview_user_contents.users.email }}"
           enabled: true
           fullName: testUser101
           mobilePhone: 555-2121
@@ -114,8 +114,8 @@
 
 - name: Validates the existence of a user with the given user name
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: validate_user_name
     data:
       userName: testUser
@@ -127,8 +127,8 @@
 
 - name: Checks for the existence of a user with the specified full name
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: validate_full_name
     data:
       fullName: testUser101
@@ -140,8 +140,8 @@
 
 - name: Add role to existing username
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: add_role_to_username
     data:
       userName: testUser
@@ -156,8 +156,8 @@
 
 - name: Update role to existing username
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: update_role_to_username
     data:
       userName: testUser
@@ -173,8 +173,8 @@
 
 - name: Remove role from existing username
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: remove_role_from_username
     data:
       userName: testUser
@@ -189,8 +189,8 @@
 
 - name: Delete single user
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: absent
     data:
       userName: testUser
@@ -202,8 +202,8 @@
 
 - name: Delete multiple users
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: delete_multiple_users
     data:
       users_list:
@@ -217,13 +217,13 @@
 
 - name: Create a User for automation
   oneview_user:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
     state: present
     data:
-      userName: "{{ contents.users.user_name }}"
+      userName: "{{ oneview_user_contents.users.user_name }}"
       password: myPass1234
-      emailAddress: "{{ contents.users.email }}"
+      emailAddress: "{{ oneview_user_contents.users.email }}"
       enabled: true
       fullName: testUser101
       mobilePhone: 555-2121
@@ -232,10 +232,10 @@
         - roleName: Read only
         - roleName: Infrastructure administrator
   delegate_to: localhost
-  register: user_1
+  register: oneview_user_user_1
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_config }}"
+    sessionID: "{{ oneview_user_session.ansible_facts.session }}"
   delegate_to: localhost

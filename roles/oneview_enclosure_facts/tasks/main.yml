@@ -1,37 +1,37 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_enclosure_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_enclosure_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_enclosure_facts_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_enclosure_facts_config_file.api_version == ""
+  register: oneview_enclosure_facts_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    current_version: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_enclosure_facts_current_version: "{{ oneview_enclosure_facts_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_enclosure_facts_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    current_version: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_enclosure_facts_current_version: oneview_enclosure_facts_config_file.api_version | string
+  when: oneview_enclosure_facts_config_file.api_version != ""
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -40,8 +40,8 @@
 
 - name: Gather paginated, filtered and sorted facts about Enclosures
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -54,9 +54,9 @@
 
 - name: Gather facts about an Enclosure by name
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure.enclosure_name }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_enclosure_facts_contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -66,19 +66,19 @@
 # This block is compatible with C7000 Enclosures
 - name: Gather facts about an Enclosure by name with script
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure.enclosure_name }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_enclosure_facts_contents.enclosure.enclosure_name }}"
     options:
       - script
-  when: contents.enclosure.variant == 'C7000' or currentVersion == '300'
+  when: oneview_enclosure_facts_contents.enclosure.variant == 'C7000' or currentVersion == '300'
   delegate_to: localhost
 
 - name: Gather facts about an Enclosure by name with options
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    name: "{{ contents.enclosure.enclosure_name }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    name: "{{ oneview_enclosure_facts_contents.enclosure.enclosure_name }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
     options:
       - environmentalConfiguration # optional
       - utilization: # optional
@@ -102,6 +102,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_facts_config }}"
+    sessionID: "{{ oneview_enclosure_facts_session.ansible_facts.session }}"
   delegate_to: localhost

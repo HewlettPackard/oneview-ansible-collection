@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_interconnect_type_facts_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_sas_interconnect_type_facts_session
 
 - name: Gather facts about all SAS Interconnect Types
   oneview_sas_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_sas_interconnect_type_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -22,15 +22,15 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    sas_interconnect_type_name: "{{ sas_interconnect_types[0]['name'] }}"
+    oneview_sas_interconnect_type_facts_sas_interconnect_type_name: "{{ sas_interconnect_types[0]['name'] }}"
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    sas_interconnect_type_uri: "{{ sas_interconnect_types[0]['uri'] }}"
+    oneview_sas_interconnect_type_facts_sas_interconnect_type_uri: "{{ sas_interconnect_types[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Interconnect Types
   oneview_sas_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_sas_interconnect_type_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -43,9 +43,9 @@
 
 - name: Gather facts about a SAS Interconnect Type by name
   oneview_sas_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ sas_interconnect_type_name }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_sas_interconnect_type_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_sas_interconnect_type_facts_sas_interconnect_type_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -54,9 +54,9 @@
 
 - name: Gather facts about a SAS Interconnect Type by uri
   oneview_sas_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ sas_interconnect_type_uri }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_sas_interconnect_type_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_sas_interconnect_type_facts_sas_interconnect_type_uri }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -65,6 +65,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_sas_interconnect_type_facts_session.ansible_facts.session }}"
   delegate_to: localhost

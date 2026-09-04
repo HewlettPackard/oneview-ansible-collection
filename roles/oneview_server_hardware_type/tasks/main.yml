@@ -1,41 +1,41 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_server_hardware_type_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_server_hardware_type_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_server_hardware_type_session
 
 # This is only supported on appliances which support rack mounted servers.
 - name: Add a Server Hardware to create a Server Hardware Type (Prerequisite)
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: present
     data:
-      hostname: "{{ contents.server_hardware.server_hardware_hostname }}"
-      username: "{{ contents.server_hardware.server_hardware_username }}"
-      password: "{{ contents.server_hardware.server_hardware_password }}"
+      hostname: "{{ oneview_server_hardware_type_contents.server_hardware.server_hardware_hostname }}"
+      username: "{{ oneview_server_hardware_type_contents.server_hardware.server_hardware_username }}"
+      password: "{{ oneview_server_hardware_type_contents.server_hardware.server_hardware_password }}"
       force: false
       licensingIntent: OneView
       configurationState: Managed
   delegate_to: localhost
-  when: contents.server_hardware_type.variant == 'C7000'
+  when: oneview_server_hardware_type_contents.server_hardware_type.variant == 'C7000'
 
 - name: Gather facts about all Server Hardware Types
   oneview_server_hardware_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Update the Server Hardware Type description
   oneview_server_hardware_type:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ server_hardware_types[0]['name'] }}"
@@ -44,48 +44,48 @@
 
 - name: Rename the Server Hardware Type
   oneview_server_hardware_type:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ server_hardware_types[0]['name'] }}"
-      newName: "{{ contents.server_hardware_type.server_hardware_type_name_renamed }}"
+      newName: "{{ oneview_server_hardware_type_contents.server_hardware_type.server_hardware_type_name_renamed }}"
   delegate_to: localhost
 
 - name: Rename the Server Hardware Type to original
   oneview_server_hardware_type:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.server_hardware_type.server_hardware_type_name_renamed }}"
+      name: "{{ oneview_server_hardware_type_contents.server_hardware_type.server_hardware_type_name_renamed }}"
       newName: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
 
 # This is only supported on appliances which support rack mounted servers.
 - name: Remove the Server Hardware to be able to delete the Server Hardware Type (Prerequisite)
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.server_hardware_type.server_hardware_hostname }}"
+      name: "{{ oneview_server_hardware_type_contents.server_hardware_type.server_hardware_hostname }}"
   delegate_to: localhost
-  when: contents.server_hardware_type.variant == 'C7000'
+  when: oneview_server_hardware_type_contents.server_hardware_type.variant == 'C7000'
 
 # This is only supported on appliances which support rack mounted servers.
 - name: Delete the Server Hardware Type
   oneview_server_hardware_type:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
     state: absent
     data:
       name: "{{ server_hardware_types[0]['name'] }}"
   delegate_to: localhost
-  when: contents.server_hardware_type.variant == 'C7000'
+  when: oneview_server_hardware_type_contents.server_hardware_type.variant == 'C7000'
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_type_config }}"
+    sessionID: "{{ oneview_server_hardware_type_session.ansible_facts.session }}"
   delegate_to: localhost

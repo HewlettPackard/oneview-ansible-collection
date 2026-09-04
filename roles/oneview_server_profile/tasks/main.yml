@@ -1,25 +1,25 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_server_profile_session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
-      name: "{{ contents.server_profile.inventory_hostname }}"
-      description: "{{ contents.server_profile.server_profile_description }}"
+      serverProfileTemplateName: "{{ oneview_server_profile_contents.server_profile.ov_template }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
+      description: "{{ oneview_server_profile_contents.server_profile.server_profile_description }}"
       # User should set initialScopeUris in case of scoped user
       # Otherwise collects scopeUris from OV when its not given
       # explicitly
@@ -28,11 +28,11 @@
     params: # Supported only in API version >= 600
       force: true
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    msg: "{{ result.msg }}"
+    msg: "{{ oneview_server_profile_result.msg }}"
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -52,11 +52,11 @@
 
 - name: Power Off the server hardware
   oneview_server_hardware:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     state: power_state_set
     data:
-      name: "{{ contents.server_profile.server_hardware_name }}"
+      name: "{{ oneview_server_profile_contents.server_profile.server_hardware_name }}"
       powerStateData:
         powerState: "Off"
         powerControl: MomentaryPress
@@ -64,13 +64,13 @@
 
 - name: Create a server profile with iLO/Bios configuration
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-2"
-      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
-      description: "{{ contents.server_profile.server_profile_description }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-2"
+      serverHardwareTypeName: "{{ oneview_server_profile_contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
+      description: "{{ oneview_server_profile_contents.server_profile.server_profile_description }}"
       bios:
         manageBios: true
         overriddenSettings: []
@@ -92,13 +92,13 @@
 
 - name: Update server profile with local storage configuration
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-2"
-      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
-      description: "{{ contents.server_profile.server_profile_description }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-2"
+      serverHardwareTypeName: "{{ oneview_server_profile_contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
+      description: "{{ oneview_server_profile_contents.server_profile.server_profile_description }}"
       localStorage:
         controllers:
           - deviceSlot: Embedded
@@ -121,12 +121,12 @@
 
 - name: Create a Server Profile with connections
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
-      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-with-connections"
+      serverHardwareTypeName: "{{ oneview_server_profile_contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
       connectionSettings: # Supported only in API version >= 600.
         connections:
           - id: 1
@@ -134,7 +134,7 @@
             functionType: Ethernet
             portId: Auto
             requestedMbps: 2000
-            networkName: "{{ contents.server_profile.network_name }}"
+            networkName: "{{ oneview_server_profile_contents.server_profile.network_name }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -143,11 +143,11 @@
 
 - name: Update Server Profile with boot configuration
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: present
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
       # affinity: "BayAndServer"
       bootMode:
         manageMode: true
@@ -157,21 +157,21 @@
         manageBoot: true
         order: [HardDisk]
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 # - name: Gather facts about a Storage Pool by name
 #   oneview_storage_pool_facts:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
-#     name: "{{ contents.storage_pool.storage_pool_name }}"
+#     config: "{{ oneview_server_profile_config }}"
+#     sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
+#     name: "{{ oneview_server_profile_contents.storage_pool.storage_pool_name }}"
 #   delegate_to: localhost
 
 # - debug: var=storage_pools
 
 # - name: Gather facts about all Storage Volume Templates
 #   oneview_storage_volume_template_facts:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_server_profile_config }}"
+#     sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
 #     params:
 #       filter: isRoot='true'
 #   delegate_to: localhost
@@ -180,13 +180,13 @@
 
 # - name: Create a server profile with San Storage Attachments
 #   oneview_server_profile:
-#     config: "{{ config }}"
+#     config: "{{ oneview_server_profile_config }}"
 #     state: present
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
 #     data:
-#       name: "{{ contents.server_profile.inventory_hostname }}-SanStorage"
-#       serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
-#       enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+#       name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-SanStorage"
+#       serverHardwareTypeName: "{{ oneview_server_profile_contents.server_profile.server_hardware_type_name }}"
+#       enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
 #       serialNumberType: "Virtual"
 #       macType: "Virtual"
 #       wwnType: "Virtual"
@@ -198,7 +198,7 @@
 #             name: "FC_Network"
 #             functionType: "FibreChannel"
 #             portId: "Mezz 2:1"
-#             networkName: "{{ contents.server_profile.fc_network_name }}"
+#             networkName: "{{ oneview_server_profile_contents.server_profile.fc_network_name }}"
 #       boot:
 #         manageBoot: true
 #         order:
@@ -263,14 +263,14 @@
 
 - name: Rename Server Profile
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: present
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      newName: "{{ contents.server_profile.inventory_hostname }}-updated"
-      name: "{{ contents.server_profile.inventory_hostname }}"
+      newName: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-updated"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -282,13 +282,13 @@
 
 - name: Remediate compliance issues
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: compliant
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-updated"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -296,13 +296,13 @@
 
 - name: Delete the Server Profile created from a Server Profile Template
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: absent
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-updated"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-updated"
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -310,11 +310,11 @@
 
 - name: Delete the Server Profile created with connections
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: absent
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}-with-connections"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -323,13 +323,13 @@
 
 - name: Create Server Profile without specifying a template
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}"
-      serverHardwareTypeName: "{{ contents.server_profile.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
-      description: "{{ contents.server_profile.server_profile_description }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
+      serverHardwareTypeName: "{{ oneview_server_profile_contents.server_profile.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
+      description: "{{ oneview_server_profile_contents.server_profile.server_profile_description }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.debug
@@ -338,23 +338,23 @@
 
 - name: Unassign Server Hardware from Server Profile
   oneview_server_profile:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     # This is required for unassigning a SH, or creating a SP and not auto-assigning a SH
     auto_assign_server_hardware: false
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
       # Specify a blank serverHardwareName or serverHardwareUri when auto_assign_server_hardware is False to unassign a SH
       serverHardwareName:
   delegate_to: localhost
 
 - name: Delete the Server Profile
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     state: absent
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile.inventory_hostname }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -362,12 +362,12 @@
 
 - name: Create a Server Profile from a Server Profile Template
   oneview_server_profile:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_config }}"
     data:
-      serverProfileTemplateName: "{{ contents.server_profile.ov_template }}"
-      name: "{{ contents.server_profile.inventory_hostname }}"
-      description: "{{ contents.server_profile.server_profile_description }}"
-      enclosureGroupName: "{{ contents.server_profile.enclosure_group_name }}"
+      serverProfileTemplateName: "{{ oneview_server_profile_contents.server_profile.ov_template }}"
+      name: "{{ oneview_server_profile_contents.server_profile.inventory_hostname }}"
+      description: "{{ oneview_server_profile_contents.server_profile.server_profile_description }}"
+      enclosureGroupName: "{{ oneview_server_profile_contents.server_profile.enclosure_group_name }}"
       # User should set initialScopeUris in case of scoped user
       # Otherwise collects scopeUris from OV when its not given
       # explicitly
@@ -376,10 +376,10 @@
     params: # Supported only in API version >= 600
       force: true
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_result
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_config }}"
+    sessionID: "{{ oneview_server_profile_session.ansible_facts.session }}"
   delegate_to: localhost

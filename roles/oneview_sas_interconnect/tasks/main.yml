@@ -1,175 +1,175 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_sas_interconnect_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_interconnect_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_sas_interconnect_session
 
 - name: Gather facts about all SAS Interconnects
   oneview_sas_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    variant: Synergy
+    oneview_sas_interconnect_variant: Synergy
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    sas_interconnect_name: "{{ sas_interconnects[0]['name'] }}"
+    oneview_sas_interconnect_sas_interconnect_name: "{{ sas_interconnects[0]['name'] }}"
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: sas_interconnect_name
+    var: oneview_sas_interconnect_sas_interconnect_name
 
 - name: Refresh the SAS interconnect
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: refreshed
     data:
-      name: "{{ sas_interconnect_name }}"
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
       refreshState: RefreshPending
-  when: variant == 'Synergy'
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Power Off the SAS interconnect
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: power_off
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Do nothing when SAS interconnect is already powered off
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: power_off
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Power On the SAS interconnect
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: power_on
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Do nothing when SAS interconnect is already powered on
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: power_on
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Set the UID state of the SAS interconnect to On
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Do nothing when UID state is already set to On
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: uid_on
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Set the UID state of the SAS interconnect to Off
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 - name: Do nothing when UID state is already set to Off
   oneview_sas_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
     state: uid_off
     data:
-      name: "{{ sas_interconnect_name }}"
-  when: variant == 'Synergy'
+      name: "{{ oneview_sas_interconnect_sas_interconnect_name }}"
+  when: oneview_sas_interconnect_variant == 'Synergy'
   delegate_to: localhost
-  register: result
+  register: oneview_sas_interconnect_result
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: result.msg
-  when: variant == 'Synergy'
+    var: oneview_sas_interconnect_result.msg
+  when: oneview_sas_interconnect_variant == 'Synergy'
 
 # Time Consuming operation
 # - name: Request a hard reset of the SAS interconnect
 #   oneview_sas_interconnect:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_sas_interconnect_config }}"
+#     sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
 #     state: hard_reset
 #     data:
-#       name: '{{ sas_interconnect_name }}'
+#       name: '{{ oneview_sas_interconnect_sas_interconnect_name }}'
 #   when: variant == 'Synergy'
 #   delegate_to: localhost
 #   register: result
@@ -179,11 +179,11 @@
 # Time Consuming operation
 # - name: Request a soft reset of the SAS interconnect
 #   oneview_sas_interconnect:
-#     config: "{{ config }}"
-#     sessionID: "{{ session.ansible_facts.session }}"
+#     config: "{{ oneview_sas_interconnect_config }}"
+#     sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
 #     state: soft_reset
 #     data:
-#       name: '{{ sas_interconnect_name }}'
+#       name: '{{ oneview_sas_interconnect_sas_interconnect_name }}'
 #   when: variant == 'Synergy'
 #   delegate_to: localhost
 #   register: result
@@ -192,6 +192,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_interconnect_config }}"
+    sessionID: "{{ oneview_sas_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost

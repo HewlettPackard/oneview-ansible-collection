@@ -1,19 +1,19 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
+    config: "{{ oneview_appliance_ssh_access_config }}"
     name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_ssh_access_session
 
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
-    var: session
+    var: oneview_appliance_ssh_access_session
 
 - name: Ensures the Appliance SSH Access is false
   oneview_appliance_ssh_access:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_ssh_access_config }}"
+    sessionID: "{{ oneview_appliance_ssh_access_session.ansible_facts.session }}"
     state: present
     data:
       allowSshAccess: false
@@ -24,8 +24,8 @@
 
 - name: Ensures the Appliance SSH Access is true
   oneview_appliance_ssh_access:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_ssh_access_config }}"
+    sessionID: "{{ oneview_appliance_ssh_access_session.ansible_facts.session }}"
     state: present
     data:
       allowSshAccess: true
@@ -36,6 +36,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_ssh_access_config }}"
+    sessionID: "{{ oneview_appliance_ssh_access_session.ansible_facts.session }}"
   delegate_to: localhost
