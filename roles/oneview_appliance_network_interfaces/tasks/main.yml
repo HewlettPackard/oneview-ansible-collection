@@ -26,9 +26,11 @@
       ipv4Subnet: "{{ ipv4_subnet }}"
       ipv4Gateway: "{{ gateway }}"
       ipv4NameServers:
-        - "{{ dnsServer1 }}"
-        - "{{ dnsServer2 }}"
+        - "{{ dns_server_1 }}"
+        - "{{ dns_server_2 }}"
+        - "{{ dns_server_3 }}"
   delegate_to: localhost
+
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
     var: appliance_network_interfaces
@@ -49,8 +51,8 @@
       ipv4Subnet: "{{ ipv4_subnet }}"
       ipv4Gateway: "{{ gateway }}"
       ipv4NameServers:
-        - "{{ dnsServer1 }}"
-        - "{{ dnsServer2 }}"
+        - "{{ dns_server_1 }}"
+        - "{{ dns_server_2 }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
@@ -64,8 +66,8 @@
     data:
       macAddress: "{{mac_address}}"
       ipv4NameServers:
-        - "{{ dnsServer1 }}"
-        - "{{ dnsServer3 }}"
+        - "{{ dns_server_1 }}"
+        - "{{ dns_server_3 }}"
   delegate_to: localhost
 - name: Run ansible.builtin.debug
   ansible.builtin.debug:
