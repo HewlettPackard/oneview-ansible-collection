@@ -60,6 +60,7 @@ issues: https://github.com/HewlettPackard/oneview-ansible-collection/issues
 build_ignore:
  - Dockerfile
  - ansible.cfg
+ - .ansible-lint
  - .gitignore
  - .gitattributes
  - CONTRIBUTING.md
