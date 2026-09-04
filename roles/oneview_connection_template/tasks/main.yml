@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all connection templates
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     ct_name: "{{ connection_templates[0]['name'] }}"
 
 - name: Update the Connection Template

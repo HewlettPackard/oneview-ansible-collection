@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all  San Managers
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Gather paginated, filtered and sorted facts about San Managers
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: 'refreshState=Stable'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Gather facts about a San Manager by name
@@ -39,7 +42,8 @@
   delegate_to: localhost
   when: san_managers | default('', True)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Logout Session

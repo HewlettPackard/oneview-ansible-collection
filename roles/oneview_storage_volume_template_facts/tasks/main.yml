@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -33,7 +34,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather paginated, filtered and sorted facts about Storage Volume Templates
@@ -46,7 +48,8 @@
       sort: 'name:descending'
       filter: status='OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather facts about a Storage Volume Template by name
@@ -56,7 +59,8 @@
     name: "{{ contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather facts about all Fibre Channel Networks
@@ -65,7 +69,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 # Only available after API500
@@ -89,7 +94,8 @@
       - compatibleSystems
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: compatible_systems
 
 # Only available prior to API500
@@ -103,9 +109,11 @@
   delegate_to: localhost
   when: currentVersion <= '500'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connectable_volume_templates
 
 - name: Logout Session

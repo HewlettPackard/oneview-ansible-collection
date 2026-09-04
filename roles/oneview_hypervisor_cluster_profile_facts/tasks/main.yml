@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Hypervisor Cluster Profiles
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather paginated, filtered and sorted facts about Hypervisor Cluster Profiles
@@ -27,7 +29,8 @@
       count: 3
       sort: 'name:descending'
       filter: 'hypervisorType=Vmware'
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ hypervisor_cluster_profiles | map(attribute='name') | list }}"
 
 - name: Gather facts about a Hypervisor Cluster Profile by name
@@ -37,7 +40,8 @@
     name: "hcp"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather facts about a Hypervisor Cluster Profile by uri
@@ -47,7 +51,8 @@
     uri: "{{hypervisor_cluster_profiles[0]['uri']}}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather all facts about a Hypervisor Cluster Profile
@@ -59,9 +64,11 @@
       - compliancePreview
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profile_compliance_preview
 
 - name: Logout Session

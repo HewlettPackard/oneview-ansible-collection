@@ -7,7 +7,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Ensure that the SNMPv3 user is present using the default configuration
@@ -24,7 +25,8 @@
       authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Set the password of specified SNMPv3 user
@@ -38,7 +40,8 @@
       authenticationPassphrase: "{{ contents.appliance_device_snmp_v3_users.authentication_passphrase }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Ensure that the SNMPv3 user is absent

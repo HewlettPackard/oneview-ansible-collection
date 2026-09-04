@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Scopes
@@ -107,7 +108,8 @@
 
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Validates the existence of a user with the given user name
@@ -119,7 +121,8 @@
       userName: "testUser"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Checks for the existence of a user with the specified full name
@@ -131,7 +134,8 @@
       fullName: "testUser101"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Add role to existing username
@@ -146,7 +150,8 @@
         - roleName: "Scope administrator"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Update role to existing username
@@ -162,10 +167,11 @@
         - roleName: "Scope operator"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
-- name: remove role from existing username
+- name: Remove role from existing username
   oneview_user:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -177,7 +183,8 @@
         - "Scope operator"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Delete single user
@@ -189,7 +196,8 @@
       userName: "testUser"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 
@@ -204,7 +212,8 @@
         - "testUser2"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user
 
 - name: Create a User for automation

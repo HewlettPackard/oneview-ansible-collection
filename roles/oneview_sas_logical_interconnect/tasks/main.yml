@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all SAS Logical Interconnects
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     sas_logical_interconnect_name: "{{ sas_logical_interconnects[0]['name'] }}"
 
 - name: Return the SAS Logical Interconnect to a consistent state
@@ -27,7 +29,8 @@
       name: "{{ sas_logical_interconnect_name }}"
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
 
 - name: Update the configuration on the logical interconnect
@@ -39,7 +42,8 @@
       name: "{{ sas_logical_interconnect_name }}"
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
 
 - name: Gather facts about all Firmware Drivers
@@ -48,7 +52,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 # - name: Installs firmware to the member interconnects of a logical interconnect

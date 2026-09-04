@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Creates Network Interface if doesn't exist
@@ -28,7 +29,8 @@
         - "{{ dnsServer1 }}"
         - "{{ dnsServer2 }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 
 - name: Do nothing when network interface exists
@@ -50,7 +52,8 @@
         - "{{ dnsServer1 }}"
         - "{{ dnsServer2 }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 
 - name: Updates dns servers of the network interface
@@ -64,7 +67,8 @@
         - "{{ dnsServer1 }}"
         - "{{ dnsServer3 }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 
 - name: Logout Session

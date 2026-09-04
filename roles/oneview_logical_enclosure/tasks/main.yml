@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Enclosures
@@ -28,11 +29,14 @@
 #
 # - debug: var=firmware_drivers
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[0]['uri']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[1]['uri']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[2]['uri']
 
 
@@ -117,7 +121,8 @@
         encrypt: "true"
         excludeApplianceDump: "false"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: generated_dump_uri
 
 - name: Reconfigure all enclosures associated with logical enclosure

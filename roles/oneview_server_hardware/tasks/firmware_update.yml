@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Scopes
@@ -26,7 +27,8 @@
         serverUUID: "{{ server_hardwares[0]['uuid'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: ansible_facts['server_hardware']['serverFirmwareUpdateRequired']
 
 - name: Update Firmware of the server hardware

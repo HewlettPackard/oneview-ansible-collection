@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Enclosures
@@ -14,7 +15,8 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[0]['uri']
 
 - name: Gather facts about all Labels
@@ -23,7 +25,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather paginated, filtered and sorted facts about Labels
@@ -35,7 +38,8 @@
       count: 3
       sort: 'name:descending'
       filter: ''
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather facts about a Label by name
@@ -45,7 +49,8 @@
     name: "{{ labels[0]['name'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gets all resources assigned with label name
@@ -56,7 +61,8 @@
     get_resources: true
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather facts about a Label by Resource
@@ -66,7 +72,8 @@
     resourceUri: "{{ enclosures[0]['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Logout Session

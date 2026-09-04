@@ -30,18 +30,24 @@
   delegate_to: localhost
   register: result
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ result.msg }}"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: serial_number
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: compliance_preview
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: created
 
 - name: Power Off the server hardware
@@ -131,7 +137,8 @@
             networkName: "{{ contents.server_profile.network_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: server_profile
 
 - name: Update Server Profile with boot configuration
@@ -265,10 +272,12 @@
   delegate_to: localhost
   register: result
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: result.msg
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile
 
 - name: Remediate compliance issues
@@ -281,7 +290,8 @@
   delegate_to: localhost
   register: result
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: result.msg
 
 - name: Delete the Server Profile created from a Server Profile Template
@@ -294,7 +304,8 @@
   delegate_to: localhost
   register: result
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: result.msg
 
 - name: Delete the Server Profile created with connections
@@ -306,7 +317,8 @@
       name: "{{ contents.server_profile.inventory_hostname }}-with-connections"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: result.msg
 
 - name: Create Server Profile without specifying a template
@@ -320,7 +332,8 @@
       description: "{{ contents.server_profile.server_profile_description }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile
 
 - name: Unassign Server Hardware from Server Profile
@@ -343,7 +356,8 @@
     data:
       name: "{{ contents.server_profile.inventory_hostname }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: inventory_hostname
 
 - name: Create a Server Profile from a Server Profile Template

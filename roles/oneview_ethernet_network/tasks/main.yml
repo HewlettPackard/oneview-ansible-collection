@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -116,9 +117,11 @@
         typicalBandwidth: 2000
   delegate_to: localhost
   register: bulk_ethernet_create
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"
 
 - name: Delete Ethernet Networks in bulk
@@ -152,9 +155,11 @@
         typicalBandwidth: 2000
   delegate_to: localhost
   register: bulk_ethernet_create
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"
 
 - name: Logout Session

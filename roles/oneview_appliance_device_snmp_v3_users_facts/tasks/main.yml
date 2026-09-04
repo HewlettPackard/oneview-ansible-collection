@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about the appliance SNMPv3 users.
@@ -14,7 +15,8 @@
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Gather paginated, filtered and sorted facts about SNMPv3 users
@@ -28,7 +30,8 @@
       filter: "securityLevel='Authentication and privacy'"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Gather facts about a snmp users by Username
@@ -38,7 +41,8 @@
     name: "user123456"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Gather facts about a SNMPv3 user by Uri
@@ -49,7 +53,8 @@
   delegate_to: localhost
   when: appliance_device_snmp_v3_users is defined
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_users
 
 - name: Logout Session

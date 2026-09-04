@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all SAS Logical JBODs
@@ -15,12 +16,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     jbod_name: "{{ sas_logical_jbods[0]['name'] }}"
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     jbod_uri: "{{ sas_logical_jbods[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBODs
@@ -33,7 +37,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather facts about an SAS Logical JBOD by name
@@ -43,7 +48,8 @@
     name: "{{ jbod_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather facts about an SAS Logical JBOD by uri
@@ -53,7 +59,8 @@
     uri: "{{ jbod_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather Drives facts about a SAS Logical JBOD by name
@@ -65,7 +72,8 @@
       - jbod_drives
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: jbod_drives
 
 - name: Logout Session

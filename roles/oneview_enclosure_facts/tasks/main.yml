@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -33,7 +34,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures
 
 - name: Gather paginated, filtered and sorted facts about Enclosures
@@ -46,7 +48,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures
 
 - name: Gather facts about an Enclosure by name
@@ -56,7 +59,8 @@
     name: "{{ contents.enclosure.enclosure_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures
 
 # This block is compatible with C7000 Enclosures
@@ -86,11 +90,14 @@
           refresh: false
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_script
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_environmental_configuration
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_utilization
 
 - name: Logout Session

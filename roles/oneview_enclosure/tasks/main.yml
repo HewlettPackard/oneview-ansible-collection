@@ -5,7 +5,8 @@
     name: "Test_Session"
   delegate_to: localhost
   register: session
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 - name: Ensure the Enclosure framelink with ipv6 is present '{{ contents.enclosure.enclosure_framelink_ipv6 }}'
   oneview_enclosure:
@@ -18,14 +19,16 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- ansible.builtin.wait_for:
+- name: Run ansible.builtin.wait_for
+  ansible.builtin.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
   # connection: local
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- ansible.builtin.wait_for:
+- name: Run ansible.builtin.wait_for
+  ansible.builtin.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
@@ -43,7 +46,8 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- ansible.builtin.wait_for:
+- name: Run ansible.builtin.wait_for
+  ansible.builtin.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
@@ -81,7 +85,8 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- ansible.builtin.wait_for.wait_for:
+- name: Run ansible.builtin.wait_for.wait_for
+  ansible.builtin.wait_for.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
@@ -114,7 +119,8 @@
   delegate_to: localhost
 
 # Waiting for 10 seconds before attempting operations on enclosure
-- ansible.builtin.wait_for:
+- name: Run ansible.builtin.wait_for
+  ansible.builtin.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 10
@@ -145,7 +151,8 @@
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -161,7 +168,8 @@
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -177,7 +185,8 @@
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -194,7 +203,8 @@
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -211,7 +221,8 @@
   when: contents.enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -229,7 +240,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -247,7 +259,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -265,7 +278,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -283,7 +297,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -301,7 +316,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -319,7 +335,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -337,7 +354,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -355,7 +373,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 
@@ -373,7 +392,8 @@
   delegate_to: localhost
   ignore_errors: "{{ ansible_check_mode }}"
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.enclosure.variant == 'Synergy'
 

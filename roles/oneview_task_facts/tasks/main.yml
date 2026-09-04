@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about the last 2 tasks
@@ -17,7 +18,8 @@
       count: 2
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: tasks
 
 - name: Gather facts about the last 2 tasks associated to Server Profile templates
@@ -60,7 +62,8 @@
       filter: "taskState='Warning'"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: tasks
 
 - name: Logout Session

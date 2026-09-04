@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Enables or disables the pool type
@@ -28,7 +29,8 @@
       poolType: '{{ contents.id_pools.poolType }}'
       count: 2
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: id_pool
 
 - name: Collects one or more IDs to be returned to a pool
@@ -49,7 +51,8 @@
     data:
       poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: id_pool
 
 - name: Validates a set of IDs to reserve in the pool

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Add a Rack Manager
@@ -27,9 +28,11 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: rack_managers
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     rack_manager_name: "{{ rack_managers[0]['name'] }}"
 
 - name: Do nothing when the rack manager is already present

@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about the appliance SNMPv3 trap forwarding destinations.
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather paginated, filtered and sorted facts about SNMPv3 trap forwarding destinations
@@ -29,7 +31,8 @@
       filter: "port='162'"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather facts about a Trap Destination by ip address
@@ -39,7 +42,8 @@
     name: "1.1.1.1"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather facts about a Trap Destination by uri
@@ -50,7 +54,8 @@
   delegate_to: localhost
   when: appliance_device_snmp_v3_trap_destinations is defined
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Logout Session

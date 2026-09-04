@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather paginated, filtered and sorted facts about Interconnects
@@ -19,10 +20,12 @@
       sort: 'name:descending'
       filter: "enclosureName='0000A66101'"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     interconnect_name: "{{ interconnects[0]['name'] }}"
 
 - name: Turn the power on for interconnect that matches the specified name

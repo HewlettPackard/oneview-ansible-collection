@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -88,7 +89,8 @@
   delegate_to: localhost
   register: result
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ result.msg }}"
 
 - name: Update the QoS aggregated configuration for the logical interconnect
@@ -133,7 +135,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: igmp_settings
 
 - name: Update the port monitor configuration of the logical interconnect
@@ -159,7 +162,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: port_flap_settings
 
 - name: Gather facts about a Logical Interconnect by name to get uri
@@ -169,7 +173,8 @@
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     li_uri: "{{ logical_interconnects['uri'] }}"
 
 - name: Generate bulk inconsistency validation report for logical interconnect by name.
@@ -185,7 +190,8 @@
   delegate_to: localhost
   when: currentVersion >= '2400'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: li_inconsistency_report
 
 - name: Update the configuration on the logical interconnect
@@ -210,7 +216,8 @@
         sampleInterval: 300
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: telemetry_configuration
 
 - name: Gather paginated, filtered and sorted facts about Firmware Drivers
@@ -222,7 +229,8 @@
       count: 3
       sort: 'name:descending'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 # - name: Install a firmware to the logical interconnect, running the stage operation to upload the firmware

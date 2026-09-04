@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Server Hardwares
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
 
 - name: Gather paginated, filtered and sorted facts about Server Hardware
@@ -29,10 +31,12 @@
       filter: uidState='Off'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{server_hardwares | map(attribute='name') | list }}"
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     server_hardware_name: "{{ server_hardwares[0]['name'] }}"
 
 - name: Gather facts about a Server Hardware by name
@@ -59,9 +63,11 @@
       - bios
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_bios
 
 
@@ -83,21 +89,29 @@
           view: 'day'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_bios
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_env_config
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_java_remote_console_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_ilo_sso_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_physical_server_hardware
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_remote_console_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_utilization
 
 # This option is available for API version 300 or later.
@@ -110,7 +124,8 @@
       - firmware
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmware
 
 # This option is available for API version 300 or later.
@@ -123,7 +138,8 @@
       - firmwares
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmwares
 
 - name: List the firmware inventory of the servers which have HPE Synergy 3530C version matches '1.2'
@@ -138,7 +154,8 @@
           ]
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmwares
 
 - name: Logout Session

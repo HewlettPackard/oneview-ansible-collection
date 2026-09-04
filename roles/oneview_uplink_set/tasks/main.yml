@@ -11,7 +11,8 @@
       smartLink: false
       privateNetwork: false
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: ethernet_network['uri']
 
 - name: Gather facts about a Logical Interconnect by name
@@ -26,7 +27,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Ethernet Networks
@@ -35,7 +37,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: logical_interconnects['uri']
 
 - name: Ensure that the Uplink Set is present

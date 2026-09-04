@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Uplink Sets
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{uplink_sets | map(attribute='name') | list }}"
 
 - name: Gather facts about all Logical Interconnects
@@ -24,7 +26,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: logical_interconnects[0]['uri']
 
 - name: Gather paginated, filtered and sorted facts about Uplink Sets
@@ -38,7 +41,8 @@
       filter: "logicalInterconnectUri='{{ logical_interconnects[0]['uri'] }}'"
   when: (logical_interconnects is not none and logical_interconnects is not undefined)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: uplink_sets
 
 - name: Gather facts about a Uplink Set by name
@@ -48,7 +52,8 @@
     name: "ULS-2"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: uplink_sets
 
 - name: Logout Session

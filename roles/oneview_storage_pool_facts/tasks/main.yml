@@ -23,14 +23,16 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Storage Pools
   oneview_storage_pool_facts:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_pools
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools
@@ -43,7 +45,8 @@
       sort: 'name:descending'
       filter: status='OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_pools
 
 - name: Gather facts about a Storage Pool by name
@@ -60,11 +63,12 @@
     name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 # To manage/unmanage a storage pool, issue a PUT with the isManaged attribute set as true to manage or false to unmanage.
-- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is not managed
+- name: Ensure the Storage Pool is not managed '{{ contents.storage_pool.storage_pool_name }}'
   oneview_storage_pool:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"
@@ -76,7 +80,7 @@
   delegate_to: localhost
   when: (storage_systems is not none or storage_systems is not undefined)
 
-- name: Ensure the Storage Pool '{{ contents.storage_pool.storage_pool_name }}' is managed
+- name: Ensure the Storage Pool is managed '{{ contents.storage_pool.storage_pool_name }}'
   oneview_storage_pool:
     config: "{{ config }}"
     sessionID: "{{ session.ansible_facts.session }}"

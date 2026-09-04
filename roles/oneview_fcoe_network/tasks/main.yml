@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -41,7 +42,8 @@
     - { name: '{{ contents.fcoe_network.network_name }}', vlanId: '201' }
     - { name: '{{ contents.fcoe_network.network_name }} (1)', vlanId: '202'}
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fcoe_network1
 
 - name: Do nothing with the FCoE Network when no changes are provided

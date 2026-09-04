@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about logical interconnect group
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.enclosure_group.lig_name }}"
   delegate_to: localhost
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     lig_uri: "{{ logical_interconnect_groups[0]['uri'] }}"
 
 - name: Create an Enclosure Group

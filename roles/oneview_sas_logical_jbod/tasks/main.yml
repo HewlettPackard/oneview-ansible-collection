@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Drive Enclosures
@@ -15,16 +16,21 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures[0]['name']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures[1]['name']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures[2]['name']
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     drive_enclosure_uri_list: ["{{ drive_enclosures[0]['uri'] }}"]
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     drive_bay_uris: ["{{ drive_enclosures[1]['driveBays'][2]['uri'] }}", "{{ drive_enclosures[1]['driveBays'][3]['uri'] }}"]
 
 - name: Create a SAS Logical JBOD
@@ -45,7 +51,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -62,7 +69,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -76,7 +84,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -91,7 +100,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -106,7 +116,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -121,7 +132,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -136,7 +148,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -150,7 +163,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -164,7 +178,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -178,7 +193,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -192,7 +208,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 
@@ -206,7 +223,8 @@
   when: contents.sas_logical_jbod.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.sas_logical_jbod.variant == 'Synergy'
 

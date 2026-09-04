@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -46,9 +47,11 @@
           value: true
   delegate_to: localhost
   register: san_manager1
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_manager1
 
 - name: Do nothing when San Manager is already present

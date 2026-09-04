@@ -2,7 +2,8 @@
 - name: HPE OneView Ansible Collection Automation
   hosts: all
   tasks:
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_range)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_range
@@ -11,7 +12,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_range_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_range_facts
@@ -20,7 +22,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_subnet)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_subnet
@@ -29,7 +32,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_subnet_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_subnet_facts
@@ -38,7 +42,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (ethernet_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_ethernet_network
@@ -47,7 +52,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (ethernet_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_ethernet_network_facts
@@ -56,7 +62,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (scope)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_scope
@@ -65,7 +72,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (scope_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_scope_facts
@@ -74,7 +82,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (fc_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fc_network
@@ -83,7 +92,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (fc_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fc_network_facts
@@ -92,7 +102,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (fcoe_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fcoe_network
@@ -101,7 +112,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (fcoe_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fcoe_network_facts
@@ -110,7 +122,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (connection_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_connection_template
@@ -119,7 +132,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (connection_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_connection_template_facts
@@ -128,7 +142,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (network_set)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_network_set
@@ -137,7 +152,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (network_set_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_network_set_facts
@@ -146,7 +162,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (hypervisor_manager)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_hypervisor_manager
@@ -155,7 +172,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (hypervisor_manager_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_hypervisor_manager_facts
@@ -164,7 +182,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (task)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_task
@@ -173,7 +192,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (task_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_task_facts
@@ -182,7 +202,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_interconnect_group)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_group
@@ -191,7 +212,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_interconnect_group_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_group_facts
@@ -200,7 +222,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (enclosure_group)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_group
@@ -209,7 +232,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (enclosure_group_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_group_facts
@@ -218,7 +242,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure
@@ -227,7 +252,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_facts
@@ -236,7 +262,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (interconnect_type_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect_type_facts
@@ -245,7 +272,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (interconnect)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect
@@ -254,7 +282,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (interconnect_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect_facts
@@ -263,7 +292,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_enclosure
@@ -272,7 +302,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_enclosure_facts
@@ -281,7 +312,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_interconnect)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect
@@ -290,7 +322,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (logical_interconnect_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_facts
@@ -299,7 +332,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (drive_enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_drive_enclosure
@@ -308,7 +342,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (drive_enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_drive_enclosure_facts
@@ -317,7 +352,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (sas_logical_jbod)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod
@@ -326,7 +362,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (sas_logical_jbod_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod_facts
@@ -335,7 +372,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (sas_logical_jbod_attachment_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod_attachment_facts
@@ -344,7 +382,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (uplink_set)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_uplink_set
@@ -353,7 +392,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (uplink_set_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_uplink_set_facts
@@ -362,7 +402,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_hardware_type)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_type
@@ -371,7 +412,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_hardware_type_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_type_facts
@@ -380,7 +422,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_hardware)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware
@@ -389,7 +432,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_hardware_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_facts
@@ -398,7 +442,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_system)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_system
@@ -407,7 +452,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_system_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_system_facts
@@ -416,7 +462,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_pool)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_pool
@@ -425,7 +472,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_pool_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_pool_facts
@@ -434,7 +482,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_volume_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_template
@@ -443,7 +492,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_volume_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_template_facts
@@ -452,7 +502,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (volume)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_volume
@@ -461,7 +512,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (volume_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_volume_facts
@@ -470,7 +522,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_profile_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_template
@@ -479,7 +532,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_profile_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_template_facts
@@ -488,7 +542,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_profile)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile
@@ -497,7 +552,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (server_profile_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_facts
@@ -515,7 +571,8 @@
     #     - name: (Display)
     #       debug:
     #         msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_volume_attachment_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_attachment_facts
@@ -524,7 +581,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_configuration_timeconfig_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_configuration_timeconfig_facts
@@ -533,7 +591,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_proxy_configuration)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_proxy_configuration
@@ -542,7 +601,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_proxy_configuration_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_proxy_configuration_facts
@@ -551,7 +611,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_network_interface_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_network_interface_facts
@@ -569,7 +630,8 @@
     #     - name: (Display)
     #       debug:
     #         msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v1_trap_destination)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
@@ -578,7 +640,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v1_trap_destination_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
@@ -587,7 +650,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_users)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_users
@@ -596,7 +660,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_users_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
@@ -605,7 +670,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_trap_destination)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
@@ -614,7 +680,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_trap_destination_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
@@ -623,7 +690,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_ssh_access_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_ssh_access_facts
@@ -632,7 +700,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_ssh_access)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_ssh_access
@@ -641,7 +710,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_time_and_locale_configuration)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_time_and_locale_configuration
@@ -650,7 +720,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_time_and_locale_configuration_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
@@ -659,7 +730,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (certificates_server)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_certificates_server
@@ -668,7 +740,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (certificates_server_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_certificates_server_facts
@@ -677,7 +750,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (firmware_bundle)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_bundle
@@ -686,7 +760,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (firmware_driver)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_driver
@@ -695,7 +770,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (firmware_driver_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_driver_facts
@@ -704,7 +780,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools
@@ -713,7 +790,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_facts
@@ -722,7 +800,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (label)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_label
@@ -731,7 +810,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (label_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_label_facts
@@ -740,7 +820,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (user)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_user
@@ -749,7 +830,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (user_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_user_facts
@@ -758,7 +840,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (version_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_version_facts
@@ -767,7 +850,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (dynamic_role)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_dynamic_role
@@ -776,7 +860,8 @@
         - name: (Display)
           ansible.builtin.debug:
             msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (repositories)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_repositories

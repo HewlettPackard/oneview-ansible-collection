@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get schema of the id pools
@@ -35,7 +36,8 @@
     data:
       poolType: '{{ contents.id_pools.poolType }}'
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: id_pool
 
 - name: Checks the range availability in the ID pool

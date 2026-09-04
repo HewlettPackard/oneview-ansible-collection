@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Volumes
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volumes
 
 - name: Gather paginated, filtered and sorted facts about Volumes
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: "provisioningType='Thin'"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volumes
 
 - name: "Gather facts about all Volumes, the attachable volumes managed by the appliance and the extra managed
@@ -45,11 +48,14 @@
       - extraManagedVolumePaths  # optional
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volumes
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: attachable_volumes
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: extra_managed_volume_paths
 
 - name: Gather facts about a Volume by name with a list of all snapshots taken
@@ -61,9 +67,11 @@
       - snapshots  # optional
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volumes
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: snapshots
 
 - name: "Gather facts about a Volume with one specific snapshot taken"
@@ -77,9 +85,11 @@
   delegate_to: localhost
   when: (snapshots is none and snapshots is undefined)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volumes
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: snapshots
 
 - name: Logout Session

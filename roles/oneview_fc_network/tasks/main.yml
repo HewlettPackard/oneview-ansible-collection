@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -102,7 +103,8 @@
   delegate_to: localhost
   register: deleted
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_network_1.results[1].ansible_facts.fc_network.uri
 
 # This feature is available only from OneView 5.20

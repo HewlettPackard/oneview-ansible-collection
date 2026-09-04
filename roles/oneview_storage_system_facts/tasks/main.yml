@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Storage Systems
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 - name: Gather paginated, filtered and sorted facts about Storage Systems
@@ -27,7 +29,8 @@
       count: 3
       sort: 'name:descending'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 - name: Gather facts about a Storage System by IP (storage_hostname)
@@ -37,7 +40,8 @@
     storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 - name: Gather facts about a Storage System by IP (hostname)
@@ -47,7 +51,8 @@
     storage_hostname: "{{ contents.storage_system.storage_system_ip }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 - name: Gather facts about a Storage System by name
@@ -57,7 +62,8 @@
     name: "{{ contents.storage_system.storage_system_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_systems
 
 - name: Gather facts about Storage System - Host Types
@@ -68,7 +74,8 @@
       - hostTypes
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_system_host_types
 
 - name: Gather facts about Storage Pools of a Storage System by name
@@ -80,7 +87,8 @@
       storagePools
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_system_pools
 
 - name: Gather facts about all Fibre Channel Networks
@@ -89,7 +97,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Gather queried facts about Storage System reachable ports
@@ -104,7 +113,8 @@
     params:
       sort: 'name:descending'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_system_reachable_ports
 
 - name: Gather facts about the Storage System storage templates
@@ -117,7 +127,8 @@
     params:
       sort: 'name:descending'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_system_templates
 
 - name: Logout Session

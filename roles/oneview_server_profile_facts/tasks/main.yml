@@ -29,9 +29,11 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{server_profiles | map(attribute='name') | list }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profiles
 
 
@@ -46,7 +48,8 @@
       filter: macType='Virtual'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{server_profiles | map(attribute='name') | list }}"
 
 
@@ -57,7 +60,8 @@
     name: "{{contents.server_profile.server_profile_name}}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profiles
 
 - name: Gather facts about a Server Profile by uri
@@ -68,7 +72,8 @@
   delegate_to: localhost
   when: server_profiles|length != 0
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profiles
 
 - name: Gather facts about all Server Hardware Types
@@ -93,7 +98,8 @@
           enclosureGroupUri: "{{enclosure_groups[0]['uri']}}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_targets
 
 - name: Gather all facts about a Server Profile works below API Version 1200
@@ -127,29 +133,41 @@
       - availableTargets
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profiles
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_schema
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_compliance_preview
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_new_profile_template
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_profile_ports
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_messages
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_transformation
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_networks
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_servers
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_storage_system
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_storage_systems
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_available_targets
 
 - name: Logout Session

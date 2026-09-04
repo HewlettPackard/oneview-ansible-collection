@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about the last 5 running tasks
@@ -19,7 +20,8 @@
       filter: ["taskState='Running'", "isCancellable=true"]
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: tasks
 
 - name: Sets the state of task to 'Cancelling'

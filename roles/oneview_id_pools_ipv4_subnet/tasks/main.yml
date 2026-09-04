@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Ensure the ID Pools IPV4 Subnet exists
@@ -44,7 +45,8 @@
       domain: '{{ contents.id_pools_ipv4_subnet.newDomain }}'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: id_pools_ipv4_subnet
 
 - name: Create an Ethernet Network

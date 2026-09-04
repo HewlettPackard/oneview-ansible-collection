@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all SAS Interconnects
@@ -15,11 +16,14 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     variant: "Synergy"
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     sas_interconnect_name: "{{ sas_interconnects[0]['name'] }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_interconnect_name
 
 - name: Refresh the SAS interconnect
@@ -33,7 +37,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -47,7 +52,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -61,7 +67,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -75,7 +82,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -89,7 +97,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -103,7 +112,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -117,7 +127,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -131,7 +142,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 
@@ -145,7 +157,8 @@
   when: variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: variant == 'Synergy'
 

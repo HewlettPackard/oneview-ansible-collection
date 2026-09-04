@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Users
@@ -14,7 +15,8 @@
     config: "{{ config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather paginated, filtered and sorted facts about Users
@@ -27,7 +29,8 @@
       sort: 'emailAddress:descending'
       filter: 'enabled=true'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather facts about a User by name
@@ -37,7 +40,8 @@
     userName: "testUser"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather facts about the users who have permissions that use a specified role
@@ -48,7 +52,8 @@
 
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: role
 
 - name: Gather facts about lists of user's roles
@@ -60,9 +65,11 @@
       - getUserRoles
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user_roles
 
 - name: Logout Session

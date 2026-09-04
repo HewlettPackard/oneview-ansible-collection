@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Get currentVersion from URL
@@ -34,7 +35,8 @@
     name: "{{ contents.storage_volume_attachment.storage_volume_name }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     volume: "{{storage_volumes[0]}}"
 
 - name: Gather facts about all Storage Volume Attachments
@@ -43,7 +45,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
 
 - name: Gather paginated, filtered and sorted facts about Storage Volume Attachments
@@ -56,7 +59,8 @@
       sort: 'name:descending'
       filter: "storageVolumeUri='{{ volume['uri'] }}'"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
 
 - name: Gather facts about a Storage Volume Attachment by Server Profile Name and Volume Uri
@@ -67,7 +71,8 @@
     storageVolumeUri: "{{ volume['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
 
 
@@ -81,9 +86,11 @@
           count: 10
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: extra_unmanaged_storage_volumes
 
 
@@ -99,9 +106,11 @@
   delegate_to: localhost
   when: currentVersion == '200' or currentVersion == '300'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachment_paths
 
 - name: Logout Session

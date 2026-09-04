@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Connection Templates
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
 
 - name: Gather paginated, filtered and sorted facts about Connection Template
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: 'name=defaultConnectionTemplate'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
 
 - name: Gather facts about a Connection Template by name
@@ -38,7 +41,8 @@
     name: "{{ contents.connection_template.template_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
 
 
@@ -50,7 +54,8 @@
       - defaultConnectionTemplate
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: default_connection_template
 
 - name: Logout Session

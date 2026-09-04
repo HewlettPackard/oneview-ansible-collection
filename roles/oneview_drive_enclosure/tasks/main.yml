@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Refresh the drive enclosure
@@ -20,7 +21,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -34,7 +36,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -48,7 +51,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -62,7 +66,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -76,7 +81,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -90,7 +96,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -104,7 +111,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -118,7 +126,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -132,7 +141,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 
@@ -146,7 +156,8 @@
   when: contents.drive_enclosure.variant == 'Synergy'
   delegate_to: localhost
   register: result
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: result.msg
   when: contents.drive_enclosure.variant == 'Synergy'
 

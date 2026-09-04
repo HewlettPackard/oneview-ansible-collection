@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Firmware Drivers
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 - name: Gather paginated, filtered and sorted facts about Firmware Drivers
@@ -28,7 +30,8 @@
       sort: 'name:descending'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 - name: Gather facts about a Firmware Driver by name
@@ -38,7 +41,8 @@
     name: "{{ contents.firmware_driver.baseline_firmware_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 - name: Gather facts about a Firmware Driver by name and version
@@ -49,7 +53,8 @@
     version: "{{ contents.firmware_driver.version }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware_drivers
 
 - name: Gather facts about Firmware Driver with options
@@ -60,7 +65,8 @@
       - schema
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: schema
 
 - name: Logout Session

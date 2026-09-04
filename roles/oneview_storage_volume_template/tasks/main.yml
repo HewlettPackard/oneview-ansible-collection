@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Retrieve the Root Storage Volume Template
@@ -20,9 +21,11 @@
       filter: isRoot='True'
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     svt_root_uri: "{{ storage_volume_templates[0]['uri'] }}"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: svt_root_uri
 
 - name: Gather paginated, filtered and sorted facts about Storage Pools

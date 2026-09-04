@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all interconnects
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{interconnects | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Interconnects
@@ -28,10 +30,12 @@
       sort: 'name:descending'
       filter: "enclosureName='0000A66101'"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     interconnect_name: "{{ interconnects[0]['name'] }}"
 
 - name: Gather facts about the interconnect that matches the specified name
@@ -41,7 +45,8 @@
     name: "{{ contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
 - name: Gather facts about the interconnect that matches the specified name and its name servers
@@ -53,9 +58,11 @@
       - nameServers
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_name_servers
 
 - name: Gather facts about statistics for the Interconnect that matches the specified name
@@ -66,9 +73,11 @@
     options:
       - statistics
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_statistics
 
 - name: Get the port statistics for the specified interconnect name and port name
@@ -80,9 +89,11 @@
       - portStatistics: "{{ port_name }}"
   when: interconnects[0]['state'] != "Monitored"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_port_statistics
 
 - name: Get the subport statistics
@@ -95,9 +106,11 @@
           portName: "{{ contents.interconnect.port_name }}"
           subportNumber: "{{ contents.interconnect.subport_number }}"
   when: interconnects[0]['state'] != "Monitored"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_subport_statistics
 
 - name: Gather facts about all the Interconnect ports
@@ -108,9 +121,11 @@
     options:
       - ports
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_ports
 
 - name: Gather facts about an Interconnect port
@@ -121,9 +136,11 @@
     options:
       - port: "{{ contents.interconnect.port_name }}"
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_port
 
 - name: Gather facts about the small-form pluggable modules
@@ -134,9 +151,11 @@
     options:
       - pluggableModuleInformation
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_pluggable_module_information
 
 - name: Logout Session

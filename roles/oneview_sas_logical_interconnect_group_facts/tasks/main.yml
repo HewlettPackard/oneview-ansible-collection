@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all SAS Logical Interconnect Group
@@ -15,12 +16,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     sas_logical_interconnect_group_name: "{{ sas_logical_interconnect_groups[0]['name'] }}"
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     sas_logical_interconnect_group_uri: "{{ sas_logical_interconnect_groups[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical Interconnect Group
@@ -33,7 +37,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Gather facts about a SAS Logical Interconnect Group by name
@@ -43,7 +48,8 @@
     name: "{{ sas_logical_interconnect_group_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Gather facts about a SAS Interconnect Type by uri
@@ -53,7 +59,8 @@
     uri: "{{ sas_logical_interconnect_group_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Logout Session

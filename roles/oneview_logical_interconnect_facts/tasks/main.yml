@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Logical Interconnects
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: logical_interconnects
 
 - name: Gather paginated and sorted facts about Logical Interconnects
@@ -27,7 +29,8 @@
       count: 3
       sort: 'name:descending'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: logical_interconnects
 
 - name: Gather facts about a Logical Interconnect by name
@@ -37,7 +40,8 @@
     name: "{{ contents.logical_interconnect.logical_interconnect_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: logical_interconnects['uri']
 
 - name: Gather facts about a Logical Interconnect by name with QOS Configuration
@@ -49,7 +53,8 @@
       - qos_aggregated_configuration
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: qos_aggregated_configuration
 
 - name: Gather facts about the SNMP configuration on the logical interconnect that matches the specified name
@@ -61,7 +66,8 @@
       - snmp_configuration
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: snmp_configuration
 
 - name: Gather facts about the IGMP settings on the logical interconnect that matches the specified name
@@ -73,7 +79,8 @@
       - igmp_settings
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: igmp_settings
 
 - name: "Gather facts about the port monitor configuration on the logical interconnect that matches the specified name"
@@ -85,7 +92,8 @@
       - port_monitor
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: port_monitor
 
 - name: "Gather facts about an internal VLAN IDs for the provisioned networks on a logical interconnect that matches the specified name"
@@ -97,7 +105,8 @@
       - internal_vlans
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: internal_vlans
 
 - name: "Gather facts about a forwarding information base data for a logical interconnect that matches the specified name"
@@ -109,7 +118,8 @@
       - forwarding_information_base
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: forwarding_information_base
 
 - name: "Gather facts about an installed firmware for a logical interconnect that matches the specified name"
@@ -121,7 +131,8 @@
       - firmware
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: firmware
 
 - name: "Gather facts about the collection of uplink ports from the member interconnects which are eligible for
@@ -134,7 +145,8 @@
       - unassigned_uplink_ports
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: unassigned_uplink_ports
 
 - name: "Gather facts about the collection of ports from the member interconnects which are eligible for
@@ -147,7 +159,8 @@
       - unassigned_ports
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: unassigned_ports
 
 - name: "Gather facts about the telemetry configuration of the logical interconnect"
@@ -159,7 +172,8 @@
       - telemetry_configuration
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: telemetry_configuration
 
 - name: "Gather the Ethernet interconnect settings for the logical interconnect"
@@ -171,7 +185,8 @@
       - ethernet_settings
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: ethernet_settings
 
 - name: Logout Session

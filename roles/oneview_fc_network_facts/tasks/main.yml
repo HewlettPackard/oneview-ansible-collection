@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Fibre Channel Networks
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Gather paginated, filtered and sorted facts about Fibre Channel Networks
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: 'fabricType=FabricAttach'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Gather facts about a Fibre Channel Network by name
@@ -39,7 +42,8 @@
   delegate_to: localhost
   when: fc_networks | default('', True)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Logout Session

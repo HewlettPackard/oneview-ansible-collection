@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Network Sets
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Gather paginated, filtered, and sorted facts about Network Sets
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: name='netset001'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Gather facts about all Network Sets, excluding Ethernet networks
@@ -39,7 +42,8 @@
       - withoutEthernet
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 
@@ -50,7 +54,8 @@
     name: '{{ contents.network_set.network_name }}'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 
@@ -63,7 +68,8 @@
       - withoutEthernet
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Logout Session

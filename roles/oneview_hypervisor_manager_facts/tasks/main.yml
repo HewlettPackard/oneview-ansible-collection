@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Hypervisor Managers
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_managers
 
 - name: Gather paginated, filtered and sorted facts about Hypervisor Managers
@@ -27,7 +29,8 @@
       count: 3
       sort: 'name:descending'
       filter: 'hypervisorType=Vmware'
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_managers
 
 - name: Gather facts about a Hypervisor Manager by name
@@ -37,7 +40,8 @@
     name: "{{ hypervisor_manager_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_managers
 
 - name: Logout Session

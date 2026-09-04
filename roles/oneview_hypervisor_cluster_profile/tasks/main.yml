@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about server profile templates
@@ -16,9 +17,11 @@
     name: "{{ contents.hypervisor_cluster_profile.server_profile_template_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile_templates
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     spt_uri: "{{ server_profile_templates[0]['uri'] }}"
 
 - name: Gather facts about hypervisor managers
@@ -27,7 +30,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
     name: "{{ contents.hypervisor_cluster_profile.hypervisor_manager_name }}"
   delegate_to: localhost
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     hyp_mgr_uri: "{{ hypervisor_managers[0]['uri'] }}"
 
 - name: Create a basic Hypervisor Cluster Profile

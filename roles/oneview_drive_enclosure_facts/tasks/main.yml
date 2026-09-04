@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all Drive Enclosures
@@ -15,7 +16,8 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather paginated, filtered and sorted facts about Drive Enclosures
@@ -28,7 +30,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather facts about a Drive Enclosure by name
@@ -38,10 +41,12 @@
     name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     drive_en_uri: "{{ drive_enclosures[0]['uri'] }}"
 
 - name: Gather facts about a Drive Enclosure by uri
@@ -51,7 +56,8 @@
     uri: "{{ drive_en_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather Port map facts about a Drive Enclosure by name
@@ -63,7 +69,8 @@
       - port_map
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: port_map
 
 - name: Logout Session

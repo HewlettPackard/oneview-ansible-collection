@@ -6,7 +6,8 @@
   delegate_to: localhost
   register: session
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: session
 
 - name: Gather facts about all SAS Logical JBOD Attachments
@@ -15,12 +16,15 @@
     sessionID: "{{ session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     jbod_attachment_name: "{{ sas_logical_jbod_attachments[0]['name'] }}"
-- ansible.builtin.set_fact:
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
     jbod_attachment_uri: "{{ sas_logical_jbod_attachments[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBOD attachments
@@ -33,7 +37,8 @@
       sort: 'name:descending'
       filter: 'status=OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Gather facts about a SAS Logical JBOD Attachment by name
@@ -43,7 +48,8 @@
     name: "{{ jbod_attachment_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Gather facts about a SAS Logical JBOD Attachment by uri
@@ -53,7 +59,8 @@
     uri: "{{ jbod_attachment_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Logout Session
