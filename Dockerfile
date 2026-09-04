@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.12-slim-bookworm
 LABEL maintainer="Chebrolu Harika <bala-sai-harika.chebrolu@hpe.com>"
 
 WORKDIR /root

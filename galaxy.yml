@@ -22,7 +22,8 @@ authors:
 ### OPTIONAL but strongly recommended
 
 # A short summary description of the collection
-description: Ansible Modules for HPE Oneview SDK
+# Requires: hpeOneView>=12.0.0 (PQC-capable), Python 3.9+, OpenSSL 3.2+ (with OQS provider) or 3.5+
+description: Ansible Modules for HPE OneView SDK. Requires hpeOneView>=12.0.0 with Python 3.9+ and OpenSSL 3.2+ for PQC (TLS 1.3 / ML-KEM-1024) support.
 
 # The path to the license file for the collection. This path is relative to the root of the collection. This key is
 # mutually exclusive with 'license'

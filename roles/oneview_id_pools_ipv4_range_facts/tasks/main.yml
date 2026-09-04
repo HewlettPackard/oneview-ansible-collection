@@ -62,6 +62,7 @@
 
 - ansible.builtin.set_fact:
     range_uri: "{{ id_pools_ipv4_ranges[0]['uri'] }}"
+  when: id_pools_ipv4_ranges|length != 0
 
 - name: Get facts about the range '{{ range_uri }}'
   oneview_id_pools_ipv4_range_facts:

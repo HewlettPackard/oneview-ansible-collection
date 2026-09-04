@@ -36,6 +36,25 @@
 - ansible.builtin.set_fact:
     subnet_uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
 
+- name: Get facts about existing ranges in the subnet (cleanup from a previous failed run)
+  oneview_id_pools_ipv4_range_facts:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    subnetUri: '{{ subnet_uri }}'
+  delegate_to: localhost
+
+- name: Remove any leftover range with the same name so the range address block is free
+  oneview_id_pools_ipv4_range:
+    config: "{{ config }}"
+    sessionID: "{{ session.ansible_facts.session }}"
+    state: absent
+    data:
+      name: '{{ item.name }}'
+      subnetUri: '{{ subnet_uri }}'
+  delegate_to: localhost
+  loop: "{{ id_pools_ipv4_ranges | default([]) }}"
+  when: item.name in [contents.id_pools_ipv4_range.range_name, contents.id_pools_ipv4_range.disabled_range_name]
+
 - name: Ensure the IPV4 Range  exists '{{ contents.id_pools_ipv4_range.range_name }}'
   oneview_id_pools_ipv4_range:
     config: "{{ config }}"
