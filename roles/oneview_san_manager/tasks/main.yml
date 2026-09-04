@@ -1,100 +1,103 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_san_manager_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_san_manager_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_san_manager_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_san_manager_config_file.api_version == ""
+  register: oneview_san_manager_version
 
 - name: Print currentVersion if api version is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_san_manager_current_version: "{{ oneview_san_manager_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_san_manager_config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_san_manager_current_version: oneview_san_manager_config_file.api_version | string
+  when: oneview_san_manager_config_file.api_version != ""
 
 - name: Add a San Manager Storage System
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: present
     data:
-      providerDisplayName: "{{ contents.san_manager.san_manager_provider_display_name }}"
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      providerDisplayName: "{{ oneview_san_manager_contents.san_manager.san_manager_provider_display_name }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
       connectionInfo:
-        - name: "Host"
-          value: "{{ contents.san_manager.san_manager_hostname }}"
-        - name: "Username"
-          value: "{{ contents.san_manager.san_manager_username }}"
-        - name: "Password"
-          value: "{{ contents.san_manager.san_manager_password }}"
-        - name: "UseHttps"
+        - name: Host
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
+        - name: Username
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_username }}"
+        - name: Password
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_password }}"
+        - name: UseHttps
           value: true
   delegate_to: localhost
-  register: san_manager1
-- ansible.builtin.debug:
-    msg: "San Manager added is  {{ san_manager1.ansible_facts.san_managers.uri }}"
-- ansible.builtin.debug:
-    var: san_manager1
+  register: oneview_san_manager_san_manager1
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: San Manager added is  {{ oneview_san_manager_san_manager1.ansible_facts.san_managers.uri }}
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_san_manager_san_manager1
 
 - name: Do nothing when San Manager is already present
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: present
     data:
-      providerDisplayName: "{{ contents.san_manager.san_manager_provider_display_name }}"
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      providerDisplayName: "{{ oneview_san_manager_contents.san_manager.san_manager_provider_display_name }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
       connectionInfo:
-        - name: "Host"
-          value: "{{ contents.san_manager.san_manager_hostname }}"
-        - name: "Username"
-          value: "{{ contents.san_manager.san_manager_username }}"
-        - name: "Password"
-          value: "{{ contents.san_manager.san_manager_password }}"
-        - name: "UseHttps"
+        - name: Host
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
+        - name: Username
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_username }}"
+        - name: Password
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_password }}"
+        - name: UseHttps
           value: true
   delegate_to: localhost
 
 - name: Refresh the San Manager
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: refresh_state_set
     data:
-      name: "{{ contents.san_manager.san_manager_hostname }}"
-      refreshState: "RefreshPending"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
+      refreshState: RefreshPending
   delegate_to: localhost
 
 - name: Update the San Manager
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
       connectionInfo:
-        - name: "Host"
-          value: "{{ contents.san_manager.san_manager_hostname }}"
-        - name: "Username"
-          value: "{{ contents.san_manager.san_manager_username }}"
-        - name: "Password"
-          value: "{{ contents.san_manager.san_manager_password }}"
-        - name: "UseHttps"
+        - name: Host
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
+        - name: Username
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_username }}"
+        - name: Password
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_password }}"
+        - name: UseHttps
           value: true
   delegate_to: localhost
 
@@ -102,45 +105,45 @@
 # should be set to True
 - name: Update password of San Manager
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
       connectionInfo:
-        - name: "Host"
-          value: "{{ contents.san_manager.san_manager_hostname }}"
-        - name: "Username"
-          value: "{{ contents.san_manager.san_manager_username }}"
-        - name: "Password"
-          value: "{{ contents.san_manager.san_manager_password }}"
+        - name: Host
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
+        - name: Username
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_username }}"
+        - name: Password
+          value: "{{ oneview_san_manager_contents.san_manager.san_manager_password }}"
           updatePassword: true
-        - name: "UseHttps"
+        - name: UseHttps
           value: true
   delegate_to: localhost
 
 - name: Remove the San Manager from OneView
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_san_manager_deleted
 
 - name: Do nothing when San Manager is absent
   hpe.oneview.oneview_san_manager:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.san_manager.san_manager_hostname }}"
+      name: "{{ oneview_san_manager_contents.san_manager.san_manager_hostname }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_san_manager_deleted
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_config }}"
+    sessionID: "{{ oneview_san_manager_session.ansible_facts.session }}"
   delegate_to: localhost

@@ -1,70 +1,73 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_task_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_task_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_task_facts_session
 
 - name: Gather facts about the last 2 tasks
   oneview_task_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
     params:
       count: 2
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: tasks
 
 - name: Gather facts about the last 2 tasks associated to Server Profile templates
   oneview_task_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
     params:
       count: 2
-      filter: "associatedResource.resourceCategory='server-profile-templates'"
+      filter: associatedResource.resourceCategory='server-profile-templates'
   delegate_to: localhost
 
 - name: Gather facts about aggregate tree of tasks with specified filter
   oneview_task_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
     params:
       childLimit: 40
       topCount: 2
-      view: "aggregatedTree"
-      filter: "taskState='Completed'"
+      view: aggregatedTree
+      filter: taskState='Completed'
   delegate_to: localhost
 
 - name: Gather facts about the last 5 tasks with state 'Completed'
   oneview_task_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
     params:
       count: 5
-      view: "tree"
-      filter: "taskState='Completed'"
+      view: tree
+      filter: taskState='Completed'
   delegate_to: localhost
 
 - name: Gather facts about the last 5 tasks completed with warnings
   oneview_task_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
     params:
       count: 5
-      view: "flat-tree"
-      filter: "taskState='Warning'"
+      view: flat-tree
+      filter: taskState='Warning'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: tasks
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_task_facts_config }}"
+    sessionID: "{{ oneview_task_facts_session.ansible_facts.session }}"
   delegate_to: localhost

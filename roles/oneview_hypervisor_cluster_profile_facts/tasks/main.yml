@@ -1,71 +1,78 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_hypervisor_cluster_profile_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_hypervisor_cluster_profile_facts_session
 
 - name: Gather facts about all Hypervisor Cluster Profiles
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather paginated, filtered and sorted facts about Hypervisor Cluster Profiles
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'hypervisorType=Vmware'
-- ansible.builtin.debug:
+      sort: name:descending
+      filter: hypervisorType=Vmware
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ hypervisor_cluster_profiles | map(attribute='name') | list }}"
 
 - name: Gather facts about a Hypervisor Cluster Profile by name
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "hcp"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
+    name: hcp
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather facts about a Hypervisor Cluster Profile by uri
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{hypervisor_cluster_profiles[0]['uri']}}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
+    uri: "{{ hypervisor_cluster_profiles[0]['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
 
 - name: Gather all facts about a Hypervisor Cluster Profile
   oneview_hypervisor_cluster_profile_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "ClusterProfile"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
+    name: ClusterProfile
     options:
       - compliancePreview
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profiles
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: hypervisor_cluster_profile_compliance_preview
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_hypervisor_cluster_profile_facts_config }}"
+    sessionID: "{{ oneview_hypervisor_cluster_profile_facts_session.ansible_facts.session }}"
   delegate_to: localhost

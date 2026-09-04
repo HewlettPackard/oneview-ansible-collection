@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_repositories
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_repositories/files/oneview_config.json"
-contents: "{{lookup('file', '../config/config.json') | from_json}}"
+oneview_repositories_config: "{{ role_path }}/files/oneview_config.json"
+oneview_repositories_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

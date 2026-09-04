@@ -1,73 +1,77 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_network_set_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_network_set_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_network_set_facts_session
 
 - name: Gather facts about all Network Sets
   oneview_network_set_facts:
-    config: '{{ config }}'
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Gather paginated, filtered, and sorted facts about Network Sets
   oneview_network_set_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
       filter: name='netset001'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Gather facts about all Network Sets, excluding Ethernet networks
   oneview_network_set_facts:
-    config: '{{ config }}'
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
     options:
       - withoutEthernet
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
-
 
 - name: Gather facts about a Network Set by name
   oneview_network_set_facts:
-    config: '{{ config }}'
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ contents.network_set.network_name }}'
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_network_set_facts_contents.network_set.network_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
-
 
 - name: Gather facts about a Network Set by name, excluding Ethernet networks
   oneview_network_set_facts:
-    config: '{{ config }}'
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: '{{ contents.network_set.network_name }}'
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_network_set_facts_contents.network_set.network_name }}"
     options:
       - withoutEthernet
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: network_sets
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_network_set_facts_config }}"
+    sessionID: "{{ oneview_network_set_facts_session.ansible_facts.session }}"
   delegate_to: localhost

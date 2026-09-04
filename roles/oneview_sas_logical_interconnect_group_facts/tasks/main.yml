@@ -1,63 +1,70 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_logical_interconnect_group_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_sas_logical_interconnect_group_facts_session
 
 - name: Gather facts about all SAS Logical Interconnect Group
   oneview_sas_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
-- ansible.builtin.set_fact:
-    sas_logical_interconnect_group_name: "{{ sas_logical_interconnect_groups[0]['name'] }}"
-- ansible.builtin.set_fact:
-    sas_logical_interconnect_group_uri: "{{ sas_logical_interconnect_groups[0]['uri'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_interconnect_group_facts_sas_logical_interconnect_group_name: "{{ sas_logical_interconnect_groups[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_interconnect_group_facts_sas_logical_interconnect_group_uri: "{{ sas_logical_interconnect_groups[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical Interconnect Group
   oneview_sas_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_group_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Gather facts about a SAS Logical Interconnect Group by name
   oneview_sas_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ sas_logical_interconnect_group_name }}"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_group_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_sas_logical_interconnect_group_facts_sas_logical_interconnect_group_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Gather facts about a SAS Interconnect Type by uri
   oneview_sas_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ sas_logical_interconnect_group_uri }}"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_group_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_sas_logical_interconnect_group_facts_sas_logical_interconnect_group_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_interconnect_groups
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_interconnect_group_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_interconnect_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost

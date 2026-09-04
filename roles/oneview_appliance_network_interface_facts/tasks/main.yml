@@ -1,43 +1,47 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_appliance_network_interface_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_network_interface_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_appliance_network_interface_facts_session
 
 - name: Gather facts about the Appliance Network Interfaces
   oneview_appliance_network_interface_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interface_facts_config }}"
+    sessionID: "{{ oneview_appliance_network_interface_facts_session.ansible_facts.session }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 - name: Gather facts about the Network Interfaces by Mac Address
   oneview_appliance_network_interface_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interface_facts_config }}"
+    sessionID: "{{ oneview_appliance_network_interface_facts_session.ansible_facts.session }}"
     params:
-      mac_address: "{{ contents.appliance_network_interface.mac_address }}"
+      mac_address: "{{ oneview_appliance_network_interface_facts_contents.appliance_network_interface.mac_address }}"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 
 - name: Gather facts about the all unconfigured Mac Addresses
   oneview_appliance_network_interface_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interface_facts_config }}"
+    sessionID: "{{ oneview_appliance_network_interface_facts_session.ansible_facts.session }}"
     options:
       - getAllMacAddress
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_network_interfaces
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_network_interface_facts_config }}"
+    sessionID: "{{ oneview_appliance_network_interface_facts_session.ansible_facts.session }}"
   delegate_to: localhost

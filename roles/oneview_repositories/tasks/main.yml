@@ -1,104 +1,107 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_repositories_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_repositories_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_repositories_session
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    remote: "{{ contents.repositories.remote_server }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
+    remote: "{{ oneview_repositories_contents.repositories.remote_server }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
-    certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_repositories_certificate: "{{ remote_certificate['certificateDetails'][0]['base64Data'] }}"
 
 # Server Certificate need to be added to appliance for using an Https web server
 - name: Create a Server Certificate
   oneview_certificates_server:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.repositories.remote_server }}"
+    name: "{{ oneview_repositories_contents.repositories.remote_server }}"
     data:
       certificateDetails:
-        - aliasName: "{{ contents.repositories.remote_server }}"
-          base64Data: "{{ certificate }}"
+        - aliasName: "{{ oneview_repositories_contents.repositories.remote_server }}"
+          base64Data: "{{ oneview_repositories_certificate }}"
   delegate_to: localhost
 
 - name: Create a Repository
   oneview_repositories:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: present
     validate_etag: false
     data:
-      name: "{{ contents.repositories.repository_name }}"
-      userName: "{{ contents.repositories.repository_username }}"
-      password: "{{ contents.repositories.repository_password }}"
-      repositoryURI: "{{ contents.repositories.repository_uri }}"
-      repositoryType: "FirmwareExternalRepo"
+      name: "{{ oneview_repositories_contents.repositories.repository_name }}"
+      userName: "{{ oneview_repositories_contents.repositories.repository_username }}"
+      password: "{{ oneview_repositories_contents.repositories.repository_password }}"
+      repositoryURI: "{{ oneview_repositories_contents.repositories.repository_uri }}"
+      repositoryType: FirmwareExternalRepo
   delegate_to: localhost
-  register: repository
+  register: oneview_repositories_repository
 
 - name: Do nothing with the Repository when no changes are provided
   oneview_repositories:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.repositories.repository_name }}"
-      userName: "{{ contents.repositories.repository_username }}"
-      password: "{{ contents.repositories.repository_password }}"
-      repositoryURI: "{{ contents.repositories.repository_uri }}"
-      repositoryType: "FirmwareExternalRepo"
+      name: "{{ oneview_repositories_contents.repositories.repository_name }}"
+      userName: "{{ oneview_repositories_contents.repositories.repository_username }}"
+      password: "{{ oneview_repositories_contents.repositories.repository_password }}"
+      repositoryURI: "{{ oneview_repositories_contents.repositories.repository_uri }}"
+      repositoryType: FirmwareExternalRepo
   delegate_to: localhost
 
-- ansible.builtin.wait_for:
+- name: Run ansible.builtin.wait_for
+  ansible.builtin.wait_for:
     port: 22
     host: "{{ ansible_host }}"
     delay: 60
 
 - name: Update the attributes of repository resource
   oneview_repositories:
-    config: '{{ config }}'
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: patch
     data:
-      name: "{{ contents.repositories.repository_name }}"
-      newName: "{{ contents.repositories.repository_name }}-updated"
+      name: "{{ oneview_repositories_contents.repositories.repository_name }}"
+      newName: "{{ oneview_repositories_contents.repositories.repository_name }}-updated"
   delegate_to: localhost
 
 - name: Delete the Repository
   oneview_repositories:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.repositories.repository_name }}"
+      name: "{{ oneview_repositories_contents.repositories.repository_name }}"
     params:
       force: true
   delegate_to: localhost
-  register: deleted
+  register: oneview_repositories_deleted
 
 - name: Do nothing when Repository is absent
   oneview_repositories:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.repositories.repository_name }}"
+      name: "{{ oneview_repositories_contents.repositories.repository_name }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_repositories_deleted
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_repositories_config }}"
+    sessionID: "{{ oneview_repositories_session.ansible_facts.session }}"
   delegate_to: localhost

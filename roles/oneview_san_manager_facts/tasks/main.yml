@@ -1,49 +1,53 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_san_manager_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_san_manager_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_san_manager_facts_session
 
 - name: Gather facts about all  San Managers
   oneview_san_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_facts_config }}"
+    sessionID: "{{ oneview_san_manager_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Gather paginated, filtered and sorted facts about San Managers
   oneview_san_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_facts_config }}"
+    sessionID: "{{ oneview_san_manager_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'refreshState=Stable'
+      sort: name:descending
+      filter: refreshState=Stable
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Gather facts about a San Manager by name
   oneview_san_manager_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_facts_config }}"
+    sessionID: "{{ oneview_san_manager_facts_session.ansible_facts.session }}"
     name: "{{ san_managers[0]['name'] }}"
   delegate_to: localhost
   when: san_managers | default('', True)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: san_managers
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_san_manager_facts_config }}"
+    sessionID: "{{ oneview_san_manager_facts_session.ansible_facts.session }}"
   delegate_to: localhost

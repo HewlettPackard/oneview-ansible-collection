@@ -1,76 +1,83 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_label_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_label_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_label_facts_session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
-    config: "{{ config }}"
+    config: "{{ oneview_label_facts_config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[0]['uri']
 
 - name: Gather facts about all Labels
   oneview_label_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather paginated, filtered and sorted facts about Labels
   oneview_label_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: ''
-- ansible.builtin.debug:
+      sort: name:descending
+      filter: ""
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather facts about a Label by name
   oneview_label_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
     name: "{{ labels[0]['name'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gets all resources assigned with label name
   oneview_label_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
     name: "{{ labels[0]['name'] }}"
     get_resources: true
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Gather facts about a Label by Resource
   oneview_label_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
     resourceUri: "{{ enclosures[0]['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: labels
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_facts_config }}"
+    sessionID: "{{ oneview_label_facts_session.ansible_facts.session }}"
   delegate_to: localhost

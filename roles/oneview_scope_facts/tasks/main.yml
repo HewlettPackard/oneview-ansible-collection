@@ -1,27 +1,29 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_scope_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_scope_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_scope_facts_session
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_facts_config }}"
+    sessionID: "{{ oneview_scope_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: scopes
 
 - name: Gather paginated, filtered and sorted facts about Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_facts_config }}"
+    sessionID: "{{ oneview_scope_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -29,21 +31,23 @@
       query: name eq 'SampleScope'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: scopes
 
 - name: Gather facts about a Scope by name
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.scope.scope_name }}"
+    config: "{{ oneview_scope_facts_config }}"
+    sessionID: "{{ oneview_scope_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_scope_facts_contents.scope.scope_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: scopes
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_scope_facts_config }}"
+    sessionID: "{{ oneview_scope_facts_session.ansible_facts.session }}"
   delegate_to: localhost

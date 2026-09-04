@@ -6,9 +6,3 @@ exclude_paths:
 # verbosity: 1
 
 use_default_rules: true
-
-# This makes linter to fully ignore rules/tags listed below
-skip_list:
- - var-spacing
- - var-naming
- - name

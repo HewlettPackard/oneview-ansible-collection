@@ -1,60 +1,64 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_connection_template_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_connection_template_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_connection_template_facts_session
 
 - name: Gather facts about all Connection Templates
   oneview_connection_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_facts_config }}"
+    sessionID: "{{ oneview_connection_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
 
 - name: Gather paginated, filtered and sorted facts about Connection Template
   oneview_connection_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_facts_config }}"
+    sessionID: "{{ oneview_connection_template_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'name=defaultConnectionTemplate'
+      sort: name:descending
+      filter: name=defaultConnectionTemplate
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
 
 - name: Gather facts about a Connection Template by name
   oneview_connection_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.connection_template.template_name }}"
+    config: "{{ oneview_connection_template_facts_config }}"
+    sessionID: "{{ oneview_connection_template_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_connection_template_facts_contents.connection_template.template_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connection_templates
-
 
 - name: Gather facts about the Default Connection Template
   oneview_connection_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_facts_config }}"
+    sessionID: "{{ oneview_connection_template_facts_session.ansible_facts.session }}"
     options:
       - defaultConnectionTemplate
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: default_connection_template
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_facts_config }}"
+    sessionID: "{{ oneview_connection_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost

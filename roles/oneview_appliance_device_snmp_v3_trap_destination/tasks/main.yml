@@ -1,85 +1,88 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_device_snmp_v3_trap_destination_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_appliance_device_snmp_v3_trap_destination_session
 
 - name: Ensure that the SNMPv3 Trap Destination is present
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      destinationAddress: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
       port: 162
-      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      userName: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Ensure that the SNMPv3 Trap Destination is already present
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      destinationAddress: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
       port: 162
-      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      userName: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - name: Update the userId of specified SNMPv3 Trap Destination
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
-      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username2 }}"
+      destinationAddress: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      userName: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.username2 }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Ensure that the SNMPv3 Trap Destination is absent
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
   delegate_to: localhost
 
 - name: Ensure that the SNMPv3 Trap Destination is already absent
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: absent
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
   delegate_to: localhost
 
 - name: Creating the SNMPv3 Trap Destination for automation
   oneview_appliance_device_snmp_v3_trap_destinations:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
     state: present
-    name: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+    name: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
     data:
-      destinationAddress: "{{ contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
+      destinationAddress: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.destination_address }}"
       port: 162
-      userName: "{{ contents.appliance_device_snmp_v3_trap_destination.username1 }}"
+      userName: "{{ oneview_appliance_device_snmp_v3_trap_destination_contents.appliance_device_snmp_v3_trap_destination.username1 }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_session.ansible_facts.session }}"
   delegate_to: localhost

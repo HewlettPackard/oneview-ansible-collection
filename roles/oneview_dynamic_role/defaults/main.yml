@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_dynamic_role
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_dynamic_role/files/oneview_config.json"
-config_file: "{{lookup('file', config)}}"
-contents: "{{lookup('file','../config/config.json')| from_json}}"
+oneview_dynamic_role_config: "{{ role_path }}/files/oneview_config.json"
+oneview_dynamic_role_config_file: "{{ lookup('file', oneview_dynamic_role_config) }}"
+oneview_dynamic_role_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

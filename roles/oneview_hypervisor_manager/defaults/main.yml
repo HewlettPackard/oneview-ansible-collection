@@ -1,6 +1,6 @@
 ---
 # defaults file for oneview_hypervisor_manager
 
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_manager/files/oneview_config.json"
-contents: "{{lookup('file','../config/config.json')|from_json}}"
-config_file: "{{lookup('file', config)}}"
+oneview_hypervisor_manager_config: "{{ role_path }}/files/oneview_config.json"
+oneview_hypervisor_manager_contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_hypervisor_manager_config_file: "{{ lookup('file', oneview_hypervisor_manager_config) }}"

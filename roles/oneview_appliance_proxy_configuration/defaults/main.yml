@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_appliance_proxy_configuration
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_appliance_proxy_configuration/files/oneview_config.json"
-contents: "{{lookup('file','../config/config.json') | from_json}}"
+oneview_appliance_proxy_configuration_config: "{{ role_path }}/files/oneview_config.json"
+oneview_appliance_proxy_configuration_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

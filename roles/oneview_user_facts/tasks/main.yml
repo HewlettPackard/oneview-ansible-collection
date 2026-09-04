@@ -1,72 +1,79 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_user_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_user_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_user_facts_session
 
 - name: Gather facts about all Users
   oneview_user_facts:
-    config: "{{ config }}"
+    config: "{{ oneview_user_facts_config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather paginated, filtered and sorted facts about Users
   oneview_user_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_facts_config }}"
+    sessionID: "{{ oneview_user_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'emailAddress:descending'
-      filter: 'enabled=true'
+      sort: emailAddress:descending
+      filter: enabled=true
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather facts about a User by name
   oneview_user_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    userName: "testUser"
+    config: "{{ oneview_user_facts_config }}"
+    sessionID: "{{ oneview_user_facts_session.ansible_facts.session }}"
+    userName: testUser
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
 
 - name: Gather facts about the users who have permissions that use a specified role
   oneview_user_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    role: "{{ contents.users.role }}"
+    config: "{{ oneview_user_facts_config }}"
+    sessionID: "{{ oneview_user_facts_session.ansible_facts.session }}"
+    role: "{{ oneview_user_facts_contents.users.role }}"
 
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: role
 
 - name: Gather facts about lists of user's roles
   oneview_user_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    userName: "testUser"
+    config: "{{ oneview_user_facts_config }}"
+    sessionID: "{{ oneview_user_facts_session.ansible_facts.session }}"
+    userName: testUser
     options:
       - getUserRoles
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: users
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: user_roles
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_user_facts_config }}"
+    sessionID: "{{ oneview_user_facts_session.ansible_facts.session }}"
   delegate_to: localhost

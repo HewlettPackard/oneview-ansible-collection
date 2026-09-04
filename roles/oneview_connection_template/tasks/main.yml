@@ -1,53 +1,55 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_connection_template_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_connection_template_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_connection_template_session
 
 - name: Gather facts about all connection templates
   oneview_connection_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_config }}"
+    sessionID: "{{ oneview_connection_template_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
-    ct_name: "{{ connection_templates[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_connection_template_ct_name: "{{ connection_templates[0]['name'] }}"
 
 - name: Update the Connection Template
   oneview_connection_template:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_config }}"
+    sessionID: "{{ oneview_connection_template_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ ct_name }}"
-      type: "connection-template"
+      name: "{{ oneview_connection_template_ct_name }}"
+      type: connection-template
       bandwidth:
         maximumBandwidth: 10000
         typicalBandwidth: 2000
-      newName: "{{ ct_name }}_updated"
+      newName: "{{ oneview_connection_template_ct_name }}_updated"
   delegate_to: localhost
 
 - name: Update back the Connection Template
   oneview_connection_template:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_config }}"
+    sessionID: "{{ oneview_connection_template_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ ct_name }}_updated"
-      type: "connection-template"
+      name: "{{ oneview_connection_template_ct_name }}_updated"
+      type: connection-template
       bandwidth:
         maximumBandwidth: 10000
         typicalBandwidth: 2000
-      newName: "{{ ct_name }}"
+      newName: "{{ oneview_connection_template_ct_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_connection_template_config }}"
+    sessionID: "{{ oneview_connection_template_session.ansible_facts.session }}"
   delegate_to: localhost
