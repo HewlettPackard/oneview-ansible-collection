@@ -2,510 +2,566 @@
 - name: HPE OneView Ansible Collection Automation
   hosts: all
   tasks:
-    - block:
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_range)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_range
-          register: msg
+          register: oneview_id_pools_ipv4_range_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_ipv4_range_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_range_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_range_facts
-          register: msg
+          register: oneview_id_pools_ipv4_range_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_ipv4_range_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_subnet)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_subnet
-          register: msg
+          register: oneview_id_pools_ipv4_subnet_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_ipv4_subnet_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (id_pools_ipv4_subnet_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_ipv4_subnet_facts
-          register: msg
+          register: oneview_id_pools_ipv4_subnet_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_ipv4_subnet_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (ethernet_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_ethernet_network
-          register: msg
+          register: oneview_ethernet_network_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_ethernet_network_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (ethernet_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_ethernet_network_facts
-          register: msg
+          register: oneview_ethernet_network_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_ethernet_network_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (scope)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_scope
-          register: msg
+          register: oneview_scope_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_scope_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (scope_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_scope_facts
-          register: msg
+          register: oneview_scope_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_scope_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (fc_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fc_network
-          register: msg
+          register: oneview_fc_network_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_fc_network_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (fc_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fc_network_facts
-          register: msg
+          register: oneview_fc_network_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_fc_network_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (fcoe_network)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fcoe_network
-          register: msg
+          register: oneview_fcoe_network_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_fcoe_network_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (fcoe_network_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_fcoe_network_facts
-          register: msg
+          register: oneview_fcoe_network_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_fcoe_network_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (connection_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_connection_template
-          register: msg
+          register: oneview_connection_template_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_connection_template_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (connection_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_connection_template_facts
-          register: msg
+          register: oneview_connection_template_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_connection_template_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (network_set)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_network_set
-          register: msg
+          register: oneview_network_set_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_network_set_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (network_set_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_network_set_facts
-          register: msg
+          register: oneview_network_set_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_network_set_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (hypervisor_manager)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_hypervisor_manager
-          register: msg
+          register: oneview_hypervisor_manager_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_hypervisor_manager_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (hypervisor_manager_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_hypervisor_manager_facts
-          register: msg
+          register: oneview_hypervisor_manager_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_hypervisor_manager_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (task)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_task
-          register: msg
+          register: oneview_task_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_task_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (task_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_task_facts
-          register: msg
+          register: oneview_task_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_task_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_interconnect_group)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_group
-          register: msg
+          register: oneview_logical_interconnect_group_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_interconnect_group_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_interconnect_group_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_group_facts
-          register: msg
+          register: oneview_logical_interconnect_group_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_interconnect_group_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (enclosure_group)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_group
-          register: msg
+          register: oneview_enclosure_group_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_enclosure_group_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (enclosure_group_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_group_facts
-          register: msg
+          register: oneview_enclosure_group_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_enclosure_group_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure
-          register: msg
+          register: oneview_enclosure_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_enclosure_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_enclosure_facts
-          register: msg
+          register: oneview_enclosure_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_enclosure_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (interconnect_type_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect_type_facts
-          register: msg
+          register: oneview_interconnect_type_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_interconnect_type_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (interconnect)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect
-          register: msg
+          register: oneview_interconnect_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_interconnect_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (interconnect_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_interconnect_facts
-          register: msg
+          register: oneview_interconnect_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_interconnect_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_enclosure
-          register: msg
+          register: oneview_logical_enclosure_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_enclosure_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_enclosure_facts
-          register: msg
+          register: oneview_logical_enclosure_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_enclosure_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_interconnect)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect
-          register: msg
+          register: oneview_logical_interconnect_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_interconnect_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (logical_interconnect_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_logical_interconnect_facts
-          register: msg
+          register: oneview_logical_interconnect_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_logical_interconnect_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (drive_enclosure)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_drive_enclosure
-          register: msg
+          register: oneview_drive_enclosure_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_drive_enclosure_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (drive_enclosure_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_drive_enclosure_facts
-          register: msg
+          register: oneview_drive_enclosure_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_drive_enclosure_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (sas_logical_jbod)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod
-          register: msg
+          register: oneview_sas_logical_jbod_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_sas_logical_jbod_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (sas_logical_jbod_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod_facts
-          register: msg
+          register: oneview_sas_logical_jbod_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_sas_logical_jbod_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (sas_logical_jbod_attachment_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_sas_logical_jbod_attachment_facts
-          register: msg
+          register: oneview_sas_logical_jbod_attachment_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_sas_logical_jbod_attachment_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (uplink_set)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_uplink_set
-          register: msg
+          register: oneview_uplink_set_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_uplink_set_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (uplink_set_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_uplink_set_facts
-          register: msg
+          register: oneview_uplink_set_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_uplink_set_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_hardware_type)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_type
-          register: msg
+          register: oneview_server_hardware_type_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_hardware_type_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_hardware_type_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_type_facts
-          register: msg
+          register: oneview_server_hardware_type_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_hardware_type_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_hardware)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware
-          register: msg
+          register: oneview_server_hardware_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_hardware_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_hardware_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_hardware_facts
-          register: msg
+          register: oneview_server_hardware_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_hardware_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_system)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_system
-          register: msg
+          register: oneview_storage_system_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_system_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_system_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_system_facts
-          register: msg
+          register: oneview_storage_system_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_system_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_pool)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_pool
-          register: msg
+          register: oneview_storage_pool_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_pool_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_pool_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_pool_facts
-          register: msg
+          register: oneview_storage_pool_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_pool_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_volume_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_template
-          register: msg
+          register: oneview_storage_volume_template_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_volume_template_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (storage_volume_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_template_facts
-          register: msg
+          register: oneview_storage_volume_template_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_volume_template_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (volume)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_volume
-          register: msg
+          register: oneview_volume_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_volume_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (volume_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_volume_facts
-          register: msg
+          register: oneview_volume_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_volume_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_profile_template)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_template
-          register: msg
+          register: oneview_server_profile_template_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_profile_template_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_profile_template_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_template_facts
-          register: msg
+          register: oneview_server_profile_template_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_profile_template_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_profile)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile
-          register: msg
+          register: oneview_server_profile_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_server_profile_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (server_profile_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_server_profile_facts
-          register: msg
+          register: oneview_server_profile_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ oneview_server_profile_facts_msg.include_args.name }}"
     # - block:
     #     - name: (storage_volume_attachment)
     #       include_role:
@@ -515,51 +571,56 @@
     #     - name: (Display)
     #       debug:
     #         msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (storage_volume_attachment_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_storage_volume_attachment_facts
-          register: msg
+          register: oneview_storage_volume_attachment_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_storage_volume_attachment_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_configuration_timeconfig_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_configuration_timeconfig_facts
-          register: msg
+          register: oneview_appliance_configuration_timeconfig_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_configuration_timeconfig_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_proxy_configuration)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_proxy_configuration
-          register: msg
+          register: oneview_appliance_proxy_configuration_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_proxy_configuration_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_proxy_configuration_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_proxy_configuration_facts
-          register: msg
+          register: oneview_appliance_proxy_configuration_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_proxy_configuration_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_network_interface_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_network_interface_facts
-          register: msg
+          register: oneview_appliance_network_interface_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ oneview_appliance_network_interface_facts_msg.include_args.name }}"
     # - block:
     #     - name: (appliance_network_interfaces)
     #       include_role:
@@ -569,219 +630,243 @@
     #     - name: (Display)
     #       debug:
     #         msg: "{{ msg.include_args.name }}"
-    - block:
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v1_trap_destination)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination
-          register: msg
+          register: oneview_appliance_device_snmp_v1_trap_destination_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v1_trap_destination_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v1_trap_destination_facts
-          register: msg
+          register: oneview_appliance_device_snmp_v1_trap_destination_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_users)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_users
-          register: msg
+          register: oneview_appliance_device_snmp_v3_users_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v3_users_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_users_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_users_facts
-          register: msg
+          register: oneview_appliance_device_snmp_v3_users_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v3_users_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_trap_destination)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination
-          register: msg
+          register: oneview_appliance_device_snmp_v3_trap_destination_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_device_snmp_v3_trap_destination_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_device_snmp_v3_trap_destination_facts
-          register: msg
+          register: oneview_appliance_device_snmp_v3_trap_destination_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_ssh_access_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_ssh_access_facts
-          register: msg
+          register: oneview_appliance_ssh_access_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_ssh_access_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_ssh_access)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_ssh_access
-          register: msg
+          register: oneview_appliance_ssh_access_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_ssh_access_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_time_and_locale_configuration)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_time_and_locale_configuration
-          register: msg
+          register: oneview_appliance_time_and_locale_configuration_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_time_and_locale_configuration_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (appliance_time_and_locale_configuration_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_appliance_time_and_locale_configuration_facts
-          register: msg
+          register: oneview_appliance_time_and_locale_configuration_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_appliance_time_and_locale_configuration_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (certificates_server)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_certificates_server
-          register: msg
+          register: oneview_certificates_server_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_certificates_server_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (certificates_server_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_certificates_server_facts
-          register: msg
+          register: oneview_certificates_server_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_certificates_server_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (firmware_bundle)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_bundle
-          register: msg
+          register: oneview_firmware_bundle_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_firmware_bundle_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (firmware_driver)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_driver
-          register: msg
+          register: oneview_firmware_driver_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_firmware_driver_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (firmware_driver_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_firmware_driver_facts
-          register: msg
+          register: oneview_firmware_driver_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_firmware_driver_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (id_pools)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools
-          register: msg
+          register: oneview_id_pools_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (id_pools_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_id_pools_facts
-          register: msg
+          register: oneview_id_pools_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_id_pools_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (label)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_label
-          register: msg
+          register: oneview_label_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_label_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (label_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_label_facts
-          register: msg
+          register: oneview_label_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_label_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (user)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_user
-          register: msg
+          register: oneview_user_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_user_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (user_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_user_facts
-          register: msg
+          register: oneview_user_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_user_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (version_facts)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_version_facts
-          register: msg
+          register: oneview_version_facts_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_version_facts_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (dynamic_role)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_dynamic_role
-          register: msg
+          register: oneview_dynamic_role_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
-    - block:
+            msg: "{{ oneview_dynamic_role_msg.include_args.name }}"
+    - name: Run block
+      block:
         - name: (repositories)
           ansible.builtin.include_role:
             name: hpe.oneview.oneview_repositories
-          register: msg
+          register: oneview_repositories_msg
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ msg.include_args.name }}"
+            msg: "{{ oneview_repositories_msg.include_args.name }}"

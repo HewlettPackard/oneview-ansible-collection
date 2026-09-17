@@ -1,123 +1,125 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_enclosure_group_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_enclosure_group_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_enclosure_group_session
 
 - name: Gather facts about logical interconnect group
   oneview_logical_interconnect_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure_group.lig_name }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
+    name: "{{ oneview_enclosure_group_contents.enclosure_group.lig_name }}"
   delegate_to: localhost
-- ansible.builtin.set_fact:
-    lig_uri: "{{ logical_interconnect_groups[0]['uri'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_enclosure_group_lig_uri: "{{ logical_interconnect_groups[0]['uri'] }}"
 
 - name: Create an Enclosure Group
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: present
     data:
       name: "{{ item.name }}"
-      ipAddressingMode: "External"
-      ipv6AddressingMode: "External"
+      ipAddressingMode: External
+      ipv6AddressingMode: External
       enclosureCount: 3
       interconnectBayMappings:
         - interconnectBay: 3
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
         - interconnectBay: 6
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
   delegate_to: localhost
   with_items:
-    - { name: 'EG' }
-    - { name: "{{ contents.enclosure_group.enclosure_group_name }}-1" }
+    - { name: EG }
+    - { name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_name }}-1" }
 
 # Run this exampleto create enclosure group with interconnects having ip rangeUris
 - name: Create an Enclosure Group with ip rangeUris
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: present
     data:
-      name: "EG_with_ip_range"
-      ipAddressingMode: "IpPool"
+      name: EG_with_ip_range
+      ipAddressingMode: IpPool
       ipRangeUris:
         - /rest/id-pools/ipv4/ranges/d4321a21-42b5-4a1e-9c44-9e8bf9339dfa
-      ipv6AddressingMode: "External"
+      ipv6AddressingMode: External
       enclosureCount: 3
       interconnectBayMappings:
         - interconnectBay: 3
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
         - interconnectBay: 6
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
   delegate_to: localhost
-  when: contents.enclosure_group.ip_range == 'True'
+  when: oneview_enclosure_group_contents.enclosure_group.ip_range == 'True'
 
 - name: Do nothing with the Enclosure Group when no changes are provided
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.enclosure_group.enclosure_group_name }}"
-      ipAddressingMode: "External"
-      ipv6AddressingMode: "External"
+      name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_name }}"
+      ipAddressingMode: External
+      ipv6AddressingMode: External
       enclosureCount: 3
       interconnectBayMappings:
         - interconnectBay: 3
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
         - interconnectBay: 6
-          logicalInterconnectGroupUri: "{{ lig_uri }}"
+          logicalInterconnectGroupUri: "{{ oneview_enclosure_group_lig_uri }}"
   delegate_to: localhost
 
 - name: Update the Enclosure Group changing the name attribute
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.enclosure_group.enclosure_group_name }}"
-      newName: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_name }}"
+      newName: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 # This play is compatible with C7000 Enclosures
 - name: Update the Enclosure Group configuration script
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_new_name }}"
       configurationScript: "# script (updated)"
   delegate_to: localhost
-  when: contents.enclosure_group.variant == "C7000"
+  when: oneview_enclosure_group_contents.enclosure_group.variant == "C7000"
 
 - name: Delete the Enclosure Group
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 - name: Do nothing when Enclosure Group is absent
   oneview_enclosure_group:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.enclosure_group.enclosure_group_new_name }}"
+      name: "{{ oneview_enclosure_group_contents.enclosure_group.enclosure_group_new_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_config }}"
+    sessionID: "{{ oneview_enclosure_group_session.ansible_facts.session }}"
   delegate_to: localhost

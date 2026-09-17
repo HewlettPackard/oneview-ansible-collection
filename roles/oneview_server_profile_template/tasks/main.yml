@@ -1,47 +1,47 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_server_profile_template_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_server_profile_template_session
 
 - name: Create a server profile template
   oneview_server_profile_template:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_template_config }}"
     state: present
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
     data:
       name: "{{ item.name }}"
-      serverHardwareTypeName: "{{ contents.server_profile_template.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile_template.enclosure_group_name }}"
+      serverHardwareTypeName: "{{ oneview_server_profile_template_contents.server_profile_template.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_template_contents.server_profile_template.enclosure_group_name }}"
       connectionSettings:
         manageConnections: true
-        complianceControl: "Checked"
+        complianceControl: Checked
         connections:
           - id: 1
-            name: "mgmt"
-            functionType: "Ethernet"
-            portId: "Auto"
+            name: mgmt
+            functionType: Ethernet
+            portId: Auto
             requestedMbps: 2000
-            networkName: "{{ contents.server_profile_template.connection_network_name }}"
+            networkName: "{{ oneview_server_profile_template_contents.server_profile_template.connection_network_name }}"
             # networkUri: '/rest/ethernet-networks/f5d68cb6-7766-4662-9774-af461436005d'
     params:
       force: "True" # Supported only for API version >= 600
   delegate_to: localhost
   with_items:
-    - { name: '{{ contents.server_profile_template.server_profile_template_name }}' }
-    - { name: '{{ contents.server_profile_template.server_profile_template_name }}-1' }
+    - { name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}" }
+    - { name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}-1" }
 
 - name: Update bootMode from recently created template
   oneview_server_profile_template:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_template_config }}"
     state: present
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile_template.server_profile_template_name }}"
-      serverHardwareTypeName: "{{ contents.server_profile_template.server_hardware_type_name }}"
-      enclosureGroupName: "{{ contents.server_profile_template.enclosure_group_name }}"
+      name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}"
+      serverHardwareTypeName: "{{ oneview_server_profile_template_contents.server_profile_template.server_hardware_type_name }}"
+      enclosureGroupName: "{{ oneview_server_profile_template_contents.server_profile_template.enclosure_group_name }}"
       bootMode:
         manageMode: true
         mode: UEFI
@@ -52,37 +52,37 @@
 
 - name: Rename Server Profile Template
   oneview_server_profile_template:
-    config: "{{ config }}"
-    state: "present"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_template_config }}"
+    state: present
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
     data:
-      newName: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
-      name: "{{ contents.server_profile_template.server_profile_template_name }}"
+      newName: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}-Updated"
+      name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}"
   delegate_to: localhost
-  register: result
+  register: oneview_server_profile_template_result
 
 - name: Delete the Server Profile Template
   oneview_server_profile_template:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_template_config }}"
     state: absent
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
+      name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}-Updated"
     params:
       force: true # Supported only for API version >= 600
   delegate_to: localhost
 
 - name: Do nothing when Server Profile Template is absent
   oneview_server_profile_template:
-    config: "{{ config }}"
+    config: "{{ oneview_server_profile_template_config }}"
     state: absent
-    sessionID: "{{ session.ansible_facts.session }}"
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
     data:
-      name: "{{ contents.server_profile_template.server_profile_template_name }}-Updated"
+      name: "{{ oneview_server_profile_template_contents.server_profile_template.server_profile_template_name }}-Updated"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_profile_template_config }}"
+    sessionID: "{{ oneview_server_profile_template_session.ansible_facts.session }}"
   delegate_to: localhost

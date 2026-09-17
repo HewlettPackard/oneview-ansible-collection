@@ -1,60 +1,65 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_device_snmp_v3_trap_destination_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_appliance_device_snmp_v3_trap_destination_facts_session
 
 - name: Gather facts about the appliance SNMPv3 trap forwarding destinations.
   oneview_appliance_device_snmp_v3_trap_destinations_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather paginated, filtered and sorted facts about SNMPv3 trap forwarding destinations
   oneview_appliance_device_snmp_v3_trap_destinations_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'destinationAddress:descending'
-      filter: "port='162'"
+      sort: destinationAddress:descending
+      filter: port='162'
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather facts about a Trap Destination by ip address
   oneview_appliance_device_snmp_v3_trap_destinations_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "1.1.1.1"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_session.ansible_facts.session }}"
+    name: 1.1.1.1
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Gather facts about a Trap Destination by uri
   oneview_appliance_device_snmp_v3_trap_destinations_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_session.ansible_facts.session }}"
     uri: "{{ appliance_device_snmp_v3_trap_destinations['uri'] }}"
   delegate_to: localhost
   when: appliance_device_snmp_v3_trap_destinations is defined
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_device_snmp_v3_trap_destinations
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_config }}"
+    sessionID: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_session.ansible_facts.session }}"
   delegate_to: localhost

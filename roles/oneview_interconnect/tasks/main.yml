@@ -1,100 +1,100 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_interconnect_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_interconnect_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_interconnect_session
 
 - name: Gather paginated, filtered and sorted facts about Interconnects
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
     params:
       start: 0
       count: 5
-      sort: 'name:descending'
-      filter: "enclosureName='0000A66101'"
+      sort: name:descending
+      filter: enclosureName='0000A66101'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
-- ansible.builtin.set_fact:
-    interconnect_name: "{{ interconnects[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_interconnect_interconnect_name: "{{ interconnects[0]['name'] }}"
 
 - name: Turn the power on for interconnect that matches the specified name
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'powered_on'
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: powered_on
+    name: "{{ oneview_interconnect_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the UID light to 'On' for interconnect that matches the specified name
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'uid_on'
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: uid_on
+    name: "{{ oneview_interconnect_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Perform a device reset for interconnect that matches the specified name
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'device_reset'
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: device_reset
+    name: "{{ oneview_interconnect_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Turn the power off for interconnect that matches the specified ip
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'powered_off'
-    ip: "{{ contents.interconnect.interconnect_ip }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: powered_off
+    ip: "{{ oneview_interconnect_contents.interconnect.interconnect_ip }}"
   delegate_to: localhost
 
 - name: Updates the interconnect ports
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'update_ports'
-    ip: "{{ contents.interconnect.interconnect_ip_for_update }}"
-    ports: [
-      {
-        "type": "portV6",
-        "portType": "Uplink",
-        "portName": "d1",
-        "bayNumber": 1,
-        "enabled": false,
-        "portId": "{{ contents.interconnect.port_id }}"
-      }
-    ]
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: update_ports
+    ip: "{{ oneview_interconnect_contents.interconnect.interconnect_ip_for_update }}"
+    ports:
+      - type: portV6
+        portType: Uplink
+        portName: d1
+        bayNumber: 1
+        enabled: false
+        portId: "{{ oneview_interconnect_contents.interconnect.port_id }}"
   delegate_to: localhost
-  register: update_ports_result
+  register: oneview_interconnect_update_ports_result
   failed_when: false
 
 - name: Triggers a reset of port protection
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: 'reset_port_protection'
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
+    state: reset_port_protection
+    name: "{{ oneview_interconnect_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Reapplies the interconnect configuration
   oneview_interconnect:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
     state: reconfigured
-    name: "{{ contents.interconnect.interconnect_name }}"
+    name: "{{ oneview_interconnect_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_config }}"
+    sessionID: "{{ oneview_interconnect_session.ansible_facts.session }}"
   delegate_to: localhost

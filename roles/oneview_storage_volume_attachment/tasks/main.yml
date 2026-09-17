@@ -1,27 +1,29 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_storage_volume_attachment_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_volume_attachment_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_storage_volume_attachment_session
 
 - name: Removes extra presentations from a specified server profile name
   oneview_storage_volume_attachment:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: "extra_presentations_removed"
-    server_profile: "{{ server_profile_name }}"
+    config: "{{ oneview_storage_volume_attachment_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_session.ansible_facts.session }}"
+    state: extra_presentations_removed
+    server_profile: "{{ oneview_storage_volume_attachment_server_profile_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_profile
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_session.ansible_facts.session }}"
   delegate_to: localhost

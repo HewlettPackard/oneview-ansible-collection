@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_san_manager
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_san_manager/files/oneview_config.json"
-contents: "{{lookup('file', '../config/config.json') | from_json}}"
-config_file: "{{lookup('file', config)}}"
+oneview_san_manager_config: "{{ role_path }}/files/oneview_config.json"
+oneview_san_manager_contents: "{{ lookup('file', '../config/config.json') | from_json }}"
+oneview_san_manager_config_file: "{{ lookup('file', oneview_san_manager_config) }}"
