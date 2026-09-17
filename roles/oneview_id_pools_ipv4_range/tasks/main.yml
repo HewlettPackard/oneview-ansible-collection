@@ -37,7 +37,7 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    oneview_id_pools_ipv4_range_subnet_uri: "{{ id_pools_ipv4_subnets[0]['oneview_id_pools_ipv4_range_uri'] }}"
+    oneview_id_pools_ipv4_range_subnet_uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
 
 - name: Ensure the IPV4 Range  exists '{{ oneview_id_pools_ipv4_range_contents.id_pools_ipv4_range.range_name }}'
   oneview_id_pools_ipv4_range:
@@ -55,7 +55,7 @@
 
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
-    oneview_id_pools_ipv4_range_uri: "{{ id_pools_ipv4_range['oneview_id_pools_ipv4_range_uri'] }}"
+    oneview_id_pools_ipv4_range_uri: "{{ id_pools_ipv4_range['uri'] }}"
 
 - name: Update the ID Pools IPV4 Range with end address 101
   oneview_id_pools_ipv4_range:
@@ -91,7 +91,7 @@
       ipAddressingMode: ipPool
       enclosureCount: 3
       ipRangeUris:
-        - '{{ id_pools_ipv4_range["oneview_id_pools_ipv4_range_uri"] }}'
+        - '{{ id_pools_ipv4_range["uri"] }}'
 
 - name: Allocates ID from an IPV4 Range
   oneview_id_pools_ipv4_range:
