@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_hypervisor_manager_facts
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_hypervisor_manager_facts/files/oneview_config.json"
-hypervisor_manager_name: "<hypervisor_ip>"
+oneview_hypervisor_manager_facts_config: "{{ role_path }}/files/oneview_config.json"
+oneview_hypervisor_manager_facts_hypervisor_manager_name: <hypervisor_ip>

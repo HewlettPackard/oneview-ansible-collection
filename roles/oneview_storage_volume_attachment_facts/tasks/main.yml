@@ -1,111 +1,118 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_volume_attachment_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_storage_volume_attachment_facts_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_storage_volume_attachment_facts_config_file.api_version == ""
+  register: oneview_storage_volume_attachment_facts_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: config_file.api_version == ""
+    oneview_storage_volume_attachment_facts_current_version: "{{ oneview_storage_volume_attachment_facts_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_storage_volume_attachment_facts_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_storage_volume_attachment_facts_current_version: oneview_storage_volume_attachment_facts_config_file.api_version | string
+  when: oneview_storage_volume_attachment_facts_config_file.api_version != ""
 
 - name: Gather facts about the storage volume associated with the storage volume attachment
   oneview_volume_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_volume_attachment.storage_volume_name }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_volume_attachment_facts_contents.storage_volume_attachment.storage_volume_name }}"
   delegate_to: localhost
 
-- ansible.builtin.set_fact:
-    volume: "{{storage_volumes[0]}}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_storage_volume_attachment_facts_volume: "{{ storage_volumes[0] }}"
 
 - name: Gather facts about all Storage Volume Attachments
   oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
 
 - name: Gather paginated, filtered and sorted facts about Storage Volume Attachments
   oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 2
-      sort: 'name:descending'
-      filter: "storageVolumeUri='{{ volume['uri'] }}'"
+      sort: name:descending
+      filter: storageVolumeUri='{{ oneview_storage_volume_attachment_facts_volume['uri'] }}'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
 
 - name: Gather facts about a Storage Volume Attachment by Server Profile Name and Volume Uri
   oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    serverProfileName: "{{ contents.storage_volume_attachment.server_profile_name }}"
-    storageVolumeUri: "{{ volume['uri'] }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
+    serverProfileName: "{{ oneview_storage_volume_attachment_facts_contents.storage_volume_attachment.server_profile_name }}"
+    storageVolumeUri: "{{ oneview_storage_volume_attachment_facts_volume['uri'] }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
-
 
 - name: Gather facts about extra unmanaged storage volumes
   oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
     options:
       - extraUnmanagedStorageVolumes:
           start: 0
           count: 10
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: extra_unmanaged_storage_volumes
-
 
 # NOTE: This is only compatible with API200 and API300
 - name: Gather facts about volume attachment paths
   oneview_storage_volume_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    serverProfileName: "{{ contents.storage_volume_attachment.server_profile_name }}"
-    storageVolumeName: "{{ contents.storage_volume_attachment.storage_volume_name }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
+    serverProfileName: "{{ oneview_storage_volume_attachment_facts_contents.storage_volume_attachment.server_profile_name }}"
+    storageVolumeName: "{{ oneview_storage_volume_attachment_facts_contents.storage_volume_attachment.storage_volume_name }}"
     options:
       - paths
   delegate_to: localhost
   when: currentVersion == '200' or currentVersion == '300'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachments
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_attachment_paths
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_attachment_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_attachment_facts_session.ansible_facts.session }}"
   delegate_to: localhost

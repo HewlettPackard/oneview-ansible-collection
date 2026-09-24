@@ -1,125 +1,127 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_fc_network_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_fc_network_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_fc_network_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_fc_network_config_file.api_version == ""
+  register: oneview_fc_network_version
 
 - name: Print currentVersion if api version is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_fc_network_current_version: "{{ oneview_fc_network_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_fc_network_config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_fc_network_current_version: oneview_fc_network_config_file.api_version | string
+  when: oneview_fc_network_config_file.api_version != ""
 
 - name: Create a Fibre Channel Network
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: present
     validate_etag: false
     data:
       name: "{{ item }}"
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
       autoLoginRedistribution: true
-      type: "fc-networkV4"
+      type: fc-networkV4
   delegate_to: localhost
-  register: fc_network_1
+  register: oneview_fc_network_fc_network_1
   with_items:
-    - "{{ contents.fc_network.network_name }}"
-    - "{{ contents.fc_network.network_name }} (1)"
-    - "{{ contents.fc_network.network_name }} (2)"
+    - "{{ oneview_fc_network_contents.fc_network.network_name }}"
+    - "{{ oneview_fc_network_contents.fc_network.network_name }} (1)"
+    - "{{ oneview_fc_network_contents.fc_network.network_name }} (2)"
 
 - name: Do nothing with the Fibre Channel Network when no changes are provided
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.fc_network.network_name }}"
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      name: "{{ oneview_fc_network_contents.fc_network.network_name }}"
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
       autoLoginRedistribution: true
   delegate_to: localhost
 
 - name: Update the Fibre Channel Network changing the attribute autoLoginRedistribution to True
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.fc_network.network_name }}"
+      name: "{{ oneview_fc_network_contents.fc_network.network_name }}"
       autoLoginRedistribution: false
-      fabricType: 'FabricAttach'
-      linkStabilityTime: '30'
+      fabricType: FabricAttach
+      linkStabilityTime: "30"
   delegate_to: localhost
 
 # This feature is available only till OneView 3.10
 - name: Update the FC Network with two scopes
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.fc_network.network_name }}"
-      scopeUris: "{{ contents.fc_network.network_scope_uris }}"
+      name: "{{ oneview_fc_network_contents.fc_network.network_name }}"
+      scopeUris: "{{ oneview_fc_network_contents.fc_network.network_scope_uris }}"
   when: currentVersion >= '300' and currentVersion <= '500'
   delegate_to: localhost
 
 - name: Delete the Fibre Channel Network
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.fc_network.network_name }}"
+      name: "{{ oneview_fc_network_contents.fc_network.network_name }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_fc_network_deleted
 
 - name: Do nothing when Fibre Channel Network is absent
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: absent
     data:
-      name: "{{ contents.fc_network.network_name }}"
+      name: "{{ oneview_fc_network_contents.fc_network.network_name }}"
   delegate_to: localhost
-  register: deleted
+  register: oneview_fc_network_deleted
 
-- ansible.builtin.debug:
-    var: fc_network_1.results[1].ansible_facts.fc_network.uri
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_fc_network_fc_network_1.results[1].ansible_facts.fc_network.uri
 
 # This feature is available only from OneView 5.20
 - name: Delete Fibre Channel Networks in bulk
   hpe.oneview.oneview_fc_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
     state: absent
     data:
       networkUris:
-        - "{{ fc_network_1.results[1].ansible_facts.fc_network.uri }}"
-        - "{{ fc_network_1.results[2].ansible_facts.fc_network.uri }}"
+        - "{{ oneview_fc_network_fc_network_1.results[1].ansible_facts.fc_network.uri }}"
+        - "{{ oneview_fc_network_fc_network_1.results[2].ansible_facts.fc_network.uri }}"
   delegate_to: localhost
   when: currentVersion >= '1600'
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_config }}"
+    sessionID: "{{ oneview_fc_network_session.ansible_facts.session }}"
   delegate_to: localhost

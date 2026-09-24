@@ -1,40 +1,41 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_ethernet_network_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_ethernet_network_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_ethernet_network_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_ethernet_network_config_file.api_version == ""
+  register: oneview_ethernet_network_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion | int }}"
-  when: config_file.api_version == ""
+    oneview_ethernet_network_current_version: "{{ oneview_ethernet_network_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_ethernet_network_config_file.api_version == ""
 
 - name: Print currentVersion if api version is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_ethernet_network_current_version: oneview_ethernet_network_config_file.api_version | string
+  when: oneview_ethernet_network_config_file.api_version != ""
 
 - name: Create an Ethernet Network
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ item.name }}'
-      vlanId: '{{ item.vlanId }}'
+      name: "{{ item.name }}"
+      vlanId: "{{ item.vlanId }}"
       ethernetNetworkType: Tagged
       purpose: General
       smartLink: false
@@ -44,16 +45,16 @@
         typicalBandwidth: 1000
   delegate_to: localhost
   with_items:
-    - { name: '{{ contents.ethernet_network.network_name }}', vlanId: '201' }
-    - { name: 'ovsdk_mgmt_nw', vlanId: '202'}
+    - { name: "{{ oneview_ethernet_network_contents.ethernet_network.network_name }}", vlanId: "201" }
+    - { name: ovsdk_mgmt_nw, vlanId: "202" }
 
 - name: Update the Ethernet Network changing bandwidth and purpose
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
+      name: "{{ oneview_ethernet_network_contents.ethernet_network.network_name }}"
       purpose: Management
       bandwidth:
         maximumBandwidth: 3000
@@ -62,51 +63,51 @@
 
 - name: Reset to the default network connection template
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: default_bandwidth_reset
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
+      name: "{{ oneview_ethernet_network_contents.ethernet_network.network_name }}"
   delegate_to: localhost
 
 - name: Ensure ethernet network has no scopes
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.ethernet_network.network_name }}"
+      name: "{{ oneview_ethernet_network_contents.ethernet_network.network_name }}"
       scopeUris: []
   when: currentVersion >= '300' and currentVersion <= '500'
   delegate_to: localhost
 
 - name: Rename the Ethernet Network to 'Updated Ethernet Network'
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.ethernet_network.network_name }}'
-      newName: 'Updated Ethernet Network'
+      name: "{{ oneview_ethernet_network_contents.ethernet_network.network_name }}"
+      newName: Updated Ethernet Network
   delegate_to: localhost
 
 - name: Delete the Ethernet Network
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Updated Ethernet Network'
+      name: Updated Ethernet Network
   delegate_to: localhost
-  register: deleted
+  register: oneview_ethernet_network_deleted
 
 - name: Create Ethernet Networks in bulk
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      vlanIdRange: '1-3,5,7'
+      vlanIdRange: 1-3,5,7
       purpose: General
       namePrefix: TestNetwork
       smartLink: false
@@ -115,16 +116,18 @@
         maximumBandwidth: 10000
         typicalBandwidth: 2000
   delegate_to: localhost
-  register: bulk_ethernet_create
-- ansible.builtin.debug:
-    msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
-- ansible.builtin.debug:
+  register: oneview_ethernet_network_bulk_ethernet_create
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ ethernet_network_bulk | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"
 
 - name: Delete Ethernet Networks in bulk
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: absent
     data:
       networkUris:
@@ -138,11 +141,11 @@
 
 - name: Create Ethernet Networks in bulk for automation
   hpe.oneview.oneview_ethernet_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
     state: present
     data:
-      vlanIdRange: '1-3,5,7'
+      vlanIdRange: 1-3,5,7
       purpose: General
       namePrefix: TestNetwork
       smartLink: false
@@ -151,14 +154,16 @@
         maximumBandwidth: 10000
         typicalBandwidth: 2000
   delegate_to: localhost
-  register: bulk_ethernet_create
-- ansible.builtin.debug:
-    msg: "{{ethernet_network_bulk | map(attribute='name') | list }}"
-- ansible.builtin.debug:
+  register: oneview_ethernet_network_bulk_ethernet_create
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ ethernet_network_bulk | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     msg: "{{ ethernet_network_bulk }}"
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_ethernet_network_config }}"
+    sessionID: "{{ oneview_ethernet_network_session.ansible_facts.session }}"
   delegate_to: localhost

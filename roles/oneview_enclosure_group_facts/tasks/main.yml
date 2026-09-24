@@ -1,69 +1,74 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_enclosure_group_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_enclosure_group_facts_session
 
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_groups
 
 - name: Gather facts about all Scopes
   oneview_scope_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Gather paginated, filtered and sorted facts about Enclosure Groups
   oneview_enclosure_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
       scope_uris: "{{ scopes[0]['uri'] }}"
   delegate_to: localhost
   when: scopes is defined
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_groups
 
 - name: Gather facts about an Enclosure Group by name
   oneview_enclosure_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure_group.eg_name}}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_enclosure_group_facts_contents.enclosure_group.eg_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_groups
 
 - name: Gather facts about an Enclosure Group by name with configuration script
   oneview_enclosure_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.enclosure_group.eg_name}}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_enclosure_group_facts_contents.enclosure_group.eg_name }}"
     options:
       - configuration_script
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosure_group_script
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_enclosure_group_facts_config }}"
+    sessionID: "{{ oneview_enclosure_group_facts_session.ansible_facts.session }}"
   delegate_to: localhost

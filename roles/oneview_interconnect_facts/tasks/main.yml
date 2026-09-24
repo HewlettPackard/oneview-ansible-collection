@@ -1,146 +1,165 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_interconnect_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_interconnect_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_interconnect_facts_session
 
 - name: Gather facts about all interconnects
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
-    msg: "{{interconnects | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ interconnects | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Interconnects
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 5
-      sort: 'name:descending'
-      filter: "enclosureName='0000A66101'"
+      sort: name:descending
+      filter: enclosureName='0000A66101'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
-- ansible.builtin.set_fact:
-    interconnect_name: "{{ interconnects[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_interconnect_facts_interconnect_name: "{{ interconnects[0]['name'] }}"
 
 - name: Gather facts about the interconnect that matches the specified name
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnects
 
 - name: Gather facts about the interconnect that matches the specified name and its name servers
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - nameServers
   delegate_to: localhost
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_name_servers
 
 - name: Gather facts about statistics for the Interconnect that matches the specified name
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - statistics
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_statistics
 
 - name: Get the port statistics for the specified interconnect name and port name
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - portStatistics: "{{ port_name }}"
   when: interconnects[0]['state'] != "Monitored"
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_port_statistics
 
 - name: Get the subport statistics
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - subPortStatistics:
-          portName: "{{ contents.interconnect.port_name }}"
-          subportNumber: "{{ contents.interconnect.subport_number }}"
+          portName: "{{ oneview_interconnect_facts_contents.interconnect.port_name }}"
+          subportNumber: "{{ oneview_interconnect_facts_contents.interconnect.subport_number }}"
   when: interconnects[0]['state'] != "Monitored"
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_subport_statistics
 
 - name: Gather facts about all the Interconnect ports
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - ports
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_ports
 
 - name: Gather facts about an Interconnect port
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
-      - port: "{{ contents.interconnect.port_name }}"
+      - port: "{{ oneview_interconnect_facts_contents.interconnect.port_name }}"
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_port
 
 - name: Gather facts about the small-form pluggable modules
   oneview_interconnect_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.interconnect.interconnect_name }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_interconnect_facts_contents.interconnect.interconnect_name }}"
     options:
       - pluggableModuleInformation
 
-- ansible.builtin.debug:
-    msg: "Interconnect '{{ interconnects[0]['name'] }}'"
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Interconnect '{{ interconnects[0]['name'] }}'
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: interconnect_pluggable_module_information
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_facts_config }}"
+    sessionID: "{{ oneview_interconnect_facts_session.ansible_facts.session }}"
   delegate_to: localhost
