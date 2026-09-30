@@ -639,7 +639,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_msg.include_args.name | default(oneview_appliance_device_snmp_v1_trap_destination_msg) }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v1_trap_destination_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v1_trap_destination_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v1_trap_destination_facts)
@@ -649,7 +651,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_facts_msg.include_args.name | default(oneview_appliance_device_snmp_v1_trap_destination_facts_msg) }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v1_trap_destination_facts_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v1_trap_destination_facts_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_users)
@@ -679,7 +683,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_msg.include_args.name | default(oneview_appliance_device_snmp_v3_trap_destination_msg) }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v3_trap_destination_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v3_trap_destination_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_trap_destination_facts)
@@ -689,7 +695,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_msg.include_args.name | default(oneview_appliance_device_snmp_v3_trap_destination_facts_msg) }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v3_trap_destination_facts_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v3_trap_destination_facts_msg) }}
     - name: Run block
       block:
         - name: (appliance_ssh_access_facts)
@@ -729,7 +737,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_time_and_locale_configuration_facts_msg.include_args.name | default(oneview_appliance_time_and_locale_configuration_facts_msg) }}"
+            msg: >-
+              {{ oneview_appliance_time_and_locale_configuration_facts_msg.include_args.name |
+                 default(oneview_appliance_time_and_locale_configuration_facts_msg) }}
     - name: Run block
       block:
         - name: (certificates_server)
