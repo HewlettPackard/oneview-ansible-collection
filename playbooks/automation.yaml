@@ -11,7 +11,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_ipv4_range_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_ipv4_range_msg.include_args.name | default(oneview_id_pools_ipv4_range_msg) }}"
     - name: Run block
       block:
         - name: (id_pools_ipv4_range_facts)
@@ -21,7 +21,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_ipv4_range_facts_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_ipv4_range_facts_msg.include_args.name | default(oneview_id_pools_ipv4_range_facts_msg) }}"
     - name: Run block
       block:
         - name: (id_pools_ipv4_subnet)
@@ -31,7 +31,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_ipv4_subnet_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_ipv4_subnet_msg.include_args.name | default(oneview_id_pools_ipv4_subnet_msg) }}"
     - name: Run block
       block:
         - name: (id_pools_ipv4_subnet_facts)
@@ -41,7 +41,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_ipv4_subnet_facts_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_ipv4_subnet_facts_msg.include_args.name | default(oneview_id_pools_ipv4_subnet_facts_msg) }}"
     - name: Run block
       block:
         - name: (ethernet_network)
@@ -51,7 +51,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_ethernet_network_msg.include_args.name }}"
+            msg: "{{ oneview_ethernet_network_msg.include_args.name | default(oneview_ethernet_network_msg) }}"
     - name: Run block
       block:
         - name: (ethernet_network_facts)
@@ -61,7 +61,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_ethernet_network_facts_msg.include_args.name }}"
+            msg: "{{ oneview_ethernet_network_facts_msg.include_args.name | default(oneview_ethernet_network_facts_msg) }}"
     - name: Run block
       block:
         - name: (scope)
@@ -71,7 +71,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_scope_msg.include_args.name }}"
+            msg: "{{ oneview_scope_msg.include_args.name | default(oneview_scope_msg) }}"
     - name: Run block
       block:
         - name: (scope_facts)
@@ -81,7 +81,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_scope_facts_msg.include_args.name }}"
+            msg: "{{ oneview_scope_facts_msg.include_args.name | default(oneview_scope_facts_msg) }}"
     - name: Run block
       block:
         - name: (fc_network)
@@ -91,7 +91,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_fc_network_msg.include_args.name }}"
+            msg: "{{ oneview_fc_network_msg.include_args.name | default(oneview_fc_network_msg) }}"
     - name: Run block
       block:
         - name: (fc_network_facts)
@@ -101,7 +101,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_fc_network_facts_msg.include_args.name }}"
+            msg: "{{ oneview_fc_network_facts_msg.include_args.name | default(oneview_fc_network_facts_msg) }}"
     - name: Run block
       block:
         - name: (fcoe_network)
@@ -111,7 +111,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_fcoe_network_msg.include_args.name }}"
+            msg: "{{ oneview_fcoe_network_msg.include_args.name | default(oneview_fcoe_network_msg) }}"
     - name: Run block
       block:
         - name: (fcoe_network_facts)
@@ -121,7 +121,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_fcoe_network_facts_msg.include_args.name }}"
+            msg: "{{ oneview_fcoe_network_facts_msg.include_args.name | default(oneview_fcoe_network_facts_msg) }}"
     - name: Run block
       block:
         - name: (connection_template)
@@ -131,7 +131,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_connection_template_msg.include_args.name }}"
+            msg: "{{ oneview_connection_template_msg.include_args.name | default(oneview_connection_template_msg) }}"
     - name: Run block
       block:
         - name: (connection_template_facts)
@@ -141,7 +141,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_connection_template_facts_msg.include_args.name }}"
+            msg: "{{ oneview_connection_template_facts_msg.include_args.name | default(oneview_connection_template_facts_msg) }}"
     - name: Run block
       block:
         - name: (network_set)
@@ -151,7 +151,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_network_set_msg.include_args.name }}"
+            msg: "{{ oneview_network_set_msg.include_args.name | default(oneview_network_set_msg) }}"
     - name: Run block
       block:
         - name: (network_set_facts)
@@ -161,7 +161,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_network_set_facts_msg.include_args.name }}"
+            msg: "{{ oneview_network_set_facts_msg.include_args.name | default(oneview_network_set_facts_msg) }}"
     - name: Run block
       block:
         - name: (hypervisor_manager)
@@ -171,7 +171,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_hypervisor_manager_msg.include_args.name }}"
+            msg: "{{ oneview_hypervisor_manager_msg.include_args.name | default(oneview_hypervisor_manager_msg) }}"
     - name: Run block
       block:
         - name: (hypervisor_manager_facts)
@@ -181,7 +181,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_hypervisor_manager_facts_msg.include_args.name }}"
+            msg: "{{ oneview_hypervisor_manager_facts_msg.include_args.name | default(oneview_hypervisor_manager_facts_msg) }}"
     - name: Run block
       block:
         - name: (task)
@@ -191,7 +191,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_task_msg.include_args.name }}"
+            msg: "{{ oneview_task_msg.include_args.name | default(oneview_task_msg) }}"
     - name: Run block
       block:
         - name: (task_facts)
@@ -201,7 +201,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_task_facts_msg.include_args.name }}"
+            msg: "{{ oneview_task_facts_msg.include_args.name | default(oneview_task_facts_msg) }}"
     - name: Run block
       block:
         - name: (logical_interconnect_group)
@@ -211,7 +211,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_interconnect_group_msg.include_args.name }}"
+            msg: "{{ oneview_logical_interconnect_group_msg.include_args.name | default(oneview_logical_interconnect_group_msg) }}"
     - name: Run block
       block:
         - name: (logical_interconnect_group_facts)
@@ -221,7 +221,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_interconnect_group_facts_msg.include_args.name }}"
+            msg: "{{ oneview_logical_interconnect_group_facts_msg.include_args.name | default(oneview_logical_interconnect_group_facts_msg) }}"
     - name: Run block
       block:
         - name: (enclosure_group)
@@ -231,7 +231,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_enclosure_group_msg.include_args.name }}"
+            msg: "{{ oneview_enclosure_group_msg.include_args.name | default(oneview_enclosure_group_msg) }}"
     - name: Run block
       block:
         - name: (enclosure_group_facts)
@@ -241,7 +241,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_enclosure_group_facts_msg.include_args.name }}"
+            msg: "{{ oneview_enclosure_group_facts_msg.include_args.name | default(oneview_enclosure_group_facts_msg) }}"
     - name: Run block
       block:
         - name: (enclosure)
@@ -251,7 +251,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_enclosure_msg.include_args.name }}"
+            msg: "{{ oneview_enclosure_msg.include_args.name | default(oneview_enclosure_msg) }}"
     - name: Run block
       block:
         - name: (enclosure_facts)
@@ -261,7 +261,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_enclosure_facts_msg.include_args.name }}"
+            msg: "{{ oneview_enclosure_facts_msg.include_args.name | default(oneview_enclosure_facts_msg) }}"
     - name: Run block
       block:
         - name: (interconnect_type_facts)
@@ -271,7 +271,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_interconnect_type_facts_msg.include_args.name }}"
+            msg: "{{ oneview_interconnect_type_facts_msg.include_args.name | default(oneview_interconnect_type_facts_msg) }}"
     - name: Run block
       block:
         - name: (interconnect)
@@ -281,7 +281,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_interconnect_msg.include_args.name }}"
+            msg: "{{ oneview_interconnect_msg.include_args.name | default(oneview_interconnect_msg) }}"
     - name: Run block
       block:
         - name: (interconnect_facts)
@@ -291,7 +291,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_interconnect_facts_msg.include_args.name }}"
+            msg: "{{ oneview_interconnect_facts_msg.include_args.name | default(oneview_interconnect_facts_msg) }}"
     - name: Run block
       block:
         - name: (logical_enclosure)
@@ -301,7 +301,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_enclosure_msg.include_args.name }}"
+            msg: "{{ oneview_logical_enclosure_msg.include_args.name | default(oneview_logical_enclosure_msg) }}"
     - name: Run block
       block:
         - name: (logical_enclosure_facts)
@@ -311,7 +311,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_enclosure_facts_msg.include_args.name }}"
+            msg: "{{ oneview_logical_enclosure_facts_msg.include_args.name | default(oneview_logical_enclosure_facts_msg) }}"
     - name: Run block
       block:
         - name: (logical_interconnect)
@@ -321,7 +321,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_interconnect_msg.include_args.name }}"
+            msg: "{{ oneview_logical_interconnect_msg.include_args.name | default(oneview_logical_interconnect_msg) }}"
     - name: Run block
       block:
         - name: (logical_interconnect_facts)
@@ -331,7 +331,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_logical_interconnect_facts_msg.include_args.name }}"
+            msg: "{{ oneview_logical_interconnect_facts_msg.include_args.name | default(oneview_logical_interconnect_facts_msg) }}"
     - name: Run block
       block:
         - name: (drive_enclosure)
@@ -341,7 +341,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_drive_enclosure_msg.include_args.name }}"
+            msg: "{{ oneview_drive_enclosure_msg.include_args.name | default(oneview_drive_enclosure_msg) }}"
     - name: Run block
       block:
         - name: (drive_enclosure_facts)
@@ -351,7 +351,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_drive_enclosure_facts_msg.include_args.name }}"
+            msg: "{{ oneview_drive_enclosure_facts_msg.include_args.name | default(oneview_drive_enclosure_facts_msg) }}"
     - name: Run block
       block:
         - name: (sas_logical_jbod)
@@ -361,7 +361,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_sas_logical_jbod_msg.include_args.name }}"
+            msg: "{{ oneview_sas_logical_jbod_msg.include_args.name | default(oneview_sas_logical_jbod_msg) }}"
     - name: Run block
       block:
         - name: (sas_logical_jbod_facts)
@@ -371,7 +371,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_sas_logical_jbod_facts_msg.include_args.name }}"
+            msg: "{{ oneview_sas_logical_jbod_facts_msg.include_args.name | default(oneview_sas_logical_jbod_facts_msg) }}"
     - name: Run block
       block:
         - name: (sas_logical_jbod_attachment_facts)
@@ -381,7 +381,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_sas_logical_jbod_attachment_facts_msg.include_args.name }}"
+            msg: "{{ oneview_sas_logical_jbod_attachment_facts_msg.include_args.name | default(oneview_sas_logical_jbod_attachment_facts_msg) }}"
     - name: Run block
       block:
         - name: (uplink_set)
@@ -391,7 +391,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_uplink_set_msg.include_args.name }}"
+            msg: "{{ oneview_uplink_set_msg.include_args.name | default(oneview_uplink_set_msg) }}"
     - name: Run block
       block:
         - name: (uplink_set_facts)
@@ -401,7 +401,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_uplink_set_facts_msg.include_args.name }}"
+            msg: "{{ oneview_uplink_set_facts_msg.include_args.name | default(oneview_uplink_set_facts_msg) }}"
     - name: Run block
       block:
         - name: (server_hardware_type)
@@ -411,7 +411,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_hardware_type_msg.include_args.name }}"
+            msg: "{{ oneview_server_hardware_type_msg.include_args.name | default(oneview_server_hardware_type_msg) }}"
     - name: Run block
       block:
         - name: (server_hardware_type_facts)
@@ -421,7 +421,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_hardware_type_facts_msg.include_args.name }}"
+            msg: "{{ oneview_server_hardware_type_facts_msg.include_args.name | default(oneview_server_hardware_type_facts_msg) }}"
     - name: Run block
       block:
         - name: (server_hardware)
@@ -431,7 +431,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_hardware_msg.include_args.name }}"
+            msg: "{{ oneview_server_hardware_msg.include_args.name | default(oneview_server_hardware_msg) }}"
     - name: Run block
       block:
         - name: (server_hardware_facts)
@@ -441,7 +441,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_hardware_facts_msg.include_args.name }}"
+            msg: "{{ oneview_server_hardware_facts_msg.include_args.name | default(oneview_server_hardware_facts_msg) }}"
     - name: Run block
       block:
         - name: (storage_system)
@@ -451,7 +451,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_system_msg.include_args.name }}"
+            msg: "{{ oneview_storage_system_msg.include_args.name | default(oneview_storage_system_msg) }}"
     - name: Run block
       block:
         - name: (storage_system_facts)
@@ -461,7 +461,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_system_facts_msg.include_args.name }}"
+            msg: "{{ oneview_storage_system_facts_msg.include_args.name | default(oneview_storage_system_facts_msg) }}"
     - name: Run block
       block:
         - name: (storage_pool)
@@ -471,7 +471,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_pool_msg.include_args.name }}"
+            msg: "{{ oneview_storage_pool_msg.include_args.name | default(oneview_storage_pool_msg) }}"
     - name: Run block
       block:
         - name: (storage_pool_facts)
@@ -481,7 +481,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_pool_facts_msg.include_args.name }}"
+            msg: "{{ oneview_storage_pool_facts_msg.include_args.name | default(oneview_storage_pool_facts_msg) }}"
     - name: Run block
       block:
         - name: (storage_volume_template)
@@ -491,7 +491,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_volume_template_msg.include_args.name }}"
+            msg: "{{ oneview_storage_volume_template_msg.include_args.name | default(oneview_storage_volume_template_msg) }}"
     - name: Run block
       block:
         - name: (storage_volume_template_facts)
@@ -501,7 +501,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_volume_template_facts_msg.include_args.name }}"
+            msg: "{{ oneview_storage_volume_template_facts_msg.include_args.name | default(oneview_storage_volume_template_facts_msg) }}"
     - name: Run block
       block:
         - name: (volume)
@@ -511,7 +511,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_volume_msg.include_args.name }}"
+            msg: "{{ oneview_volume_msg.include_args.name | default(oneview_volume_msg) }}"
     - name: Run block
       block:
         - name: (volume_facts)
@@ -521,7 +521,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_volume_facts_msg.include_args.name }}"
+            msg: "{{ oneview_volume_facts_msg.include_args.name | default(oneview_volume_facts_msg) }}"
     - name: Run block
       block:
         - name: (server_profile_template)
@@ -531,7 +531,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_profile_template_msg.include_args.name }}"
+            msg: "{{ oneview_server_profile_template_msg.include_args.name | default(oneview_server_profile_template_msg) }}"
     - name: Run block
       block:
         - name: (server_profile_template_facts)
@@ -541,7 +541,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_profile_template_facts_msg.include_args.name }}"
+            msg: "{{ oneview_server_profile_template_facts_msg.include_args.name | default(oneview_server_profile_template_facts_msg) }}"
     - name: Run block
       block:
         - name: (server_profile)
@@ -551,7 +551,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_profile_msg.include_args.name }}"
+            msg: "{{ oneview_server_profile_msg.include_args.name | default(oneview_server_profile_msg) }}"
     - name: Run block
       block:
         - name: (server_profile_facts)
@@ -561,7 +561,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_server_profile_facts_msg.include_args.name }}"
+            msg: "{{ oneview_server_profile_facts_msg.include_args.name | default(oneview_server_profile_facts_msg) }}"
     # - block:
     #     - name: (storage_volume_attachment)
     #       include_role:
@@ -570,7 +570,7 @@
     #   rescue:
     #     - name: (Display)
     #       debug:
-    #         msg: "{{ msg.include_args.name }}"
+    #         msg: "{{ msg.include_args.name | default(msg) }}"
     - name: Run block
       block:
         - name: (storage_volume_attachment_facts)
@@ -580,7 +580,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_storage_volume_attachment_facts_msg.include_args.name }}"
+            msg: "{{ oneview_storage_volume_attachment_facts_msg.include_args.name | default(oneview_storage_volume_attachment_facts_msg) }}"
     - name: Run block
       block:
         - name: (appliance_configuration_timeconfig_facts)
@@ -590,7 +590,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_configuration_timeconfig_facts_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_configuration_timeconfig_facts_msg.include_args.name | default(oneview_appliance_configuration_timeconfig_facts_msg) }}"
     - name: Run block
       block:
         - name: (appliance_proxy_configuration)
@@ -600,7 +600,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_proxy_configuration_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_proxy_configuration_msg.include_args.name | default(oneview_appliance_proxy_configuration_msg) }}"
     - name: Run block
       block:
         - name: (appliance_proxy_configuration_facts)
@@ -610,7 +610,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_proxy_configuration_facts_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_proxy_configuration_facts_msg.include_args.name | default(oneview_appliance_proxy_configuration_facts_msg) }}"
     - name: Run block
       block:
         - name: (appliance_network_interface_facts)
@@ -620,7 +620,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_network_interface_facts_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_network_interface_facts_msg.include_args.name | default(oneview_appliance_network_interface_facts_msg) }}"
     # - block:
     #     - name: (appliance_network_interfaces)
     #       include_role:
@@ -629,7 +629,7 @@
     #   rescue:
     #     - name: (Display)
     #       debug:
-    #         msg: "{{ msg.include_args.name }}"
+    #         msg: "{{ msg.include_args.name | default(msg) }}"
     - name: Run block
       block:
         - name: (appliance_device_snmp_v1_trap_destination)
@@ -639,7 +639,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_msg.include_args.name }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v1_trap_destination_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v1_trap_destination_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v1_trap_destination_facts)
@@ -649,7 +651,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v1_trap_destination_facts_msg.include_args.name }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v1_trap_destination_facts_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v1_trap_destination_facts_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_users)
@@ -659,7 +663,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_users_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_device_snmp_v3_users_msg.include_args.name | default(oneview_appliance_device_snmp_v3_users_msg) }}"
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_users_facts)
@@ -669,7 +673,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_users_facts_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_device_snmp_v3_users_facts_msg.include_args.name | default(oneview_appliance_device_snmp_v3_users_facts_msg) }}"
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_trap_destination)
@@ -679,7 +683,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_msg.include_args.name }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v3_trap_destination_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v3_trap_destination_msg) }}
     - name: Run block
       block:
         - name: (appliance_device_snmp_v3_trap_destination_facts)
@@ -689,7 +695,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_device_snmp_v3_trap_destination_facts_msg.include_args.name }}"
+            msg: >-
+              {{ oneview_appliance_device_snmp_v3_trap_destination_facts_msg.include_args.name |
+                 default(oneview_appliance_device_snmp_v3_trap_destination_facts_msg) }}
     - name: Run block
       block:
         - name: (appliance_ssh_access_facts)
@@ -699,7 +707,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_ssh_access_facts_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_ssh_access_facts_msg.include_args.name | default(oneview_appliance_ssh_access_facts_msg) }}"
     - name: Run block
       block:
         - name: (appliance_ssh_access)
@@ -709,7 +717,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_ssh_access_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_ssh_access_msg.include_args.name | default(oneview_appliance_ssh_access_msg) }}"
     - name: Run block
       block:
         - name: (appliance_time_and_locale_configuration)
@@ -719,7 +727,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_time_and_locale_configuration_msg.include_args.name }}"
+            msg: "{{ oneview_appliance_time_and_locale_configuration_msg.include_args.name | default(oneview_appliance_time_and_locale_configuration_msg) }}"
     - name: Run block
       block:
         - name: (appliance_time_and_locale_configuration_facts)
@@ -729,7 +737,9 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_appliance_time_and_locale_configuration_facts_msg.include_args.name }}"
+            msg: >-
+              {{ oneview_appliance_time_and_locale_configuration_facts_msg.include_args.name |
+                 default(oneview_appliance_time_and_locale_configuration_facts_msg) }}
     - name: Run block
       block:
         - name: (certificates_server)
@@ -739,7 +749,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_certificates_server_msg.include_args.name }}"
+            msg: "{{ oneview_certificates_server_msg.include_args.name | default(oneview_certificates_server_msg) }}"
     - name: Run block
       block:
         - name: (certificates_server_facts)
@@ -749,7 +759,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_certificates_server_facts_msg.include_args.name }}"
+            msg: "{{ oneview_certificates_server_facts_msg.include_args.name | default(oneview_certificates_server_facts_msg) }}"
     - name: Run block
       block:
         - name: (firmware_bundle)
@@ -759,7 +769,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_firmware_bundle_msg.include_args.name }}"
+            msg: "{{ oneview_firmware_bundle_msg.include_args.name | default(oneview_firmware_bundle_msg) }}"
     - name: Run block
       block:
         - name: (firmware_driver)
@@ -769,7 +779,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_firmware_driver_msg.include_args.name }}"
+            msg: "{{ oneview_firmware_driver_msg.include_args.name | default(oneview_firmware_driver_msg) }}"
     - name: Run block
       block:
         - name: (firmware_driver_facts)
@@ -779,7 +789,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_firmware_driver_facts_msg.include_args.name }}"
+            msg: "{{ oneview_firmware_driver_facts_msg.include_args.name | default(oneview_firmware_driver_facts_msg) }}"
     - name: Run block
       block:
         - name: (id_pools)
@@ -789,7 +799,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_msg.include_args.name | default(oneview_id_pools_msg) }}"
     - name: Run block
       block:
         - name: (id_pools_facts)
@@ -799,7 +809,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_id_pools_facts_msg.include_args.name }}"
+            msg: "{{ oneview_id_pools_facts_msg.include_args.name | default(oneview_id_pools_facts_msg) }}"
     - name: Run block
       block:
         - name: (label)
@@ -809,7 +819,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_label_msg.include_args.name }}"
+            msg: "{{ oneview_label_msg.include_args.name | default(oneview_label_msg) }}"
     - name: Run block
       block:
         - name: (label_facts)
@@ -819,7 +829,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_label_facts_msg.include_args.name }}"
+            msg: "{{ oneview_label_facts_msg.include_args.name | default(oneview_label_facts_msg) }}"
     - name: Run block
       block:
         - name: (user)
@@ -829,7 +839,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_user_msg.include_args.name }}"
+            msg: "{{ oneview_user_msg.include_args.name | default(oneview_user_msg) }}"
     - name: Run block
       block:
         - name: (user_facts)
@@ -839,7 +849,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_user_facts_msg.include_args.name }}"
+            msg: "{{ oneview_user_facts_msg.include_args.name | default(oneview_user_facts_msg) }}"
     - name: Run block
       block:
         - name: (version_facts)
@@ -849,7 +859,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_version_facts_msg.include_args.name }}"
+            msg: "{{ oneview_version_facts_msg.include_args.name | default(oneview_version_facts_msg) }}"
     - name: Run block
       block:
         - name: (dynamic_role)
@@ -859,7 +869,7 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_dynamic_role_msg.include_args.name }}"
+            msg: "{{ oneview_dynamic_role_msg.include_args.name | default(oneview_dynamic_role_msg) }}"
     - name: Run block
       block:
         - name: (repositories)
@@ -869,4 +879,4 @@
       rescue:
         - name: (Display)
           ansible.builtin.debug:
-            msg: "{{ oneview_repositories_msg.include_args.name }}"
+            msg: "{{ oneview_repositories_msg.include_args.name | default(oneview_repositories_msg) }}"

@@ -24,7 +24,7 @@
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
     oneview_id_pools_ipv4_range_facts_subnet_uri: "{{ id_pools_ipv4_subnets[0]['uri'] }}"
-  when: id_pools_ipv4_subnets| length != 0
+  when: id_pools_ipv4_subnets | length != 0
 
 - name: Get ID Pools IPv4 Range Schema
   oneview_id_pools_ipv4_range_facts:
@@ -69,6 +69,7 @@
 - name: Run ansible.builtin.set_fact
   ansible.builtin.set_fact:
     oneview_id_pools_ipv4_range_facts_range_uri: "{{ id_pools_ipv4_ranges[0]['uri'] }}"
+  when: id_pools_ipv4_ranges | length != 0
 
 - name: Get facts about the range '{{ oneview_id_pools_ipv4_range_facts_range_uri }}'
   oneview_id_pools_ipv4_range_facts:
