@@ -1,73 +1,80 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_drive_enclosure_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_drive_enclosure_facts_session
 
 - name: Gather facts about all Drive Enclosures
   oneview_drive_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather paginated, filtered and sorted facts about Drive Enclosures
   oneview_drive_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather facts about a Drive Enclosure by name
   oneview_drive_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_drive_enclosure_facts_contents.drive_enclosure.drive_enclosure_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
-- ansible.builtin.set_fact:
-    drive_en_uri: "{{ drive_enclosures[0]['uri'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_drive_enclosure_facts_drive_en_uri: "{{ drive_enclosures[0]['uri'] }}"
 
 - name: Gather facts about a Drive Enclosure by uri
   oneview_drive_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ drive_en_uri }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_drive_enclosure_facts_drive_en_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: drive_enclosures
 
 - name: Gather Port map facts about a Drive Enclosure by name
   oneview_drive_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.drive_enclosure.drive_enclosure_name }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_drive_enclosure_facts_contents.drive_enclosure.drive_enclosure_name }}"
     options:
       - port_map
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: port_map
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_drive_enclosure_facts_config }}"
+    sessionID: "{{ oneview_drive_enclosure_facts_session.ansible_facts.session }}"
   delegate_to: localhost

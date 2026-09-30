@@ -1,4 +1,4 @@
 ---
 # defaults file for oneview_firmware_driver
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_firmware_driver/files/oneview_config.json"
-contents: "{{lookup('file','../config/config.json') | from_json}}"
+oneview_firmware_driver_config: "{{ role_path }}/files/oneview_config.json"
+oneview_firmware_driver_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

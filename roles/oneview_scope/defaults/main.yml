@@ -1,5 +1,5 @@
 ---
 # defaults file for oneview_scope
-config: "~/.ansible/collections/ansible_collections/hpe/oneview/roles/oneview_scope/files/oneview_config.json"
-config_file: "{{lookup('file', config)}}"
-contents: "{{lookup('file', '../config/config.json') | from_json}}"
+oneview_scope_config: "{{ role_path }}/files/oneview_config.json"
+oneview_scope_config_file: "{{ lookup('file', oneview_scope_config) }}"
+oneview_scope_contents: "{{ lookup('file', '../config/config.json') | from_json }}"

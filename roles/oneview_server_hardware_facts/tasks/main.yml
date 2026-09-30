@@ -1,27 +1,29 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_server_hardware_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_server_hardware_facts_session
 
 - name: Gather facts about all Server Hardwares
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
 
 - name: Gather paginated, filtered and sorted facts about Server Hardware
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
@@ -29,120 +31,131 @@
       filter: uidState='Off'
   delegate_to: localhost
 
-- ansible.builtin.debug:
-    msg: "{{server_hardwares | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ server_hardwares | map(attribute='name') | list }}"
 
-- ansible.builtin.set_fact:
-    server_hardware_name: "{{ server_hardwares[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_server_hardware_facts_server_hardware_name: "{{ server_hardwares[0]['name'] }}"
 
 - name: Gather facts about a Server Hardware by name
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     name: "{{ server_hardwares[0]['name'] }}"
   delegate_to: localhost
 
 - name: Gather facts about a Server Hardware by uri
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     uri: "{{ server_hardwares[0]['uri'] }}"
   delegate_to: localhost
   when: (server_hardwares is none and server_hardwares is not undefined)
 
 - name: Gather BIOS facts about a Server Hardware
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     name: server_hardware_name
     options:
       - bios
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_bios
-
 
 - name: Gather all facts about a Server Hardware
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     name: server_hardware_name
     options:
-      - bios                   # optional
-      - javaRemoteConsoleUrl   # optional
-      - environmentalConfig    # optional
-      - iloSsoUrl              # optional
+      - bios # optional
+      - javaRemoteConsoleUrl # optional
+      - environmentalConfig # optional
+      - iloSsoUrl # optional
       - physicalServerHardware # optional
-      - remoteConsoleUrl       # optional
-      - utilization:           # optional
-          fields: 'AveragePower'
-          filter: ['startDate=2016-05-30T03:29:42.000Z']
-          view: 'day'
+      - remoteConsoleUrl # optional
+      - utilization: # optional
+          fields: AveragePower
+          filter: [startDate=2016-05-30T03:29:42.000Z]
+          view: day
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardwares
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_bios
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_env_config
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_java_remote_console_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_ilo_sso_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_physical_server_hardware
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_remote_console_url
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_utilization
 
 # This option is available for API version 300 or later.
 - name: Gather facts about the Server Hardware firmware
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     name: server_hardware_name
     options:
       - firmware
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmware
 
 # This option is available for API version 300 or later.
 - name: Gather facts about all the firmwares inventory across all servers
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     name: server_hardware_name
     options:
       - firmwares
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmwares
 
 - name: List the firmware inventory of the servers which have HPE Synergy 3530C version matches '1.2'
   oneview_server_hardware_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
     options:
       - firmwares:
-          filter: [
-            "components.componentName='HPE Synergy 3530C 16G Host Bus Adapter'",
-            "components.componentVersion matches '1.2%'"
-          ]
+          filter: [components.componentName='HPE Synergy 3530C 16G Host Bus Adapter', components.componentVersion matches '1.2%']
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: server_hardware_firmwares
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_server_hardware_facts_config }}"
+    sessionID: "{{ oneview_server_hardware_facts_session.ansible_facts.session }}"
   delegate_to: localhost

@@ -9,10 +9,9 @@ galaxy_info:
   platforms: []
   galaxy_tags:
     - ansible
-    - hpe-oneview
-    - ansible-modules
+    - hpeoneview
+    - ansiblemodules
     - sdk
 dependencies: []
-
 collections:
   - hpe.oneview

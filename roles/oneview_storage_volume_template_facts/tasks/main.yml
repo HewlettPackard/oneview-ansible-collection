@@ -1,78 +1,83 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_storage_volume_template_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_storage_volume_template_facts_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_storage_volume_template_facts_config_file.api_version == ""
+  register: oneview_storage_volume_template_facts_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: config_file.api_version == ""
+    oneview_storage_volume_template_facts_current_version: "{{ oneview_storage_volume_template_facts_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_storage_volume_template_facts_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_storage_volume_template_facts_current_version: oneview_storage_volume_template_facts_config_file.api_version | string
+  when: oneview_storage_volume_template_facts_config_file.api_version != ""
 
 - name: Gather facts about all Storage Volume Templates
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather paginated, filtered and sorted facts about Storage Volume Templates
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
+      sort: name:descending
       filter: status='OK'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather facts about a Storage Volume Template by name
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_volume.volume_template_name }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_volume_template_facts_contents.storage_volume.volume_template_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 # Only available after API500
 - name: Gather facts about the reachable Storage Volume Templates
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
     options:
       - reachableVolumeTemplates
     params:
@@ -82,34 +87,37 @@
 
 - name: Gather facts about Storage Systems compatible to the SVT
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_volume.volume_template_name }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_volume_template_facts_contents.storage_volume.volume_template_name }}"
     options:
       - compatibleSystems
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: compatible_systems
 
 # Only available prior to API500
 - name: Gather facts about the connectable Storage Volume Templates
   oneview_storage_volume_template_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.storage_volume.volume_template_name }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_storage_volume_template_facts_contents.storage_volume.volume_template_name }}"
     options:
       - connectableVolumeTemplates
   delegate_to: localhost
   when: currentVersion <= '500'
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: storage_volume_templates
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: connectable_volume_templates
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_storage_volume_template_facts_config }}"
+    sessionID: "{{ oneview_storage_volume_template_facts_session.ansible_facts.session }}"
   delegate_to: localhost

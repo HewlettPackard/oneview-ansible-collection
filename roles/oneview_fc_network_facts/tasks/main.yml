@@ -1,49 +1,53 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_fc_network_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_fc_network_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_fc_network_facts_session
 
 - name: Gather facts about all Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Gather paginated, filtered and sorted facts about Fibre Channel Networks
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'fabricType=FabricAttach'
+      sort: name:descending
+      filter: fabricType=FabricAttach
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Gather facts about a Fibre Channel Network by name
   oneview_fc_network_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
     name: "{{ fc_networks[0]['name'] }}"
   delegate_to: localhost
   when: fc_networks | default('', True)
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: fc_networks
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fc_network_facts_config }}"
+    sessionID: "{{ oneview_fc_network_facts_session.ansible_facts.session }}"
   delegate_to: localhost

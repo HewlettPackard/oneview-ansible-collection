@@ -1,36 +1,39 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_certificates_server_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_certificates_server_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_certificates_server_facts_session
 
 - name: Gather facts about a Server Certificate by remote address
   oneview_certificates_server_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    remote: "{{ contents.certificates_server.remote_server }}"
+    config: "{{ oneview_certificates_server_facts_config }}"
+    sessionID: "{{ oneview_certificates_server_facts_session.ansible_facts.session }}"
+    remote: "{{ oneview_certificates_server_facts_contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: remote_certificate['certificateDetails'][0]['base64Data']
 
 - name: Gather facts about a Server Certificate by alias_name
   oneview_certificates_server_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    aliasName: "{{ contents.certificates_server.remote_server }}"
+    config: "{{ oneview_certificates_server_facts_config }}"
+    sessionID: "{{ oneview_certificates_server_facts_session.ansible_facts.session }}"
+    aliasName: "{{ oneview_certificates_server_facts_contents.certificates_server.remote_server }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: certificates_server
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_certificates_server_facts_config }}"
+    sessionID: "{{ oneview_certificates_server_facts_session.ansible_facts.session }}"
   delegate_to: localhost

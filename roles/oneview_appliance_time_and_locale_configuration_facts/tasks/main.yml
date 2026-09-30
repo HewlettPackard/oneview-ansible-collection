@@ -1,25 +1,27 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_appliance_time_and_locale_configuration_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_appliance_time_and_locale_configuration_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_appliance_time_and_locale_configuration_facts_session
 
 - name: Gather facts about the Appliance time and locale configuration
   oneview_appliance_time_and_locale_configuration_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_time_and_locale_configuration_facts_config }}"
+    sessionID: "{{ oneview_appliance_time_and_locale_configuration_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: appliance_time_and_locale_configuration
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_appliance_time_and_locale_configuration_facts_config }}"
+    sessionID: "{{ oneview_appliance_time_and_locale_configuration_facts_session.ansible_facts.session }}"
   delegate_to: localhost

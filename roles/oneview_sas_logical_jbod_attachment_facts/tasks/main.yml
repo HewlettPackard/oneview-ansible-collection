@@ -1,63 +1,70 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_logical_jbod_attachment_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_sas_logical_jbod_attachment_facts_session
 
 - name: Gather facts about all SAS Logical JBOD Attachments
   oneview_sas_logical_jbod_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_attachment_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
-- ansible.builtin.set_fact:
-    jbod_attachment_name: "{{ sas_logical_jbod_attachments[0]['name'] }}"
-- ansible.builtin.set_fact:
-    jbod_attachment_uri: "{{ sas_logical_jbod_attachments[0]['uri'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_jbod_attachment_facts_jbod_attachment_name: "{{ sas_logical_jbod_attachments[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_jbod_attachment_facts_jbod_attachment_uri: "{{ sas_logical_jbod_attachments[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBOD attachments
   oneview_sas_logical_jbod_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_attachment_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Gather facts about a SAS Logical JBOD Attachment by name
   oneview_sas_logical_jbod_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ jbod_attachment_name }}"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_attachment_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_sas_logical_jbod_attachment_facts_jbod_attachment_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Gather facts about a SAS Logical JBOD Attachment by uri
   oneview_sas_logical_jbod_attachment_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ jbod_attachment_uri }}"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_attachment_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_sas_logical_jbod_attachment_facts_jbod_attachment_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbod_attachments
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_attachment_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_attachment_facts_session.ansible_facts.session }}"
   delegate_to: localhost

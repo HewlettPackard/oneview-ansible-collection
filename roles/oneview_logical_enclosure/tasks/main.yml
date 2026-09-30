@@ -1,62 +1,67 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_logical_enclosure_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_logical_enclosure_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_logical_enclosure_session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
   delegate_to: localhost
 
 - name: Gather facts about all Enclosure Groups
   oneview_enclosure_group_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ contents.logical_enclosure.eg_name }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
+    name: "{{ oneview_logical_enclosure_contents.logical_enclosure.eg_name }}"
   delegate_to: localhost
 
 # - name: Gather facts about all Firmware Drivers
 #  oneview_firmware_driver_facts:
-#    config: "{{ config }}"
+#    config: "{{ oneview_logical_enclosure_config }}"
 #
 # - debug: var=firmware_drivers
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[0]['uri']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[1]['uri']
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[2]['uri']
-
 
 # This operation is only available on HPE Synergy
 - name: Create a Logical Enclosure (available only on HPE Synergy)
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: present
     data:
       enclosureUris:
-        - "/rest/enclosures/0000000000A66101"
-        - "/rest/enclosures/0000000000A66102"
-        - "/rest/enclosures/0000000000A66103"
+        - /rest/enclosures/0000000000A66101
+        - /rest/enclosures/0000000000A66102
+        - /rest/enclosures/0000000000A66103
       enclosureGroupUri: "{{ enclosure_groups['uri'] }}"
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
   ignore_errors: "{{ ansible_check_mode }}"
   delegate_to: localhost
-  when: (contents.logical_enclosure.variant == "Synergy" and enclosures is not none and enclosures is not undefined and
-        enclosure_groups is not none and enclosure_groups is not undefined)
+  when: >-
+    (contents.logical_enclosure.variant == "Synergy" and enclosures is not none
+    and enclosures is not undefined and enclosure_groups is not none and
+    enclosure_groups is not undefined)
 
 # - name: Update the firmware for the Logical Enclosure
 #  oneview_logical_enclosure:
-#    config: "{{ config }}"
+#    config: "{{ oneview_logical_enclosure_config }}"
 #    state: firmware_updated
 #    data:
 #        name: "{{ logical_enclosure_name }}"
@@ -75,7 +80,7 @@
 ## This play is compatible with Synergy Enclosures
 # - name: Update the firmware for the Logical Enclosure with the logical-interconnect validation set as true
 #  oneview_logical_enclosure:
-#    config: "{{ config }}"
+#    config: "{{ oneview_logical_enclosure_config }}"
 #    state: firmware_updated
 #    data:
 #        name: "{{ logical_enclosure_name }}"
@@ -95,74 +100,75 @@
 
 - name: Update the Logical Enclosure configuration script(available only on C7000)
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: script_updated
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
       configurationScript: "# script (updated)"
   ignore_errors: "{{ ansible_check_mode }}"
   delegate_to: localhost
-  when: contents.logical_enclosure.variant == "C7000"
+  when: oneview_logical_enclosure_contents.logical_enclosure.variant == "C7000"
 
 - name: Generates a support dump for the Logical Enclosure
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: dumped
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
       dump:
-        errorCode: "MyDump16"
+        errorCode: MyDump16
         encrypt: "true"
         excludeApplianceDump: "false"
   delegate_to: localhost
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: generated_dump_uri
 
 - name: Reconfigure all enclosures associated with logical enclosure
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: reconfigured
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Makes the logical enclosure consistent with the enclosure group
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: updated_from_group
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 - name: Update the Logical Enclosure changing the name attribute
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }}"
-      newName: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
+      newName: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }} (renamed)"
   delegate_to: localhost
 
 - name: Rename the Logical Enclosure to its initial name
   oneview_logical_enclosure:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
     state: present
     data:
-      name: "{{ contents.logical_enclosure.logical_enclosure_name }} (renamed)"
-      newName: "{{ contents.logical_enclosure.logical_enclosure_name }}"
+      name: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }} (renamed)"
+      newName: "{{ oneview_logical_enclosure_contents.logical_enclosure.logical_enclosure_name }}"
   delegate_to: localhost
 
 # This state is only available on HPE Synergy
 # Commenting this to ensure continuity for automation script
 # - name: Delete a Logical Enclosure (available only on HPE Synergy)
 #   oneview_logical_enclosure:
-#     config: "{{ config }}"
+#     config: "{{ oneview_logical_enclosure_config }}"
 #     state: absent
 #     data: '{{ logical_enclosure }}'
 #   ignore_errors: "{{ ansible_check_mode }}"
@@ -171,6 +177,6 @@
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_logical_enclosure_config }}"
+    sessionID: "{{ oneview_logical_enclosure_session.ansible_facts.session }}"
   delegate_to: localhost

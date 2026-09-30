@@ -1,54 +1,56 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_label_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_label_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_label_session
 
 - name: Gather facts about all Enclosures
   oneview_enclosure_facts:
-    config: "{{ config }}"
+    config: "{{ oneview_label_config }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: enclosures[0]['uri']
 
 - name: Create Labels for enclosure resource
   oneview_label:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    state: present
-    data:
-      resourceUri: "{{ enclosures[0]['uri']}}"
-      labels:
-        - name: "{{ contents.labels.label_name_1  }}"
-        - name: "{{ contents.labels.label_name_2 }}"
-  delegate_to: localhost
-
-- name: Update label of given resource for enclosure resource
-  oneview_label:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_config }}"
+    sessionID: "{{ oneview_label_session.ansible_facts.session }}"
     state: present
     data:
       resourceUri: "{{ enclosures[0]['uri'] }}"
       labels:
-        - name: "{{ contents.labels.label_rename_1 }}"
+        - name: "{{ oneview_label_contents.labels.label_name_1 }}"
+        - name: "{{ oneview_label_contents.labels.label_name_2 }}"
+  delegate_to: localhost
+
+- name: Update label of given resource for enclosure resource
+  oneview_label:
+    config: "{{ oneview_label_config }}"
+    sessionID: "{{ oneview_label_session.ansible_facts.session }}"
+    state: present
+    data:
+      resourceUri: "{{ enclosures[0]['uri'] }}"
+      labels:
+        - name: "{{ oneview_label_contents.labels.label_rename_1 }}"
           uri: "{{ labels['labels'][0]['uri'] }}"
-        - name: "{{ contents.labels.label_rename_2 }}"
-          uri: null
-        - name: "{{ contents.labels.label_name_3 }}"
-          uri: null
+        - name: "{{ oneview_label_contents.labels.label_rename_2 }}"
+          uri:
+        - name: "{{ oneview_label_contents.labels.label_name_3 }}"
+          uri:
   delegate_to: localhost
 
 - name: Delete Labels for enclosure resource
   oneview_label:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_config }}"
+    sessionID: "{{ oneview_label_session.ansible_facts.session }}"
     state: absent
     data:
       resourceUri: "{{ enclosures[0]['uri'] }}"
@@ -56,17 +58,17 @@
 
 - name: Create Labels for enclosure resource
   oneview_label:
-    config: "{{ config }}"
+    config: "{{ oneview_label_config }}"
     state: present
     data:
-      resourceUri: "{{ enclosures[0]['uri']}}"
+      resourceUri: "{{ enclosures[0]['uri'] }}"
       labels:
-        - name: "{{ contents.labels.label_name_1  }}"
-        - name: "{{ contents.labels.label_name_2 }}"
+        - name: "{{ oneview_label_contents.labels.label_name_1 }}"
+        - name: "{{ oneview_label_contents.labels.label_name_2 }}"
   delegate_to: localhost
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_label_config }}"
+    sessionID: "{{ oneview_label_session.ansible_facts.session }}"
   delegate_to: localhost

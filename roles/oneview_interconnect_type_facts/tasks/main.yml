@@ -1,48 +1,52 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_interconnect_type_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_interconnect_type_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_interconnect_type_facts_session
 
 - name: Gather facts about all Interconnect Types
   oneview_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_interconnect_type_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
-    msg: "{{interconnect_types | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ interconnect_types | map(attribute='name') | list }}"
 
 - name: Gather paginated, filtered and sorted facts about Interconnect Types
   oneview_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_interconnect_type_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: "maximumFirmwareVersion='4000.99'"
+      sort: name:descending
+      filter: maximumFirmwareVersion='4000.99'
 
-- ansible.builtin.debug:
-    msg: "{{interconnect_types | map(attribute='name') | list }}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: "{{ interconnect_types | map(attribute='name') | list }}"
 
 - name: Gather facts about an Interconnect Type by name {{ interconnect_types.0.name }}
   oneview_interconnect_type_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_interconnect_type_facts_session.ansible_facts.session }}"
     name: "{{ interconnect_types.0.name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
-    msg: "Found an interconnect type named {{interconnect_types.0.name}} and with uri {{interconnect_types.0.uri}}"
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    msg: Found an interconnect type named {{ interconnect_types.0.name }} and with uri {{ interconnect_types.0.uri }}
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_interconnect_type_facts_config }}"
+    sessionID: "{{ oneview_interconnect_type_facts_session.ansible_facts.session }}"
   delegate_to: localhost

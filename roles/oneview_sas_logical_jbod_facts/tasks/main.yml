@@ -1,75 +1,83 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_sas_logical_jbod_facts_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_sas_logical_jbod_facts_session
 
 - name: Gather facts about all SAS Logical JBODs
   oneview_sas_logical_jbod_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
-- ansible.builtin.set_fact:
-    jbod_name: "{{ sas_logical_jbods[0]['name'] }}"
-- ansible.builtin.set_fact:
-    jbod_uri: "{{ sas_logical_jbods[0]['uri'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_jbod_facts_jbod_name: "{{ sas_logical_jbods[0]['name'] }}"
+- name: Run ansible.builtin.set_fact
+  ansible.builtin.set_fact:
+    oneview_sas_logical_jbod_facts_jbod_uri: "{{ sas_logical_jbods[0]['uri'] }}"
 
 - name: Gather paginated, filtered and sorted facts about SAS Logical JBODs
   oneview_sas_logical_jbod_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
     params:
       start: 0
       count: 3
-      sort: 'name:descending'
-      filter: 'status=OK'
+      sort: name:descending
+      filter: status=OK
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather facts about an SAS Logical JBOD by name
   oneview_sas_logical_jbod_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ jbod_name }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_sas_logical_jbod_facts_jbod_name }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather facts about an SAS Logical JBOD by uri
   oneview_sas_logical_jbod_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    uri: "{{ jbod_uri }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
+    uri: "{{ oneview_sas_logical_jbod_facts_jbod_uri }}"
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: sas_logical_jbods
 
 - name: Gather Drives facts about a SAS Logical JBOD by name
   oneview_sas_logical_jbod_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
-    name: "{{ jbod_name }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
+    name: "{{ oneview_sas_logical_jbod_facts_jbod_name }}"
     options:
       - jbod_drives
   delegate_to: localhost
 
-- ansible.builtin.debug:
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
     var: jbod_drives
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_sas_logical_jbod_facts_config }}"
+    sessionID: "{{ oneview_sas_logical_jbod_facts_session.ansible_facts.session }}"
   delegate_to: localhost

@@ -1,114 +1,116 @@
 ---
 - name: Fetch Session Id
   oneview_get_session_id:
-    config: "{{ config }}"
-    name: "Test_Session"
+    config: "{{ oneview_fcoe_network_config }}"
+    name: Test_Session
   delegate_to: localhost
-  register: session
+  register: oneview_fcoe_network_session
 
-- ansible.builtin.debug:
-    var: session
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_fcoe_network_session
 
 - name: Get currentVersion from URL
   oneview_version_facts:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
   delegate_to: localhost
-  when: config_file.api_version == ""
-  register: version
+  when: oneview_fcoe_network_config_file.api_version == ""
+  register: oneview_fcoe_network_version
 
 - name: Print currentVersion if an apiVersion is not specified in config file
   ansible.builtin.set_fact:
-    currentVersion: "{{ version.ansible_facts.version.currentVersion|int }}"
-  when: config_file.api_version == ""
+    oneview_fcoe_network_current_version: "{{ oneview_fcoe_network_version.ansible_facts.version.currentVersion | int }}"
+  when: oneview_fcoe_network_config_file.api_version == ""
 
 - name: Print currentVersion if an apiVersion is specified in config file
   ansible.builtin.set_fact:
-    currentVersion: config_file.api_version | string
-  when: config_file.api_version != ""
+    oneview_fcoe_network_current_version: oneview_fcoe_network_config_file.api_version | string
+  when: oneview_fcoe_network_config_file.api_version != ""
 
 - name: Create a FCoE Network
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ item.name }}'
-      vlanId: '{{ item.vlanId }}'
+      name: "{{ item.name }}"
+      vlanId: "{{ item.vlanId }}"
   delegate_to: localhost
-  register: fcoe_network1
+  register: oneview_fcoe_network_fcoe_network1
   with_items:
-    - { name: '{{ contents.fcoe_network.network_name }}', vlanId: '201' }
-    - { name: '{{ contents.fcoe_network.network_name }} (1)', vlanId: '202'}
+    - { name: "{{ oneview_fcoe_network_contents.fcoe_network.network_name }}", vlanId: "201" }
+    - { name: "{{ oneview_fcoe_network_contents.fcoe_network.network_name }} (1)", vlanId: "202" }
 
-- ansible.builtin.debug:
-    var: fcoe_network1
+- name: Run ansible.builtin.debug
+  ansible.builtin.debug:
+    var: oneview_fcoe_network_fcoe_network1
 
 - name: Do nothing with the FCoE Network when no changes are provided
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test FCoE Network'
+      name: Test FCoE Network
       vlanId: 201
   delegate_to: localhost
 
 - name: Update the FCoE Network changing the name attribute
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: '{{ contents.fcoe_network.network_name }}'
-      newName: 'Test FCoE Network - Changed'
+      name: "{{ oneview_fcoe_network_contents.fcoe_network.network_name }}"
+      newName: Test FCoE Network - Changed
       vlanId: 201
   delegate_to: localhost
 
 # Below task is supported only with OneView 3.10
 - name: Update the FCoE Network with two scopes
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: present
     data:
-      name: 'Test FCoE Network - Changed'
-      scopeUris: "{{ contents.fcoe_network.network_scope_uris }}"
+      name: Test FCoE Network - Changed
+      scopeUris: "{{ oneview_fcoe_network_contents.fcoe_network.network_scope_uris }}"
   when: currentVersion >= '300' and currentVersion <= '500'
   delegate_to: localhost
 
 - name: Delete the FCoE Network
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Test FCoE Network - Changed'
+      name: Test FCoE Network - Changed
   delegate_to: localhost
 
 - name: Do nothing when FCoE Network is absent
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: absent
     data:
-      name: 'Test FCoE Network - Changed'
+      name: Test FCoE Network - Changed
   delegate_to: localhost
 
 # This feature is available only from OneView 5.20
 - name: Delete FCoE Networks in bulk
   hpe.oneview.oneview_fcoe_network:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
     state: absent
     data:
       networkUris:
-        - "{{ fcoe_network1.results[1].ansible_facts.fcoe_network.uri }}"
+        - "{{ oneview_fcoe_network_fcoe_network1.results[1].ansible_facts.fcoe_network.uri }}"
   delegate_to: localhost
   when: currentVersion >= '1600'
 
 - name: Logout Session
   oneview_logout_session:
-    config: "{{ config }}"
-    sessionID: "{{ session.ansible_facts.session }}"
+    config: "{{ oneview_fcoe_network_config }}"
+    sessionID: "{{ oneview_fcoe_network_session.ansible_facts.session }}"
   delegate_to: localhost
